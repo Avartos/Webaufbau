@@ -1,6 +1,7 @@
 import React from "react";
 import PreviewList from "./previewList";
 import ThreadStatistics from "./threadStatistics";
+import classNames from 'classnames';
 
 const Thread = ({
   id,
@@ -17,13 +18,17 @@ const Thread = ({
   posts
 }) => {
 
+  let subscribeClass = classNames({
+    subscribeButton: true,
+    active: isSubscribed
+  });
+
   return (
     <div className="thread">
       <div className="threadHeader">
-        <h3 className="threadTitle">{subject}</h3>
-        <button onClick={() => handleSubscribeThread(id)}>Abonnieren</button>
-        {isSubscribed && <span>Test</span>}
-        <button className="callButton">Call beitreten</button>
+        <span className="threadTitle">{subject}</span>
+        <button className="callButton"></button>
+        <button onClick={() => handleSubscribeThread(id)} className={subscribeClass}></button>
       </div>
       <div className="threadBody">
         <p className="shortDescription">{subject}</p>
@@ -39,8 +44,8 @@ const Thread = ({
         onClick={() => handleTogglePreview(id)}
         className="loadMoreButton"
       >
-        {isUnfolded && <span>Reduzieren</span>}
-        {!isUnfolded && <span>Mehr...</span>}
+        {isUnfolded && <span>-</span>}
+        {!isUnfolded && <span>+</span>}
       </button>
       {isUnfolded && <PreviewList key={id} posts={posts}/>}
     </div>

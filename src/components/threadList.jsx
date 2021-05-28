@@ -1,6 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import Thread from "./thread";
+import "../threadList.css";
 
 const ThreadList = () => {
   const [threads, setThreads] = useState([
@@ -18,25 +19,25 @@ const ThreadList = () => {
           id: 0,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 1,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 2,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 3,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
       ],
     },
@@ -54,25 +55,25 @@ const ThreadList = () => {
           id: 0,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 1,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 2,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 3,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
       ],
     },
@@ -90,25 +91,25 @@ const ThreadList = () => {
           id: 0,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 1,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 2,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 3,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
       ],
     },
@@ -126,25 +127,25 @@ const ThreadList = () => {
           id: 0,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 1,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 2,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
         {
           id: 3,
           subject: "tehest",
           body: "tehestText",
-          user: 'Squid1701'
+          user: "Squid1701",
         },
       ],
     },
@@ -169,7 +170,7 @@ const ThreadList = () => {
   };
 
   return (
-    <React.Fragment>
+    <div className="threadList">
       {threads.map((thread) => {
         return (
           <Thread
@@ -189,7 +190,7 @@ const ThreadList = () => {
           />
         );
       })}
-    </React.Fragment>
+    </div>
   );
 };
 

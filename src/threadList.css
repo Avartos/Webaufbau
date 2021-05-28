@@ -1,0 +1,126 @@
+:root {
+    --threadHeaderColor: #BFCDE0;
+    --threadBodyColor: #FEFCFD;
+    --buttonColor: #05668D;
+    --buttonHoverColor: #0085b9;
+    --buttonPressedColor: #054964;
+    --inkColor: #F038FF;
+}
+
+body {
+    background-color: #028090;
+}
+
+.thread {
+    display: block;
+    border-radius: 5px;
+    padding: 0px;
+    margin: 10px;
+    overflow: hidden;
+    background-color: var(--threadBodyColor);
+    border-radius: 5px;
+    width: 80%;
+    margin: 10px auto;
+}
+
+.thread p {
+    padding: 0;
+    margin: 0;
+    
+}
+
+.threadHeader {
+    background-color: var(--threadHeaderColor);
+    border-radius: 5px 5px 0px 0px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-gap: 10px;
+
+}
+
+.threadTitle {
+    font-size: 1.3em;
+    font-weight: bold;
+    text-align: left;
+    margin-left: 20px;
+    grid-column: 1/3;
+    padding: 5px;
+}
+
+.subscribeButton {
+    grid-column: 5;
+    border: none;
+    width: 35px;
+    height: 35px;
+    margin: 5px 70%;
+    background-color: darkgray;
+    transition: ease-in-out .1s;
+}
+
+.subscribeButton:hover {
+    background-color: grey;
+}
+
+.subscribeButton.active {
+    background-color: var(--inkColor);
+}
+
+.subscribeButton.active:hover {
+    background-color: #f279fd;
+}
+
+
+.callButton {
+    grid-column: 4;
+    border: none;
+    width: 35px;
+    height: 35px;
+    margin: 5px 140%;
+}
+
+.threadBody {
+    background-color: var(--threadBodyColor);
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-gap: 10px;
+    padding: 15px;
+    font-size: .8em;
+}
+
+.threadStatistics {
+    grid-column: 4;
+    text-align: left;    
+}
+
+.loadMoreButton {
+    background-color: var(--buttonColor);
+    color: white;
+    width: 100%;
+    height: 25px;
+    outline: none;
+    border: none;
+    border-color: var(--buttonColor);
+    border-radius: 0px 0px 5px 5px;
+    transition: ease-in-out .1s;
+}
+
+.loadMoreButton:hover {
+    background-color: var(--buttonHoverColor);
+}
+
+.loadMoreButton:active {
+    background-color: var(--buttonColor);
+}
+
+.postPreviews {
+    text-align: left;
+    padding: 5px;
+}
+
+.postPreviews:nth-child(1) {
+    background-color: var(--threadHeaderColor);
+}
+
+.postPreviews:nth-child(2n+1) {
+    background-color: var(--threadBodyColor);
+}
