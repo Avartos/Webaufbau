@@ -8,7 +8,7 @@ const ThreadList = () => {
     {
       id: 1,
       subject: "Ein erster Thread",
-      body: "Hier könnte Ihre Werbung stehen",
+      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
       createdAt: "11.11.2011",
       numberOfPosts: 10,
       lastPoster: "Squid1701",
@@ -43,8 +43,8 @@ const ThreadList = () => {
     },
     {
       id: 2,
-      subject: "Ein erster Thread",
-      body: "Hier könnte Ihre Werbung stehen",
+      subject: "Noch ein erster Thread",
+      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
       createdAt: "11.11.2011",
       numberOfPosts: 10,
       lastPoster: "Squid1701",
@@ -79,8 +79,8 @@ const ThreadList = () => {
     },
     {
       id: 3,
-      subject: "Ein erster Thread",
-      body: "Hier könnte Ihre Werbung stehen",
+      subject: "Ein ersterer Thread",
+      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
       createdAt: "11.11.2011",
       numberOfPosts: 10,
       lastPoster: "Squid1701",
@@ -115,8 +115,8 @@ const ThreadList = () => {
     },
     {
       id: 4,
-      subject: "Ein erster Thread",
-      body: "Hier könnte Ihre Werbung stehen",
+      subject: "Der ersteste Thread",
+      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
       createdAt: "11.11.2011",
       numberOfPosts: 10,
       lastPoster: "Squid1701",
