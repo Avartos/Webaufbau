@@ -9,6 +9,7 @@
 
 body {
   background-image: url("./background.svg");
+  background-attachment: fixed;
   background-color: #028090;
 }
 
@@ -42,7 +43,7 @@ body {
   font-weight: bold;
   text-align: left;
   margin-left: 20px;
-  grid-column: 1/5;
+  grid-column: 1/7;
   padding: 5px;
   cursor: pointer;
 }
@@ -52,14 +53,14 @@ body {
   border: none;
   width: 35px;
   height: 35px;
-  margin: 5px 50%;
+  margin: 5px auto;
   background-color: #00000000;
   transition: ease-in-out 0.1s;
 }
 
 .subscribeButton img {
   transition: ease-in-out 0.1s;
-  width: 90%;
+  width: 140%;
   cursor: pointer;
 }
 
@@ -73,7 +74,11 @@ body {
   filter: brightness(0);
 }
 
-.subscribeButton.active {
+.subscribeButton:active img{
+    width: 130%;
+}
+
+.subscribeButton.active img{
   filter: grayscale(0%);
 }
 
@@ -87,7 +92,7 @@ body {
   border: none;
   width: 35px;
   height: 35px;
-  margin: 5px 100%;
+  margin: 5px 70%;
   background-color: #00000000;
 }
 
@@ -172,4 +177,44 @@ body {
 
 .postPreviews p:nth-child(odd) {
   background-color: var(--threadBodyColor);
+}
+
+form label {
+    margin-left: 100px;
+    padding: 5px;
+    font-weight: bold;
+    text-align: left;
+    display: block;
+    width: 100%;
+    display: block;
+}
+
+form input,
+form textarea {
+    margin: 5px auto;
+    padding: 5px;
+    width: 80%;
+    display: block;
+}
+
+form button {
+    margin: 25px auto;
+    padding: 5px;
+    display: block;
+    width: 100px;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+    background-color: var(--buttonColor);
+    transition: ease-in-out .1s;
+}
+
+form button:hover {
+    background-color: var(--buttonHoverColor);
+}
+
+form button:active {
+    background-color: var(--buttonPressedColor);
 }

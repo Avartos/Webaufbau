@@ -40,13 +40,15 @@ const Thread = ({
           lastPostDate={lastPostDate}
         />
       </div>
-      <button
-        onClick={() => handleTogglePreview(id)}
-        className="loadMoreButton"
-      >
-        {isUnfolded && <span>-</span>}
-        {!isUnfolded && <span>+</span>}
-      </button>
+      {posts.length > 0 && (
+        <button
+          onClick={() => handleTogglePreview(id)}
+          className="loadMoreButton"
+        >
+          {isUnfolded && <span>-</span>}
+          {!isUnfolded && <span>+</span>}
+        </button>
+      )}
       {isUnfolded && <PreviewList key={id} posts={posts} />}
     </div>
   );

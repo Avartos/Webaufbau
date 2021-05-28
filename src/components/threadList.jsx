@@ -2,6 +2,7 @@ import React from "react";
 import { useState } from "react";
 import Thread from "./thread";
 import "../threadList.css";
+import NewThreadForm from "./newThreadForm";
 
 const ThreadList = () => {
   const [threads, setThreads] = useState([
@@ -169,28 +170,51 @@ const ThreadList = () => {
     setUnfoldedThreadId(targetThreadId);
   };
 
+  const handleSubmitForm = (e, title, body, currentUser) => {
+    e.preventDefault();
+    let today = new Date();
+    let nextId = Math.max.apply(Math, threads.map(thread => {return thread.id})) + 1;
+    let currentDateString = today.getDate() + '.' + (today.getMonth()+1) + '.' + today.getFullYear();
+    let newPost = {
+      id: nextId,
+      subject: title,
+      body: body,
+      createdAt: currentDateString,
+      numberOfPosts: 0,
+      lastPoster: currentUser,
+      lastPostDate: currentDateString,
+      isSubscribed: false,
+      posts: []
+    }
+
+    setThreads([...threads, newPost]);
+  }
+
   return (
-    <div className="threadList">
-      {threads.map((thread) => {
-        return (
-          <Thread
-            key={thread.id}
-            id={thread.id}
-            subject={thread.subject}
-            body={thread.body}
-            createdAt={thread.createdAt}
-            numberOfPosts={thread.numberOfPosts}
-            lastPoster={thread.lastPoster}
-            lastPostDate={thread.lastPostDate}
-            isSubscribed={thread.isSubscribed}
-            isUnfolded={thread.id === unfoldedThreadId}
-            handleSubscribeThread={handleSubscribeThread}
-            handleTogglePreview={handleTogglePreview}
-            posts={thread.posts}
-          />
-        );
-      })}
-    </div>
+    <React.Fragment>
+      <div className="threadList">
+        {threads.map((thread) => {
+          return (
+            <Thread
+              key={thread.id}
+              id={thread.id}
+              subject={thread.subject}
+              body={thread.body}
+              createdAt={thread.createdAt}
+              numberOfPosts={thread.numberOfPosts}
+              lastPoster={thread.lastPoster}
+              lastPostDate={thread.lastPostDate}
+              isSubscribed={thread.isSubscribed}
+              isUnfolded={thread.id === unfoldedThreadId}
+              handleSubscribeThread={handleSubscribeThread}
+              handleTogglePreview={handleTogglePreview}
+              posts={thread.posts}
+            />
+          );
+        })}
+      </div>
+      <NewThreadForm handleSubmitForm={handleSubmitForm}/>
+    </React.Fragment>
   );
 };
 
