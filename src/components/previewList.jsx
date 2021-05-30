@@ -1,6 +1,5 @@
 import React from "react";
 
-
 const PreviewList = ({posts}) => {
   return (
       <div className="postPreviews">

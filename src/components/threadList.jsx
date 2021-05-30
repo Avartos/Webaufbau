@@ -1,8 +1,8 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+
 import Thread from "./thread";
-import "../threadList.css";
 import NewThreadForm from "./newThreadForm";
+import "../threadList.css";
 
 const ThreadList = () => {
   const [threads, setThreads] = useState([

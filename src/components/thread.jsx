@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useState } from "react";
+import { CSSTransition } from "react-transition-group";
+
 import PreviewList from "./previewList";
 import SubscribeButton from "./subscribeButton";
 import ThreadStatistics from "./threadStatistics";
 import { ReactComponent as CallIcon } from "../icons/voiceCall.svg";
-import { CSSTransition } from "react-transition-group";
-import { useState } from "react";
+
 
 const Thread = ({
   id,
