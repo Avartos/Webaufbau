@@ -20,10 +20,9 @@ const Thread = ({
   handleTogglePreview,
   posts,
 }) => {
-  const [previewHeight, setPreviewHeight] = useState(null);
+  const [previewHeight, setPreviewHeight] = useState(0);
   const calculatePreviewHeight = (element) => {
-    const height =
-      previewHeight == null || previewHeight === 0 ? element.offsetHeight : 0;
+    const height = (previewHeight === 0) ? element.offsetHeight : 0;
     setPreviewHeight(height);
   };
 
