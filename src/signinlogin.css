@@ -1,0 +1,15 @@
+:root {
+    --threadHeaderColor: #bfcde0;
+    --threadBodyColor: #fefcfd;
+    --buttonColor: #05668d;
+    --buttonHoverColor: #0085b9;
+    --buttonPressedColor: #054964;
+    --inkColor: #f038ff;
+    --threadHeaderSize: 40px;
+  }
+  
+  body {
+    background-image: url("./background.svg");
+    background-attachment: fixed;
+    background-color: #028090;
+  }
