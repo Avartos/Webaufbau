@@ -2,6 +2,9 @@ import React from "react";
 import PreviewList from "./previewList";
 import SubscribeButton from "./subscribeButton";
 import ThreadStatistics from "./threadStatistics";
+import { ReactComponent as CallIcon } from "../icons/voiceCall.svg";
+import { CSSTransition } from "react-transition-group";
+import { useState } from "react";
 
 const Thread = ({
   id,
@@ -17,13 +20,18 @@ const Thread = ({
   handleTogglePreview,
   posts,
 }) => {
+  const [previewHeight, setPreviewHeight] = useState(null);
+  const calculatePreviewHeight = (element) => {
+    const height =
+      previewHeight == null || previewHeight === 0 ? element.offsetHeight : 0;
+    setPreviewHeight(height);
+  };
+
   return (
     <div className="thread">
       <div className="threadHeader">
         <span className="threadTitle">Thread: {subject}</span>
-        <button className="callButton">
-          <img src="/images/voiceCall.svg" alt="voiceCall" />
-        </button>
+        <CallIcon className="callButton"></CallIcon>
         <SubscribeButton
           parentId={id}
           isSubscribed={isSubscribed}
@@ -33,23 +41,35 @@ const Thread = ({
       <div className="threadBody">
         <p className="shortDescription">{body}</p>
         <ThreadStatistics
-          key={id}
           createdAt={createdAt}
           numberOfPosts={numberOfPosts}
           lastPoster={lastPoster}
           lastPostDate={lastPostDate}
         />
       </div>
+
       {posts.length > 0 && (
-        <button
-          onClick={() => handleTogglePreview(id)}
-          className="loadMoreButton"
-        >
-          {isUnfolded && <span>-</span>}
-          {!isUnfolded && <span>+</span>}
-        </button>
+        <React.Fragment>
+          <button
+            onClick={() => handleTogglePreview(id)}
+            className="loadMoreButton"
+          >
+            {isUnfolded && <span>-</span>}
+            {!isUnfolded && <span>+</span>}
+          </button>
+          <div className="threadFooter" style={{ height: previewHeight }}>
+            <CSSTransition
+              in={isUnfolded}
+              timeout={500}
+              unmountOnExit
+              onEnter={calculatePreviewHeight}
+              onExit={calculatePreviewHeight}
+            >
+              <PreviewList key={id} posts={posts} />
+            </CSSTransition>
+          </div>
+        </React.Fragment>
       )}
-      {isUnfolded && <PreviewList key={id} posts={posts} />}
     </div>
   );
 };

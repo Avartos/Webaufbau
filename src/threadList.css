@@ -5,6 +5,7 @@
   --buttonHoverColor: #0085b9;
   --buttonPressedColor: #054964;
   --inkColor: #f038ff;
+  --threadHeaderSize: 40px;
 }
 
 body {
@@ -13,13 +14,13 @@ body {
   background-color: #028090;
 }
 
+/* #region threads*/
 .thread {
   display: block;
+  background-color: var(--threadBodyColor);
   border-radius: 5px;
   padding: 0px;
-  margin: 10px;
   overflow: hidden;
-  background-color: var(--threadBodyColor);
   border-radius: 5px;
   width: 80%;
   margin: 10px auto;
@@ -31,69 +32,59 @@ body {
   margin: 0;
 }
 
+/* #region threadHeader */
 .threadHeader {
   background-color: var(--threadHeaderColor);
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-gap: 10px;
+  display: flex;
+  /* padding: 15px; */
+  height: var(--threadHeaderSize);
+  font-weight: bold;
+  font-size: 1.3em;
+  cursor: pointer;
 }
 
 .threadTitle {
-  font-size: 1.3em;
-  font-weight: bold;
+  flex-grow: 1;
   text-align: left;
-  margin-left: 20px;
-  grid-column: 1/7;
-  padding: 5px;
-  cursor: pointer;
+  margin: 5px auto 5px 5px;
 }
 
+/* #region subcribeButton */
 .subscribeButton {
-  grid-column: 10;
-  border: none;
-  width: 35px;
-  height: 35px;
-  margin: 5px auto;
-  background-color: #00000000;
-  transition: ease-in-out 0.1s;
+  margin-left: auto;
+  margin: 0px 5px 5px auto;
+  width: calc(var(--threadHeaderSize)*.8);
 }
 
-.subscribeButton img {
-  transition: ease-in-out 0.1s;
-  width: 140%;
-  cursor: pointer;
-}
 
-.subscribeButton:not(.active) img {
+.subscribeButton:not(.active){
   filter: brightness(0.5);
   filter: grayscale(100%);
 }
 
-.subscribeButton:hover img {
+.subscribeButton:hover{
   filter: grayscale(100%);
   filter: brightness(0);
 }
 
-.subscribeButton:active img{
-    width: 130%;
+.subscribeButton:active{
+  filter: brightness(50%);
 }
 
-.subscribeButton.active img{
+.subscribeButton.active{
   filter: grayscale(0%);
 }
 
-.subscribeButton.active:hover img {
+.subscribeButton.active:hover{
   filter: brightness(2);
 }
 
+/* #endregion */
+
+/* #region callButton */
 .callButton {
-  grid-column: 9;
-  cursor: pointer;
-  border: none;
-  width: 35px;
-  height: 35px;
-  margin: 5px 70%;
-  background-color: #00000000;
+  margin: 0px 15px 5px auto;
+  width: calc(var(--threadHeaderSize)*.9);
 }
 
 .callButton img {
@@ -109,20 +100,31 @@ body {
     filter: brightness(.5);
 }
 
+/* #endregion */
+
+/* #endregion */
+
+/* #region threadBody */
 .threadBody {
   background-color: var(--threadBodyColor);
-  display: grid;
-  grid-template-columns: repeat(8, 1fr);
-  grid-gap: 10px;
+  display: flex;
   padding: 15px;
   font-size: 0.8em;
 }
 
+.shortDescription {
+  font-style: italic;
+  flex-grow: 1;
+  text-align: left;
+}
+
+
+/* #region threadStatistics */
 .threadStatistics {
-  grid-column: 8;
+  min-width: 200px;
   display: table;
   text-align: left;
-  transition: ease-in-out;
+  align-self: flex-start;
 }
 
 .threadStatistics .row{
@@ -132,12 +134,10 @@ body {
 .threadStatistics .row span {
     display: table-cell;
 }
+/* #endregion */
+/* #endregion */
 
-.threadBody .shortDescription {
-  grid-column: 1/6;
-  text-align: left;
-}
-
+/* #region postPreviews */
 .loadMoreButton {
   background-color: var(--buttonColor);
   color: white;
@@ -163,6 +163,10 @@ body {
   font-weight: bold;
 }
 
+.threadFooter {
+  transition: height 500ms ease;
+}
+
 .postPreviews {
   text-align: left;
 }
@@ -178,9 +182,11 @@ body {
 .postPreviews p:nth-child(odd) {
   background-color: var(--threadBodyColor);
 }
+/* #endregion */
 
+/* #region threadForm */
 form label {
-    margin-left: 100px;
+    margin-left: 25px;
     padding: 5px;
     font-weight: bold;
     text-align: left;
@@ -193,7 +199,9 @@ form input,
 form textarea {
     margin: 5px auto;
     padding: 5px;
-    width: 80%;
+    flex-grow: 1;
+    width: 95%;
+    resize: none;
     display: block;
 }
 
@@ -218,3 +226,6 @@ form button:hover {
 form button:active {
     background-color: var(--buttonPressedColor);
 }
+
+/* #endregion */
+/* #endregion */
