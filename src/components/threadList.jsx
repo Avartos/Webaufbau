@@ -170,7 +170,7 @@ const ThreadList = () => {
     setUnfoldedThreadId(targetThreadId);
   };
 
-  const handleSubmitForm = (e, title, body, currentUser) => {
+  const handleSubmitNewThread = (e, title, body, currentUser) => {
     e.preventDefault();
     let today = new Date();
     let nextId = Math.max.apply(Math, threads.map(thread => {return thread.id})) + 1;
@@ -213,7 +213,7 @@ const ThreadList = () => {
           );
         })}
       </div>
-      <NewThreadForm handleSubmitForm={handleSubmitForm}/>
+      <NewThreadForm handleSubmitForm={handleSubmitNewThread}/>
     </React.Fragment>
   );
 };
