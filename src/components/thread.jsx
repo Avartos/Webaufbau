@@ -31,12 +31,17 @@ const Thread = ({
     <div className="thread">
       <div className="threadHeader">
         <span className="threadTitle">Thread: {subject}</span>
-        <CallIcon className="callButton"></CallIcon>
+        <div className="buttonWrapper">
+          <CallIcon className="callButton"></CallIcon>
+        </div>
+        <div className="buttonWrapper">
         <SubscribeButton
           parentId={id}
           isSubscribed={isSubscribed}
           handleSubscribe={handleSubscribeThread}
         />
+        </div>
+        
       </div>
       <div className="threadBody">
         <p className="shortDescription">{body}</p>

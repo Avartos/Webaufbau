@@ -49,6 +49,11 @@ body {
   margin: 5px auto 5px 5px;
 }
 
+.buttonWrapper {
+  width: calc(var(--threadHeaderSize)*.8);
+  margin-right: 15px;
+}
+
 /* #region subcribeButton */
 .subscribeButton {
   margin-left: auto;
