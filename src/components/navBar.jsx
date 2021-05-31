@@ -1,6 +1,11 @@
 import React, { Component } from 'react';
+import LinkedImage from "./linkedImage";
+import SearchBar from "./searchBar";
+import Bell from "./bell";
+import Profile from "./profile";
 
 export default class NavBar extends Component {
+
     state = {
         pictures: [
             {id:"logo",     url:"../assets/logo.png",           alt:"logo.png"},
@@ -10,46 +15,48 @@ export default class NavBar extends Component {
             {id:"profile",  url:"../assets/icon/profile.png",   alt:"profile.png"}
         ]
     }
+
+
     render() {
 
+
+        /*
         let logo = this.getPictureById("logo");
         let glass = this.getPictureById("glass");
         let call = this.getPictureById("call");
         let bell = this.getPictureById("bell");
         let profile = this.getPictureById("profile");
+        */
+
+
+        let logo    = this.state.pictures.find(pic => pic.id === "logo");
+        let glass   = this.state.pictures.find(pic => pic.id === "glass");
+        let call    = this.state.pictures.find(pic => pic.id === "call");
+        let bell    = this.state.pictures.find(pic => pic.id === "bell");
+        let profile = this.state.pictures.find(pic => pic.id === "profile");
 
         return (
             <nav>
                 <div className="wrapper-nav-left">
-                    <a href="#">
-                        <img src={logo.url} alt={logo.alt}/>
-                    </a>
+                    <LinkedImage key={logo.id} href="#" url={logo.url} alt={logo.alt}/>
                 </div>
                 <div className="wrapper-nav-middle">
-                    <form className="searchBar">
-                        <input type="text" placeholder="Suche..."/>
-                        <button className="submit">
-                            <img src={glass.url} alt={glass.alt}/>
-                        </button>
-                    </form>
-                    <div className="callLabel" hidden="true">
-                        <img src={call.url} alt={call.alt}/>
+                    <SearchBar key="NavSearchBar" url={glass.url} alt={glass.alt}/>
+
+                    <div className="callLabel" hidden>
+                        <LinkedImage key={call.id} href="#" url={call.url} alt={call.alt}/>
                         <label>Dummy Text</label>
                     </div>
                 </div>
                 <div className="wrapper-nav-right">
-                    <div className="wrapper-bell">
-                        <img src={bell.url} alt={bell.alt}/>
-                    </div>
-                    <div className="wrapper-profile">
-                        <img src={profile.url} alt={profile.alt}/>
-                    </div>
+                    <Bell key={bell.id} url={bell.url} alt={bell.alt}/>
+                    <Profile key={profile.id} url={profile.url} alt={profile.alt}/>
                 </div>
             </nav>
         );
     }
-
     getPictureById(pictureID) {
         return this.state.pictures.find(pic => pic === pictureID);
     }
+
 }
