@@ -3,16 +3,17 @@ import LinkedImage from "./linkedImage";
 import SearchBar from "./searchBar";
 import Bell from "./bell";
 import Profile from "./profile";
+import "../assets/css/navBar.css"
 
 export default class NavBar extends Component {
 
     state = {
         pictures: [
-            {id:"logo",     url:"../assets/logo.png",           alt:"logo.png"},
-            {id:"glass",    url:"../assets/icon/glass.png",     alt:"glass.png" },
-            {id:"call",     url:"../assets/call.png",           alt:"call.png"},
-            {id:"bell",     url:"../assets/icon/bell.png",      alt:"bell.png"},
-            {id:"profile",  url:"../assets/icon/profile.png",   alt:"profile.png"}
+            {id:"logo",     url:"../assets/images/dummy.png", alt:"logo.png"},
+            {id:"glass",    url:"../assets/images/dummy.png", alt:"glass.png" },
+            {id:"call",     url:"../assets/images/dummy.png", alt:"call.png"},
+            {id:"bell",     url:"../assets/images/dummy.png", alt:"bell.png"},
+            {id:"profile",  url:"../assets/images/dummy.png", alt:"profile.png"}
         ]
     }
 
@@ -21,10 +22,10 @@ export default class NavBar extends Component {
 
 
         /*
-        let logo = this.getPictureById("logo");
-        let glass = this.getPictureById("glass");
-        let call = this.getPictureById("call");
-        let bell = this.getPictureById("bell");
+        let logo    = this.getPictureById("logo");
+        let glass   = this.getPictureById("glass");
+        let call    = this.getPictureById("call");
+        let bell    = this.getPictureById("bell");
         let profile = this.getPictureById("profile");
         */
 
