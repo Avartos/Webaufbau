@@ -69,6 +69,7 @@ body {
 
 .subscribeButton:active{
   filter: brightness(50%);
+  width: calc(var(--threadHeaderSize)*.7);
 }
 
 .subscribeButton.active{
@@ -85,19 +86,16 @@ body {
 .callButton {
   margin: 0px 15px 5px auto;
   width: calc(var(--threadHeaderSize)*.9);
+  transition: ease-in-out .1s;
 }
 
-.callButton img {
-    width: 150%;
-    transition: ease-in-out .1s;
-}
-
-.callButton img:hover {
+.callButton:hover {
     filter: brightness(2);
 }
 
-.callButton:active img{
+.callButton:active{
     filter: brightness(.5);
+    width: calc(var(--threadHeaderSize)*.8);
 }
 
 /* #endregion */
