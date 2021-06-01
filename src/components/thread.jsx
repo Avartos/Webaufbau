@@ -6,71 +6,56 @@ import SubscribeButton from "./subscribeButton";
 import ThreadStatistics from "./threadStatistics";
 import { ReactComponent as CallIcon } from "../icons/voiceCall.svg";
 
-
-const Thread = ({
-  id,
-  subject,
-  body,
-  createdAt,
-  numberOfPosts,
-  lastPoster,
-  lastPostDate,
-  isSubscribed,
-  handleSubscribeThread,
-  isUnfolded,
-  handleTogglePreview,
-  posts,
-}) => {
+const Thread = (props) => {
   const [previewHeight, setPreviewHeight] = useState(0);
   const calculatePreviewHeight = (element) => {
-    const height = (previewHeight === 0) ? element.offsetHeight : 0;
+    const height = previewHeight === 0 ? element.offsetHeight : 0;
     setPreviewHeight(height);
   };
 
   return (
     <div className="thread">
       <div className="threadHeader">
-        <span className="threadTitle">Thread: {subject}</span>
+        <span className="threadTitle">Thread: {props.subject}</span>
         <div className="buttonWrapper">
           <CallIcon className="callButton"></CallIcon>
         </div>
         <div className="buttonWrapper">
-        <SubscribeButton
-          parentId={id}
-          isSubscribed={isSubscribed}
-          handleSubscribe={handleSubscribeThread}
-        />
+          <SubscribeButton
+            parentId={props.id}
+            isSubscribed={props.isSubscribed}
+            handleSubscribe={props.handleSubscribeThread}
+          />
         </div>
-        
       </div>
       <div className="threadBody">
-        <p className="shortDescription">{body}</p>
+        <p className="shortDescription">{props.body}</p>
         <ThreadStatistics
-          createdAt={createdAt}
-          numberOfPosts={numberOfPosts}
-          lastPoster={lastPoster}
-          lastPostDate={lastPostDate}
+          createdAt={props.createdAt}
+          numberOfPosts={props.numberOfPosts}
+          lastPoster={props.lastPoster}
+          lastPostDate={props.lastPostDate}
         />
       </div>
 
-      {posts.length > 0 && (
+      {props.posts.length > 0 && (
         <React.Fragment>
           <button
-            onClick={() => handleTogglePreview(id)}
+            onClick={() => props.handleTogglePreview(props.id)}
             className="loadMoreButton"
           >
-            {isUnfolded && <span>-</span>}
-            {!isUnfolded && <span>+</span>}
+            {props.isUnfolded && <span>-</span>}
+            {!props.isUnfolded && <span>+</span>}
           </button>
           <div className="threadFooter" style={{ height: previewHeight }}>
             <CSSTransition
-              in={isUnfolded}
+              in={props.isUnfolded}
               timeout={500}
               unmountOnExit
               onEnter={calculatePreviewHeight}
               onExit={calculatePreviewHeight}
             >
-              <PreviewList key={id} posts={posts} />
+              <PreviewList key={props.id} posts={props.posts} />
             </CSSTransition>
           </div>
         </React.Fragment>
