@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import {useParams} from 'react-router'
 
 import Thread from "./thread";
 import NewThreadForm from "./newThreadForm";
 import "../threadList.css";
 
 const ThreadList = () => {
+  const {id} = useParams();
   const [threads, setThreads] = useState([
     {
       id: 1,
@@ -192,6 +194,7 @@ const ThreadList = () => {
 
   return (
     <React.Fragment>
+      <h3>Threads {id}</h3>
       <div className="threadList">
         {threads.map((thread) => {
           return (

@@ -2,6 +2,9 @@ import React from "react";
 
 const PreviewList = ({posts}) => {
   return (
+      
+    
+      
       <div className="postPreviews">
         {posts.map((post) => {
           //TODO: Reference to Post Component here

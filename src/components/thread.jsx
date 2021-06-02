@@ -8,8 +8,13 @@ import { ReactComponent as CallIcon } from "../icons/voiceCall.svg";
 
 const Thread = (props) => {
   const [previewHeight, setPreviewHeight] = useState(0);
-  const calculatePreviewHeight = (element) => {
-    const height = previewHeight === 0 ? element.offsetHeight : 0;
+
+  //used to reference to the preview list
+  const previewRef = React.useRef(null);
+
+  //determines target height of the previewList depending on current unfold State
+  const calculatePreviewHeight = () => {
+    const height = props.isUnfolded ? previewRef.current.clientHeight : 0;
     setPreviewHeight(height);
   };
 
@@ -47,6 +52,7 @@ const Thread = (props) => {
             {props.isUnfolded && <span>-</span>}
             {!props.isUnfolded && <span>+</span>}
           </button>
+
           <div className="threadFooter" style={{ height: previewHeight }}>
             <CSSTransition
               in={props.isUnfolded}
@@ -54,8 +60,11 @@ const Thread = (props) => {
               unmountOnExit
               onEnter={calculatePreviewHeight}
               onExit={calculatePreviewHeight}
+              nodeRef={previewRef}
             >
-              <PreviewList key={props.id} posts={props.posts} />
+              <div ref={previewRef}>
+                <PreviewList key={props.id} posts={props.posts} />
+              </div>
             </CSSTransition>
           </div>
         </React.Fragment>
