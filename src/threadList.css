@@ -8,12 +8,6 @@
   --threadHeaderSize: 40px;
 }
 
-body {
-  background-image: url("./background.svg");
-  background-attachment: fixed;
-  background-color: #028090;
-}
-
 /* #region threads*/
 .thread {
   display: block;
@@ -52,6 +46,13 @@ body {
 .buttonWrapper {
   width: calc(var(--threadHeaderSize)*.8);
   margin-right: 15px;
+
+  -webkit-touch-callout: none;
+    -webkit-user-select: none;
+     -khtml-user-select: none;
+       -moz-user-select: none;
+        -ms-user-select: none;
+            user-select: none;
 }
 
 /* #region subcribeButton */
@@ -119,6 +120,7 @@ body {
   font-style: italic;
   flex-grow: 1;
   text-align: left;
+  margin-right: 25px;
 }
 
 
