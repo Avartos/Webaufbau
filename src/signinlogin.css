@@ -13,3 +13,14 @@
     background-attachment: fixed;
     background-color: #028090;
   }
+
+  .LoginBody{
+    background-color: #f038ff;
+    display: flex;
+    text-align: center;
+  }
+
+  .LoginHeader{
+    color: brown;
+    margin: 1.5em;
+  }
