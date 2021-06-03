@@ -1,3 +1,4 @@
+import './App.css';
 import './signinlogin.css';
 import Login from "./components/Login";
 
