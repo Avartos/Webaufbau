@@ -29,7 +29,7 @@ function App() {
           <Route exact path="/registration">
             <Signin />
           </Route>
-          <Route>
+          <Route exact path="/contributions/:id">
             <Contributions ></Contributions>
           </Route>
         </Switch>

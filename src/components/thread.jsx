@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
+import {Link} from 'react-router-dom';
 
 import PreviewList from "./previewList";
 import SubscribeButton from "./subscribeButton";
@@ -21,7 +22,9 @@ const Thread = (props) => {
   return (
     <div className="thread">
       <div className="threadHeader">
-        <span className="threadTitle">Thread: {props.subject}</span>
+        <Link className="threadTitle" to={`/contributions/${props.id}`}>
+          Thread: {props.subject}
+        </Link>
         <div className="buttonWrapper">
           <CallIcon className="callButton"></CallIcon>
         </div>
