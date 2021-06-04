@@ -1,0 +1,89 @@
+
+.contributionList {
+    margin: 0 auto;
+    width: 1000px;
+    height: 700;
+    border: 1px solid black;
+    
+}
+
+.descriptionText {
+    padding-left: 20px;
+}
+
+.ThreadName {
+    padding-left: 20px;
+    font-size: 22px;
+}
+
+.contribution1 {
+    width: 957px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+}
+
+.contribution2 {
+    width: 957px;
+    padding-top: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 10px;
+    background-color: #BFCDE0;
+}
+
+.contributorSquid {
+    font-size: 20;
+}
+
+.answerContribution {
+    margin-left: 0 auto;
+    width: 950px;
+    padding: 20px 20px;
+}
+
+.answer {
+    resize: none;
+    margin-left: 0 auto;
+    width: 900px;
+    height: 100px;
+    padding: 10px 10px;
+    border: 1px solid #FF9838;
+    border-radius: 10px;
+}
+
+
+.conText {
+    color: rgb(0, 0, 0);
+}
+
+.addContribution {
+    background-color: #05668D;
+    color: white;
+    margin-left: 0 auto;
+    width: 980px;
+}
+
+.answerButtons {
+    background-color: #05668D;
+    color: white;
+    position: relative;
+    left: 800px;
+    border-radius: 200px;
+}
+
+.deleteAnswer {
+    position: relative;
+    left: 550px;
+    border-radius: 200px;
+    background-color: #FE4716;
+    color: white;
+}
+
+.contributionButtons {
+    position: relative;
+    left: 700px;
+    background-color: #05668D;
+    color: white;
+    border-radius: 200px;
+}
