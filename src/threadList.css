@@ -40,7 +40,11 @@
 .threadTitle {
   flex-grow: 1;
   text-align: left;
+  text-decoration: none;
+  color: auto;
   margin: 5px auto 5px 5px;
+  color: inherit;
+  text-decoration: inherit;
 }
 
 .buttonWrapper {

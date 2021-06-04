@@ -25,7 +25,7 @@ function App() {
           <Route excact path="/login">
             <Login />
           </Route>
-          <Route>
+          <Route exact path="/contributions/:id">
             <Contributions ></Contributions>
           </Route>
         </Switch>
