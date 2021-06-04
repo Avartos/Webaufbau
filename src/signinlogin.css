@@ -16,6 +16,7 @@
     }
 
     @media screen and (min-width: 430px) {
+      .Sigin,
       .Login{
         display: block;
         background-color: var(--BodyColor);
