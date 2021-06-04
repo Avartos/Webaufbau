@@ -7,29 +7,30 @@ import "../assets/css/navBar.css"
 
 export default class NavBar extends Component {
 
+    constructor() {
+        super();
+        this.handleGetPictureById = this.handleGetPictureById.bind(this);
+    }
+
     state = {
         pictures: [
-            {id:"logo",     url:"../assets/images/dummy.png", alt:"logo.png"},
-            {id:"glass",    url:"../assets/images/dummy.png", alt:"glass.png" },
-            {id:"call",     url:"../assets/images/dummy.png", alt:"call.png"},
-            {id:"bell",     url:"../assets/images/dummy.png", alt:"bell.png"},
-            {id:"profile",  url:"../assets/images/dummy.png", alt:"profile.png"}
+            {id:"logo",     url:"/assets/images/dummy.png", alt:"logo.png"},
+            {id:"glass",    url:"/assets/images/dummy.png", alt:"glass.png" },
+            {id:"call",     url:"/assets/images/dummy.png", alt:"call.png"},
+            {id:"bell",     url:"/assets/images/dummy.png", alt:"bell.png"},
+            {id:"profile",  url:"/assets/images/dummy.png", alt:"profile.png"}
         ]
     }
 
 
     render() {
-
-
         /*
-        let logo    = this.getPictureById("logo");
-        let glass   = this.getPictureById("glass");
-        let call    = this.getPictureById("call");
-        let bell    = this.getPictureById("bell");
-        let profile = this.getPictureById("profile");
+        let logo    = this.handleGetPictureById("logo");
+        let glass   = this.handleGetPictureById("glass");
+        let call    = this.handleGetPictureById("call");
+        let bell    = this.handleGetPictureById("bell");
+        let profile = this.handleGetPictureById("profile");
         */
-
-
         let logo    = this.state.pictures.find(pic => pic.id === "logo");
         let glass   = this.state.pictures.find(pic => pic.id === "glass");
         let call    = this.state.pictures.find(pic => pic.id === "call");
@@ -56,7 +57,8 @@ export default class NavBar extends Component {
             </nav>
         );
     }
-    getPictureById(pictureID) {
+
+    handleGetPictureById(pictureID) {
         return this.state.pictures.find(pic => pic === pictureID);
     }
 
