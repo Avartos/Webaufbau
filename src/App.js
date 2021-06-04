@@ -1,9 +1,11 @@
 import './App.css';
+import Contributions from './components/contributions';
+import './contributions.css';
 
 function App() {
   return (
-    <div className="App">
-      
+    <div>
+      <Contributions ></Contributions>
     </div>
   );
 }
