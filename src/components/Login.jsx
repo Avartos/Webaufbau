@@ -4,6 +4,12 @@ const Login = () => {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        console.log(userName);
+        console.log(password);
+    }
     
 
     return ( 
@@ -12,9 +18,7 @@ const Login = () => {
                 <span className = "LoginTitle">Login</span>
              </div>
              <form onSubmit = {(e) =>{
-                 //handleLoginForm(e, userName, password);
-                 setUserName("");
-                 setPassword("");
+                 handleSubmit(e);
              }}>
 
              <div>
