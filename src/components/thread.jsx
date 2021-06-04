@@ -43,7 +43,7 @@ const Thread = (props) => {
         />
       </div>
 
-      {props.posts.length > 0 && (
+      {props.posts.length > 0 && 
         <React.Fragment>
           <button
             onClick={() => props.handleTogglePreview(props.id)}
@@ -68,7 +68,7 @@ const Thread = (props) => {
             </CSSTransition>
           </div>
         </React.Fragment>
-      )}
+      }
     </div>
   );
 };
