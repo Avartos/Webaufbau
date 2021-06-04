@@ -50,7 +50,7 @@ const Login = () => {
              </form>
 
              <div>
-                 {/* <Link to = "/">Registrierung</Link> */}
+                 <Link to = "/registration">Registrierung</Link>
              </div>
              <p>{userName}</p>
              <p>{password}</p>
@@ -59,3 +59,4 @@ const Login = () => {
 }
  
 export default Login;
+

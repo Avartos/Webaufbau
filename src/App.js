@@ -8,6 +8,7 @@ import './signinlogin.css';
 import ThreadList from './components/threadList';
 import Login from "./components/Login";
 import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+import Signin from './components/Signin';
 
 function App() {
   return (
@@ -24,6 +25,9 @@ function App() {
           </Route>
           <Route excact path="/login">
             <Login />
+          </Route>
+          <Route exact path="/registration">
+            <Signin />
           </Route>
           <Route>
             <Contributions ></Contributions>

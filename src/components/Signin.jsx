@@ -1,7 +1,16 @@
+import React, { useState } from "react";
+
 const Signin = () => {
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [passwordTwo, setPasswordTwo] = useState("");
+
+    const [isInValid, setIsValid] = useState(false);
+
+    const loginClasses = classNames({
+        LoginInput: true,
+        errorMessage: isInValid
+      });
 
     const handleSubmit = (e) =>{
         e.preventDefault();
@@ -31,7 +40,7 @@ const Signin = () => {
                         
                         <div>
                             <label className = "LoginLabel">Password: </label>
-                            <input placeholder="Passwort" className = "LoginInput"
+                            <input placeholder="Passwort" className = "Loginclases"
                                 type = "password"
                                 value = {password}
                                 onChange = {(e) => {
@@ -43,7 +52,7 @@ const Signin = () => {
 
                         <div>
                             <label className = "LoginLabel">Password: </label>
-                            <input placeholder="nochmal das Passwort"className = "LoginInput"
+                            <input placeholder="nochmal das Passwort"className = {loginClasses}
                                 type = "password"
                                 value = {passwordTwo}
                                 onChange = {(e) => {
