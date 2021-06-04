@@ -5,18 +5,34 @@ import ForumList from './components/forumList';
 import Contributions from './components/contributions';
 import './contributions.css';
 import './signinlogin.css';
+import ThreadList from './components/threadList';
 import Login from "./components/Login";
-import {Router} from "react-router-dom";
+import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
 
 function App() {
   return (
-    <div className="App">
-      <NavBar/>
-      <FavBar/>
-      <ForumList />
-      <Contributions ></Contributions>
-      <Login />
-    </div>
+    <Router>
+      <div className="App">
+        <NavBar/>
+        <FavBar/>
+        <Switch>
+          <Route exact path="/">
+            <ForumList />
+          </Route>
+          <Route exact path="/threads/:id">
+            <ThreadList/>
+          </Route>
+          <Route excact path="/login">
+            <Login />
+          </Route>
+          <Route>
+            <Contributions ></Contributions>
+          </Route>
+        </Switch>
+      </div>
+    </Router>
+    
+    
   );
 }
 

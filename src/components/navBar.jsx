@@ -40,7 +40,7 @@ export default class NavBar extends Component {
         return (
             <nav>
                 <div className="wrapper-nav-left">
-                    <LinkedImage key={logo.id} href="#" url={logo.url} alt={logo.alt}/>
+                    <LinkedImage key={logo.id} href="/login" url={logo.url} alt={logo.alt}/>
                 </div>
                 <div className="wrapper-nav-middle">
                     <SearchBar key="NavSearchBar" url={glass.url} alt={glass.alt}/>
