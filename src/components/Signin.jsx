@@ -3,13 +3,20 @@ const Signin = () => {
     const [password, setPassword] = useState("");
     const [passwordTwo, setPasswordTwo] = useState("");
 
+    const handleSubmit = (e) =>{
+        e.preventDefault();
+        console.log(userName);
+        console.log(password);
+        console.log(passwordTwo);
+    }
+
     return ( 
         <div className = "Sigin">
             <div className = "LoginHeader">
                             <span className = "LoginTitle">Registrierung</span>
                         </div>
                         <form onSubmit = {(e) =>{
-                            
+                            handleSubmit(e);
                         }}>
 
                         <div>
