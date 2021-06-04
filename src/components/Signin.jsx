@@ -38,7 +38,7 @@ const Signin = () => {
                             <label className = "LoginLabel">Password: </label>
                             <input placeholder="nochmal das Passwort"className = "LoginInput"
                                 type = "password"
-                                value = {password}
+                                value = {passwordTwo}
                                 onChange = {(e) => {
                                     setPasswordTwo(e.target.value);
                                 }}>
