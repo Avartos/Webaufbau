@@ -24,14 +24,10 @@ const Signin = () => {
             let hasSpecial      = password.match(/[@#^!"'ยง$%&/()=*\-+,.;:_<>?|\\{}\[\]]/m);
     
     
-            if (hasLength && hasLowerCase && hasUpperCase && hasNumber && hasSpecial) {
-                setPasswordConditions("");
-            } else if (hasLowerCase && hasUpperCase && hasNumber && hasSpecial) {
-                setPasswordConditions("Ihr Passwort muss mindestes 8 Zeichen lang sein, aus Groß-, Kleinbuchstaben, Zahlen und Sonderzeichen bestehen!");
-            } else if (hasLowerCase && hasUpperCase) {
-                setPasswordConditions("Ihr Passwort muss mindestes 8 Zeichen lang sein, aus Groß-, Kleinbuchstaben, Zahlen und Sonderzeichen bestehen!");
+            if (!hasLength || !hasLowerCase || !hasUpperCase || !hasNumber || !hasSpecial) {
+                setPasswordConditions("Ihr Passwort muss mindestes 8 Zeichen lang sein, aus Groß-, Kleinbuchstaben, Zahlen und Sonderzeichen bestehen!"); 
             } else {
-                setPasswordConditions("Ihr Passwort muss mindestes 8 Zeichen lang sein, aus Groß-, Kleinbuchstaben, Zahlen und Sonderzeichen bestehen!");
+                setPasswordConditions("");
             }
          }
     }
