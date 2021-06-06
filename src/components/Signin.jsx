@@ -7,13 +7,6 @@ const Signin = () => {
     const [comparePasswords, setComparePasswords] = useState("");
     const [passwordConditions, setPasswordConditions] = useState("");
 
-    // const [isInValid, setIsValid] = useState(false);
-
-    // const loginClasses = className({
-    //     LoginInput: true,
-    //     errorMessage: isInValid
-    //   });
-
     const handleSubmit = (e) =>{
         e.preventDefault();
         console.log(userName);
