@@ -1,14 +1,16 @@
+import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
+
 import './App.css';
+import './contributions.css';
+import './signinlogin.css';
+
 import NavBar from "./components/navBar";
 import FavBar from "./components/favBar";
 import ForumList from './components/forumList';
 import Contributions from './components/contributions';
-import './contributions.css';
-import './signinlogin.css';
 import ThreadList from './components/threadList';
-import Login from "./components/Login";
-import {BrowserRouter as Router, Route, Switch, Link} from 'react-router-dom';
-import Signin from './components/Signin';
+import Login from "./components/login";
+import Signin from './components/signin';
 
 function App() {
   return (

@@ -5,7 +5,7 @@ import {Link} from 'react-router-dom';
 import PreviewList from "./previewList";
 import SubscribeButton from "./subscribeButton";
 import ThreadStatistics from "./threadStatistics";
-import { ReactComponent as CallIcon } from "../icons/voiceCall.svg";
+import { ReactComponent as CallIcon } from "../assets/icons/voiceCall.svg";
 
 const Thread = (props) => {
   const [previewHeight, setPreviewHeight] = useState(0);

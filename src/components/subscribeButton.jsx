@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 
-import {ReactComponent as SubscribeIcon} from '../icons/splat.svg';
+import {ReactComponent as SubscribeIcon} from '../assets/icons/splat.svg';
 
 const SubscribeButton = ({isSubscribed, handleSubscribe, parentId}) => {
     let subscribeClass = classNames({
