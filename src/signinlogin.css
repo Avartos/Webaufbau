@@ -10,7 +10,7 @@
   
   @media screen and (min-width: 900px) {
     body {
-      background-image: url("./background.svg");
+      /* background-image: url("./background.svg"); */
       background-attachment: fixed;
       background-color: #028090;
     }
