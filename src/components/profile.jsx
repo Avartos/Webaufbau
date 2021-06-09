@@ -1,15 +1,15 @@
-import React, {Component} from "react";
+import { ReactComponent as ProfileIcon } from "../assets/icons/profile.svg";
 
 
-export default class Profile extends Component {
+
+const Profile = (props) => {
 
     //state = {};
 
-    render() {
-        return(
-            <div className="wrapper-profile">
-                <img src={this.props.url} alt={this.props.alt}/>
-            </div>
-        );
-    }
+    return(
+        <div className="wrapper-profile">
+            <ProfileIcon/>
+        </div>
+    );
 }
+export default Profile;
