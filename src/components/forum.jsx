@@ -1,29 +1,31 @@
-import React, {Component} from 'react';
+import React, { useState } from 'react';
 
 import ForumStatictics from './forumStatistics';
+import SubscribeButton from "./subscribeButton";
 
-class Forum extends Component {
-    // state = {  }
-    render() { 
+const Forum = (props) => { 
         return (  
             <div className="forum">
                 <div className="forumHeader">
-                    <span className="forumTitle">Forum: {this.props.name}</span>
+                    <span className="forumTitle">Forum: {props.name}</span>
                     <div className="buttonWrapper">
-                        <button>Favorite</button>
+                        <SubscribeButton
+                            parentId={props.id}
+                            isSubscribed={props.isSubscribed}
+                            handleSubscribe={props.handleSubscribeThread}
+                        />
                     </div>
-                </div>
-                <div className="forumBody">
-                    <p className="forumDesrciption">{this.props.description}</p>
-                    <ForumStatictics 
-                        numberOfThreads={this.props.numberOfThreads}
-                        numberOfComments={this.props.numberOfComments}
-                        lastActivityFrom={this.props.lastActivityFrom}
-                        lastActivityAt={this.props.lastActivityAt}/>
+                    <div className="forumBody">
+                        <p className="forumDesrciption">{props.description}</p>
+                        <ForumStatictics 
+                            numberOfThreads={props.numberOfThreads}
+                            numberOfComments={props.numberOfComments}
+                            lastActivityFrom={props.lastActivityFrom}
+                            lastActivityAt={props.lastActivityAt}/>
+                    </div>
                 </div>
             </div>
         );
-    }
 }
  
 export default Forum;
