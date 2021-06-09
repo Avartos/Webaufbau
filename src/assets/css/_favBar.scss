@@ -1,0 +1,16 @@
+@import './variables';
+
+.favBar {
+    margin-top: $headerHeight;
+    height: 100%;
+    width: $favBarWidth;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: $favBarColor;
+    overflow-x: hidden;
+    padding-top: 75px;
+
+    text-align: left;
+}

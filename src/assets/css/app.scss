@@ -1,9 +1,46 @@
+@import './variables';
+@import './header';
+@import './favBar';
 .App {
-    text-align: center;
-  }
+  text-align: center;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+}
+
+body {
+  background-image: url("../images/background.svg");
+  background-attachment: fixed;
+  margin: 0;
+  background-color: $backgroundColor;
+  padding: 0;
+  height: 100%;
+}
+
+.rightSideBar {
+  margin-top: $headerHeight;
+  height: 100%;
+  width: $favBarWidth;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  background-color: $rightBackgroundColor;
+}
+
+.content {
   
-  body {
-    background-image: url("../images/background.svg");
-    background-attachment: fixed;
-    background-color: #028090;
+  margin-left: $favBarWidth;
+  margin-right: $favBarWidth;
+  min-height: 100%;
+  height: auto !important;
+  height: 100%;
+  padding-top: 2em;
+
+  * {
+    padding: 0;
+    margin: 0;
   }
+}

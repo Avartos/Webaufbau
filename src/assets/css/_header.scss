@@ -1,0 +1,12 @@
+@import './variables';
+
+nav {
+    background-color: $headerBackgroundColor;
+    height: $headerHeight;
+
+    $gridColums: 3;
+    
+    * {
+        display: inline-block;
+    }
+}
