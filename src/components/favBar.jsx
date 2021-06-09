@@ -5,7 +5,7 @@ import { ReactComponent as SplatIcon} from "../assets/icons/splat.svg";
 
 const FavBar = () => {
 
-    const favorite = useState(
+    const [favorite, setFavorite] = useState(
         [
             {forum:"Forumtitle 1"           , threads:["Threadtitle 1", "Threadtitle 2"]},
             {forum:"Senf macht spaß"        , threads:["Threadtitle 1", "Threadtitle 2"]},
@@ -14,7 +14,7 @@ const FavBar = () => {
         ]
     );
 
-    const popular = useState(
+    const [popular, setPopular] = useState(
         [
             {forum:"Forumtitle 1"           , threads:["Threadtitle 1", "Threadtitle 2"]},
             {forum:"Fußball"                , threads:["Threadtitle 1", "Threadtitle 2"]},
@@ -24,7 +24,7 @@ const FavBar = () => {
         ]
     )
 
-    const latest = useState(
+    const [latest, setLatest] = useState(
         [
             {forum:"Forumtitle 1"           , threads:["Threadtitle 1", "Threadtitle 2"]},
             {forum:"BUGA22"                 , threads:["Threadtitle 1", "Threadtitle 2"]},
