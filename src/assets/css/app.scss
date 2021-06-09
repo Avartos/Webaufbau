@@ -1,11 +1,14 @@
-@import './variables';
-@import './header';
-@import './favBar';
+@import "./variables";
+@import "./header";
+@import "./favBar";
+@import "./threadList";
+
 .App {
   text-align: center;
 }
 
-html, body {
+html,
+body {
   height: 100%;
   margin: 0;
 }
@@ -31,16 +34,7 @@ body {
 }
 
 .content {
-  
   margin-left: $favBarWidth;
   margin-right: $favBarWidth;
-  min-height: 100%;
-  height: auto !important;
-  height: 100%;
   padding-top: 2em;
-
-  * {
-    padding: 0;
-    margin: 0;
-  }
 }

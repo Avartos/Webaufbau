@@ -3,7 +3,7 @@ import {useParams} from 'react-router'
 
 import Thread from "./thread";
 import NewThreadForm from "./newThreadForm";
-import "../threadList.css";
+// import "../threadList.css";
 
 const ThreadList = () => {
   const {id} = useParams();
