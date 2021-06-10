@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Route, Switch, Link } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 import "./assets/css/app.scss";
 // import './contributions.css';
@@ -22,21 +22,22 @@ function App() {
         <div className="rightSideBar"></div>
         <div className="content">
           <Switch>
-            <Route exact path="/">
-              <ForumList />
+            {/* Forum Routes */}
+            <Route exact path="/"><ForumList/></Route>
+            <Route exact path="/threads/:id"><ThreadList/></Route>
+            <Route exact path="/contributions/:id"><Contributions/></Route>
+            {/* Login Routes */}
+            <Route exact path="/registration"><Signin/></Route>
+            <Route excact path="/login"><Login/></Route>
+
+            {/* profile */}
+            <Route exact path="/my_profile"></Route>
+
+            {/* 404 */}
+            <Route path="/">
+              <h1>404-Page not Found</h1>
             </Route>
-            <Route exact path="/threads/:id">
-              <ThreadList />
-            </Route>
-            <Route excact path="/login">
-              <Login />
-            </Route>
-            <Route exact path="/registration">
-              <Signin />
-            </Route>
-            <Route exact path="/contributions/:id">
-              <Contributions></Contributions>
-            </Route>
+
           </Switch>
         </div>
       </div>
