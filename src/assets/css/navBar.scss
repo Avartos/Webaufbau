@@ -15,8 +15,7 @@ nav {
     height: 100px;
 
     .wrapper-nav-left {
-        margin: 50px;
-        margin-bottom: -75px;
+        margin: 50px 50px -75px;
     }
 
     .wrapper-nav-middle {
@@ -27,8 +26,7 @@ nav {
         .searchBar {
             display: flex;
             flex-direction: row;
-            border: solid;
-            border-color: $button-color;
+            border: solid $button-color;
             border-radius: 5px;
             width: 300px;
 
@@ -58,6 +56,7 @@ nav {
     .wrapper-nav-right {
         display: flex;
         flex-direction: row;
+
         * {
             padding: 10px;
         }
