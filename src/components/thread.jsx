@@ -21,8 +21,8 @@ const Thread = (props) => {
 
   return (
     <div className="thread">
-      <div className="threadHeader">
-        <Link className="threadTitle" to={`/contributions/${props.id}`}>
+      <div className="header">
+        <Link className="title" to={`/contributions/${props.id}`}>
           Thread: {props.subject}
         </Link>
         <div className="buttonWrapper">
@@ -36,7 +36,7 @@ const Thread = (props) => {
           />
         </div>
       </div>
-      <div className="threadBody">
+      <div className="body">
         <p className="shortDescription">{props.body}</p>
         <ThreadStatistics
           createdAt={props.createdAt}

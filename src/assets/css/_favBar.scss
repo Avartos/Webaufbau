@@ -1,0 +1,13 @@
+@import './variables';
+
+@media (min-width: 1024px) {
+    .favBar {
+        grid-area: sidebar;
+        background-color: $favBarColor;
+        padding-top: 2em;
+        text-align: left;
+    }
+}
+
+.favBar {
+}
