@@ -31,7 +31,6 @@
       .LoginHeader{
         background-color: var(--HeaderColor);
         display: flex;
-        /* padding: 15px; */
         height: var(--HeaderSize);
         font-weight: bold;
         font-size: 1.3em;
@@ -84,6 +83,14 @@
       form button:active {
         background-color: var(--buttonPressedColor);
       }
+      
+      .errorMessage{
+        width:80%;
+        margin: 25px auto;
+        color: black;
+        background-color: lightpink;
+      }
+
     }
   }
   
