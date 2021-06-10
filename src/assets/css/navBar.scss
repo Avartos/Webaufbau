@@ -1,0 +1,64 @@
+$button-color: #00A8E8;
+$nav-background-color: #05668D;
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+nav {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    background: $nav-background-color;
+    height: 100px;
+
+    .wrapper-nav-left {
+        margin: 50px 50px -75px;
+    }
+
+    .wrapper-nav-middle {
+        display: flex;
+        flex-direction: row;
+        height: 40px;
+
+        .searchBar {
+            display: flex;
+            flex-direction: row;
+            border: solid $button-color;
+            border-radius: 5px;
+            width: 300px;
+
+            input {
+                margin: 0;
+                padding: 0;
+            }
+
+            button {
+                margin: 0;
+                padding: 0;
+                border: none;
+                border-radius: 0;
+                background: $button-color;
+                width: 40px;
+
+                .searchButtonIcon {
+                    height: 20px;
+                }
+
+            }
+
+        }
+
+    }
+
+    .wrapper-nav-right {
+        display: flex;
+        flex-direction: row;
+
+        * {
+            padding: 10px;
+        }
+    }
+}

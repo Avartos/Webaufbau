@@ -14,6 +14,7 @@ import Signin from "./components/signin";
 
 function App() {
   return (
+
     <Router>
       <div className="App">
         <NavBar />
