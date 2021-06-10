@@ -1,0 +1,44 @@
+@import "../variables";
+
+@mixin buttonContainer($targetHeight) {
+  width: calc(#{$targetHeight} * 0.8);
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+@mixin squaredButton($containerHeight, $hoverBrightness, $clickBrightness) {
+  width: calc(#{$containerHeight} * 0.9);
+  transition: ease-in-out 0.1s;
+  cursor: pointer;
+
+  &:hover {
+    filter: brightness(#{hoverBrighness});
+  }
+
+  &:active {
+    filter: brightness(#{$clickBrightness});
+    width: calc(#{$containerHeight} * 0.8);
+  }
+}
+
+@mixin basicButton($fontColor, $buttonColor, $hoverColor, $buttonPressedColor) {
+  background-color: #{$buttonColor};
+  color: #{$fontColor};
+  outline: none;
+  border: none;
+  border-color: $buttonColor;
+  transition: ease-in-out 0.1s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #{$buttonHoverColor};
+  }
+
+  &:active {
+    background-color: #{$buttonPressedColor};
+  }
+}

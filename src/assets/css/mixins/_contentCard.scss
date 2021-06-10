@@ -1,0 +1,46 @@
+@import "../variables";
+
+@mixin header($headerColor) {
+    background-color: #{$headerColor};
+    display: flex;
+    height: $threadHeaderSize;
+    font-weight: bold;
+    font-size: 1.3em;
+
+    .title {
+        flex-grow: 1;
+        text-align: left;
+        margin: 5px auto 5px 5px;
+        text-decoration: inherit;
+        color: inherit;
+    }
+}
+
+@mixin body($bodyColor) {
+    padding: 15px;
+    font-size: 1em;
+    background-color: #{$bodyColor};
+}
+
+
+@mixin contentCard($headerColor, $bodyColor) {
+    display: block;
+    background-color: #{$bodyColor};
+    padding: 0px;
+    margin: 10px auto;
+    border-radius: 5px;
+    overflow: hidden;
+
+    * {
+        margin: 0;
+        padding: 0;
+    }
+
+    .header {
+        @include header(#{$headerColor});
+    }
+
+    .body {
+        @include body(#{$bodyColor});
+    }
+}

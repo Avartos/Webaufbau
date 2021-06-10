@@ -8,7 +8,7 @@ import NavBar from "./components/navBar";
 import FavBar from "./components/favBar";
 import ForumList from "./components/forumList";
 import Contributions from "./components/contributions";
-import ThreadList from "./components/threadList";
+import ThreadList from "./components/threads/threadList";
 import Login from "./components/login";
 import Signin from "./components/signin";
 

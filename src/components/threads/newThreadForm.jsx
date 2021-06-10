@@ -6,12 +6,12 @@ const NewThreadForm = ({ handleSubmitForm }) => {
   const [currentUser, setCurrentUser] = useState("Squidy1701");
 
   return (
-    <div className="thread">
-      <div className="threadHeader">
-        <span className="threadTitle">Neuen Thread hinzufügen</span>
+    <div className="newThreadForm">
+      <div className="header">
+        <span className="title">Neuen Thread hinzufügen</span>
       </div>
 
-      <form
+      <form className="body"
         onSubmit={(e) => {
           handleSubmitForm(e, title, body, currentUser);
           setTitle("");

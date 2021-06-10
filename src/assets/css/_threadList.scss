@@ -1,82 +1,82 @@
 @import "./variables";
+@import "./mixins/contentCard";
+@import "./mixins/buttonPreset";
+@import "./mixins/statistics";
 
 /* #region threads*/
 .thread {
-  display: block;
-  background-color: $threadBodyColor;
-  border-radius: 5px;
-  padding: 0px;
-  overflow: hidden;
-  border-radius: 5px;
-  // width: 80%;
-  margin: 10px auto;
+  @include contentCard($threadHeaderColor, $threadBodyColor);
   transition: ease-in-out .2s;
-
-  p {
-    padding: 0;
-    margin: 0;
-  }
 
   &:hover {
     box-shadow: 0 0 0 3px $hoverBorder;
     
   }
-}
 
-.thread {
-  .header {
-    background-color: $threadHeaderColor;
-    display: flex;
-    height: $threadHeaderSize;
-    font-weight: bold;
-    font-size: 1.3em;
+  .header .title{
     cursor: pointer;
+    transition: .2s ease-in-out;
+    &:hover {
+      color: $highlightedFontColor;
+    }
+  }
 
-    .title {
+  .body {
+    display: flex;
+
+    .shortDescription {
+      font-style: italic;
       flex-grow: 1;
       text-align: left;
-      text-decoration: none;
-      color: auto;
-      margin: 5px auto 5px 5px;
-      color: inherit;
-      text-decoration: inherit;
+      margin-right: 25px;
+    }
+
+    .threadStatistics {
+      min-width: 200px;
+      @include statistics();
+    }
+  }
+
+  .wrapperPreview {
+    transition: height 500ms ease;
+  
+    .postPreviews {
+      text-align: left;
+    
+      p {
+        padding: 10px;
+        &:nth-child(even) {
+          background-color: $threadHeaderColor;
+        }
+    
+        &:nth-child(odd) {
+          background-color: $threadBodyColor;
+        }
+      }
     }
   }
 }
 
+
 /* #region threadHeader */
 
-.buttonWrapper {
-  width: calc(#{$threadHeaderSize} * 0.8);
+.wrapperButton {
   margin-right: 15px;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
+  @include buttonContainer($threadHeaderSize);
 }
 
-/* #region subcribeButton */
+/* #region buttons */
 .subscribeButton {
-  margin-left: auto;
-  margin: 0px 5px 5px auto;
-  width: calc(#{$threadHeaderSize} * 0.8);
+  margin: auto auto;
+  @include squaredButton($threadHeaderSize, 0, .5);
 
   &:not(.active) {
-    filter: brightness(0.5);
     filter: grayscale(100%);
   }
 
   &:hover {
     filter: grayscale(100%);
     filter: brightness(0);
-  }
-
-  &:active {
-    filter: brightness(50%);
-    width: calc(#{$threadHeaderSize} * 0.7);
   }
 
   &.active {
@@ -88,113 +88,29 @@
   }
 }
 
-/* #endregion */
-
-/* #region callButton */
 .callButton {
-  margin: 0px 15px 5px auto;
-  width: calc(#{$threadHeaderSize} * 0.9);
-  transition: ease-in-out 0.1s;
-
-  &:hover {
-    filter: brightness(2);
-  }
-
-  &:active {
-    filter: brightness(0.5);
-    width: calc(#{$threadHeaderSize} * 0.8);
-  }
+  margin: auto auto;
+  @include squaredButton($threadHeaderSize, 2, .5);
 }
 
-/* #endregion */
-
-/* #endregion */
-
-/* #region threadBody */
-.thread {
-  .body {
-    background-color: $threadBodyColor;
-    display: flex;
-    padding: 15px;
-    font-size: 1em;
-  }
-
-  .shortDescription {
-    font-style: italic;
-    flex-grow: 1;
-    text-align: left;
-    margin-right: 25px;
-  }
-}
-
-/* #region threadStatistics */
-.threadStatistics {
-  min-width: 200px;
-  display: table;
-  text-align: left;
-  align-self: flex-start;
-  .threadStatistics .row {
-    display: table-row;
-    span {
-      display: table-cell;
-    }
-  }
-}
-
-/* #endregion */
-/* #endregion */
-
-/* #region postPreviews */
 .loadMoreButton {
-  background-color: $buttonColor;
-  color: white;
+  @include basicButton(white, $buttonColor, $buttonHoverColor, $buttonPressedColor);
   width: 100%;
   height: 25px;
-  outline: none;
-  border: none;
-  border-color: $buttonColor;
-  transition: ease-in-out 0.1s;
-  cursor: pointer;
-
-  &:hover {
-    background-color: $buttonHoverColor;
-  }
-
-  &:active {
-    background-color: $buttonColor;
-  }
-
+  
   span {
     font-size: 1.5em;
     font-weight: bold;
   }
 }
+// #endregion
 
-.threadFooter {
-  transition: height 500ms ease;
-}
-
-.postPreviews {
-  text-align: left;
-
-  p {
-    padding: 10px;
-    &:nth-child(even) {
-      background-color: $threadHeaderColor;
-    }
-
-    &:nth-child(odd) {
-      background-color: $threadBodyColor;
-    }
-  }
-}
-
-/* #endregion */
-
-/* #region threadForm */
-form {
+.newThreadForm {
+  @include contentCard($threadHeaderColor, $threadBodyColor);
+  display: block !important;
+  background-color: $threadBodyColor;
   label {
-    margin-left: 25px;
+    margin: auto;
     padding: 5px;
     font-weight: bold;
     text-align: left;
@@ -206,7 +122,7 @@ form {
   input,
   textarea {
     margin: 5px auto;
-    padding: 5px;
+    padding: 5px 0px;
     flex-grow: 1;
     width: 95%;
     resize: none;
@@ -214,27 +130,14 @@ form {
   }
 
   button {
+    @include basicButton(white, $buttonColor, $buttonHoverColor, $buttonPressedColor);
+    
     margin: 25px auto;
-    padding: 5px;
+    padding: 15px;
+    font-weight: bold;
     display: block;
     width: 100px;
     border: none;
     border-radius: 5px;
-    color: white;
-    font-weight: bold;
-    cursor: pointer;
-    background-color: $buttonColor;
-    transition: ease-in-out 0.1s;
-
-    &:hover {
-      background-color: $buttonHoverColor;
-    }
-
-    &:active {
-      background-color: $buttonPressedColor;
-    }
   }
 }
-
-/* #endregion */
-/* #endregion */
