@@ -21,6 +21,28 @@
 -	Hook-Up Links für Benachrichtigungen (stellen wir bereit)
 -	StrawPoll anzeigen lassen (nutzen wir)
 
+---
+## einfacher Codestyle
+### Ordner
+- Ordner werden entsprechnd ihres Inhaltes bezeichnet
+- Verwendung von camelCase
+
+### Dateinamen
+- Dateinamen sind zweckmäßig nach deren Inhalt zu bezeichnen
+- Verwendung von camelCase
+- Ausnahme bilden hier scss-Dateien, die nur für einen Import gedacht sind. Diese beginnen mit einem Unterstrich.
+
+### Variablen
+- Variablen werden Aufgabe bezeichnet
+- Verwendung von camelCase
+
+### Funktionen
+- Funktionen sind nach ihrer Aufgabe zu bezeichnen. 
+- Verwendung von camelCase
+
+### Css-Klassen
+- Css-Klassen sind nach ihrem Verwendungsbereich zu benennen. Spezialisierte Funktionen, werden den Namen vorangestellt, als Beispiel "wrapperNavLeft"
+- Verwendung von camelCase
 
 ---
 
@@ -94,25 +116,3 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/d
 ### `npm run build` fails to minify
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
-
-## einfacher Codestyle
-### Ordner
-- Ordner werden entsprechnd ihres Inhaltes bezeichnet
-- Verwendung von camelCase
-
-### Dateinamen
-- Dateinamen sind zweckmäßig nach deren Inhalt zu bezeichnen
-- Verwendung von camelCase
-- Ausnahme bilden hier scss-Dateien, die nur für einen Import gedacht sind. Diese beginnen mit einem Unterstrich.
-
-### Variablen
-- Variablen werden Aufgabe bezeichnet
-- Verwendung von camelCase
-
-### Funktionen
-- Funktionen sind nach ihrer Aufgabe zu bezeichnen. 
-- Verwendung von camelCase
-
-### Css-Klassen
-- Css-Klassen sind nach ihrem Verwendungsbereich zu benennen. Spezialisierte Funktionen, werden den Namen vorangestellt, als Beispiel "wrapperNavLeft"
-- Verwendung von camelCase
