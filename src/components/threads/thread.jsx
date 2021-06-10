@@ -3,9 +3,9 @@ import { CSSTransition } from "react-transition-group";
 import {Link} from 'react-router-dom';
 
 import PreviewList from "./previewList";
-import SubscribeButton from "./subscribeButton";
+import SubscribeButton from "../subscribeButton";
 import ThreadStatistics from "./threadStatistics";
-import { ReactComponent as CallIcon } from "../assets/icons/voiceCall.svg";
+import { ReactComponent as CallIcon } from "../../assets/icons/voiceCall.svg";
 
 const Thread = (props) => {
   const [previewHeight, setPreviewHeight] = useState(0);
@@ -25,10 +25,10 @@ const Thread = (props) => {
         <Link className="title" to={`/contributions/${props.id}`}>
           Thread: {props.subject}
         </Link>
-        <div className="buttonWrapper">
+        <div className="wrapperButton">
           <CallIcon className="callButton"></CallIcon>
         </div>
-        <div className="buttonWrapper">
+        <div className="wrapperButton">
           <SubscribeButton
             parentId={props.id}
             isSubscribed={props.isSubscribed}
@@ -56,7 +56,7 @@ const Thread = (props) => {
             {!props.isUnfolded && <span>+</span>}
           </button>
 
-          <div className="threadFooter" style={{ height: previewHeight }}>
+          <div className="wrapperPreview" style={{ height: previewHeight }}>
             <CSSTransition
               in={props.isUnfolded}
               timeout={500}

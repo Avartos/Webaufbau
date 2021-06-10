@@ -8,10 +8,10 @@ const ThreadStatistics = ({
 }) => {
   return (
     <div className="threadStatistics">
-      <div className="row"><span>Antworten:</span><span>{numberOfPosts}</span></div>
+      <div className="row"><span>Antworten:</span><span className="highlighted">{numberOfPosts}</span></div>
       <div className="row"><span>Erstellt am:</span><span>{createdAt}</span></div>
       <div className="row"><span>Letzter Post von:</span><span className="user">{lastPoster}</span></div>
-      <div className="row"><span>Letzter Post am:</span><span>{lastPostDate}</span></div>
+      <div className="row"><span>Letzter Post am:</span><span className="highlighted">{lastPostDate}</span></div>
     </div>
   );
 };
