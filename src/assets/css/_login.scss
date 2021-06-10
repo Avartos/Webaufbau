@@ -1,0 +1,76 @@
+@import './variables';
+@import './mixins/contentCard';
+@import './mixins/buttonPreset';
+
+.login{
+    @include contentCard($threadHeaderColor, $threadBodyColor);
+  transition: ease-in-out .2s;
+
+  &:hover {
+    box-shadow: 0 0 0 3px $hoverBorder;
+    
+  }
+
+  .header .title{
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    &:hover {
+      color: $highlightedFontColor;
+    }
+  }
+
+  .loginBody {
+      padding: 1em;
+      margin: 1em;
+      display: block;
+    }
+
+    .loginLabel{
+        margin-left: 25px;
+        padding: 5px;
+        font-weight: bold;
+        text-align: left;
+        display: block;
+        width: 100%;
+        display: block;
+      }
+
+      .loginInput{
+        margin: 5px auto;
+        padding: 5px;
+        flex-grow: 1;
+        width: 80%;
+        resize: none;
+        display: block;
+      }
+
+      .loginButton{
+        margin: 25px auto;
+        padding: 5px;
+        display: block;
+        width: 100px;
+        border: none;
+        border-radius: 5px;
+        color: white;
+        font-weight: bold;
+        cursor: pointer;
+        background-color: $buttonColor;
+        transition: ease-in-out .1s;
+      }
+
+      Button:hover {
+        background-color: var(--buttonHoverColor);
+      }
+    
+      form button:active {
+        background-color: var(--buttonPressedColor);
+      }
+      
+      .errorMessage{
+        width:80%;
+        margin: 25px auto;
+        color: black;
+        background-color: lightpink;
+      }
+
+}

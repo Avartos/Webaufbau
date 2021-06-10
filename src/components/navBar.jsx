@@ -1,6 +1,7 @@
 import SearchBar from "./searchBar";
 import Bell from "./bell";
 import Profile from "./profile";
+import {Link} from "react-router-dom";
 import { ReactComponent as CallIcon } from "../assets/icons/voiceCall.svg";
 import { ReactComponent as LogoIcon } from "../assets/icons/logo.svg";
 import "../assets/css/_navBar.scss"
@@ -23,7 +24,9 @@ const NavBar = () => {
                 </div>
                 <div className="wrapper-nav-right">
                     <Bell/>
-                    <Profile/>
+                    <Link to = "/login">
+                        <Profile />
+                    </Link>
                 </div>
             </nav>
         );

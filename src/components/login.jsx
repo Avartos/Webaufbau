@@ -14,46 +14,48 @@ const Login = () => {
     
 
     return ( 
-        <div className = "Login">
-            <div className = "LoginHeader">
-                <span className = "LoginTitle">Login</span>
-             </div>
-             <form onSubmit = {(e) =>{
-                 handleSubmit(e);
-             }}>
-
-             <div>
-                 <label className = "LoginLabel">Benutzername: </label>
-                 <input placeholder="Benutzername" className = "LoginInput"
-                 type = "text"
-                 value = {userName}
-                 onChange = {(e) => {
-                     setUserName(e.target.value);
-                 }}></input>
-             </div>
-             
-             <div>
-                 <label className = "LoginLabel">Password: </label>
-                 <input  placeholder="Passwort" className = "LoginInput"
-                    type = "password"
-                    value = {password}
+        <div className = "login">
+            <div className = "header">
+                <span className = "title">Login</span>
+            </div>
+            <div className="loginBody">
+                <form onSubmit = {(e) =>{
+                    handleSubmit(e);
+                }}>
+                
+                
+                <div>
+                    <label className = "loginLabel">Benutzername: </label>
+                    <input placeholder="Benutzername" className = "loginInput"
+                    type = "text"
+                    value = {userName}
                     onChange = {(e) => {
-                        setPassword(e.target.value);
-                    }}>
+                        setUserName(e.target.value);
+                    }}></input>
+                </div>
+                
+                <div>
+                    <label className = "loginLabel">Password: </label>
+                    <input  placeholder="Passwort" className = "loginInput"
+                        type = "password"
+                        value = {password}
+                        onChange = {(e) => {
+                            setPassword(e.target.value);
+                        }}>
 
-                    </input>    
-             </div>
+                        </input>    
+                </div>
 
-             <div>
-                 <button className = "LoginButton">Login</button>
-             </div>
-             </form>
+                <div>
+                    <button className = "loginButton">Login</button>
+                </div>
+                </form>
 
-             <div>
-                 <Link to = "/registration">Registrierung</Link>
+                <div>
+                    <Link to = "/registration">Registrierung</Link>
+                </div>
+
              </div>
-             <p>{userName}</p>
-             <p>{password}</p>
         </div>
      );
 }
