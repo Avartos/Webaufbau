@@ -8,12 +8,18 @@
   padding: 0px;
   overflow: hidden;
   border-radius: 5px;
-  width: 80%;
+  // width: 80%;
   margin: 10px auto;
+  transition: ease-in-out .2s;
 
   p {
     padding: 0;
     margin: 0;
+  }
+
+  &:hover {
+    box-shadow: 0 0 0 3px $hoverBorder;
+    
   }
 }
 
@@ -110,7 +116,7 @@
     background-color: $threadBodyColor;
     display: flex;
     padding: 15px;
-    font-size: 0.8em;
+    font-size: 1em;
   }
 
   .shortDescription {

@@ -5,6 +5,23 @@
 
 .App {
   text-align: center;
+  height: 100vw;
+  display: grid;
+  grid-template-columns: 1fr;
+  background-color: $rightBackgroundColor;
+  grid-template-rows: $headerHeight auto;
+  grid-template-areas: 
+  "header"
+  "content";
+}
+
+@media (min-width: 1024px) {
+  .App {
+    grid-template-columns: $favBarWidth 5fr $favBarWidth;
+    grid-template-areas: 
+    "header  header header"
+    "sidebar content ."
+  }
 }
 
 html,
@@ -14,27 +31,16 @@ body {
 }
 
 body {
-  background-image: url("../images/background.svg");
-  background-attachment: fixed;
-  margin: 0;
-  background-color: $backgroundColor;
   padding: 0;
-  height: 100%;
-}
-
-.rightSideBar {
-  margin-top: $headerHeight;
-  height: 100%;
-  width: $favBarWidth;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  right: 0;
-  background-color: $rightBackgroundColor;
+  margin: 0;
+  // height: 100%;
 }
 
 .content {
-  margin-left: $favBarWidth;
-  margin-right: $favBarWidth;
-  padding-top: 2em;
+  background-image: url("../images/background.svg");
+  background-attachment: fixed;
+  background-color: $backgroundColor;
+  padding: 2em 3.5em 0em 3.5em;
+  grid-area: content;
 }
+

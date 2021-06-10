@@ -1,16 +1,13 @@
 @import './variables';
 
-.favBar {
-    margin-top: $headerHeight;
-    height: 100%;
-    width: $favBarWidth;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: $favBarColor;
-    overflow-x: hidden;
-    padding-top: 75px;
+@media (min-width: 1024px) {
+    .favBar {
+        grid-area: sidebar;
+        background-color: $favBarColor;
+        padding-top: 2em;
+        text-align: left;
+    }
+}
 
-    text-align: left;
+.favBar {
 }
