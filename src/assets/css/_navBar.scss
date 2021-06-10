@@ -1,18 +1,13 @@
-$button-color: #00A8E8;
-$nav-background-color: #05668D;
-
-body {
-    margin: 0;
-    padding: 0;
-}
-
+@import "./variables";
 nav {
+    grid-area: header;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    background: $nav-background-color;
-    height: 100px;
+    background: $headerBackgroundColor;
+    position: sticky;
+    z-index: 999;
 
     .wrapper-nav-left {
         margin: 50px 50px -75px;
@@ -21,12 +16,11 @@ nav {
     .wrapper-nav-middle {
         display: flex;
         flex-direction: row;
-        height: 40px;
 
         .searchBar {
             display: flex;
             flex-direction: row;
-            border: solid $button-color;
+            border: solid $buttonColor;
             border-radius: 5px;
             width: 300px;
 
@@ -40,7 +34,7 @@ nav {
                 padding: 0;
                 border: none;
                 border-radius: 0;
-                background: $button-color;
+                background: $buttonColor;
                 width: 40px;
 
                 .searchButtonIcon {

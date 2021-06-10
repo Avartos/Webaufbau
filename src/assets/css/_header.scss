@@ -1,11 +1,4 @@
 @import './variables';
 
 nav {
-    background-color: $headerBackgroundColor;
-    height: $headerHeight;
-    position: sticky;
-    top: 0;
-    z-index: 999;
-    grid-area: header;
-    height: 100%;
 }
