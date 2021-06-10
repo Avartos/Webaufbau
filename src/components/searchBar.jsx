@@ -10,7 +10,7 @@ const SearchBar = (props) => {
         <form className="searchBar">
             <input type="text" placeholder="Suche..."/>
             <button className="submit">
-                <GlassIcon/>
+                <GlassIcon className="searchButtonIcon"/>
             </button>
         </form>
     );

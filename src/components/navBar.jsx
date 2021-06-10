@@ -3,6 +3,7 @@ import Bell from "./bell";
 import Profile from "./profile";
 import { ReactComponent as CallIcon } from "../assets/icons/voiceCall.svg";
 import { ReactComponent as LogoIcon } from "../assets/icons/logo.svg";
+import "../assets/css/navBar.scss"
 
 
 const NavBar = () => {
