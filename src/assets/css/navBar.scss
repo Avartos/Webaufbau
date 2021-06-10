@@ -30,6 +30,7 @@ nav {
             border: solid;
             border-color: $button-color;
             border-radius: 5px;
+            width: 300px;
 
             input {
                 margin: 0;
@@ -42,6 +43,7 @@ nav {
                 border: none;
                 border-radius: 0;
                 background: $button-color;
+                width: 40px;
 
                 .searchButtonIcon {
                     height: 20px;
