@@ -1,3 +1,4 @@
+import { ReactComponent as SplatIcon} from "../assets/icons/splat.svg";
 
 
 const FavList = (props) => {
@@ -6,14 +7,18 @@ const FavList = (props) => {
 
     return(
         <div className="wrapper-list">
-            <ul> {props.className}
+            <ul>
+                <div className="title">
+                    <SplatIcon/>
+                    {props.className}
+                </div>
                 {/*forEach list*/}
                 {props.list.map((item) => {return (
-                    <li>{item.forum}
+                    <li className="forum"><span>{item.forum}</span><input type="checkbox" className="checkbox"/>
                         <ul>
                             {/*forEach threads*/}
                             {item.threads.map((thread) => {return (
-                                <li> {thread} </li>
+                                <li className="thread"> {thread} </li>
                             );})}
                         </ul>
                     </li>

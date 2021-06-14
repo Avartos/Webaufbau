@@ -20,13 +20,19 @@ nav {
         .searchBar {
             display: flex;
             flex-direction: row;
-            border: solid $buttonColor;
-            border-radius: 5px;
+            border: 5px solid $buttonColor;
+            border-radius: 15px;
             width: 300px;
 
             input {
                 margin: 0;
-                padding: 0;
+                padding: 12px 20px;
+                width: 100%;
+                border-radius: 10px 0 0 10px;
+            }
+            input, input:focus{
+                outline:none !important;
+                -webkit-appearance:none;
             }
 
             button {
@@ -50,6 +56,7 @@ nav {
     .wrapper-nav-right {
         display: flex;
         flex-direction: row;
+        align-items: center;
 
         * {
             padding: 10px;
