@@ -31,6 +31,7 @@
 
         .thread {
             margin-left: -1px !important;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEXDw8PWKQJEAAAAC0lEQVR4XmMgEQAAADAAAYFIpkQAAAAASUVORK5CYII=) 0 0 no-repeat;
             padding-left: 21px;
         }
 
@@ -61,6 +62,7 @@
         }
 
         .checkbox:checked + ul {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEX///+AgIAAAAA8XrssAAAAFUlEQVR4XmMIDXVgQIZeK1D5oaEOAGzEBgf+DZdOAAAAAElFTkSuQmCC) 8px 6px no-repeat;
             margin: -1.25em 0 0 -44px;
             padding: 1.563em 0 0 50px;
             height: auto;
