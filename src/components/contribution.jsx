@@ -1,29 +1,36 @@
-import React, { Component } from 'react'
+import React, { useState } from 'react'
+import ReplyIcon from '@material-ui/icons/Reply';
+import RemoveIcon from '@material-ui/icons/Remove';
+import AddIcon from '@material-ui/icons/Add';
 
-class Contribution extends Component {
 
-    constructor(props) {
-        super(props);
 
-        this.state = {
-            contribution: props.contribution
-        }
+function Contribution() {
+
+    function ContributorSquid(props) {
+        return <p>{props.contributorSquid}</p>
     }
 
-    render() {
-        return (
-            <React.Fragment>
-                <div className="contribution">
-                    <p className="contributorSquid"> From: {this.state.contribution.squidname}</p>
-                    <p className="conText">{this.state.contribution.text}</p>
-                    <button className="contributionButtons"><i className="fas fa-reply"></i> Antworten </button>
-                    <button className="contributionButtons"><i className="fas fa-reply"></i> Bearbeiten </button>
-                    <button className="contributionButtons"><i className="fas fa-thumbs-up"></i> Like </button>
-                    <button className="contributionButtons"><i className="fas fa-thumbs-down"></i> Dislike </button>
-                </div>
-            </React.Fragment>
-        )
+    function ContributionText(props) {
+        return <p>{props.conText}</p>
     }
+
+    const [count, setCount] = useState(0);
+
+    return (
+        <div className="contribution">
+            <p className="contributorSquid">From: <ContributorSquid contributorSquid="Squid161" /></p>
+            <p className="conText"><ContributionText conText="Hallo ich bin ein Beitrag!" /></p>
+            <button className="contributionButtons"> <ReplyIcon /> </button>
+
+            <div id="CounterOfLikes">
+
+                <button className="contributionButtons" onClick={() => setCount(count - 1)}> <RemoveIcon /> </button>
+                <p>{count}</p>
+                <button className="contributionButtons" onClick={() => setCount(count + 1)}> <AddIcon /> </button>
+
+            </div>
+        </div>
+    )
 }
-
 export default Contribution;
