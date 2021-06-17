@@ -16,7 +16,7 @@ const ThreadList = () => {
 
   useEffect(() => {
     fetchThreads();
-  }, [forumId]);
+  });
 
   const fetchThreads =  () => {
     const abortController = new AbortController();

@@ -145,11 +145,21 @@ let threads = [
     },
   ]
 
-const getAllBlogs = (req,res) => {
+/**
+ * Returns all threads from the given forum id
+ * @param {*} req 
+ * @param {*} res 
+ */
+const getAllThreads = (req,res) => {
     const forumId = req.params.forumId;
     res.json(threads);
 }
 
+/**
+ * Returns the thread that has the given id
+ * @param {*} req 
+ * @param {*} res 
+ */
 const getSingleThread = (req, res) => {
     const id = req.params.id;
     const result = threads.find(thread => parseInt(thread.id) === parseInt(id));
@@ -160,6 +170,11 @@ const getSingleThread = (req, res) => {
     }
 }
 
+/**
+ * Adds a new thread to the given forum id
+ * @param {*} req 
+ * @param {*} res 
+ */
 const addThread = (req, res) => {
     //get thread from body
     const thread = req.body;
@@ -175,18 +190,27 @@ const addThread = (req, res) => {
     res.sendStatus(200);
 }
 
+/**
+ * changes subscription state of the given thread
+ * @param {*} req 
+ * @param {*} res 
+ */
 const subscribeThread = (req, res) => {
     const threadId = req.params.id;
     let indexToUpdate = threads.findIndex((thread) => {
-      return thread.id == threadId;
+      return parseInt(thread.id) === parseInt(threadId);
     });
-    if(indexToUpdate) {
+    if(indexToUpdate !== -1) {
         threads[indexToUpdate].isSubscribed = threads[indexToUpdate].isSubscribed === true ? false : true;
     }
     res.send(200);
 }
 
-
+/**
+ * deletes the thread that has the given id
+ * @param {*} req 
+ * @param {*} res 
+ */
 const deleteSingleThread = (req, res) => {
     const id = req.params.id;
     threads = threads.filter( thread => parseInt(thread.id) !== parseInt(id));
@@ -194,7 +218,7 @@ const deleteSingleThread = (req, res) => {
 }
 
 module.exports = {
-    getAllBlogs,
+    getAllThreads,
     getSingleThread,
     deleteSingleThread,
     addThread,
