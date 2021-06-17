@@ -1,169 +1,59 @@
-import React, { useState } from "react";
-import {useParams} from 'react-router'
+import React, { useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { CircularProgress } from "@material-ui/core";
 
 import Thread from "./thread";
 import NewThreadForm from "./newThreadForm";
-// import "../threadList.css";
+import useFetch from "../../hooks/useFetch";
+
 
 const ThreadList = () => {
-  const {id} = useParams();
-  const [threads, setThreads] = useState([
-    {
-      id: 1,
-      subject: "Ein erster Thread",
-      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      createdAt: "11.11.2011",
-      numberOfPosts: 10,
-      lastPoster: "Squid1701",
-      lastPostDate: "12.11.2011",
-      isSubscribed: false,
-      posts: [
-        {
-          id: 0,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 1,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 2,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 3,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-      ],
-    },
-    {
-      id: 2,
-      subject: "Noch ein erster Thread",
-      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      createdAt: "11.11.2011",
-      numberOfPosts: 10,
-      lastPoster: "Squid1701",
-      lastPostDate: "12.11.2011",
-      isSubscribed: false,
-      posts: [
-        {
-          id: 0,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 1,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 2,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 3,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-      ],
-    },
-    {
-      id: 3,
-      subject: "Ein ersterer Thread",
-      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      createdAt: "11.11.2011",
-      numberOfPosts: 10,
-      lastPoster: "Squid1701",
-      lastPostDate: "12.11.2011",
-      isSubscribed: false,
-      posts: [
-        {
-          id: 0,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 1,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 2,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 3,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-      ],
-    },
-    {
-      id: 4,
-      subject: "Der ersteste Thread",
-      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      createdAt: "11.11.2011",
-      numberOfPosts: 10,
-      lastPoster: "Squid1701",
-      lastPostDate: "12.11.2011",
-      isSubscribed: false,
-      posts: [
-        {
-          id: 0,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 1,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 2,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 3,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-      ],
-    },
-  ]);
+  const { forumId } = useParams();
+
+  const [threads, setThreads] = useState();
+  const [isPending, setIsPending] = useState(true);
+  const [error, setError] = useState(null);
+
+  useEffect(() => {
+    fetchThreads();
+  }, [forumId]);
+
+  const fetchThreads =  () => {
+    const abortController = new AbortController();
+    fetch(`http://localhost:3001/api/threads/${forumId}`, {signal: abortController.signal})
+        .then(res => {
+            if(!res.ok) {
+                throw Error('Could not fetch data for that resource!');
+            }
+            return res.json();
+        })
+        .then ((data) => {
+            setThreads(data);
+            setIsPending(false);
+            setError(null);
+        })
+        .catch((error) => {
+            if(error.name === 'AbortError') {
+                console.log('fetch abortet');
+            } else {
+                setError(error.message);
+                setIsPending(false);
+            }
+        });
+        return () => console.log(abortController.abort());
+  }
 
   const [unfoldedThreadId, setUnfoldedThreadId] = useState(-1);
+  const history = useHistory();
 
   const handleSubscribeThread = (id) => {
-    let changedThreads = threads;
-    let indexToUpdate = changedThreads.findIndex((thread) => {
-      return thread.id === id;
+    fetch(`http://localhost:3001/api/threads/${id}/`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+    }).then(() => {
+      fetchThreads();
+      
     });
-    changedThreads[indexToUpdate].isSubscribed =
-      changedThreads[indexToUpdate].isSubscribed === true ? false : true;
-    setThreads([...changedThreads]);
   };
 
   const handleTogglePreview = (id) => {
@@ -174,49 +64,60 @@ const ThreadList = () => {
 
   const handleSubmitNewThread = (e, title, body, currentUser) => {
     e.preventDefault();
-    let today = new Date();
-    let nextId = Math.max.apply(Math, threads.map(thread => {return thread.id})) + 1;
-    let currentDateString = today.getDate() + '.' + (today.getMonth()+1) + '.' + today.getFullYear();
-    let newPost = {
-      id: nextId,
+
+    let newThread = {
       subject: title,
       body: body,
-      createdAt: currentDateString,
       numberOfPosts: 0,
       lastPoster: currentUser,
-      lastPostDate: currentDateString,
       isSubscribed: false,
-      posts: []
-    }
+      posts: [],
+    };
 
-    setThreads([...threads, newPost]);
-  }
+    fetch(`http://localhost:3001/api/threads/${forumId}/`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(newThread),
+    }).then(() => {
+      history.go(0);
+    });
+  };
 
   return (
     <React.Fragment>
-      <h3>Threads {id}</h3>
+      <h3>Threads {forumId}</h3>
       <div className="threadList">
-        {threads.map((thread) => {
-          return (
-            <Thread
-              key={thread.id}
-              id={thread.id}
-              subject={thread.subject}
-              body={thread.body}
-              createdAt={thread.createdAt}
-              numberOfPosts={thread.numberOfPosts}
-              lastPoster={thread.lastPoster}
-              lastPostDate={thread.lastPostDate}
-              isSubscribed={thread.isSubscribed}
-              isUnfolded={thread.id === unfoldedThreadId}
-              handleSubscribeThread={handleSubscribeThread}
-              handleTogglePreview={handleTogglePreview}
-              posts={thread.posts}
-            />
-          );
-        })}
+      
+        {isPending && (
+          <React.Fragment>
+            <CircularProgress/>
+            <p>Wird geladen...</p>
+          </React.Fragment>
+        )}
+        {!isPending && !threads && <p>Es gibt noch keine Threads</p>}
+        {!isPending &&
+          threads &&
+          threads.map((thread) => {
+            return (
+              <Thread
+                key={thread.id}
+                id={thread.id}
+                subject={thread.subject}
+                body={thread.body}
+                createdAt={thread.createdAt}
+                numberOfPosts={thread.numberOfPosts}
+                lastPoster={thread.lastPoster}
+                lastPostDate={thread.lastPostDate}
+                isSubscribed={thread.isSubscribed}
+                isUnfolded={thread.id === unfoldedThreadId}
+                handleSubscribeThread={handleSubscribeThread}
+                handleTogglePreview={handleTogglePreview}
+                posts={thread.posts}
+              />
+            );
+          })}
       </div>
-      <NewThreadForm handleSubmitForm={handleSubmitNewThread}/>
+      <NewThreadForm handleSubmitForm={handleSubmitNewThread} />
     </React.Fragment>
   );
 };

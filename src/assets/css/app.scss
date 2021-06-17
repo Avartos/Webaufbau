@@ -50,3 +50,6 @@ body {
   grid-area: content;
 }
 
+.MuiCircularProgress-colorPrimary {
+  color: $highlightedFontColor !important;
+}
