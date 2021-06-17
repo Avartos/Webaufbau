@@ -1,13 +1,83 @@
 @import './variables';
 
-@media (min-width: 1024px) {
-    .favBar {
-        grid-area: sidebar;
-        background-color: $favBarColor;
-        padding-top: 2em;
-        text-align: left;
-    }
-}
-
 .favBar {
+    grid-area: sidebar;
+    background-color: $favBarColor;
+    padding-top: 6em;
+    text-align: left;
+
+    .wrapper-list {
+
+        .title {
+            font-size: 200%;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            margin-left: -50px;
+            * {
+                padding: 5px;
+            }
+        }
+
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        .forum {
+            position: relative;
+            list-style: none;
+            padding-left:37px;
+        }
+
+        .thread {
+            margin-left: -1px !important;
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEXDw8PWKQJEAAAAC0lEQVR4XmMgEQAAADAAAYFIpkQAAAAASUVORK5CYII=) 0 0 no-repeat;
+            padding-left: 21px;
+        }
+
+        .checkbox {
+            position: absolute;
+            left: 0;
+            margin-left: 0;
+            opacity: 0;
+            z-index: 2;
+            cursor: pointer;
+            height: 1em;
+            width: 1em;
+            top: 0;
+        }
+
+        .checkbox + ul {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEX///+AgIAAAAA8XrssAAAAGUlEQVR4XmMIDXVgAMMGCPZagWCDYGioAwCQxAgHBIBVQwAAAABJRU5ErkJggg==) 8px 0 no-repeat;
+            margin: -0.938em 0 0 -44px;
+            height: 1em;
+        }
+
+        .checkbox + ul > li {
+            display: none;
+        }
+
+        li span {
+            display: block;
+        }
+
+        .checkbox:checked + ul {
+            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEX///+AgIAAAAA8XrssAAAAFUlEQVR4XmMIDXVgQIZeK1D5oaEOAGzEBgf+DZdOAAAAAElFTkSuQmCC) 8px 6px no-repeat;
+            margin: -1.25em 0 0 -44px;
+            padding: 1.563em 0 0 50px;
+            height: auto;
+        }
+
+        .checkbox:checked + ul > li {
+            display: block;
+            margin: 0 0 0.125em;
+        }
+
+        .checkbox:checked + ul > li:last-child {
+            margin: 0 0 0.063em;
+        }
+
+    }
+
+
 }

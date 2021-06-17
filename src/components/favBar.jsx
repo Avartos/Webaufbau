@@ -1,6 +1,5 @@
 import React, {useState} from "react";
 import FavList from "./favList";
-import { ReactComponent as SplatIcon} from "../assets/icons/splat.svg";
 
 
 const FavBar = () => {
@@ -38,10 +37,7 @@ const FavBar = () => {
 
         return(
             <div className="favBar">
-                <div>
-                    <SplatIcon/>
-                    <FavList className="favorite" key="favorite" list={favorite}/>
-                </div>
+                <FavList className="favorite" key="favorite" list={favorite}/>
                 <FavList className="popular" key="popular" list={popular}/>
                 <FavList className="latest" key="latest" list={latest}/>
             </div>
