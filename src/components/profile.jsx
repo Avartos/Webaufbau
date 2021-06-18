@@ -1,15 +1,34 @@
-import { ReactComponent as ProfileIcon } from "../assets/icons/profile.svg";
+import { ReactComponent as ProfilePicture} from "../assets/icons/profilePicture.svg";
+import React, {useState} from "react";
+import ProfileStats from "./profileStats"
+import ProfileButtons from "./profileButtons"
 
 
 
 const Profile = (props) => {
 
-    //state = {};
+    const [username, setUsername] = useState("Squid#2027");
+    const [email, setEmail] = useState("squiddy@pool.de");
 
-    return(
-        <div className="wrapper-profile">
-            <ProfileIcon/>
-        </div>
-    );
+    if (props.roll == "user")
+    {
+        return(
+            <div className="wrapper-account">
+                <ProfileStats username={username} email={email} />
+                <ProfilePicture/>
+                <ProfileButtons roll={props.roll}/>
+            </div>
+        );
+    } else if (props.roll == "admin")
+    {
+        return(
+            <div className="wrapper-account">
+                <input type="text"/>
+                <ProfileStats username={username} email={email} />
+                <ProfilePicture/>
+                <ProfileButtons roll={props.roll}/>
+            </div>
+        );
+    }
 }
 export default Profile;
