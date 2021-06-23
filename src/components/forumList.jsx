@@ -13,33 +13,35 @@ const ForumList = () => {
  
         return ( 
             <React.Fragment>
-                <Forum 
-                    key={forums[0].id}
-                    name={forums[0].name}
-                    description={forums[0].description}
-                    numberOfThreads={forums[0].numberOfThreads}
-                    numberOfComments={forums[0].numberOfComments}
-                    lastActivityFrom={forums[0].lastActivityFrom}
-                    lastActivityAt={forums[0].lastActivityAt}
-                />
-                <Forum 
-                    key={forums[1].id}
-                    name={forums[1].name}
-                    description={forums[1].description}
-                    numberOfThreads={forums[1].numberOfThreads}
-                    numberOfComments={forums[1].numberOfComments}
-                    lastActivityFrom={forums[1].lastActivityFrom}
-                    lastActivityAt={forums[1].lastActivityAt}
-                />
-                <Forum 
-                    key={forums[1].id}
-                    name={forums[1].name}
-                    description={forums[1].description}
-                    numberOfThreads={forums[1].numberOfThreads}
-                    numberOfComments={forums[1].numberOfComments}
-                    lastActivityFrom={forums[1].lastActivityFrom}
-                    lastActivityAt={forums[1].lastActivityAt}
-                />
+                <div className="forumList">
+                    <Forum 
+                        key={forums[0].id}
+                        name={forums[0].name}
+                        description={forums[0].description}
+                        numberOfThreads={forums[0].numberOfThreads}
+                        numberOfComments={forums[0].numberOfComments}
+                        lastActivityFrom={forums[0].lastActivityFrom}
+                        lastActivityAt={forums[0].lastActivityAt}
+                    />
+                    <Forum 
+                        key={forums[1].id}
+                        name={forums[1].name}
+                        description={forums[1].description}
+                        numberOfThreads={forums[1].numberOfThreads}
+                        numberOfComments={forums[1].numberOfComments}
+                        lastActivityFrom={forums[1].lastActivityFrom}
+                        lastActivityAt={forums[1].lastActivityAt}
+                    />
+                    <Forum 
+                        key={forums[1].id}
+                        name={forums[1].name}
+                        description={forums[1].description}
+                        numberOfThreads={forums[1].numberOfThreads}
+                        numberOfComments={forums[1].numberOfComments}
+                        lastActivityFrom={forums[1].lastActivityFrom}
+                        lastActivityAt={forums[1].lastActivityAt}
+                    />
+                </div>
             </React.Fragment>
         );
     
