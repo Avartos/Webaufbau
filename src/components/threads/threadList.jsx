@@ -16,9 +16,10 @@ const ThreadList = () => {
 
   useEffect(() => {
     fetchThreads();
-  });
+  }, []);
 
   const fetchThreads =  () => {
+    console.log(forumId);
     const abortController = new AbortController();
     fetch(`http://localhost:3001/api/threads/${forumId}`, {signal: abortController.signal})
         .then(res => {
@@ -79,7 +80,7 @@ const ThreadList = () => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newThread),
     }).then(() => {
-      history.go(0);
+      // history.go(0);
     });
   };
 
