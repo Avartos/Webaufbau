@@ -7,8 +7,10 @@ const morgan = require('morgan');
 
 
 // #region routes
-const threadRoutes = require('./routes/threadRoutes.js');
-const userRoutes = require('./routes/userRoutes.js');
+const threadRoutes = require('./routes/threadRoutes');
+const userRoutes = require('./routes/userRoutes');
+const imageRoutes = require('./routes/imageRoutes');
+const contributionRoutes = require('./routes/contributionRoutes');
 // #endregion
 
 //set up express app
@@ -29,7 +31,8 @@ app.use(morgan('dev'));
 // contains the routes that are offered by the api
 app.use('/api/threads', threadRoutes);
 app.use('/api/users', userRoutes);
-
+app.use('/api/images', imageRoutes);
+app.use('/api/contributions', contributionRoutes);
 // #endregion
 
 // 404 page

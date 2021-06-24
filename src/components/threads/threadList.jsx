@@ -8,7 +8,7 @@ import useFetch from "../../hooks/useFetch";
 
 
 const ThreadList = () => {
-  const { forumId } = useParams();
+  const { forumId } = useParams('forumId');
 
   const [threads, setThreads] = useState();
   const [isPending, setIsPending] = useState(true);
@@ -16,11 +16,11 @@ const ThreadList = () => {
 
   useEffect(() => {
     fetchThreads();
-  });
+  },[]);
 
   const fetchThreads =  () => {
     const abortController = new AbortController();
-    fetch(`http://localhost:3001/api/threads/${forumId}`, {signal: abortController.signal})
+    fetch(`http://localhost:3001/api/threads/all/${forumId}`, {signal: abortController.signal})
         .then(res => {
             if(!res.ok) {
                 throw Error('Could not fetch data for that resource!');
@@ -28,6 +28,7 @@ const ThreadList = () => {
             return res.json();
         })
         .then ((data) => {
+            console.log(forumId);
             setThreads(data);
             setIsPending(false);
             setError(null);
@@ -47,7 +48,7 @@ const ThreadList = () => {
   const history = useHistory();
 
   const handleSubscribeThread = (id) => {
-    fetch(`http://localhost:3001/api/threads/${id}/`, {
+    fetch(`http://localhost:3001/api/threads/${id}`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
     }).then(() => {
@@ -66,20 +67,19 @@ const ThreadList = () => {
     e.preventDefault();
 
     let newThread = {
-      subject: title,
-      body: body,
+      title: title,
+      content: body,
       numberOfPosts: 0,
       lastPoster: currentUser,
-      isSubscribed: false,
       posts: [],
     };
 
-    fetch(`http://localhost:3001/api/threads/${forumId}/`, {
+    fetch(`http://localhost:3001/api/threads/${forumId}`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newThread),
     }).then(() => {
-      history.go(0);
+      fetchThreads();
     });
   };
 
@@ -102,17 +102,17 @@ const ThreadList = () => {
               <Thread
                 key={thread.id}
                 id={thread.id}
-                subject={thread.subject}
-                body={thread.body}
+                subject={thread.title}
+                body={thread.content}
                 createdAt={thread.createdAt}
-                numberOfPosts={thread.numberOfPosts}
-                lastPoster={thread.lastPoster}
-                lastPostDate={thread.lastPostDate}
-                isSubscribed={thread.isSubscribed}
+                numberOfPosts={thread.contributionCount}
+                lastPoster={10}
+                lastPostDate={10}
+                isSubscribed={false}
                 isUnfolded={thread.id === unfoldedThreadId}
                 handleSubscribeThread={handleSubscribeThread}
                 handleTogglePreview={handleTogglePreview}
-                posts={thread.posts}
+                posts={[]}
               />
             );
           })}

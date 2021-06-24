@@ -1,6 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/connection');
 const User = require('./user');
+const Thread = require('./thread');
 
 const Contribution = sequelize.define("Contribution", {
     usersId: Sequelize.INTEGER,
@@ -8,6 +9,9 @@ const Contribution = sequelize.define("Contribution", {
 });
 
 User.hasMany(Contribution, {as : 'contributions', foreignKey: 'usersId'});
-Contribution.belongsTo(Contribution, {as: "user", foreignKey: 'usersId'});
+Contribution.belongsTo(User, {as: "user", foreignKey: 'usersId'});
+
+Thread.hasMany(Contribution, {as : 'contributions', foreignKey: 'threadsId'});
+Contribution.belongsTo(Thread, {as: "threads", foreignKey: 'threadsId'});
 
 module.exports = Contribution;

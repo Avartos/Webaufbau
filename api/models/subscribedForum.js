@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/connection');
 
-module.exports = sequelize.define("SubscribedForum", {
+const SubscribedForum = sequelize.define("SubscribedForum", {
     forumsId : {
         primaryKey: true,
         type: Sequelize.INTEGER,
@@ -11,3 +11,5 @@ module.exports = sequelize.define("SubscribedForum", {
         type: Sequelize.INTEGER,
     },
 });
+
+module.exports = SubscribedForum;

@@ -25,4 +25,6 @@ const User = sequelize.define("User", {
 User.belongsTo(Login, {as: 'login', foreignKey: 'loginsId' });
 User.belongsTo(Image, {as: 'image', foreignKey: 'imagesId'});
 
+
+
 module.exports = User;

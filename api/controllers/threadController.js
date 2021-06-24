@@ -148,6 +148,7 @@ let threads = [
 const sequelize = require('../config/connection');
 const Thread = require('../models/thread');
 const User = require('../models/user');
+const Contribution = require('../models/contribution');
 
 
 /**
@@ -158,17 +159,22 @@ const User = require('../models/user');
 const findAll = (req,res) => {
     const forumId = req.params.forumId;
     Thread.findAll({
+      // attributes: ['Thread.*', 'Contribution.*', [sequelize.fn('COUNT', 'Contributions.id'), 'ContributionCount']],
+      attributes: {
+        include: [[sequelize.fn("COUNT", sequelize.col("contributions.id")), "contributionCount"]]
+      },
       where: {
         forumsId: forumId,
       },
-      include: [{model: User, as: 'user'}]
+      group: ['id'],
+      include: [{model: User, as: 'user'}, {model: Contribution, as: 'contributions'}],
+      includeIgnoreAttributes: false,
     }).then(data => {
       res.json(data);
     }).catch(error => {
       console.error("Error:\t", error);
+      res.sendStatus(500);
     });
-    
-    
 }
 
 /**
@@ -192,41 +198,23 @@ const findOne = (req, res) => {
  * @param {*} res 
  */
 const add = (req, res) => {
-    
   const forumId = req.params.forumId;
-    Thread.create({
-        title: "Ein neuer Testthread",
-        content: "Hier koennte Ihre Werbung stehen",
-        forumsId: forumId,
-        usersId: 1,
-      })
+  const thread = req.body;
+
+  Thread.create({
+      title: thread.title,
+      content: thread.content,
+      usersId: 1,
+      forumsId: parseInt(forumId)
+    })
       .then(data => {
-        console.log(data);
         res.json(data);
-      })
-      .then(() => {
-        sequelize.sync({force: true});
+        // sequelize.sync({force:true});
       })
       .catch(error => {
         console.error("Error:\t", error);
+        res.sendStatus(500);
       });
-  
-  
-  
-  
-    //get thread from body
-    // const thread = req.body;
-    // calculate id for the new thread
-    // thread.id = Math.max.apply(Math, threads.map(thread => {return thread.id})) + 1;
-    //get current date
-    // let today = new Date();
-    // let currentDateString = today.getDate() + '.' + (today.getMonth()+1) + '.' + today.getFullYear();
-    // thread.createdAt = currentDateString;
-    //add thread to list
-    // threads = [...threads, thread];
-
-    //send ok
-    // res.sendStatus(200);
 }
 
 /**

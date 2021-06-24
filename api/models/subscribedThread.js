@@ -1,7 +1,10 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/connection');
 
-module.exports = sequelize.define("SubscribedThread", {
+const Thread = require('./thread');
+const User = require('./user');
+
+const SubscribedThread = sequelize.define("SubscribedThread", {
     threadsId : {
         primaryKey: true,
         type: Sequelize.INTEGER,
@@ -11,3 +14,5 @@ module.exports = sequelize.define("SubscribedThread", {
         type: Sequelize.INTEGER,
     },
 });
+
+module.export = SubscribedThread;

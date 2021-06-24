@@ -1,8 +1,16 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/connection');
 
-module.exports = sequelize.define("Rating", {
-    contributionsId: Sequelize.INTEGER,
-    usersId: Sequelize.INTEGER,
+const Rating = sequelize.define("Rating", {
+    contributionsId: {
+        primaryKey: true,
+        type: Sequelize.INTEGER
+    },
+    usersId: {
+        primaryKey: true,
+        type: Sequelize.INTEGER
+    },
     rating: Sequelize.INTEGER,
 });
+
+module.exports = Rating;

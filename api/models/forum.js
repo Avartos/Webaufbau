@@ -9,6 +9,6 @@ const Forum = sequelize.define("Forum", {
 });
 
 Forum.belongsTo(User, {as: "user", foreignKey: 'usersId'});
-User.hasMany(Forum, {as : 'threads', foreignKey: 'usersId'});
+User.hasMany(Forum, {as : 'forums', foreignKey: 'usersId'});
 
 module.exports = Forum;
