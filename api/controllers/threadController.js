@@ -145,14 +145,30 @@ let threads = [
     },
   ]
 
+const sequelize = require('../config/connection');
+const Thread = require('../models/thread');
+const User = require('../models/user');
+
+
 /**
  * Returns all threads from the given forum id
  * @param {*} req 
  * @param {*} res 
  */
-const getAllThreads = (req,res) => {
+const findAll = (req,res) => {
     const forumId = req.params.forumId;
-    res.json(threads);
+    Thread.findAll({
+      where: {
+        forumsId: forumId,
+      },
+      include: [{model: User, as: 'user'}]
+    }).then(data => {
+      res.json(data);
+    }).catch(error => {
+      console.error("Error:\t", error);
+    });
+    
+    
 }
 
 /**
@@ -160,7 +176,7 @@ const getAllThreads = (req,res) => {
  * @param {*} req 
  * @param {*} res 
  */
-const getSingleThread = (req, res) => {
+const findOne = (req, res) => {
     const id = req.params.id;
     const result = threads.find(thread => parseInt(thread.id) === parseInt(id));
     if(result) {
@@ -175,19 +191,42 @@ const getSingleThread = (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-const addThread = (req, res) => {
+const add = (req, res) => {
+    
+  const forumId = req.params.forumId;
+    Thread.create({
+        title: "Ein neuer Testthread",
+        content: "Hier koennte Ihre Werbung stehen",
+        forumsId: forumId,
+        usersId: 1,
+      })
+      .then(data => {
+        console.log(data);
+        res.json(data);
+      })
+      .then(() => {
+        sequelize.sync({force: true});
+      })
+      .catch(error => {
+        console.error("Error:\t", error);
+      });
+  
+  
+  
+  
     //get thread from body
-    const thread = req.body;
+    // const thread = req.body;
     // calculate id for the new thread
-    thread.id = Math.max.apply(Math, threads.map(thread => {return thread.id})) + 1;
+    // thread.id = Math.max.apply(Math, threads.map(thread => {return thread.id})) + 1;
     //get current date
-    let today = new Date();
-    let currentDateString = today.getDate() + '.' + (today.getMonth()+1) + '.' + today.getFullYear();
-    thread.createdAt = currentDateString;
+    // let today = new Date();
+    // let currentDateString = today.getDate() + '.' + (today.getMonth()+1) + '.' + today.getFullYear();
+    // thread.createdAt = currentDateString;
     //add thread to list
-    threads = [...threads, thread];
+    // threads = [...threads, thread];
+
     //send ok
-    res.sendStatus(200);
+    // res.sendStatus(200);
 }
 
 /**
@@ -211,16 +250,16 @@ const subscribeThread = (req, res) => {
  * @param {*} req 
  * @param {*} res 
  */
-const deleteSingleThread = (req, res) => {
+const deleteOne = (req, res) => {
     const id = req.params.id;
     threads = threads.filter( thread => parseInt(thread.id) !== parseInt(id));
     res.sendStatus(200);
 }
 
 module.exports = {
-    getAllThreads,
-    getSingleThread,
-    deleteSingleThread,
-    addThread,
+    findAll,
+    findOne,
+    deleteOne,
+    add,
     subscribeThread
 }
