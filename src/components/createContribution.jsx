@@ -1,25 +1,53 @@
-import React from 'react'
+import { Duo } from '@material-ui/icons';
+import React, { useState } from 'react'
 
-function CreateContribution() {
 
-    function Answer(props) {
-        return <textarea>{props.answer}</textarea>
+const NewContributionForm = ({ handleSubmitForm }) => {
+
+    const [visible, setVisible] = React.useState(false)
+
+    const AddNewContributionForm = () => {
+        const [contributionText, setContributionText] = useState("");
+        const [currentUser, setCurrentUser] = useState("Squidy50");
+        return (
+            <div className="newContributionForm">
+
+                <form className="body"
+                    onSubmit={(e) => {
+                        handleSubmitForm(e, contributionText, currentUser);
+                        setContributionText("");
+                    }}
+                >
+
+                    <textarea
+                        required
+                        value={contributionText}
+                        onChange={(e) => {
+                            setContributionText(e.target.value);
+                        }}
+                        placeholder="Gib deinen Beitrag zum Thema!"
+                    ></textarea>
+
+                    <button>Absenden</button>
+                </form>
+            </div>
+        )
     }
 
+    const openForm = (event) => {
+        event.preventDefault();
+        setVisible(true)
+    }
+    const closeForm = (event) => {
+        event.preventDefault();
+        setVisible(false)
+    }
     return (
-
-        
-        <div className="createContribution">
-            <button className="addContribution" onclick="document.getElementById('answerContribution').style.display='block'"> + </button>
-
-            <div className="answerContribution" id="answerContribution">
-                <textarea className="answer"><Answer answer="Ich bin eine Antwort looooool"/></textarea>
-                <button className="answerButtons"><i className="fas fa-paperclip"></i> Anhängen </button>
-                <button className="answerButtons" type="submit"><i className="fas fa-paper-plane"></i> Senden </button>
-                <button className="deleteAnswer"><i className="fas fa-trash-alt"></i> Verwerfen </button>
-            </div>
+        <div>
+            {!visible && <button className="addContribution" onClick={openForm}>+</button>}
+            {visible && <div><AddNewContributionForm /><button onClick={closeForm}>Verwerfen</button></div>}
         </div>
     )
-}
+};
 
-export default CreateContribution;
+export default NewContributionForm;
