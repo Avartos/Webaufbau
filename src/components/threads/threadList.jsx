@@ -19,6 +19,7 @@ const ThreadList = () => {
   },[]);
 
   const fetchThreads =  () => {
+    console.log(forumId);
     const abortController = new AbortController();
     fetch(`http://localhost:3001/api/threads/all/${forumId}`, {signal: abortController.signal})
         .then(res => {

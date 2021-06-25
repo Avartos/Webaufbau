@@ -1,0 +1,89 @@
+@import "./variables";
+@import "./mixins/contentCard";
+@import "./mixins/buttonPreset";
+@import "./mixins/statistics";
+
+/* #region forum*/
+.forum {
+  @include contentCard($threadHeaderColor, $threadBodyColor);
+  transition: ease-in-out .2s;
+
+  &:hover {
+    box-shadow: 0 0 0 3px $hoverBorder;
+    
+  }
+
+  .header .title{
+    cursor: pointer;
+    transition: .2s ease-in-out;
+    &:hover {
+      color: $highlightedFontColor;
+    }
+  }
+
+  .body {
+    display: flex;
+
+    .shortDescription {
+      font-style: italic;
+      flex-grow: 1;
+      text-align: left;
+      margin-right: 25px;
+    }
+
+    .threadStatistics {
+      min-width: 200px;
+      @include statistics();
+    }
+  }
+
+  .wrapperPreview {
+    transition: height 500ms ease;
+  
+    .postPreviews {
+      text-align: left;
+    
+      p {
+        padding: 10px;
+        &:nth-child(even) {
+          background-color: $threadHeaderColor;
+        }
+    
+        &:nth-child(odd) {
+          background-color: $threadBodyColor;
+        }
+      }
+    }
+  }
+}
+
+
+/* #region forumHeader */
+
+.wrapperButton {
+  margin-right: 15px;
+  @include buttonContainer($threadHeaderSize);
+}
+
+/* #region buttons */
+.subscribeButton {
+  margin: auto auto;
+  @include squaredButton($threadHeaderSize, 0, .5);
+
+  &:not(.active) {
+    filter: grayscale(100%);
+  }
+
+  &:hover {
+    filter: grayscale(100%);
+    filter: brightness(0);
+  }
+
+  &.active {
+    filter: grayscale(0%);
+
+    &:hover {
+      filter: brightness(2);
+    }
+  }
+}

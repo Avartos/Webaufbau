@@ -16,6 +16,10 @@
     font-size: 22px;
 }
 
+.contribution:nth-child(even){
+    background-color: #BFCDE0;
+}
+
 .contribution1 {
     width: 957px;
     padding-left: 20px;

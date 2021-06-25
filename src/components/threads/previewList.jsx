@@ -1,4 +1,5 @@
 import React from "react";
+import Contribution from '../contribution';
 
 const PreviewList = ({posts}) => {
   return (
@@ -7,8 +8,7 @@ const PreviewList = ({posts}) => {
       
       <div className="postPreviews">
         {posts.map((post) => {
-          //TODO: Reference to Post Component here
-          return <p key={post.id}>Tehehest</p>;
+          return <Contribution key={post.id}></Contribution>
         })}
       </div>    
   );

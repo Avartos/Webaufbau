@@ -11,6 +11,7 @@ import Contributions from "./components/contributions";
 import ThreadList from "./components/threads/threadList";
 import Login from "./components/login";
 import Signin from "./components/signin";
+import Account from "./components/profile"
 
 function App() {
   return (
@@ -30,8 +31,11 @@ function App() {
             <Route exact path="/registration"><Signin/></Route>
             <Route excact path="/login"><Login/></Route>
 
-            {/* profile */}
-            <Route exact path="/my_profile"></Route>
+            {/* account */}
+            <Route exact path="/profile1"><Account roll="user"/></Route>
+            <Route exact path="/profile2"><Account roll="admin"/></Route>
+
+
 
             {/* 404 */}
             <Route path="/">
