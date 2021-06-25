@@ -96,7 +96,7 @@ const ThreadList = () => {
             <p>Wird geladen...</p>
           </React.Fragment>
         )}
-        {!isPending && !threads && <p>Es gibt noch keine Threads</p>}
+        {!isPending && !threads && !error && <p>Es gibt noch keine Threads</p>}
         {!isPending &&
           threads &&
           threads.map((thread) => {
