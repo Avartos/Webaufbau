@@ -56,7 +56,6 @@ const deleteOne = (req, res) => {
 }
 
 const update = (req, res) => {
-    const id = req.params.id;
     const contribution = req.body;
     Contribution.update(contribution)
         .then(data => {

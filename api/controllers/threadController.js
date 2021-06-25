@@ -1,180 +1,210 @@
-let threads = [
-    {
-      id: 1,
-      subject: "Ein erster Thread",
-      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      createdAt: "11.11.2011",
-      numberOfPosts: 10,
-      lastPoster: "Squid1701",
-      lastPostDate: "12.11.2011",
-      isSubscribed: false,
-      posts: [
-        {
-          id: 0,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 1,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 2,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 3,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-      ],
-    },
-    {
-      id: 2,
-      subject: "Noch ein erster Thread",
-      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      createdAt: "11.11.2011",
-      numberOfPosts: 10,
-      lastPoster: "Squid1701",
-      lastPostDate: "12.11.2011",
-      isSubscribed: false,
-      posts: [
-        {
-          id: 0,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 1,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 2,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 3,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-      ],
-    },
-    {
-      id: 3,
-      subject: "Ein ersterer Thread",
-      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      createdAt: "11.11.2011",
-      numberOfPosts: 10,
-      lastPoster: "Squid1701",
-      lastPostDate: "12.11.2011",
-      isSubscribed: false,
-      posts: [
-        {
-          id: 0,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 1,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 2,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 3,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-      ],
-    },
-    {
-      id: 4,
-      subject: "Der ersteste Thread",
-      body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
-      createdAt: "11.11.2011",
-      numberOfPosts: 10,
-      lastPoster: "Squid1701",
-      lastPostDate: "12.11.2011",
-      isSubscribed: false,
-      posts: [
-        {
-          id: 0,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 1,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 2,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-        {
-          id: 3,
-          subject: "tehest",
-          body: "tehestText",
-          user: "Squid1701",
-        },
-      ],
-    },
-  ]
+let threads = [{
+    id: 1,
+    subject: "Ein erster Thread",
+    body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    createdAt: "11.11.2011",
+    numberOfPosts: 10,
+    lastPoster: "Squid1701",
+    lastPostDate: "12.11.2011",
+    isSubscribed: false,
+    posts: [{
+        id: 0,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 1,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 2,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 3,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+    ],
+  },
+  {
+    id: 2,
+    subject: "Noch ein erster Thread",
+    body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    createdAt: "11.11.2011",
+    numberOfPosts: 10,
+    lastPoster: "Squid1701",
+    lastPostDate: "12.11.2011",
+    isSubscribed: false,
+    posts: [{
+        id: 0,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 1,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 2,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 3,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+    ],
+  },
+  {
+    id: 3,
+    subject: "Ein ersterer Thread",
+    body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    createdAt: "11.11.2011",
+    numberOfPosts: 10,
+    lastPoster: "Squid1701",
+    lastPostDate: "12.11.2011",
+    isSubscribed: false,
+    posts: [{
+        id: 0,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 1,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 2,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 3,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+    ],
+  },
+  {
+    id: 4,
+    subject: "Der ersteste Thread",
+    body: "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.",
+    createdAt: "11.11.2011",
+    numberOfPosts: 10,
+    lastPoster: "Squid1701",
+    lastPostDate: "12.11.2011",
+    isSubscribed: false,
+    posts: [{
+        id: 0,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 1,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 2,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+      {
+        id: 3,
+        subject: "tehest",
+        body: "tehestText",
+        user: "Squid1701",
+      },
+    ],
+  },
+]
 
 const sequelize = require('../config/connection');
 const Thread = require('../models/thread');
 const User = require('../models/user');
 const Contribution = require('../models/contribution');
+const SubscribedThread = require('../models/subscribedThread');
 
+
+const currentUserId = 1;
 
 /**
  * Returns all threads from the given forum id
  * @param {*} req 
  * @param {*} res 
  */
-const findAll = (req,res) => {
-    const forumId = req.params.forumId;
-    Thread.findAll({
-      // attributes: ['Thread.*', 'Contribution.*', [sequelize.fn('COUNT', 'Contributions.id'), 'ContributionCount']],
-      attributes: {
-        include: [[sequelize.fn("COUNT", sequelize.col("contributions.id")), "contributionCount"]]
+const findAll = (req, res) => {
+  const forumId = req.params.forumId;
+  Thread.findAll({
+    attributes: {
+      include: [
+        [sequelize.fn('date_format', sequelize.col('contributions.createdAt'), '%d.%m.%Y'), 'lastPostDate'],
+        [sequelize.col('contributions.user.username'), 'lastPostUsername'],
+        [sequelize.fn('date_format', sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
+        [sequelize.fn("COUNT", sequelize.col("contributions.id")), "contributionCount"],
+        [sequelize.col('subscribedThreads.usersId'), 'subscriptionUsersId']
+      ]
+    },
+    where: {
+      forumsId: forumId,
+    },
+    group: ['id'],
+    // join with table users and contributions
+    include: [{
+        model: User,
+        as: 'user'
       },
-      where: {
-        forumsId: forumId,
+      {
+        model: Contribution,
+        as: 'contributions',
+        include: [{
+          model: User,
+          as: 'user'
+        }],
       },
-      group: ['id'],
-      include: [{model: User, as: 'user'}, {model: Contribution, as: 'contributions'}],
-      includeIgnoreAttributes: false,
-    }).then(data => {
-      res.json(data);
-    }).catch(error => {
-      console.error("Error:\t", error);
-      res.sendStatus(500);
-    });
+      {
+        model: SubscribedThread,
+        as: 'subscribedThreads',
+        required: false,
+        where: {usersId: currentUserId}
+      }
+    ],
+    // sort contributions by date
+    order: [
+      [{
+        model: Contribution,
+        as: 'contributions'
+      }, 'createdAt', 'DESC']
+    ],
+    //don't send sub-arrays
+    includeIgnoreAttributes: false,
+  }, ).then(data => {
+    res.json(data);
+  }).catch(error => {
+    console.error("Error:\t", error);
+    res.sendStatus(500);
+  });
 }
 
 /**
@@ -183,13 +213,13 @@ const findAll = (req,res) => {
  * @param {*} res 
  */
 const findOne = (req, res) => {
-    const id = req.params.id;
-    const result = threads.find(thread => parseInt(thread.id) === parseInt(id));
-    if(result) {
-        res.json(result);
-    } else {
-        res.sendStatus(404);
-    }
+  const id = req.params.id;
+  const result = threads.find(thread => parseInt(thread.id) === parseInt(id));
+  if (result) {
+    res.json(result);
+  } else {
+    res.sendStatus(404);
+  }
 }
 
 /**
@@ -207,14 +237,14 @@ const add = (req, res) => {
       usersId: 1,
       forumsId: parseInt(forumId)
     })
-      .then(data => {
-        res.json(data);
-        // sequelize.sync({force:true});
-      })
-      .catch(error => {
-        console.error("Error:\t", error);
-        res.sendStatus(500);
-      });
+    .then(data => {
+      res.json(data);
+      // sequelize.sync({force:true});
+    })
+    .catch(error => {
+      console.error("Error:\t", error);
+      res.sendStatus(500);
+    });
 }
 
 /**
@@ -223,14 +253,14 @@ const add = (req, res) => {
  * @param {*} res 
  */
 const subscribeThread = (req, res) => {
-    const threadId = req.params.id;
-    let indexToUpdate = threads.findIndex((thread) => {
-      return parseInt(thread.id) === parseInt(threadId);
-    });
-    if(indexToUpdate !== -1) {
-        threads[indexToUpdate].isSubscribed = threads[indexToUpdate].isSubscribed === true ? false : true;
-    }
-    res.send(200);
+  const threadId = req.params.id;
+  let indexToUpdate = threads.findIndex((thread) => {
+    return parseInt(thread.id) === parseInt(threadId);
+  });
+  if (indexToUpdate !== -1) {
+    threads[indexToUpdate].isSubscribed = threads[indexToUpdate].isSubscribed === true ? false : true;
+  }
+  res.send(200);
 }
 
 /**
@@ -239,15 +269,15 @@ const subscribeThread = (req, res) => {
  * @param {*} res 
  */
 const deleteOne = (req, res) => {
-    const id = req.params.id;
-    threads = threads.filter( thread => parseInt(thread.id) !== parseInt(id));
-    res.sendStatus(200);
+  const id = req.params.id;
+  threads = threads.filter(thread => parseInt(thread.id) !== parseInt(id));
+  res.sendStatus(200);
 }
 
 module.exports = {
-    findAll,
-    findOne,
-    deleteOne,
-    add,
-    subscribeThread
+  findAll,
+  findOne,
+  deleteOne,
+  add,
+  subscribeThread
 }

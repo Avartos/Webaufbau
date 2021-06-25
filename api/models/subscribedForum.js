@@ -10,6 +10,10 @@ const SubscribedForum = sequelize.define("SubscribedForum", {
         primaryKey: true,
         type: Sequelize.INTEGER,
     },
+    timeStamp : {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
+    }
 });
 
 module.exports = SubscribedForum;

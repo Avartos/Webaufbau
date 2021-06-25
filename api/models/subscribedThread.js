@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/connection');
-
-const Thread = require('./thread');
-const User = require('./user');
+const Thread = require('../models/thread');
 
 const SubscribedThread = sequelize.define("SubscribedThread", {
     threadsId : {
@@ -13,6 +11,13 @@ const SubscribedThread = sequelize.define("SubscribedThread", {
         primaryKey: true,
         type: Sequelize.INTEGER,
     },
+    timeStamp : {
+        type: Sequelize.DATE,
+        defaultValue: Sequelize.NOW
+    }
 });
 
-module.export = SubscribedThread;
+Thread.hasMany(SubscribedThread, {as : 'subscribedThreads', foreignKey: 'threadsId'});
+SubscribedThread.belongsTo(Thread, {as: "threads", foreignKey: 'threadsId'});
+
+module.exports = SubscribedThread;

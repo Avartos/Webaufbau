@@ -47,13 +47,14 @@ const ThreadList = () => {
   const [unfoldedThreadId, setUnfoldedThreadId] = useState(-1);
   const history = useHistory();
 
-  const handleSubscribeThread = (id) => {
-    fetch(`http://localhost:3001/api/threads/${id}`, {
-      method: "PUT",
+  const handleSubscribeThread = (id, isSubscribed) => {
+    const subscribeMethod = (isSubscribed) ? 'DELETE' : 'POST';
+    
+    fetch(`http://localhost:3001/api/threads/subscriptions/${id}`, {
+      method: subscribeMethod,
       headers: { "Content-Type": "application/json" },
     }).then(() => {
       fetchThreads();
-      
     });
   };
 
@@ -101,18 +102,8 @@ const ThreadList = () => {
             return (
               <Thread
                 key={thread.id}
-                id={thread.id}
-                subject={thread.title}
-                body={thread.content}
-                createdAt={thread.createdAt}
-                numberOfPosts={thread.contributionCount}
-                lastPoster={10}
-                lastPostDate={10}
-                isSubscribed={false}
-                isUnfolded={thread.id === unfoldedThreadId}
-                handleSubscribeThread={handleSubscribeThread}
-                handleTogglePreview={handleTogglePreview}
-                posts={[]}
+                thread={thread}
+                handleSubscribe={handleSubscribeThread}
               />
             );
           })}

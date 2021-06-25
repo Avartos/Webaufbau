@@ -20,7 +20,6 @@ const findAll = (req,res) => {
 const findOne = (req,res) => {
     const userId = req.params.id;
 
-
     User.findByPk(userId, {
         include: [
             {model: Login, as: 'login'},
@@ -34,10 +33,22 @@ const findOne = (req,res) => {
     })  
 }
 
+const update = (req, res) => {
+    const user = req.body;
+    User.update(user)
+        .then(data => {
+            res.json(data);
+        })
+        .catch(error => {
+            console.error("Error:\t", error);
+            res.sendStatus(500);
+        });
+}
+
 
 module.exports = {
 
     findAll,
     findOne,
-
+    update,
 }

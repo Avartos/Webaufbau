@@ -15,50 +15,50 @@ const Thread = (props) => {
 
   //determines target height of the previewList depending on current unfold State
   const calculatePreviewHeight = () => {
-    const height = props.isUnfolded ? previewRef.current.clientHeight : 0;
+    const height = props.thread.isUnfolded ? previewRef.current.clientHeight : 0;
     setPreviewHeight(height);
   };
 
   return (
     <div className="thread">
       <div className="header">
-        <Link className="title" to={`/contributions/${props.id}`}>
-          Thread: {props.subject}
+        <Link className="title" to={`/contributions/${props.thread.id}`}>
+          Thread: {props.thread.title}
         </Link>
         <div className="wrapperButton">
           <CallIcon className="callButton"></CallIcon>
         </div>
         <div className="wrapperButton">
           <SubscribeButton
-            parentId={props.id}
-            isSubscribed={props.isSubscribed}
-            handleSubscribe={props.handleSubscribeThread}
+            parentId={props.thread.id}
+            isSubscribed={props.thread.subscriptionUsersId}
+            handleSubscribe={props.handleSubscribe}
           />
         </div>
       </div>
       <div className="body">
-        <p className="shortDescription">{props.body}</p>
+        <p className="shortDescription">{props.thread.content}</p>
         <ThreadStatistics
-          createdAt={props.createdAt}
-          numberOfPosts={props.numberOfPosts}
-          lastPoster={props.lastPoster}
-          lastPostDate={props.lastPostDate}
+          createdAt={props.thread.createdAt}
+          numberOfPosts={props.thread.contributionCount}
+          lastPoster={props.thread.lastPostUsername}
+          lastPostDate={props.thread.lastPostDate}
         />
       </div>
 
-      {props.posts.length > 0 && 
+      {props.thread.contributionCount > 0 && 
         <React.Fragment>
           <button
-            onClick={() => props.handleTogglePreview(props.id)}
+            onClick={() => props.thread.handleTogglePreview(props.thread.id)}
             className="loadMoreButton"
           >
-            {props.isUnfolded && <span>-</span>}
-            {!props.isUnfolded && <span>+</span>}
+            {props.thread.isUnfolded && <span>-</span>}
+            {!props.thread.isUnfolded && <span>+</span>}
           </button>
 
           <div className="wrapperPreview" style={{ height: previewHeight }}>
             <CSSTransition
-              in={props.isUnfolded}
+              in={props.thread.isUnfolded}
               timeout={500}
               unmountOnExit
               onEnter={calculatePreviewHeight}
@@ -66,7 +66,7 @@ const Thread = (props) => {
               nodeRef={previewRef}
             >
               <div ref={previewRef}>
-                <PreviewList key={props.id} posts={props.posts} />
+                <PreviewList key={props.thread.id} posts={props.thread.posts} />
               </div>
             </CSSTransition>
           </div>

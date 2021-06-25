@@ -8,7 +8,4 @@ const Forum = sequelize.define("Forum", {
     shortDescription: Sequelize.STRING(1000),
 });
 
-Forum.belongsTo(User, {as: "user", foreignKey: 'usersId'});
-User.hasMany(Forum, {as : 'forums', foreignKey: 'usersId'});
-
 module.exports = Forum;

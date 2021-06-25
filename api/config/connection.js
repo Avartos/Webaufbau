@@ -11,7 +11,7 @@ const sequelize = new Sequelize(
         host: 'localhost',
         dialect: 'mysql',
         operatorsAliases: 0,
-        logging: false,
+        // logging: false,
         pool: {
             // number of max simultaneous connections
             max: 5,
@@ -23,4 +23,5 @@ const sequelize = new Sequelize(
 });
 
 module.exports = sequelize;
+// module.exports = Sequelize;
 global.sequelize = sequelize;

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const contributionsController = require('../controllers/contributionsController');
+const contributionsController = require('../controllers/contributionController');
 
 router.get('/all/:threadId', contributionsController.findAll);
 router.get('/:id', contributionsController.findOne);
