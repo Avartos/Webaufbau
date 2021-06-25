@@ -8,9 +8,11 @@ const Contribution = sequelize.define("Contribution", {
     content: Sequelize.STRING(10000),
 });
 
+// setup for user-contribution mapping
 User.hasMany(Contribution, {as : 'contributions', foreignKey: 'usersId'});
 Contribution.belongsTo(User, {as: "user", foreignKey: 'usersId'});
 
+// setup for thread-contribution mapping
 Thread.hasMany(Contribution, {as : 'contributions', foreignKey: 'threadsId'});
 Contribution.belongsTo(Thread, {as: "threads", foreignKey: 'threadsId'});
 

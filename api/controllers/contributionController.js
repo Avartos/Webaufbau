@@ -35,7 +35,7 @@ const findOne = (req, res) => {
         })
         .catch(error => {
             res.senStatus(500);
-            console.error("Error:\t", error);
+            console.error('Error:\t', error);
         })
 }
 
@@ -50,7 +50,7 @@ const deleteOne = (req, res) => {
             res.sendStatus(200);
         })
         .catch(error => {
-            console.error("Error:\t", error);
+            console.error('Error:\t', error);
             res.sendStatus(500);
         })
 }
@@ -62,11 +62,10 @@ const update = (req, res) => {
             res.json(data);
         })
         .catch(error => {
+            console.error('Error:\t', error);
             res.sendStatus(500);
         });
 }
-
-
 
 module.exports = {
     findAll,

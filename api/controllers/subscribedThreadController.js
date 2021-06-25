@@ -12,7 +12,7 @@ const findAll = (req, res) => {
             res.json(data);
         })
         .catch(error => {
-            console.log("Error:\t", error);
+            console.log('Error:\t', error);
             res.sendStatus(500);
         })
 }
@@ -24,7 +24,7 @@ const findOne = (req, res) => {
             res.json(data);
         })
         .catch(error => {
-            console.log("Error:\t", error)
+            console.log('Error:\t', error)
             res.sendStatus(500);
         });
 }
@@ -39,7 +39,7 @@ const deleteOne = (req, res) => {
     }, ).then(() => {
         res.sendStatus(200);
     }).catch(error => {
-        console.error("Error:\t", error);
+        console.error('Error:\t', error);
         res.sendStatus(500);
     });
 }
@@ -56,7 +56,7 @@ const add = (req, res) => {
             res.json(data);
         })
         .catch(error => {
-            console.error("Error:\t", error);
+            console.error('Error:\t', error);
             res.sendStatus(500);
         });
 }
@@ -91,7 +91,7 @@ const findNew = (req, res) => {
             res.json(data);
         })
         .catch(error => {
-            console.log("Error:\t", error);
+            console.log('Error:\t', error);
             res.sendStatus(500);
         })
 }

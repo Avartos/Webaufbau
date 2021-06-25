@@ -6,6 +6,14 @@ const Login = sequelize.define("Login", {
         type:  Sequelize.STRING(255),
         allowNull: false,
     },
+    isAdmin: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: false,
+    },
+    isEnabled: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true,
+    },
 });
 
 module.exports = Login;

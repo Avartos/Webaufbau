@@ -159,18 +159,22 @@ const findAll = (req, res) => {
   Thread.findAll({
     attributes: {
       include: [
+        // format the given date into a dd.mm.YYYY string
         [sequelize.fn('date_format', sequelize.col('contributions.createdAt'), '%d.%m.%Y'), 'lastPostDate'],
+        //add and rename the column to the result
         [sequelize.col('contributions.user.username'), 'lastPostUsername'],
         [sequelize.fn('date_format', sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
+        //count the occurance of the contributions
         [sequelize.fn("COUNT", sequelize.col("contributions.id")), "contributionCount"],
         [sequelize.col('subscribedThreads.usersId'), 'subscriptionUsersId']
       ]
     },
+    // restrict query by where clause
     where: {
       forumsId: forumId,
     },
     group: ['id'],
-    // join with table users and contributions
+    // join with table users and contributions and subscriptions for current user
     include: [{
         model: User,
         as: 'user'
@@ -202,7 +206,7 @@ const findAll = (req, res) => {
   }, ).then(data => {
     res.json(data);
   }).catch(error => {
-    console.error("Error:\t", error);
+    console.error('Error:\t', error);
     res.sendStatus(500);
   });
 }
@@ -239,10 +243,9 @@ const add = (req, res) => {
     })
     .then(data => {
       res.json(data);
-      // sequelize.sync({force:true});
     })
     .catch(error => {
-      console.error("Error:\t", error);
+      console.error('Error:\t', error);
       res.sendStatus(500);
     });
 }

@@ -5,6 +5,7 @@ const Image = require('../models/image.js');
 
 const findAll = (req,res) => {
     User.findAll({
+        // join with tables login and image
         include: [
             {model: Login, as : 'login'},
             {model: Image, as: 'image'},
