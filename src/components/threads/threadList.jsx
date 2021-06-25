@@ -5,10 +5,10 @@ import { CircularProgress } from "@material-ui/core";
 import Thread from "./thread";
 import NewThreadForm from "./newThreadForm";
 import useFetch from "../../hooks/useFetch";
-
+import CollapsibleError from "../collapsibleError";
 
 const ThreadList = () => {
-  const { forumId } = useParams('forumId');
+  const { forumId } = useParams("forumId");
 
   const [threads, setThreads] = useState();
   const [isPending, setIsPending] = useState(true);
@@ -16,41 +16,41 @@ const ThreadList = () => {
 
   useEffect(() => {
     fetchThreads();
-  },[]);
+  }, []);
 
-  const fetchThreads =  () => {
+  const fetchThreads = () => {
     console.log(forumId);
     const abortController = new AbortController();
-    fetch(`http://localhost:3001/api/threads/all/${forumId}`, {signal: abortController.signal})
-        .then(res => {
-            if(!res.ok) {
-                throw Error('Could not fetch data for that resource!');
-            }
-            return res.json();
-        })
-        .then ((data) => {
-            console.log(forumId);
-            setThreads(data);
-            setIsPending(false);
-            setError(null);
-        })
-        .catch((error) => {
-            if(error.name === 'AbortError') {
-                console.log('fetch abortet');
-            } else {
-                setError(error.message);
-                setIsPending(false);
-            }
-        });
-        return () => console.log(abortController.abort());
-  }
+    fetch(`http://localhost:3001/api/threads/all/${forumId}`, {
+      signal: abortController.signal,
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Could not fetch data for that resource!");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setThreads(data);
+        setIsPending(false);
+        setError(null);
+      })
+      .catch((error) => {
+        if (error.name === "AbortError") {
+          console.log("fetch abortet");
+        } else {
+          setError(error.message);
+          setIsPending(false);
+        }
+      });
+    return () => console.log(abortController.abort());
+  };
 
   const [unfoldedThreadId, setUnfoldedThreadId] = useState(-1);
-  const history = useHistory();
 
   const handleSubscribeThread = (id, isSubscribed) => {
-    const subscribeMethod = (isSubscribed) ? 'DELETE' : 'POST';
-    
+    const subscribeMethod = isSubscribed ? "DELETE" : "POST";
+
     fetch(`http://localhost:3001/api/threads/subscriptions/${id}`, {
       method: subscribeMethod,
       headers: { "Content-Type": "application/json" },
@@ -89,10 +89,10 @@ const ThreadList = () => {
     <React.Fragment>
       <h3>Threads {forumId}</h3>
       <div className="threadList">
-      
+        <CollapsibleError description={error}/>
         {isPending && (
           <React.Fragment>
-            <CircularProgress/>
+            <CircularProgress />
             <p>Wird geladen...</p>
           </React.Fragment>
         )}
@@ -105,6 +105,7 @@ const ThreadList = () => {
                 key={thread.id}
                 thread={thread}
                 handleSubscribe={handleSubscribeThread}
+                handleTogglePreview={handleTogglePreview}
               />
             );
           })}

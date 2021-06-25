@@ -49,7 +49,7 @@ const Thread = (props) => {
       {props.thread.contributionCount > 0 && 
         <React.Fragment>
           <button
-            onClick={() => props.thread.handleTogglePreview(props.thread.id)}
+            onClick={() => props.handleTogglePreview(props.thread.id)}
             className="loadMoreButton"
           >
             {props.thread.isUnfolded && <span>-</span>}
