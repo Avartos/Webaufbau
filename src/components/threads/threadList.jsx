@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import { useParams, useHistory } from "react-router-dom";
-import { CircularProgress } from "@material-ui/core";
+import { useParams} from "react-router-dom";
+
 
 import Thread from "./thread";
 import NewThreadForm from "./newThreadForm";
-import useFetch from "../../hooks/useFetch";
 import CollapsibleError from "../collapsibleError";
+import LoadingCircle from "../loadingCircle";
 
 const ThreadList = () => {
   const { forumId } = useParams("forumId");
@@ -55,8 +55,12 @@ const ThreadList = () => {
       method: subscribeMethod,
       headers: { "Content-Type": "application/json" },
     }).then(() => {
+      setError(null);
       fetchThreads();
-    });
+    }).catch(error => {
+      setError(error);
+    })
+    ;
   };
 
   const handleTogglePreview = (id) => {
@@ -82,6 +86,8 @@ const ThreadList = () => {
       body: JSON.stringify(newThread),
     }).then(() => {
       fetchThreads();
+    }).catch(error => {
+      setError('Das Formular konnte nicht abgeschickt werden (' + error + ')');
     });
   };
 
@@ -90,12 +96,7 @@ const ThreadList = () => {
       <h3>Threads {forumId}</h3>
       <div className="threadList">
         <CollapsibleError description={error}/>
-        {isPending && (
-          <React.Fragment>
-            <CircularProgress />
-            <p>Wird geladen...</p>
-          </React.Fragment>
-        )}
+        <LoadingCircle isActive={isPending} loadingText={'Wird geladen...'}></LoadingCircle>
         {!isPending && !threads && !error && <p>Es gibt noch keine Threads</p>}
         {!isPending &&
           threads &&
