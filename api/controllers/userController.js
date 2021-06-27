@@ -46,10 +46,15 @@ const update = (req, res) => {
         });
 }
 
+const add =(req, res) => {
+    
+}
+
 
 module.exports = {
 
     findAll,
     findOne,
     update,
+    add,
 }

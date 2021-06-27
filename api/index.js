@@ -17,6 +17,9 @@ const subscribedForumRoutes = require('./routes/subscribedForumRoutes');
 const subscribedThreadRoutes = require('./routes/subscribedThreadRoutes');
 // #endregion
 
+//jsonwebtoken
+const jwt = require('jsonwebtoken');
+
 //set up express app
 const app = express();
 app.listen(3001);
