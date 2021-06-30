@@ -14,11 +14,11 @@ const FavList = (props) => {
                 </div>
                 {/*forEach list*/}
                 {props.list.map((item) => {return (
-                    <li className="forum"><span>{item.forum}</span><input type="checkbox" className="checkbox"/>
+                    <li className="fav-forum"><span>{item.forum}</span><input type="checkbox" className="checkbox"/>
                         <ul>
                             {/*forEach threads*/}
                             {item.threads.map((thread) => {return (
-                                <li className="thread"> {thread} </li>
+                                <li className="fav-thread"> {thread} </li>
                             );})}
                         </ul>
                     </li>
