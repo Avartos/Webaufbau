@@ -8,10 +8,10 @@ const findAll = (req, res) => {
             where: {
                 threadsId: threadId,
             },
-            include: [{
-                model: User,
-                as: 'user'
-            }]
+            // include: [{
+            //     model: User,
+            //     as: 'user'
+            // }]
         })
         .then(data => {
             res.json(data)

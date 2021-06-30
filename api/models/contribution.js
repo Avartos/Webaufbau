@@ -14,6 +14,6 @@ Contribution.belongsTo(User, {as: "user", foreignKey: 'usersId'});
 
 // setup for thread-contribution mapping
 Thread.hasMany(Contribution, {as : 'contributions', foreignKey: 'threadsId'});
-Contribution.belongsTo(Thread, {as: "threads", foreignKey: 'threadsId'});
+Contribution.belongsTo(Thread, {as: "thread", foreignKey: 'threadsId'});
 
 module.exports = Contribution;

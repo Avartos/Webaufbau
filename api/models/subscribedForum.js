@@ -19,7 +19,7 @@ const SubscribedForum = sequelize.define("SubscribedForum", {
 });
 
 // Setup for Forum-subscribedForum mapping
-Forum.hasMany(SubscribedForum, {as : 'subscribedForums', foreignKey: 'forumsId'});
-SubscribedForum.belongsTo(Forum, {as: "forums", foreignKey: 'forumsId'});
+Forum.hasMany(SubscribedForum, {as: 'subscribedForums', foreignKey: 'forumsId'});
+SubscribedForum.belongsTo(Forum, {as: 'forum', foreignKey: 'forumsId'});
 
 module.exports = SubscribedForum;

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import {Link} from 'react-router-dom';
 
@@ -19,6 +19,23 @@ const Thread = (props) => {
     setPreviewHeight(height);
   };
 
+  const [lastPostDate, setLastPostDate] = useState(props.thread.createdAt);
+  const [lastPoster, setLastPoster] = useState(props.thread.creatorUserName);
+
+
+  //used to change the last post information, if there are already contributions
+  const determineLastPostData = () => {
+    if(props.thread.contributionCount !== 0) {
+      setLastPostDate(props.thread.contributions[0].createdAt);
+      setLastPoster(props.thread.contributions[0].user.userName);
+    }
+  }
+
+  useEffect(() => {
+    determineLastPostData();
+  }, []);
+
+  
   return (
     <div className="thread">
       <div className="header">
@@ -41,8 +58,8 @@ const Thread = (props) => {
         <ThreadStatistics
           createdAt={props.thread.createdAt}
           numberOfPosts={props.thread.contributionCount}
-          lastPoster={props.thread.lastPostUsername}
-          lastPostDate={props.thread.lastPostDate}
+          lastPoster={lastPoster}
+          lastPostDate={lastPostDate}
         />
       </div>
 

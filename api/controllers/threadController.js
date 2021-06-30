@@ -140,7 +140,7 @@ let threads = [{
   },
 ]
 
-const sequelize = require('../config/connection');
+const Sequelize = require('../config/connection');
 const Thread = require('../models/thread');
 const User = require('../models/user');
 const Contribution = require('../models/contribution');
@@ -149,6 +149,50 @@ const SubscribedThread = require('../models/subscribedThread');
 
 const currentUserId = 1;
 
+const threadAttributes = [
+  'id',
+  'title',
+  'content',
+  [Sequelize.fn('date_format', Sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
+  'usersId',
+  [Sequelize.col('user.userName'), 'creatorUserName'],
+  [Sequelize.col('subscribedThreads.usersId'), 'subscriptionUsersId'],
+]
+
+//Used to include contributions to thread
+const contributionInclude = {
+  model: Contribution,
+  as: 'contributions',
+  //Orders contributions to show the newest contribution first
+  order: [
+    [
+      'createdAt', 'desc'
+    ]
+  ],
+  //only display the creation date of the contribution
+  attributes: [
+    'usersId',
+    [Sequelize.fn('date_format', Sequelize.col('contribution.createdAt'), '%d.%m.%Y'), 'createdAt'],
+  ],
+  //include the user to access its username
+  include: [{
+    model: User,
+    as: 'user',
+    attributes: ['userName']
+  }],
+  limit: 1
+}
+
+const subscriptionInclude = {
+  model: SubscribedThread,
+  as: 'subscribedThreads',
+  required: false,
+  where: {
+    usersId: currentUserId
+  },
+  attributes: []
+}
+
 /**
  * Returns all threads from the given forum id
  * @param {*} req 
@@ -156,59 +200,43 @@ const currentUserId = 1;
  */
 const findAll = (req, res) => {
   const forumId = req.params.forumId;
-  Thread.findAll({
-    attributes: {
-      include: [
-        // format the given date into a dd.mm.YYYY string
-        [sequelize.fn('date_format', sequelize.col('contributions.createdAt'), '%d.%m.%Y'), 'lastPostDate'],
-        //add and rename the column to the result
-        [sequelize.col('contributions.user.username'), 'lastPostUsername'],
-        [sequelize.fn('date_format', sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
-        //count the occurance of the contributions
-        [sequelize.fn("COUNT", sequelize.col("contributions.id")), "contributionCount"],
-        [sequelize.col('subscribedThreads.usersId'), 'subscriptionUsersId']
-      ]
-    },
-    // restrict query by where clause
-    where: {
-      forumsId: forumId,
-    },
-    group: ['id'],
-    // join with table users and contributions and subscriptions for current user
-    include: [{
-        model: User,
-        as: 'user'
-      },
-      {
-        model: Contribution,
-        as: 'contributions',
-        include: [{
-          model: User,
-          as: 'user'
-        }],
-      },
-      {
-        model: SubscribedThread,
-        as: 'subscribedThreads',
-        required: false,
-        where: {usersId: currentUserId}
-      }
-    ],
-    // sort contributions by date
-    order: [
-      [{
-        model: Contribution,
-        as: 'contributions'
-      }, 'createdAt', 'DESC']
-    ],
-    //don't send sub-arrays
-    includeIgnoreAttributes: false,
-  }, ).then(data => {
-    res.json(data);
-  }).catch(error => {
-    console.error('Error:\t', error);
-    res.sendStatus(500);
-  });
+  Contribution.count({
+      group: ['threadsId'],
+      include: [{
+        model: Thread,
+        as: 'thread',
+        where: {
+          forumsId: forumId
+        }
+      }],
+    })
+    .then(data => {
+      Thread.findAll({
+          attributes: threadAttributes,
+          include: [{
+              model: User,
+              as: 'user',
+              attributes: [],
+            },
+            subscriptionInclude,
+            contributionInclude
+          ],
+          where: {
+            forumsId: forumId
+          },
+        })
+        .then(threadData => {
+          let mappedData = addCountsToData(threadData, data);
+          res.json(mappedData);
+        })
+        .catch(error => {
+          console.error('Error:\t', error);
+          res.sendStatus(500);
+        })
+    })
+    .catch(error => {
+      res.sendStatus(error);
+    })
 }
 
 /**
@@ -218,12 +246,39 @@ const findAll = (req, res) => {
  */
 const findOne = (req, res) => {
   const id = req.params.id;
-  const result = threads.find(thread => parseInt(thread.id) === parseInt(id));
-  if (result) {
-    res.json(result);
-  } else {
-    res.sendStatus(404);
-  }
+  Contribution.count({
+    group: ['threadsId'],
+    where: {
+      threadsId: id
+    }
+  })
+  .then(data => {
+    Thread.findAll({
+        attributes: threadAttributes,
+        include: [{
+            model: User,
+            as: 'user',
+            attributes: [],
+          },
+          subscriptionInclude,
+          contributionInclude
+        ],
+        where: {
+          id: id
+        },
+      })
+      .then(threadData => {
+        let mappedData = addCountsToData(threadData, data);
+        res.json(mappedData);
+      })
+      .catch(error => {
+        console.error('Error:\t', error);
+        res.sendStatus(500);
+      })
+  })
+  .catch(error => {
+    res.sendStatus(error);
+  })
 }
 
 /**
@@ -251,22 +306,6 @@ const add = (req, res) => {
 }
 
 /**
- * changes subscription state of the given thread
- * @param {*} req 
- * @param {*} res 
- */
-const subscribeThread = (req, res) => {
-  const threadId = req.params.id;
-  let indexToUpdate = threads.findIndex((thread) => {
-    return parseInt(thread.id) === parseInt(threadId);
-  });
-  if (indexToUpdate !== -1) {
-    threads[indexToUpdate].isSubscribed = threads[indexToUpdate].isSubscribed === true ? false : true;
-  }
-  res.send(200);
-}
-
-/**
  * deletes the thread that has the given id
  * @param {*} req 
  * @param {*} res 
@@ -277,10 +316,28 @@ const deleteOne = (req, res) => {
   res.sendStatus(200);
 }
 
+/**
+ * UThis function is used to map the found contribution counts to the threads
+ * @param {*} threads
+ * @param {*} dataCounts 
+ * @returns 
+ */
+const addCountsToData = (threads, contributionCounts) => {
+  const mappedArray = threads.map(entry => {
+    let matchingCount = contributionCounts.find(countEntry => entry.id === countEntry.threadsId);
+    if (matchingCount) {
+      entry.dataValues.contributionCount = matchingCount.count;
+    } else {
+      entry.dataValues.contributionCount = 0;
+    }
+    return entry;
+  });
+  return mappedArray;
+}
+
 module.exports = {
   findAll,
   findOne,
   deleteOne,
   add,
-  subscribeThread
 }

@@ -16,7 +16,7 @@ const sequelize = new Sequelize(
         dialect: 'mysql',
         operatorsAliases: 0,
         // set to true, to see the executed queries in console log
-        logging: false,
+        // logging: false,
         pool: {
             // number of max simultaneous connections
             max: 5,
@@ -31,4 +31,4 @@ const sequelize = new Sequelize(
 
 module.exports = sequelize;
 // module.exports = Sequelize;
-global.sequelize = sequelize;
+// global.sequelize = sequelize; //did not work

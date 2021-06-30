@@ -26,8 +26,6 @@ app.use(bodyParser.json());
 //DB connection
 require('./config/connection');
 
-
-
 //use logger
 app.use(morgan('dev'));
 

@@ -10,7 +10,5 @@ router.get('/:id', threadController.findOne);
 router.delete('/:id', threadController.deleteOne);
 // post a new thread to the given forum
 router.post('/:forumId', threadController.add);
-// update a thread that is given by id
-router.put('/:id', threadController.subscribeThread);
 
 module.exports = router;

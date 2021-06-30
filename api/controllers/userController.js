@@ -48,7 +48,6 @@ const update = (req, res) => {
 
 
 module.exports = {
-
     findAll,
     findOne,
     update,

@@ -5,14 +5,6 @@ const Login = require('./login');
 const Image = require('./image');
 
 const User = sequelize.define("User", {
-    
-    id: {
-        type : Sequelize.INTEGER,
-        allowNull: false,
-        autoIncrement: true,
-        primaryKey: true
-    },
-    
     loginsId: Sequelize.INTEGER,
     imagesId: Sequelize.INTEGER,
     userName: {
