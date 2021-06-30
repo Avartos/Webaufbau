@@ -1,0 +1,19 @@
+@import "./mixins/contentCard";
+
+.wrapper-account {
+  @include contentCard($threadHeaderColor, $threadBodyColor);
+
+  .body {
+    display: flex;
+    justify-content: center;
+    .left {
+      display: flex;
+      flex-direction: column;
+      text-align: left;
+    }
+  }
+
+
+
+
+}
