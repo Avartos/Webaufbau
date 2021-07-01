@@ -1,16 +1,44 @@
 import React, { useState } from "react";
-import {Link} from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 const Login = () => {
 
     const [userName, setUserName] = useState("");
     const [password, setPassword] = useState("");
+    const [error, setError] = useState(null);
+
+    let history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         console.log(userName);
         console.log(password);
-    }
+
+        let user = {
+            userName: userName,
+            passwordHash: password,
+          };
+      
+          fetch(`http://localhost:3001/api/users/login/${user}`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(user),
+          })
+            .then((response) => {
+              if (response.data.error){
+                alert(response.data.error);
+              }else{
+                sessionStorage.setItem("accessToken", response.data);
+                console.log("juhu");
+                history.push("/");
+              }
+            })
+            .catch((error) => {
+              setError(
+                "Das Formular konnte nicht abgeschickt werden (" + error + ")"
+              );
+            });
+        }
     
 
     return ( 

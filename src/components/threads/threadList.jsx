@@ -59,8 +59,7 @@ const ThreadList = () => {
       fetchThreads();
     }).catch(error => {
       setError(error);
-    })
-    ;
+    });
   };
 
   const handleTogglePreview = (id) => {
