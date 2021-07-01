@@ -1,0 +1,110 @@
+@import "./variables";
+@import "./mixins/contentCard";
+@import "./mixins/buttonPreset";
+@import "./mixins/statistics";
+
+
+.addContribution {
+    width: 100%;
+    @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+}
+
+.discardContribution {
+    @include basicButton($aCFontColor, $dAbuttonColor, $aCHoverColor, $buttonPressedColor);
+    border-radius: 20px;
+    padding: 5px;
+    margin: 5px;
+    display: flex;
+}
+
+.newContributionForm {
+    @include contentCard($nCFHeaderColor, $nCFBodyColor);
+
+    textarea {
+        margin: 5px;
+        outline: none;
+        resize: none;
+        width: 90%;
+        height: 7em;
+        border: 1px solid #FF9838;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    button {
+        @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+        border-radius: 20px;
+        padding: 5px;
+        margin: 5px;
+    }
+
+}
+
+.descriptionThread {
+    @include contentCard($threadHeaderColor, $threadBodyColor);
+
+    header {
+        margin-left: 5px;
+    }
+
+    .statistics {
+        @include statistics;
+        display: flex;
+        float: right;
+        padding-right: 40px;
+        padding-bottom: 10px;
+    }
+}
+
+.contributions {
+    background-color: #FEFCFD;
+    border-radius: 10px;
+}
+
+.contribution {
+    padding: 5px;
+    padding-left: 20px;
+    text-align: left;
+}
+
+.contribution:nth-child(even){
+    background-color: #BFCDE0;
+
+    .replyButton {
+        @include basicButton($aCAnswerFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+        background-color: #BFCDE0;
+    }
+
+    .newContributionForm {
+        .body {background-color: #BFCDE0;}
+    }
+}
+
+.replyButton {
+    @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+    border: none;
+    background-color: #FEFCFD;
+    color: $buttonColor;
+    display: flex;
+    margin-left: 1137px;
+    margin-bottom: 15px;
+
+}
+
+.counterOfLikes {
+    padding-bottom: 10px;
+    float: right;
+    display: flex;
+    margin-top: -42px;
+    margin-right: 10px;
+
+    p {
+        margin: 8px;
+    }
+}
+
+
+.counterButton {
+    @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+    margin-right: 0;
+}
