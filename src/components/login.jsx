@@ -11,15 +11,13 @@ const Login = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(userName);
-        console.log(password);
 
         let user = {
             userName: userName,
             passwordHash: password,
           };
       
-          fetch(`http://localhost:3001/api/users/login/${user}`, {
+          fetch(`http://localhost:3001/api/users/login`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify(user),
@@ -27,11 +25,14 @@ const Login = () => {
             .then((response) => {
               if (response.data.error){
                 alert(response.data.error);
-              }else{
-                sessionStorage.setItem("accessToken", response.data);
-                console.log("juhu");
-                history.push("/");
-              }
+            //   }else{
+            //     sessionStorage.setItem("accessToken", response.data);
+            //     console.log("juhu");
+            //     history.push("/"); 
+               }
+            return response.json();
+            }).then(data=>{
+                console.log(data);
             })
             .catch((error) => {
               setError(
@@ -70,7 +71,6 @@ const Login = () => {
                         onChange = {(e) => {
                             setPassword(e.target.value);
                         }}>
-
                         </input>    
                 </div>
 
