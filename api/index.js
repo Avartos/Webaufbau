@@ -7,7 +7,14 @@ const morgan = require('morgan');
 
 
 // #region routes
-const threadRoutes = require('./routes/threadRoutes.js');
+const threadRoutes = require('./routes/threadRoutes');
+const userRoutes = require('./routes/userRoutes');
+const imageRoutes = require('./routes/imageRoutes');
+const contributionRoutes = require('./routes/contributionRoutes');
+const forumRoutes = require('./routes/forumRoutes');
+const ratingRoutes = require('./routes/ratingRoutes');
+const subscribedForumRoutes = require('./routes/subscribedForumRoutes');
+const subscribedThreadRoutes = require('./routes/subscribedThreadRoutes');
 // #endregion
 
 //set up express app
@@ -16,13 +23,22 @@ app.listen(3001);
 app.use(cors());
 app.use(bodyParser.json());
 
+//DB connection
+require('./config/connection');
+
 //use logger
 app.use(morgan('dev'));
 
 // #region routers
 // contains the routes that are offered by the api
+app.use('/api/threads/subscriptions', subscribedThreadRoutes);
 app.use('/api/threads', threadRoutes);
-
+app.use('/api/users', userRoutes);
+app.use('/api/images', imageRoutes);
+app.use('/api/contributions', contributionRoutes);
+app.use('/api/forums/subscriptions', subscribedForumRoutes);
+app.use('/api/forums', forumRoutes);
+app.use('/api/ratings', ratingRoutes);
 // #endregion
 
 // 404 page

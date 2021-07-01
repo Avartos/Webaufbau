@@ -25,7 +25,7 @@ function App() {
           <Switch>
             {/* Forum Routes */}
             <Route exact path="/"><ForumList/></Route>
-            <Route exact path="/threads/:id"><ThreadList/></Route>
+            <Route exact path="/threads/:forumId"><ThreadList/></Route>
             <Route exact path="/contributions/:id"><Contributions/></Route>
             {/* Login Routes */}
             <Route exact path="/registration"><Signin/></Route>
