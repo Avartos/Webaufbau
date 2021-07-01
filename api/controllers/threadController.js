@@ -41,16 +41,6 @@ const contributionInclude = {
   limit: 1
 }
 
-const subscriptionInclude = {
-  model: SubscribedThread,
-  as: 'subscribedThreads',
-  required: false,
-  where: {
-    usersId: currentUserId
-  },
-  attributes: []
-}
-
 /**
  * Returns all threads from the given forum id
  * @param {*} req 
@@ -58,6 +48,8 @@ const subscriptionInclude = {
  */
 const findAll = (req, res) => {
   const forumId = req.params.forumId;
+  const userId = (req.user) ? req.user.id : -1;
+
   Contribution.count({
       group: ['threadsId'],
       include: [{
@@ -76,7 +68,15 @@ const findAll = (req, res) => {
               as: 'user',
               attributes: [],
             },
-            subscriptionInclude,
+            {
+              model: SubscribedThread,
+              as: 'subscribedThreads',
+              required: false,
+              where: {
+                usersId: userId
+              },
+              attributes: []
+            },
             contributionInclude
           ],
           where: {
@@ -104,39 +104,48 @@ const findAll = (req, res) => {
  */
 const findOne = (req, res) => {
   const id = req.params.id;
+  const userId = (req.user) ? req.user.id : -1;
   Contribution.count({
-    group: ['threadsId'],
-    where: {
-      threadsId: id
-    }
-  })
-  .then(data => {
-    Thread.findAll({
-        attributes: threadAttributes,
-        include: [{
-            model: User,
-            as: 'user',
-            attributes: [],
+      group: ['threadsId'],
+      where: {
+        threadsId: id
+      }
+    })
+    .then(data => {
+      Thread.findAll({
+          attributes: threadAttributes,
+          include: [{
+              model: User,
+              as: 'user',
+              attributes: [],
+            },
+            {
+              model: SubscribedThread,
+              as: 'subscribedThreads',
+              required: false,
+              where: {
+                usersId: userId
+              },
+              attributes: []
+            },
+            contributionInclude
+          ],
+          where: {
+            id: id
           },
-          subscriptionInclude,
-          contributionInclude
-        ],
-        where: {
-          id: id
-        },
-      })
-      .then(threadData => {
-        let mappedData = addCountsToData(threadData, data);
-        res.json(mappedData);
-      })
-      .catch(error => {
-        console.error('Error:\t', error);
-        res.sendStatus(500);
-      })
-  })
-  .catch(error => {
-    res.sendStatus(error);
-  })
+        })
+        .then(threadData => {
+          let mappedData = addCountsToData(threadData, data);
+          res.json(mappedData);
+        })
+        .catch(error => {
+          console.error('Error:\t', error);
+          res.sendStatus(500);
+        })
+    })
+    .catch(error => {
+      res.sendStatus(error);
+    })
 }
 
 /**
@@ -147,11 +156,11 @@ const findOne = (req, res) => {
 const add = (req, res) => {
   const forumId = req.params.forumId;
   const thread = req.body;
-
+  const userId = req.user.id;
   Thread.create({
       title: thread.title,
       content: thread.content,
-      usersId: 1,
+      usersId: userId,
       forumsId: parseInt(forumId)
     })
     .then(data => {
@@ -169,8 +178,8 @@ const add = (req, res) => {
  * @param {*} res 
  */
 const deleteOne = (req, res) => {
-  const id = req.params.id;
-  threads = threads.filter(thread => parseInt(thread.id) !== parseInt(id));
+  // const id = req.params.id;
+  // threads = threads.filter(thread => parseInt(thread.id) !== parseInt(id));
   res.sendStatus(200);
 }
 

@@ -1,5 +1,4 @@
 const Sequelize = require('sequelize');
-const sequelize = require('../config/connection');
 const Contribution = require('../models/contribution');
 const SubscribedThread = require('../models/subscribedThread');
 const Thread = require('../models/thread');
@@ -31,9 +30,10 @@ const findOne = (req, res) => {
 
 const deleteOne = (req, res) => {
     const threadId = req.params.id;
+    const userId = (req.user.id) ? req.user.id : -1;
     SubscribedThread.destroy({
         where: {
-            usersId: currentUserId,
+            usersId: userId,
             threadsId: threadId
         },
     }, ).then(() => {
@@ -46,8 +46,10 @@ const deleteOne = (req, res) => {
 
 const add = (req, res) => {
     const threadId = req.params.id;
+    const userId = (req.user.id) ? req.user.id : -1;
+    console.log(userId);
     const newSubscription = SubscribedThread.build({
-        usersId: currentUserId,
+        usersId: userId,
         threadsId: threadId,
     });
 

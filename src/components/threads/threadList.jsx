@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams} from "react-router-dom";
-
+import { useParams } from "react-router-dom";
 
 import Thread from "./thread";
 import NewThreadForm from "./newThreadForm";
@@ -14,15 +13,15 @@ const ThreadList = () => {
   const [isPending, setIsPending] = useState(true);
   const [error, setError] = useState(null);
 
-  useEffect(() => {
-    fetchThreads();
-  }, []);
-
   const fetchThreads = () => {
-    console.log(forumId);
+    //used to stop fetching when forcing reload
     const abortController = new AbortController();
     fetch(`http://localhost:3001/api/threads/all/${forumId}`, {
       signal: abortController.signal,
+      headers: {
+        "Content-Type": "application/json",
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
     })
       .then((res) => {
         if (!res.ok) {
@@ -46,6 +45,8 @@ const ThreadList = () => {
     return () => console.log(abortController.abort());
   };
 
+  useEffect(fetchThreads, []); // eslint-disable-line react-hooks/exhaustive-deps
+
   const [unfoldedThreadId, setUnfoldedThreadId] = useState(-1);
 
   const handleSubscribeThread = (id, isSubscribed) => {
@@ -53,13 +54,27 @@ const ThreadList = () => {
 
     fetch(`http://localhost:3001/api/threads/subscriptions/${id}`, {
       method: subscribeMethod,
-      headers: { "Content-Type": "application/json", accessToken:  sessionStorage.getItem("accessToken")},
-    }).then(() => {
-      setError(null);
-      fetchThreads();
-    }).catch(error => {
-      setError(error);
-    });
+      headers: {
+        "Content-Type": "application/json",
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
+    })
+      .then((req) => {
+        if (!req.ok) {
+          throw Error("Der Thread konnte nicht abonniert werden.");
+        }
+        setError(null);
+        let updatedThreads = threads;
+        const index = updatedThreads.findIndex((thread) => thread.id === id);
+        updatedThreads[index].subscriptionUsersId = updatedThreads[index]
+          .subscriptionUsersId
+          ? null
+          : true;
+        setThreads([...updatedThreads]);
+      })
+      .catch((error) => {
+        setError(error);
+      });
   };
 
   const handleTogglePreview = (id) => {
@@ -68,34 +83,41 @@ const ThreadList = () => {
     setUnfoldedThreadId(targetThreadId);
   };
 
-  const handleSubmitNewThread = (e, title, body, currentUser) => {
+  const handleSubmitNewThread = (e, title, body) => {
     e.preventDefault();
 
     let newThread = {
       title: title,
       content: body,
-      numberOfPosts: 0,
-      lastPoster: currentUser,
-      posts: [],
     };
 
     fetch(`http://localhost:3001/api/threads/${forumId}`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
       body: JSON.stringify(newThread),
-    }).then(() => {
-      fetchThreads();
-    }).catch(error => {
-      setError('Das Formular konnte nicht abgeschickt werden (' + error + ')');
-    });
+    })
+      .then(() => {
+        fetchThreads();
+      })
+      .catch((error) => {
+        setError(
+          "Das Formular konnte nicht abgeschickt werden (" + error + ")"
+        );
+      });
   };
 
   return (
     <React.Fragment>
       <h3>Threads {forumId}</h3>
       <div className="threadList">
-        <CollapsibleError description={error}/>
-        <LoadingCircle isActive={isPending} loadingText={'Wird geladen...'}></LoadingCircle>
+        <CollapsibleError description={error} />
+        <LoadingCircle
+          isActive={isPending}
+          loadingText={"Wird geladen..."}
+        ></LoadingCircle>
         {!isPending && !threads && !error && <p>Es gibt noch keine Threads</p>}
         {!isPending &&
           threads &&
@@ -110,7 +132,9 @@ const ThreadList = () => {
             );
           })}
       </div>
-      <NewThreadForm handleSubmitForm={handleSubmitNewThread} />
+      {sessionStorage.getItem("accessToken") && (
+        <NewThreadForm handleSubmitForm={handleSubmitNewThread} />
+      )}
     </React.Fragment>
   );
 };

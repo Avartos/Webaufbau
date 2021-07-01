@@ -1,20 +1,46 @@
-const {verify} = require("jsonwebtoken");
+const {
+    verify
+} = require("jsonwebtoken");
 
 //next
-const validateToken = (req,res,next) => {
+const validateToken = (req, res, next) => {
     const accessToken = req.header("accessToken");
 
-    if (!accessToken) return res.json({error: "User is not logged in!"});
+    if (!accessToken) return res.json({
+        error: "User is not logged in!"
+    });
 
-    try{ 
-        const validToken = verify(accessToken, "i677hf8kuah2basb0fasjb234faksbf")
-
-        if(validToken){
-            return next();
-        } 
-    } catch (err){
-        res.json({error: err})
+    try {
+        verify(accessToken, "i677hf8kuah2basb0fasjb234faksbf", (err, decodedToken) => {
+            req.user = decodedToken;
+            if(decodedToken) {
+                next();
+            }
+        })
+    } catch (err) {
+        res.json({
+            error: err
+        })
     }
 };
 
-module.exports = {validateToken};
+const extractUserFromToken = (req, res, next) => {
+    const accessToken = req.header("accessToken");
+
+    try {
+        verify(accessToken, "i677hf8kuah2basb0fasjb234faksbf", (err, decodedToken) => {
+            req.user = decodedToken;
+            next();
+        })
+    } catch (error) {
+        console.error('Error:', error);
+        res.sendStatus(500);
+    }
+
+
+}
+
+module.exports = {
+    validateToken,
+    extractUserFromToken
+};

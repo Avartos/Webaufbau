@@ -10,7 +10,7 @@ router.get('/new', subscribedThreadController.findNew);
 // get single subscription by id
 router.get('/:id', subscribedThreadController.findOne);
 // delete subscription by id for the current user
-router.delete('/:id', subscribedThreadController.deleteOne);
+router.delete('/:id', validateToken,subscribedThreadController.deleteOne);
 // add a new subscription for the current user
 router.post('/:id',validateToken, subscribedThreadController.add)
 

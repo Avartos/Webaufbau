@@ -31,9 +31,7 @@ const Thread = (props) => {
     }
   }
 
-  useEffect(() => {
-    determineLastPostData();
-  }, []);
+  useEffect(determineLastPostData, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   
   return (
@@ -45,13 +43,14 @@ const Thread = (props) => {
         <div className="wrapperButton">
           <CallIcon className="callButton"></CallIcon>
         </div>
+        {sessionStorage.getItem("accessToken") &&
         <div className="wrapperButton">
           <SubscribeButton
             parentId={props.thread.id}
             isSubscribed={props.thread.subscriptionUsersId}
             handleSubscribe={props.handleSubscribe}
           />
-        </div>
+        </div>}
       </div>
       <div className="body">
         <p className="shortDescription">{props.thread.content}</p>
@@ -62,7 +61,6 @@ const Thread = (props) => {
           lastPostDate={lastPostDate}
         />
       </div>
-
       {props.thread.contributionCount > 0 && 
         <React.Fragment>
           <button

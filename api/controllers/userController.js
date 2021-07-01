@@ -59,7 +59,7 @@ const findOneByName = (req, res) => {
 
             //sign create the token
             const accessToken = sign(
-              { userName: user.userName, id: user.userId },
+              { userName: user.userName, id: user.id },
               "i677hf8kuah2basb0fasjb234faksbf"
             );
 

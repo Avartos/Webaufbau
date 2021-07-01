@@ -3,7 +3,6 @@ import React, { useState } from "react";
 const NewThreadForm = ({ handleSubmitForm }) => {
   const [title, setTitle] = useState("");
   const [body, setBody] = useState("");
-  const [currentUser, setCurrentUser] = useState("Squidy1701");
 
   return (
     <div className="newThreadForm">
@@ -13,7 +12,7 @@ const NewThreadForm = ({ handleSubmitForm }) => {
 
       <form className="body"
         onSubmit={(e) => {
-          handleSubmitForm(e, title, body, currentUser);
+          handleSubmitForm(e, title, body);
           setTitle("");
           setBody("");
         }}

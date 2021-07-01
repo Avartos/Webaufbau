@@ -1,8 +1,9 @@
 const sequelize = require('../config/connection');
+const Login = require('../models/login');
 
 const findOne = (req,res) => {
     const id = req.params.id;
-    const result = logins.find(login => parseInt(login.id) === parseInt(id));
+    const result = Login.find(login => parseInt(login.id) === parseInt(id));
     if(result){
         res.json(result);
     } else {

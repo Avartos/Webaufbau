@@ -19,6 +19,7 @@ const subscribedThreadRoutes = require('./routes/subscribedThreadRoutes');
 
 //jsonwebtoken
 const jwt = require('jsonwebtoken');
+const sequelize = require('./config/connection');
 
 //set up express app
 const app = express();
