@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const subscribedThreadController = require('../controllers/subscribedThreadController');
+const { validateToken } = require('../middlewares/authMiddleware');
 
 // get all subscribed threads for a given user
 router.get('/all', subscribedThreadController.findAll);
@@ -11,6 +12,6 @@ router.get('/:id', subscribedThreadController.findOne);
 // delete subscription by id for the current user
 router.delete('/:id', subscribedThreadController.deleteOne);
 // add a new subscription for the current user
-router.post('/:id', subscribedThreadController.add)
+router.post('/:id',validateToken, subscribedThreadController.add)
 
 module.exports = router;

@@ -53,7 +53,7 @@ const ThreadList = () => {
 
     fetch(`http://localhost:3001/api/threads/subscriptions/${id}`, {
       method: subscribeMethod,
-      headers: { "Content-Type": "application/json" },
+      headers: { "Content-Type": "application/json", accessToken:  sessionStorage.getItem("accessToken")},
     }).then(() => {
       setError(null);
       fetchThreads();

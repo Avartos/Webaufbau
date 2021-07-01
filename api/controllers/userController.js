@@ -62,11 +62,7 @@ const findOneByName = (req, res) => {
               { userName: user.userName, id: user.userId },
               "i677hf8kuah2basb0fasjb234faksbf"
             );
-
-            console.log("LoggedIN");
-            console.log(password);
-            console.log(user.login.passwordHash);
-
+            
             res.json(accessToken);
           })
 
