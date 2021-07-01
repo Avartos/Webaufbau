@@ -7,4 +7,8 @@ router.get('/', userController.findAll);
 // get one specific user by a given id
 router.get('/:id', userController.findOne);
 
+router.post('/login', userController.findOneByName);
+
+router.post('/', userController.add);
+
 module.exports = router;
