@@ -19,7 +19,7 @@ function App() {
     <Router>
       <div className="App">
         <NavBar />
-        {/* <FavBar /> */}
+        <FavBar />
         <div className="content">
           <Switch>
             {/* Forum Routes */}

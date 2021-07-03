@@ -45,6 +45,7 @@ body {
   background-color: $backgroundColor;
   padding: 2em .5em 0em .5em;
   grid-area: content;
+  height: auto;
 
   @media (min-width: $minDesktopWidth) {
     padding: 2em 3.5em 0em 3.5em;

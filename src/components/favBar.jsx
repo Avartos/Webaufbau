@@ -3,32 +3,62 @@ import FavList from "./favList";
 
 const FavBar = () => {
   const [favorite, setFavorite] = useState([
-    { forum: "Forumtitle 1", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { forum: "Senf macht spaß", threads: ["Threadtitle 1", "Threadtitle 2"] },
     {
+      id: 0,
+      forum: "Forumtitle 1",
+      threads: ["Threadtitle 1", "Threadtitle 2"],
+    },
+    {
+      id: 1,
+      forum: "Senf macht spaß",
+      threads: ["Threadtitle 1", "Threadtitle 2"],
+    },
+    {
+      id: 2,
       forum: "Vogelfreunde Erfurt",
       threads: ["Threadtitle 1", "Threadtitle 2"],
     },
-    { forum: "Kochen mit Zimt", threads: ["Threadtitle 1", "Threadtitle 2"] },
+    {
+      id: 3,
+      forum: "Kochen mit Zimt",
+      threads: ["Threadtitle 1", "Threadtitle 2"],
+    },
   ]);
 
   const [popular, setPopular] = useState([
-    { forum: "Forumtitle 1", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { forum: "Fußball", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { forum: "Schwimmen", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { forum: "Erfurt", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { forum: "FH-Erfurt", threads: ["Threadtitle 1", "Threadtitle 2"] },
+    {
+      id: 4,
+      forum: "Forumtitle 1",
+      threads: ["Threadtitle 1", "Threadtitle 2"],
+    },
+    { id: 5, forum: "Fußball", threads: ["Threadtitle 1", "Threadtitle 2"] },
+    { id: 6, forum: "Schwimmen", threads: ["Threadtitle 1", "Threadtitle 2"] },
+    { id: 7, forum: "Erfurt", threads: ["Threadtitle 1", "Threadtitle 2"] },
+    { id: 8, forum: "FH-Erfurt", threads: ["Threadtitle 1", "Threadtitle 2"] },
   ]);
 
   const [latest, setLatest] = useState([
-    { forum: "Forumtitle 1", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { forum: "BUGA22", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { forum: "Fragen zu REACT", threads: ["Threadtitle 1", "Threadtitle 2"] },
     {
+      id: 9,
+      forum: "Forumtitle 1",
+      threads: ["Threadtitle 1", "Threadtitle 2"],
+    },
+    { id: 10, forum: "BUGA22", threads: ["Threadtitle 1", "Threadtitle 2"] },
+    {
+      id: 11,
+      forum: "Fragen zu REACT",
+      threads: ["Threadtitle 1", "Threadtitle 2"],
+    },
+    {
+      id: 12,
       forum: "Schützenverein Erfurt",
       threads: ["Threadtitle 1", "Threadtitle 2"],
     },
-    { forum: "Ein neues Forum", threads: ["Threadtitle 1", "Threadtitle 2"] },
+    {
+      id: 13,
+      forum: "Ein neues Forum",
+      threads: ["Threadtitle 1", "Threadtitle 2"],
+    },
   ]);
 
   return (
