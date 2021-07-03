@@ -26,7 +26,7 @@ nav {
   }
 
   .searchBar {
-      display: none;
+    display: none;
   }
   @media (min-width: $minDesktopWidth) {
     .searchBar {
@@ -89,10 +89,15 @@ nav {
       * {
         display: inherit;
       }
+      position: relative;
       display: inline;
+      width: 50px;
       float: right;
       padding: 5px;
-      height: 1em;
+      @media (min-width: $minDesktopWidth) {
+        margin-right: 25px;
+      }
+      height: $headerHeight;
       &.left {
         float: left;
       }
@@ -120,15 +125,35 @@ nav {
       }
     }
 
-    .wrapperButton {
+    .buttons {
+      position: absolute;
       top: 50%;
-        transform: translate(0, 50%);
-      margin-right: 0px;
+      transform: translate(-50%, 50%);
+    }
+
+    .wrapperButton {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, 50%);
+      @media (min-width: $minDesktopWidth) {
+        top: 50%;
+        transform: translate(-50%, -60%);
+      }
+
       @include buttonContainer($mobileHeaderHeight * 0.7);
+
+      @media (min-width: $minDesktopWidth) {
+        @include buttonContainer($headerHeight * 0.8);
+      }
 
       .headerButton {
         margin: auto auto;
         @include squaredButton($mobileHeaderHeight * 0.5, 0, 0.5);
+
+        @media (min-width: $minDesktopWidth) {
+          @include squaredButton($headerHeight * 0.5, 0, 0.5);
+        }
 
         &:not(.active) {
           filter: grayscale(100%);
