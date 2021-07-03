@@ -24,6 +24,7 @@ const Login = () => {
       .then((response) => {
         if (!response.ok) {
           alert(response.data.error);
+          //TODO: Error renaming
           throw error("BubbelBabbel");
         }
         return response.json();
