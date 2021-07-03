@@ -7,39 +7,54 @@ const SubscribedThread = require('../models/subscribedThread');
 
 const currentUserId = 1;
 
-const threadAttributes = [
-  'id',
-  'title',
-  'content',
-  [Sequelize.fn('date_format', Sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
-  'usersId',
-  [Sequelize.col('user.userName'), 'creatorUserName'],
-  [Sequelize.col('subscribedThreads.usersId'), 'subscriptionUsersId'],
-]
-
-//Used to include contributions to thread
-const contributionInclude = {
-  model: Contribution,
-  as: 'contributions',
-  //Orders contributions to show the newest contribution first
-  order: [
-    [
-      'createdAt', 'desc'
-    ]
-  ],
-  //only display the creation date of the contribution
+const threadCondition = (userId) => {return {
   attributes: [
+    'id',
+    'title',
+    'content',
+    [Sequelize.fn('date_format', Sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
     'usersId',
-    [Sequelize.fn('date_format', Sequelize.col('contribution.createdAt'), '%d.%m.%Y'), 'createdAt'],
+    [Sequelize.col('user.userName'), 'creatorUserName'],
+    [Sequelize.col('subscribedThreads.usersId'), 'subscriptionUsersId'],
   ],
-  //include the user to access its username
   include: [{
-    model: User,
-    as: 'user',
-    attributes: ['userName']
-  }],
-  limit: 1
-}
+      model: User,
+      as: 'user',
+      attributes: [],
+    },
+    {
+      model: SubscribedThread,
+      as: 'subscribedThreads',
+      required: false,
+      where: {
+        usersId: userId
+      },
+      attributes: []
+    },
+    {
+      model: Contribution,
+      as: 'contributions',
+      //Orders contributions to show the newest contribution first
+      order: [
+        [
+          'createdAt', 'desc'
+        ]
+      ],
+      //only display the creation date of the contribution
+      attributes: [
+        'usersId',
+        [Sequelize.fn('date_format', Sequelize.col('contribution.createdAt'), '%d.%m.%Y'), 'createdAt'],
+      ],
+      //include the user to access its username
+      include: [{
+        model: User,
+        as: 'user',
+        attributes: ['userName']
+      }],
+      limit: 1
+    }
+  ],
+}}
 
 /**
  * Returns all threads from the given forum id
@@ -49,6 +64,7 @@ const contributionInclude = {
 const findAll = (req, res) => {
   const forumId = req.params.forumId;
   const userId = (req.user) ? req.user.id : -1;
+  let condition = {...threadCondition(userId)};
 
   Contribution.count({
       group: ['threadsId'],
@@ -61,28 +77,7 @@ const findAll = (req, res) => {
       }],
     })
     .then(data => {
-      Thread.findAll({
-          attributes: threadAttributes,
-          include: [{
-              model: User,
-              as: 'user',
-              attributes: [],
-            },
-            {
-              model: SubscribedThread,
-              as: 'subscribedThreads',
-              required: false,
-              where: {
-                usersId: userId
-              },
-              attributes: []
-            },
-            contributionInclude
-          ],
-          where: {
-            forumsId: forumId
-          },
-        })
+      Thread.findAll(condition)
         .then(threadData => {
           let mappedData = addCountsToData(threadData, data);
           res.json(mappedData);
@@ -105,6 +100,9 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const id = req.params.id;
   const userId = (req.user) ? req.user.id : -1;
+  let condition = {...threadCondition(userId)};
+  condition.where = {'id' : id};
+
   Contribution.count({
       group: ['threadsId'],
       where: {
@@ -112,28 +110,7 @@ const findOne = (req, res) => {
       }
     })
     .then(data => {
-      Thread.findAll({
-          attributes: threadAttributes,
-          include: [{
-              model: User,
-              as: 'user',
-              attributes: [],
-            },
-            {
-              model: SubscribedThread,
-              as: 'subscribedThreads',
-              required: false,
-              where: {
-                usersId: userId
-              },
-              attributes: []
-            },
-            contributionInclude
-          ],
-          where: {
-            id: id
-          },
-        })
+      Thread.findAll(condition)
         .then(threadData => {
           let mappedData = addCountsToData(threadData, data);
           res.json(mappedData);

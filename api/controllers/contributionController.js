@@ -1,18 +1,61 @@
-const sequelize = require('../config/connection');
+const Sequelize = require('../config/connection');
 const Contribution = require('../models/contribution');
 const User = require('../models/user');
+const Rating = require('../models/rating');
+
+//basic condition for contribution search
+const contributionCondition = {
+    attributes: [
+        [Sequelize.col('user.userName'), 'creatorUserName'],
+        [Sequelize.col('user.id'), 'creatorId'],
+        [Sequelize.fn('sum', Sequelize.col('ratings.rating')), 'actualRating'],
+        'content',
+        'id',
+        'threadsId',
+        [Sequelize.fn('date_format', Sequelize.col('contribution.createdAt'), '%d.%m.%Y'), 'createdAt'],
+        [Sequelize.fn('date_format', Sequelize.col('contribution.updatedAt'), '%d.%m.%Y'), 'updatedAt'],
+    ],
+    include: [{
+        model: User,
+        as: 'user',
+        attributes: []
+    }, {
+        model: Rating,
+        as: 'ratings',
+        attributes: ['rating'],
+        required: false,
+    }],
+    group: ['id'],
+    
+    includeIgnoreAttributes: false,
+}
 
 const findAll = (req, res) => {
     const threadId = req.params.threadId;
-    Contribution.findAll({
-            where: {
-                threadsId: threadId,
-            },
-            // include: [{
-            //     model: User,
-            //     as: 'user'
-            // }]
-        })
+    const limit = isNaN(req.query.limit) ? 0 : req.query.limit;
+    const offset = isNaN(req.query.offset) ? 0 : req.query.offset;
+    const sortBy = (req.query.sortBy) ? req.query.sortBy : null;
+    const sortOrder = (req.query.order === 'desc') ? 'desc' : 'asc';
+    let condition = {...contributionCondition};
+    condition.where = {'threadsId' : threadId};
+    
+
+    //check if the result should be limited
+    if (limit > 0) {
+        condition.limit = parseInt(limit);
+        condition.offset =  parseInt(offset);
+    }
+
+    //check if the result should be sorted
+    if (sortBy) {
+        condition.order = [
+            [sortBy, sortOrder],
+        ];
+    }
+
+    console.log(condition);
+
+    Contribution.findAll(condition)
         .then(data => {
             res.json(data)
         })
@@ -24,12 +67,9 @@ const findAll = (req, res) => {
 
 const findOne = (req, res) => {
     const id = req.params.id;
-    Contribution.findByPk(id, {
-            include: [{
-                model: User,
-                as: 'user'
-            }]
-        })
+    let condition = {...contributionCondition};
+    
+    Contribution.findByPk(id, condition)
         .then(data => {
             res.json(data);
         })

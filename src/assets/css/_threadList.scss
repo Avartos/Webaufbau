@@ -101,6 +101,18 @@
   span {
     font-size: 1.5em;
     font-weight: bold;
+    text-align: center;
+    margin: auto auto;
+  }
+
+  .MuiCircularProgress-colorPrimary {
+    color: white !important;
+  }
+
+  .MuiCircularProgress-root {
+    width: 15px !important;
+    height: 15px !important;
+    margin-left:15px;
   }
 }
 // #endregion

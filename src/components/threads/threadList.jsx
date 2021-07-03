@@ -128,6 +128,7 @@ const ThreadList = () => {
                 thread={thread}
                 handleSubscribe={handleSubscribeThread}
                 handleTogglePreview={handleTogglePreview}
+                isUnfolded={thread.id === unfoldedThreadId}
               />
             );
           })}

@@ -1,13 +1,64 @@
 import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import {Link} from 'react-router-dom';
+import { CircularProgress } from "@material-ui/core";
 
 import PreviewList from "./previewList";
 import SubscribeButton from "../subscribeButton";
 import ThreadStatistics from "./threadStatistics";
-import { ReactComponent as CallIcon } from "../../assets/icons/voiceCall.svg";
+
+
 
 const Thread = (props) => {
+  //variables for preview Fetch
+  const [isPending, setIsPending] = useState(false);
+  const [error, setError] = useState(null);
+  const [contributions, setContributions] = useState(null);
+
+  const contributionLimit = 5;
+
+  const handleLoadContributionPreviews = () => {
+    //only fetch contributions, if they aren't already fetched
+    props.handleTogglePreview(props.thread.id);
+    if(!contributions) {
+      fetchContributions();
+    }
+  } 
+  
+  const fetchContributions = () => {
+    //used to stop fetching when forcing reload
+    const abortController = new AbortController();
+    setIsPending(true);
+    fetch(`http://localhost:3001/api/contributions/all/${props.thread.id}?limit=${contributionLimit}`, {
+      signal: abortController.signal,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Could not fetch data for that resource!");
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setContributions(data);
+        setIsPending(false);
+        setError(null);
+        console.log(data);
+      })
+      .catch((error) => {
+        if (error.name === "AbortError") {
+          console.log("fetch abortet");
+        } else {
+          setError(error.message);
+          setIsPending(false);
+        }
+      });
+    return () => console.log(abortController.abort());
+  };
+  
+  //used to animate the height of the preview list based on the actual content height
   const [previewHeight, setPreviewHeight] = useState(0);
 
   //used to reference to the preview list
@@ -15,7 +66,7 @@ const Thread = (props) => {
 
   //determines target height of the previewList depending on current unfold State
   const calculatePreviewHeight = () => {
-    const height = props.thread.isUnfolded ? previewRef.current.clientHeight : 0;
+    const height = props.isUnfolded ? previewRef.current.clientHeight : 0;
     setPreviewHeight(height);
   };
 
@@ -40,9 +91,6 @@ const Thread = (props) => {
         <Link className="title" to={`/contributions/${props.thread.id}`}>
           Thread: {props.thread.title}
         </Link>
-        <div className="wrapperButton">
-          <CallIcon className="callButton"></CallIcon>
-        </div>
         {sessionStorage.getItem("accessToken") &&
         <div className="wrapperButton">
           <SubscribeButton
@@ -64,16 +112,17 @@ const Thread = (props) => {
       {props.thread.contributionCount > 0 && 
         <React.Fragment>
           <button
-            onClick={() => props.handleTogglePreview(props.thread.id)}
+            onClick={handleLoadContributionPreviews}
             className="loadMoreButton"
           >
-            {props.thread.isUnfolded && <span>-</span>}
-            {!props.thread.isUnfolded && <span>+</span>}
+            {isPending && <span><CircularProgress></CircularProgress></span>}
+            {props.isUnfolded && !isPending && <span>-</span>}
+            {!props.isUnfolded && !isPending && <span>+</span>}
           </button>
 
           <div className="wrapperPreview" style={{ height: previewHeight }}>
             <CSSTransition
-              in={props.thread.isUnfolded}
+              in={props.isUnfolded && !isPending}
               timeout={500}
               unmountOnExit
               onEnter={calculatePreviewHeight}
@@ -81,7 +130,7 @@ const Thread = (props) => {
               nodeRef={previewRef}
             >
               <div ref={previewRef}>
-                <PreviewList key={props.thread.id} posts={props.thread.posts} />
+                <PreviewList key={props.thread.id} contributions={contributions} />
               </div>
             </CSSTransition>
           </div>

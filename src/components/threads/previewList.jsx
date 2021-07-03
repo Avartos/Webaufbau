@@ -1,14 +1,12 @@
 import React from "react";
 import Contribution from '../contribution';
 
-const PreviewList = ({posts}) => {
+const PreviewList = ({contributions}) => {
   return (
-      
-    
-      
       <div className="postPreviews">
-        {posts.map((post) => {
-          return <Contribution key={post.id}></Contribution>
+        {contributions.map((contribution) => {
+          console.log('test')
+          return <Contribution key={contribution.id} contribution={{id:0, contributionText: contribution.content, contributorSquid: contribution.creatorUserName}}></Contribution>
         })}
       </div>    
   );
