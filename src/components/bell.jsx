@@ -1,16 +1,13 @@
 import { ReactComponent as BellIcon } from "../assets/icons/bell.svg";
 
-
 const Bell = (props) => {
+  //state = {};
 
-    //state = {};
-
-
-    return(
-            <div className="wrapper-bell">
-                <BellIcon/>
-            </div>
-        );
-}
+  return (
+    <div className="wrapperButton">
+      <BellIcon className="headerButton" />
+    </div>
+  );
+};
 
 export default Bell;

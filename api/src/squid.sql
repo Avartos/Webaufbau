@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema squid
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `squid` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `squid` DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
 USE `squid` ;
 
 -- -----------------------------------------------------

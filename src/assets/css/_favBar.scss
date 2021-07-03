@@ -1,15 +1,35 @@
 @import './variables';
 
+@media (min-width: $minDesktopWidth) {
+    .favBar {
+        width: auto !important;
+        grid-area: sidebar;
+    }
+}
+
+.favToggle {
+    display: none;
+    &:checked+.favBar{
+        position: absolute;
+        z-index: 999;
+        width: 100vw;
+        overflow:visible;
+    }
+}
+
 .favBar {
-    grid-area: sidebar;
+    width: 0vw;
+    transition: width ease-in-out .1s;
+    overflow: hidden;
+    position: absolute;
+    top: $mobileHeaderHeight;
     background-color: $favBarColor;
     padding-top: 6em;
     text-align: left;
 
     .wrapper-list {
-
         .title {
-            font-size: 200%;
+            font-size: 1.5em;
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -48,7 +68,10 @@
         }
 
         .checkbox + ul {
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEX///+AgIAAAAA8XrssAAAAGUlEQVR4XmMIDXVgAMMGCPZagWCDYGioAwCQxAgHBIBVQwAAAABJRU5ErkJggg==) 8px 0 no-repeat;
+            // background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEX///+AgIAAAAA8XrssAAAAGUlEQVR4XmMIDXVgAMMGCPZagWCDYGioAwCQxAgHBIBVQwAAAABJRU5ErkJggg==) 8px 0 no-repeat;
+            &::before {
+                content: "〉";
+            }
             margin: -0.938em 0 0 -44px;
             height: 1em;
         }

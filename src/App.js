@@ -19,8 +19,7 @@ function App() {
     <Router>
       <div className="App">
         <NavBar />
-        <FavBar />
-        <div className="rightSideBar"></div>
+        {/* <FavBar /> */}
         <div className="content">
           <Switch>
             {/* Forum Routes */}
@@ -34,8 +33,6 @@ function App() {
             {/* account */}
             <Route exact path="/profile1"><Account roll="user"/></Route>
             <Route exact path="/profile2"><Account roll="admin"/></Route>
-
-
 
             {/* 404 */}
             <Route path="/">
