@@ -22,7 +22,7 @@
     z-index: 999;
     width: 100vw;
     min-height: 100%;
-    position:absolute;
+    position: absolute;
     overflow: visible;
   }
 }
@@ -30,10 +30,11 @@
 .favBar {
   * {
     user-select: none; /* supported by Chrome and Opera */
-      -webkit-user-select: none; /* Safari */
-      -khtml-user-select: none; /* Konqueror HTML */
-      -moz-user-select: none; /* Firefox */
-      -ms-user-select: none; /* Internet Explorer/Edge */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    white-space: nowrap;
   }
 
   width: 0vw;
@@ -49,104 +50,76 @@
     margin: 0;
   }
 
-  .checkbox {
-    display: none;
-  }
-
-  
-
   .favList {
     .title {
       background-color: $threadHeaderColor;
       position: relative;
       .splatIcon {
-        display: none;
-
-        @media (min-width: $minDesktopWidth) {
-          position: absolute;
-          height: 30px;
-          top: 45%;
-          left: 15px;
-          transform: translate(-50%,-50%);
-          display: inline-block;
-
-        }
-      }
-      span {
-        display: block;
-        height: 35px;
-        font-size: 1.5em;
-        padding: 5px;
-        padding-left: 15px;
-        @media (min-width: $minDesktopWidth) {
-          display: inline-block;
-          margin-left: 25px;
-        }
-      }
-    }
-
-    .checkbox {
-      display: none;
-
-      + .favForum span::before {
-        content: "\25B6";
-        transform: rotate(0deg);
-
-        padding-right: 5px;
-        padding-left: 15px;
-      }
-
-      &:checked + .favForum span::before {
-        content: "\25B6";
+        position: absolute;
+        height: 30px;
+        top: 50%;
+        left: 25px;
+        transform: translate(-50%, -50%);
         display: inline-block;
-        transform: rotate(90deg);
       }
-
-      + .favForum ul {
-        max-height: 0;
-      }
-
-      &:checked + .favForum ul {
-        max-height: 100%;
-        background-color: rgba(255, 255, 255, 0.822);
+      span {
+        font-weight: bold;
+        font-size: 1.5em;
+        padding: 15px 5px 15px 5px;
+        padding-left: 15px;
+      
+          display: inline-block;
+          margin-left: 30px;
       }
     }
+
     .favForum {
-      span {
+      > span {
+        position: relative;
         display: block;
-        height: 35px;
-        padding: 5px;
         margin-top: 5px;
-      }
-      
-      
-      list-style-type: none;
-      ul {
-        overflow: hidden;
-
-        li {
-          padding: 5px;
-          padding-left: 15px;
-          font-size: 1.2em;
-          cursor: pointer;
-          transition: ease-in-out .2s;
-          &:hover {
-            background-color: #fffffffa;
-          }
-        }
-      }
-
-      span {
-        font-size: 1.1em;
+        padding: 0;
+        padding: 15px 5px 15px 15px;
+        font-size: 1em;
         font-weight: bold;
         cursor: pointer;
-        transition: ease-in-out .2s;
+        transition: all ease-in-out 0.2s;
         &:hover {
-          background-color: #ffffffef;
+          background-color: rgba(255, 255, 255, 0.733);
+        }
+
+        .forumTitle {
+          display: block;
+          position: absolute;
+          top: 50%;
+          transform: translate(25px, -50%);
+        }
+
+        .dropDown {
+          display: inline-block;
+          transform: rotate(0deg);
+          transition: transform ease-in-out 0.2s;
+        }
+
+        .dropDown.active {
+          transform: rotate(90deg);
+        }
+      }
+      div {
+        overflow: hidden;
+        transition: height ease-in-out 0.2s;
+      }
+
+      .favThread {
+        cursor: pointer;
+        display: block;
+        padding: 10px 5px 10px 35px;
+        font-size: 1em;
+        transition: all ease-in-out 0.2s;
+        &:hover {
+          background-color: rgba(255, 255, 255, 0.733);
         }
       }
     }
   }
 }
-
-
