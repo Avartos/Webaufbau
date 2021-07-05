@@ -18,6 +18,7 @@ const NewContributionForm = ({ handleSubmitForm }) => {
                         setContributionText("");
                     }}
                 >
+                <div className="createArea">
 
                     <textarea className="textarea"
                         required
@@ -27,8 +28,11 @@ const NewContributionForm = ({ handleSubmitForm }) => {
                         }}
                         placeholder="Gib deinen Beitrag zum Thema!"
                     ></textarea>
-                    <button>Anfügen</button>
-                    <button>Absenden</button>
+                    <div className="buttonArea">
+                        <button>Anfügen</button>
+                        <button>Absenden</button>
+                    </div>
+                    </div>
                 </form>
             </div>
         )

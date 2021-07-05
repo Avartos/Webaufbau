@@ -15,6 +15,9 @@
     padding: 5px;
     margin: 5px;
     display: flex;
+    margin-top: -55px;
+    margin-left: 930px
+    
 }
 
 .newContributionForm {
@@ -24,7 +27,7 @@
         margin: 5px;
         outline: none;
         resize: none;
-        width: 90%;
+        min-width: 95%;
         height: 7em;
         border: 1px solid #FF9838;
         border-radius: 10px;
@@ -54,6 +57,10 @@
         padding-right: 40px;
         padding-bottom: 10px;
     }
+
+    .body {
+        text-align: left;
+    }
 }
 
 .contributions {
@@ -62,17 +69,20 @@
 }
 
 .contribution {
+    position: relative;
     padding: 5px;
     padding-left: 20px;
     text-align: left;
+    display:flex;
+    flex-direction: column;
 }
 
 .contribution:nth-child(even){
     background-color: #BFCDE0;
 
     .replyButton {
-        @include basicButton($aCAnswerFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
-        background-color: #BFCDE0;
+       // @include basicButton($aCAnswerFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+        background-color: #bfcde000;
     }
 
     .newContributionForm {
@@ -81,13 +91,19 @@
 }
 
 .replyButton {
-    @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+    //@include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
     border: none;
-    background-color: #FEFCFD;
+    position: absolute;
+    bottom: 5px;
+    right: 130px;
+    top: 45px;
+    background-color: #fefcfd00;
     color: $buttonColor;
-    display: flex;
-    margin-left: 1137px;
-    margin-bottom: 15px;
+    //display: flex;
+   // justify-content: flex-end;
+   // padding-right: 120px;
+    height: 40px;
+    padding-top: 20px;
 
 }
 
@@ -97,6 +113,7 @@
     display: flex;
     margin-top: -42px;
     margin-right: 10px;
+    justify-content: flex-end;
 
     p {
         margin: 8px;
@@ -108,3 +125,24 @@
     @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
     margin-right: 0;
 }
+
+.createArea{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
+    margin: 0 auto 0 auto;
+    
+    
+}
+
+.buttonArea {
+    display: flex;
+    justify-content: flex-end;
+    padding-left: 990px;
+}
+
+.contibutionAllButtons {
+    display: flex;
+    justify-content: flex-end;
+}
+

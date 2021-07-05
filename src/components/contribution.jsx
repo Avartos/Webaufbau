@@ -55,11 +55,9 @@ function Contribution({ contribution, isReply = false }) {
 
     return (
         <div className="contribution">
+            
             <p className="header">From: {contribution.contributorSquid}</p>
             <p className="body">{contribution.contributionText}</p>
-            {!isReply && !reply && <button className="replyButton" onClick={() => setReply(true)}> <ReplyIcon /> </button>}
-            {!isReply && reply && <div><AddNewContributionForm /><button className="discardContribution" onClick={() => setReply(false)}>Verwerfen</button></div>}
-
             <div className="counterOfLikes">
 
                 <button className="counterButton" onClick={() => setCount(count - 1)}> <RemoveIcon /> </button>
@@ -67,6 +65,9 @@ function Contribution({ contribution, isReply = false }) {
                 <button className="counterButton" onClick={() => setCount(count + 1)}> <AddIcon /> </button>
 
             </div>
+            {!isReply && !reply && <button className="replyButton" onClick={() => setReply(true)}> <ReplyIcon /> </button>}
+            {!isReply && reply && <div><AddNewContributionForm /><button className="discardContribution" onClick={() => setReply(false)}>Verwerfen</button></div>}
+
             <div className="replies">
                 {replies.map((reply) => {
                     return (
@@ -77,6 +78,7 @@ function Contribution({ contribution, isReply = false }) {
                     );
                 })}
             </div>
+            
         </div>
     )
 }
