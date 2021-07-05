@@ -1,0 +1,5 @@
+@import "./mixins/buttonPreset";
+
+button {
+  @include basicButton(white, $buttonColor, $buttonHoverColor, $buttonPressedColor);
+}

@@ -13,27 +13,17 @@
             display: flex;
             flex-direction: row;
             align-items: center;
-            margin-left: -50px;
             * {
                 padding: 5px;
             }
         }
 
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-
-        .forum {
+        .fav-forum {
             position: relative;
             list-style: none;
             padding-left:37px;
         }
 
-        .thread {
-            margin-left: -1px !important;
-            background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQAQMAAAAlPW0iAAAAA1BMVEXDw8PWKQJEAAAAC0lEQVR4XmMgEQAAADAAAYFIpkQAAAAASUVORK5CYII=) 0 0 no-repeat;
-            padding-left: 21px;
-        }
 
         .checkbox {
             position: absolute;
@@ -59,7 +49,9 @@
 
         li span {
             display: block;
+            margin-right: 35px;
         }
+
 
         .checkbox:checked + ul {
             background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAkAAAAJAgMAAACd/+6DAAAACVBMVEX///+AgIAAAAA8XrssAAAAFUlEQVR4XmMIDXVgQIZeK1D5oaEOAGzEBgf+DZdOAAAAAElFTkSuQmCC) 8px 6px no-repeat;
@@ -70,11 +62,11 @@
 
         .checkbox:checked + ul > li {
             display: block;
-            margin: 0 0 0.125em;
+            margin: 0 0.125em;
         }
 
         .checkbox:checked + ul > li:last-child {
-            margin: 0 0 0.063em;
+            margin: 0 0.125em;
         }
 
     }
