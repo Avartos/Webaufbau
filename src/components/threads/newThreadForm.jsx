@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 const NewThreadForm = ({ handleSubmitForm }) => {
-  const [title, setTitle] = useState("");
-  const [body, setBody] = useState("");
+  const [threadTitle, setTitle] = useState("");
+  const [threadBody, setBody] = useState("");
 
   return (
     <div className="newThreadForm">
@@ -10,31 +10,31 @@ const NewThreadForm = ({ handleSubmitForm }) => {
         <span className="title">Neuen Thread hinzufügen</span>
       </div>
 
-      <form className="body"
+      <form
+        className="body"
         onSubmit={(e) => {
-          handleSubmitForm(e, title, body);
+          handleSubmitForm(e, threadTitle, threadBody);
           setTitle("");
           setBody("");
         }}
       >
-        <label>Titel</label>
+        <label>Thread-Titel</label>
         <input
           type="text"
           required
-          value={title}
+          value={threadTitle}
           onChange={(e) => {
             setTitle(e.target.value);
           }}
         />
 
-        {/* TODO: Should be Replaced with more advanced component to allow more than just simple text inputs */}
         <label>
-          <span>Nachricht</span>
+          <span>Thread-Inhalt</span>
         </label>
         <textarea
           required
           rows="10"
-          value={body}
+          value={threadBody}
           onChange={(e) => {
             setBody(e.target.value);
           }}

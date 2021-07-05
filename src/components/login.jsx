@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const Login = () => {
+const Login = ({handleAddAlert}) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
@@ -31,11 +31,21 @@ const Login = () => {
       })
       .then((data) => {
         sessionStorage.setItem("accessToken", data);
+        handleAddAlert(
+          'success',
+          'Hallo',
+          'Sie wurden erfolgreich angemeldet!'
+        );
         history.push("/");
       })
       .catch((error) => {
         setError(
           "Das Formular konnte nicht abgeschickt werden (" + error + ")"
+        );
+        handleAddAlert(
+          "error",
+          "Fehler",
+          "Das Formular konnte nicht abgeschickt werden."
         );
       });
   };

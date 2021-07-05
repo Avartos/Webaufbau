@@ -3,15 +3,19 @@ import { useParams } from "react-router-dom";
 
 import Thread from "./thread";
 import NewThreadForm from "./newThreadForm";
-import CollapsibleError from "../collapsibleError";
 import LoadingCircle from "../loadingCircle";
 
-const ThreadList = () => {
+const ThreadList = ({handleAddAlert}) => {
   const { forumId } = useParams("forumId");
 
   const [threads, setThreads] = useState();
+  // used to check if the fetch is in progress
   const [isPending, setIsPending] = useState(true);
+  // used to store fetch errors inside, null if there were no fetch errors
   const [error, setError] = useState(null);
+
+  // contains the id of the thread, that is currently unfolded
+  const [unfoldedThreadId, setUnfoldedThreadId] = useState(-1);
 
   const fetchThreads = () => {
     //used to stop fetching when forcing reload
@@ -25,7 +29,7 @@ const ThreadList = () => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw Error("Could not fetch data for that resource!");
+          throw Error("Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut.");
         }
         return res.json();
       })
@@ -38,6 +42,7 @@ const ThreadList = () => {
         if (error.name === "AbortError") {
           console.log("fetch abortet");
         } else {
+          handleAddAlert('error', 'Fehler', error.message);
           setError(error.message);
           setIsPending(false);
         }
@@ -45,10 +50,12 @@ const ThreadList = () => {
     return () => console.log(abortController.abort());
   };
 
-  useEffect(fetchThreads, []); // eslint-disable-line react-hooks/exhaustive-deps
-
-  const [unfoldedThreadId, setUnfoldedThreadId] = useState(-1);
-
+  /**
+   * toggles the subscription state of a thread
+   * updates only the corresponding thread if the (un)subscription was successfull to transfer less data when subscribing
+   * @param {*} id            id of the thread that should be subscribed
+   * @param {*} isSubscribed  state of the subscription
+   */
   const handleSubscribeThread = (id, isSubscribed) => {
     const subscribeMethod = isSubscribed ? "DELETE" : "POST";
 
@@ -74,15 +81,28 @@ const ThreadList = () => {
       })
       .catch((error) => {
         setError(error);
+        handleAddAlert('error', 'Fehler', error.message);
       });
   };
 
+  /**
+   * Hides / unhides the preview of a single thread.
+   * Only one thread at the same time can be unfolded.
+   * @param {*} id id of the thread whose preview should be toggled
+   */
   const handleTogglePreview = (id) => {
     let targetThreadId = unfoldedThreadId;
     targetThreadId = targetThreadId === id ? -1 : id;
     setUnfoldedThreadId(targetThreadId);
   };
 
+  /**
+   * Requests the api to build a new thread
+   * Refreshes threads after the new thread has been added
+   * @param {*} e The event of the calling form
+   * @param {*} title the title of the thread
+   * @param {*} body  the body of the thread
+   */
   const handleSubmitNewThread = (e, title, body) => {
     e.preventDefault();
 
@@ -101,19 +121,23 @@ const ThreadList = () => {
     })
       .then(() => {
         fetchThreads();
+        handleAddAlert('error', 'Fehler', error.message);
       })
       .catch((error) => {
-        setError(
-          "Das Formular konnte nicht abgeschickt werden (" + error + ")"
-        );
+        setError("Das Formular konnte nicht abgeschickt werden (" + error + ")");
+        handleAddAlert('success', '', 'Ihr Thread wurde erfolgreich angelegt!');
       });
   };
+
+  /**
+   * Fetch threads whenever the component has been mounted
+   */
+  useEffect(fetchThreads, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>
       <h3>Threads {forumId}</h3>
       <div className="threadList">
-        <CollapsibleError description={error} />
         <LoadingCircle
           isActive={isPending}
           loadingText={"Wird geladen..."}
@@ -133,6 +157,7 @@ const ThreadList = () => {
             );
           })}
       </div>
+      {/* only show the form, if the user is logged in */}
       {sessionStorage.getItem("accessToken") && (
         <NewThreadForm handleSubmitForm={handleSubmitNewThread} />
       )}

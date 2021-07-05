@@ -1,12 +1,16 @@
 import React, { useState } from "react";
+import Alert from "@material-ui/lab/Alert";
+import { Link, useHistory } from "react-router-dom";
 
-const Signin = () => {
+const Signin = ({ handleAddAlert }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordTwo, setPasswordTwo] = useState("");
   const [comparePasswords, setComparePasswords] = useState("");
   const [passwordConditions, setPasswordConditions] = useState("");
   const [error, setError] = useState(null);
+
+  let history = useHistory();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -25,11 +29,22 @@ const Signin = () => {
       body: JSON.stringify(user),
     })
       .then(() => {
-        console.log('dance');
+        handleAddAlert(
+          "success",
+          "Registriert!",
+          "Sie wurden erfolgreich registriert."
+        );
+        history.push("/login");
+        console.log("dance");
       })
       .catch((error) => {
         setError(
           "Das Formular konnte nicht abgeschickt werden (" + error + ")"
+        );
+        handleAddAlert(
+          "error",
+          "Fehler",
+          "Das Formular konnte nicht abgeschickt werden."
         );
       });
   };
@@ -118,8 +133,12 @@ const Signin = () => {
                 equalPasswords(password, e.target.value);
               }}
             ></input>
-            <p className="errorMessage">{comparePasswords}</p>
-            <p className="errorMessage">{passwordConditions}</p>
+            {comparePasswords && (
+              <Alert severity="error">{comparePasswords}</Alert>
+            )}
+            {passwordConditions && (
+              <Alert severity="error">{passwordConditions}</Alert>
+            )}
           </div>
 
           <div>
