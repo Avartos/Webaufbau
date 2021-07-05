@@ -13,18 +13,18 @@
   display: grid;
   grid-template-columns: 1fr;
   
-  grid-template-rows: $headerHeight auto;
+  grid-template-rows: $mobileHeaderHeight auto;
   grid-template-areas: 
   "header"
   "content";
-}
 
-@media (min-width: 1024px) {
-  .App {
-    grid-template-columns: $favBarWidth 5fr $favBarWidth;
-    grid-template-areas: 
-    "header  header header"
-    "sidebar content ."
+  @media (min-width: $minDesktopWidth) {
+
+      grid-template-rows: $headerHeight auto;
+      grid-template-columns: $favBarWidth 5fr $favBarWidth;
+      grid-template-areas: 
+      "header  header header"
+      "sidebar content ."
   }
 }
 
@@ -43,10 +43,16 @@ body {
   background-image: url("../images/background.svg");
   background-attachment: fixed;
   background-color: $backgroundColor;
-  padding: 2em 3.5em 0em 3.5em;
+  padding: 2em .5em 0em .5em;
   grid-area: content;
+  height: auto;
+
+  @media (min-width: $minDesktopWidth) {
+    padding: 2em 3.5em 0em 3.5em;
+  }
 }
 
 .MuiCircularProgress-colorPrimary {
   color: $highlightedFontColor !important;
 }
+

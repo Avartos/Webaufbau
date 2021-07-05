@@ -29,7 +29,7 @@ const Thread = (props) => {
     //used to stop fetching when forcing reload
     const abortController = new AbortController();
     setIsPending(true);
-    fetch(`http://localhost:3001/api/contributions/all/${props.thread.id}?limit=${contributionLimit}`, {
+    fetch(`http://localhost:3001/api/contributions/all/${props.thread.id}?limit=${contributionLimit}&offset=0&orderBy=createdAt&order=desc`, {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",

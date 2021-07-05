@@ -3,7 +3,7 @@
 @mixin statistics() {
   display: table;
   text-align: left;
-  align-self: flex-start;
+
   .row {
     display: table-row;
     span {

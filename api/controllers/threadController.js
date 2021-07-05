@@ -141,6 +141,7 @@ const add = (req, res) => {
       forumsId: parseInt(forumId)
     })
     .then(data => {
+      console.log(userId);
       res.json(data);
     })
     .catch(error => {

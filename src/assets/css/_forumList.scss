@@ -5,50 +5,80 @@
 
 /* #region forum*/
 .forum {
+  width: 100%;
+  @media (min-width: $minDesktopWidth) {
+    width: auto !important;
+  }
   @include contentCard($threadHeaderColor, $threadBodyColor);
-  transition: ease-in-out .2s;
+  transition: ease-in-out 0.2s;
 
   &:hover {
     box-shadow: 0 0 0 3px $hoverBorder;
-    
   }
 
-  .header .title{
+  .header .title {
     cursor: pointer;
-    transition: .2s ease-in-out;
+    transition: 0.2s ease-in-out;
     &:hover {
       color: $highlightedFontColor;
     }
   }
 
   .body {
-    display: flex;
+    @media (min-width: $minDesktopWidth) {
+      & {
+        display: flex;
+      }
+
+      .shortDescription {
+        margin-bottom: 0px;
+        margin-right: 25px;
+        width: auto !important;
+        &::after {
+          display: none !important;
+        }
+      }
+
+      .forumStatistics {
+        min-width: 250px !important;
+      }
+    }
+
+    // display: flex;
 
     .shortDescription {
       font-style: italic;
       flex-grow: 1;
       text-align: left;
-      margin-right: 25px;
+
+      margin-bottom: 15px;
+      width: 100%;
+      &::after {
+        display: inline-block;
+        content: "";
+        border-top: 0.1em solid black;
+        width: 100%;
+      }
     }
 
-    .threadStatistics {
-      min-width: 200px;
+    .forumStatistics {
+      min-width: 100%;
       @include statistics();
     }
   }
 
   .wrapperPreview {
     transition: height 500ms ease;
-  
+
     .postPreviews {
       text-align: left;
-    
+
       p {
         padding: 10px;
         &:nth-child(even) {
           background-color: $threadHeaderColor;
         }
-    
+
         &:nth-child(odd) {
           background-color: $threadBodyColor;
         }
@@ -56,7 +86,6 @@
     }
   }
 }
-
 
 /* #region forumHeader */
 
@@ -68,7 +97,7 @@
 /* #region buttons */
 .subscribeButton {
   margin: auto auto;
-  @include squaredButton($threadHeaderSize, 0, .5);
+  @include squaredButton($threadHeaderSize, 0, 0.5);
 
   &:not(.active) {
     filter: grayscale(100%);
