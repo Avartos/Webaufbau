@@ -1,0 +1,100 @@
+@import "./variables";
+nav {
+  grid-area: header;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  background: $headerBackgroundColor;
+  position: sticky;
+  z-index: 999;
+//   width: 100vw;
+
+  .favToggleLabel {
+    color: white;
+    font-size: 2.5em;
+    margin-left: 50px;
+    padding: 5px 15px 5px 15px;
+    border-radius: 50px;
+    
+    transition: ease-out .2s;
+    &:active {
+        transition: ease-in 0s;
+        color: grey;
+      background-color: $buttonColor;
+    }
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    @media (min-width: $minDesktopWidth) {
+        display: none;
+    }
+  }
+
+  .wrapper-nav-left {
+    .websiteLogo {
+      height: 75px;
+    }
+  }
+
+  @media (min-width: $minDesktopWidth) {
+    .wrapper-nav-left {
+      position: relative;
+      top: 75px;
+      left: 100px;
+      .websiteLogo {
+        height: 200px;
+      }
+    }
+  }
+
+  .wrapper-nav-middle {
+    display: flex;
+    flex-direction: row;
+
+    .searchBar {
+      display: flex;
+      flex-direction: row;
+      border: 5px solid $buttonColor;
+      border-radius: 15px;
+      width: 300px;
+
+      input {
+        margin: 0;
+        padding: 12px 20px;
+        width: 100%;
+        border-radius: 10px 0 0 10px;
+      }
+      input,
+      input:focus {
+        outline: none !important;
+        -webkit-appearance: none;
+      }
+
+      button {
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        background: $buttonColor;
+        width: 40px;
+
+        .searchButtonIcon {
+          height: 20px;
+        }
+      }
+    }
+  }
+
+  .wrapper-nav-right {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    // * {
+    //   padding: 10px;
+    // }
+  }
+}

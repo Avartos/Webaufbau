@@ -14,7 +14,7 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema squid
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `squid` DEFAULT CHARACTER SET utf8 ;
+CREATE SCHEMA IF NOT EXISTS `squid` DEFAULT CHARSET = utf8mb4 DEFAULT COLLATE = utf8mb4_unicode_ci;
 USE `squid` ;
 
 -- -----------------------------------------------------
@@ -238,9 +238,9 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (1, 'url', 'green_squid', NULL, DEFAULT);
-INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (2, 'url', 'pruple_squid', NULL, DEFAULT);
-INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (3, 'url', 'red_squid', NULL, DEFAULT);
+INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (1, 'avatar_monocle.png', 'green_squid', NULL, DEFAULT);
+INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (2, 'avatar_bow.png', 'pruple_squid', NULL, DEFAULT);
+INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (3, 'avatar_tie.png', 'red_squid', NULL, DEFAULT);
 INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (4, 'url', 'blue_squid', NULL, DEFAULT);
 
 COMMIT;
@@ -278,6 +278,7 @@ COMMIT;
 START TRANSACTION;
 USE `squid`;
 INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (1, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Harry Potter', 'Dieser Thread enthält alles rund um Hogwarts! ', 1, 1);
+INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (6, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Emoji sind jetzt nutzbar 🦑', 'Ab jetzt können in der Datenbank Emoji genutzt werden, ist das nicht 🐙-stark?', 1, 1);
 INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (2, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Katzentatzen', 'Katzentazen sind süß!', 2, 2);
 INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (3, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Studizeugs', 'Hier geht\'s ums Studieren! Teilt euer Wissen', 3, 3);
 INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (4, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Blumen', 'Grüne Daumen sind willkommen!', 4, 4);

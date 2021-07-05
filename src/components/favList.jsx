@@ -1,30 +1,26 @@
-import { ReactComponent as SplatIcon} from "../assets/icons/splat.svg";
+import React, { useState } from "react";
+import { CSSTransition } from "react-transition-group";
 
+import { ReactComponent as SplatIcon } from "../assets/icons/splat.svg";
+import FavThreadList from "./favThreadList";
 
 const FavList = (props) => {
+  
 
-    //state = {};
-
-    return(
-        <div className="wrapper-list">
-            <ul>
-                <div className="title">
-                    <SplatIcon/>
-                    {props.className}
-                </div>
-                {/*forEach list*/}
-                {props.list.map((item) => {return (
-                    <li className="forum"><span>{item.forum}</span><input type="checkbox" className="checkbox"/>
-                        <ul>
-                            {/*forEach threads*/}
-                            {item.threads.map((thread) => {return (
-                                <li className="thread"> {thread} </li>
-                            );})}
-                        </ul>
-                    </li>
-                );})}
-            </ul>
+  return (
+    <div className="favList">
+      <ul>
+        <div className="title">
+          <SplatIcon className="splatIcon" />
+          <span>{props.className}</span>
         </div>
-    );
-}
+        {props.list.map((item) => {
+          return (
+            <FavThreadList item={item} key={item.key}></FavThreadList>
+          );
+        })}
+      </ul>
+    </div>
+  );
+};
 export default FavList;

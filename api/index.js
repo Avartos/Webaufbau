@@ -27,6 +27,9 @@ app.listen(3001);
 app.use(cors());
 app.use(bodyParser.json());
 
+//allow access to static files
+app.use('/profile_pictures', express.static('static/profile_pictures'));
+
 //DB connection
 require('./config/connection');
 

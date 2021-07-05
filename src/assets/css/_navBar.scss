@@ -1,65 +1,178 @@
 @import "./variables";
+@import "./mixins/buttonPreset";
+
 nav {
-    grid-area: header;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    background: $headerBackgroundColor;
-    position: sticky;
-    z-index: 999;
+  grid-area: header;
+  background-color: $headerBackgroundColor;
+  position: relative;
 
-    .wrapper-nav-left {
-        margin: 50px 50px -75px;
+  .wrapperLogo {
+    height: $mobileHeaderHeight * 0.7;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    transform: translate(-50%, -50%);
+
+    @media (min-width: $minDesktopWidth) {
+      height: 200px;
+      top: 0;
+      left: 215px;
+      transform: translate(-50%, 0);
     }
 
-    .wrapper-nav-middle {
-        display: flex;
-        flex-direction: row;
+    .websiteLogo {
+      height: 100%;
+      display: block;
+    }
+  }
 
-        .searchBar {
-            display: flex;
-            flex-direction: row;
-            border: 5px solid $buttonColor;
-            border-radius: 15px;
-            width: 300px;
+  .searchBar {
+    display: none;
+  }
+  @media (min-width: $minDesktopWidth) {
+    .searchBar {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
-            input {
-                margin: 0;
-                padding: 12px 20px;
-                width: 100%;
-                border-radius: 10px 0 0 10px;
-            }
-            input, input:focus{
-                outline:none !important;
-                -webkit-appearance:none;
-            }
+      display: flex;
+      flex-direction: row;
+      border: 5px solid $buttonColor;
+      background-color: $buttonColor;
+      border-radius: 15px;
+      min-width: 300px;
 
-            button {
-                margin: 0;
-                padding: 0;
-                border: none;
-                border-radius: 0;
-                background: $buttonColor;
-                width: 40px;
+      input {
+        margin: 0;
+        padding: 12px 20px;
+        width: 300px;
+        border: 0;
+        border-radius: 10px 0px 0px 10px;
+        font-size: 1.1em;
+      }
+      input,
+      input:focus {
+        outline: none !important;
+        -webkit-appearance: none;
+      }
 
-                .searchButtonIcon {
-                    height: 20px;
-                }
+      button {
+        margin: 0;
+        padding: 0;
+        border: none;
+        border-radius: 0;
+        background: $buttonColor;
+        width: 40px;
 
-            }
-
+        &:hover .searchButtonIcon {
+          filter: grayscale(100%);
+          filter: brightness(0);
         }
 
-    }
-
-    .wrapper-nav-right {
-        display: flex;
-        flex-direction: row;
-        align-items: center;
-
-        * {
-            padding: 10px;
+        &:active .searchButtonIcon {
         }
+
+        .searchButtonIcon {
+          height: 20px;
+          transition: filter ease-in-out 0.2s;
+        }
+      }
     }
+  }
+
+  ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+
+    li {
+      * {
+        display: inherit;
+      }
+      position: relative;
+      display: inline;
+      width: 50px;
+      float: right;
+      padding: 5px;
+      @media (min-width: $minDesktopWidth) {
+        margin-right: 25px;
+      }
+      height: $headerHeight;
+      &.left {
+        float: left;
+      }
+    }
+
+    .favToggleLabel {
+      color: white;
+      font-size: 2.5em;
+      border-radius: 50px;
+
+      transition: ease-out 0.2s;
+      &:active {
+        transition: ease-in 0s;
+        color: grey;
+        background-color: $buttonColor;
+      }
+      user-select: none; /* supported by Chrome and Opera */
+      -webkit-user-select: none; /* Safari */
+      -khtml-user-select: none; /* Konqueror HTML */
+      -moz-user-select: none; /* Firefox */
+      -ms-user-select: none; /* Internet Explorer/Edge */
+      @media (min-width: $minDesktopWidth) {
+        display: none;
+      }
+    }
+
+    .buttons {
+      position: absolute;
+      top: 50%;
+      transform: translate(-50%, 50%);
+    }
+
+    .wrapperButton {
+      position: absolute;
+      left: 50%;
+      top: 0;
+      transform: translate(-50%, 50%);
+      @media (min-width: $minDesktopWidth) {
+        top: 50%;
+        transform: translate(-50%, -60%);
+      }
+
+      @include buttonContainer($mobileHeaderHeight * 0.7);
+
+      @media (min-width: $minDesktopWidth) {
+        @include buttonContainer($headerHeight * 0.8);
+      }
+
+      .headerButton {
+        margin: auto auto;
+        @include squaredButton($mobileHeaderHeight * 0.5, 0, 0.5);
+
+        @media (min-width: $minDesktopWidth) {
+          @include squaredButton($headerHeight * 0.5, 0, 0.5);
+        }
+
+        &:not(.active) {
+          filter: grayscale(100%);
+        }
+
+        &:hover {
+          filter: grayscale(100%);
+          filter: brightness(0);
+        }
+
+        &.active {
+          filter: grayscale(0%);
+
+          &:hover {
+            filter: brightness(2);
+          }
+        }
+      }
+    }
+  }
 }
