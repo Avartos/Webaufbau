@@ -1,0 +1,83 @@
+import React, { useState } from "react";
+import { CircularProgress } from "@material-ui/core";
+import classNames from "classnames";
+
+const ApiTokenForm = ({ handleAddAlert }) => {
+  const [token, setToken] = useState(null);
+
+  const [isPending, setIsPending] = useState(null);
+
+  const tokenButtonClass = classNames({
+    isLoading: isPending,
+  });
+
+  const handleRequestToken = (e) => {
+    e.preventDefault();
+    const abortController = new AbortController();
+    fetch(`http://localhost:3001/api/foreign_api/generate`, {
+      signal: abortController.signal,
+      headers: {
+        "Content-Type": "application/json",
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(
+            "Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut."
+          );
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setToken(data);
+        setIsPending(false);
+        handleAddAlert(
+          "success",
+          "Token generiert",
+          "Ihr Token wurde erfolgreich generiert!"
+        );
+      })
+      .catch((error) => {
+        if (error.name === "AbortError") {
+          console.log("fetch abortet");
+        } else {
+          handleAddAlert("error", "Fehler", error.message);
+          setIsPending(false);
+        }
+      });
+
+    setToken("Test");
+    setIsPending(true);
+  };
+
+  return (
+    <form className="tokenForm">
+      <div className="header">
+        <h2>API-Token anfordern</h2>
+      </div>
+      <div className="body">
+        <p>
+          Damit Sie die API, die von SQUID zur Verfügung gestellt wird, nutzen
+          können, müssen Sie zunächst ein API-Token anfordern. Die API antwortet
+          lediglich auf Anfragen mit gültigem API Token.
+        </p>
+        <input type="text" readOnly className="tokenDisplay" value={token} />
+        <button
+          class={tokenButtonClass}
+          onClick={handleRequestToken}
+          disabled={token != null}
+        >
+          Token Anfordern
+          {isPending && !token && (
+            <div className="loadingCircle">
+              <CircularProgress></CircularProgress>
+            </div>
+          )}
+        </button>
+      </div>
+    </form>
+  );
+};
+
+export default ApiTokenForm;

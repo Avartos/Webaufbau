@@ -11,6 +11,7 @@ import ThreadList from "./components/threads/threadList";
 import Login from "./components/login";
 import Signin from "./components/signin";
 import Account from "./components/profile";
+import ApiTokenForm from "./components/apiTokenForm";
 
 import AlertList from "./components/userAlerts/alertList";
 
@@ -40,49 +41,45 @@ function App() {
         <NavBar />
         <FavBar />
         <div className="content">
-          <AlertList messages={alerts} handleRemoveAlert={handleRemoveAlert}>
-            {" "}
-          </AlertList>{" "}
+          <AlertList
+            messages={alerts}
+            handleRemoveAlert={handleRemoveAlert}
+          ></AlertList>
           <Switch>
-            {" "}
-            {/* Forum Routes */}{" "}
+            {/* Forum Routes */}
             <Route exact path="/">
-              {" "}
-              <ForumList />{" "}
-            </Route>{" "}
+              <ForumList />
+            </Route>
             <Route exact path="/threads/:forumId">
-              {" "}
               <ThreadList handleAddAlert={handleAddAlert} />
             </Route>
             <Route exact path="/contributions/:id">
-              {" "}
-              <Contributions />{" "}
-            </Route>{" "}
-            {/* Login Routes */}{" "}
+              <Contributions />
+            </Route>
+            {/* Login Routes */}
             <Route exact path="/registration">
-              {" "}
               <Signin handleAddAlert={handleAddAlert} />
             </Route>
             <Route excact path="/login">
-              {" "}
               <Login handleAddAlert={handleAddAlert} />
             </Route>
-            {/* account */}{" "}
+            {/* account */}
             <Route exact path="/profile1">
-              {" "}
-              <Account roll="user" />{" "}
-            </Route>{" "}
+              <Account roll="user" />
+            </Route>
             <Route exact path="/profile2">
-              {" "}
-              <Account roll="admin" />{" "}
+              <Account roll="admin" />
             </Route>
-            {/* 404 */}{" "}
+            <Route exact path="/tokenrequest">
+              <ApiTokenForm handleAddAlert={handleAddAlert}/>
+            </Route>
+            {/* 404 */}
             <Route path="/">
-              <h1> 404 - Page not Found </h1>{" "}
+              <h1> 404 - Page not Found </h1>
             </Route>
-          </Switch>{" "}
-        </div>{" "}
-      </div>{" "}
+          </Switch>
+        </div>
+      </div>
     </Router>
   );
 }
