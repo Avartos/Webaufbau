@@ -46,8 +46,6 @@ const ApiTokenForm = ({ handleAddAlert }) => {
           setIsPending(false);
         }
       });
-
-    setToken("Test");
     setIsPending(true);
   };
 

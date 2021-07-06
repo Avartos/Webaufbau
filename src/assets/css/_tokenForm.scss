@@ -25,7 +25,7 @@
       margin: 15px auto;
       transition: color ease-in-out .2s;
 
-      &.loading {
+      &.isLoading {
           color: $buttonColor;
       }
 
