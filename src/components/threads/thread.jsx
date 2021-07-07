@@ -66,7 +66,6 @@ const Thread = (props) => {
       .then((data) => {
         setContributions(data);
         setIsPending(false);
-        console.log(data);
       })
       .catch((error) => {
         if (error.name === "AbortError") {

@@ -2,16 +2,16 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import Thread from "./thread";
-import NewThreadForm from "./newThreadForm";
 import LoadingCircle from "../loadingCircle";
+import ForumHeader from "./forumHeader";
 
 /**
  * This component includes all threads of a single forum and the form to create a new thread
  * It also handles the functions to add a new thread or to subscribe existing threads
  * @param {handleAddAlert} reference to the function to add alerts to the app
- * @returns 
+ * @returns
  */
-const ThreadList = ({handleAddAlert}) => {
+const ThreadList = ({ handleAddAlert }) => {
   const { forumId } = useParams("forumId");
 
   const [threads, setThreads] = useState();
@@ -19,6 +19,8 @@ const ThreadList = ({handleAddAlert}) => {
   const [isPending, setIsPending] = useState(true);
   // used to store fetch errors inside, null if there were no fetch errors
   const [error, setError] = useState(null);
+
+  const [forum, setForum] = useState("");
 
   // contains the id of the thread, that is currently unfolded
   const [unfoldedThreadId, setUnfoldedThreadId] = useState(-1);
@@ -36,7 +38,9 @@ const ThreadList = ({handleAddAlert}) => {
     })
       .then((res) => {
         if (!res.ok) {
-          throw Error("Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut.");
+          throw Error(
+            "Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut."
+          );
         }
         return res.json();
       })
@@ -49,7 +53,43 @@ const ThreadList = ({handleAddAlert}) => {
         if (error.name === "AbortError") {
           console.log("fetch abortet");
         } else {
-          handleAddAlert('error', 'Fehler', error.message);
+          handleAddAlert("error", "Fehler", error.message);
+          setError(error.message);
+          setIsPending(false);
+        }
+      });
+    return () => console.log(abortController.abort());
+  };
+
+  const fetchForum = () => {
+    //used to stop fetching when forcing reload
+    const abortController = new AbortController();
+    fetch(`http://localhost:3001/api/forums/${forumId}`, {
+      signal: abortController.signal,
+      headers: {
+        "Content-Type": "application/json",
+        // undefined, if the user is not logged in
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(
+            "Fehler beim Abrufen des Forums! Bitte versuchen Sie es später erneut."
+          );
+        }
+        return res.json();
+      })
+      .then((data) => {
+        setForum(data);
+        setIsPending(false);
+        setError(null);
+      })
+      .catch((error) => {
+        if (error.name === "AbortError") {
+          console.log("fetch abortet");
+        } else {
+          handleAddAlert("error", "Fehler", 'Fehler beim laden des Forums.');
           setError(error.message);
           setIsPending(false);
         }
@@ -88,7 +128,7 @@ const ThreadList = ({handleAddAlert}) => {
       })
       .catch((error) => {
         setError(error);
-        handleAddAlert('error', 'Fehler', error.message);
+        handleAddAlert("error", "Fehler", error.message);
       });
   };
 
@@ -128,22 +168,28 @@ const ThreadList = ({handleAddAlert}) => {
     })
       .then(() => {
         fetchThreads();
-        handleAddAlert('error', 'Fehler', error.message);
+        handleAddAlert("error", "Fehler", error.message);
       })
       .catch((error) => {
-        setError("Das Formular konnte nicht abgeschickt werden (" + error + ")");
-        handleAddAlert('success', '', 'Ihr Thread wurde erfolgreich angelegt!');
+        setError(
+          "Das Formular konnte nicht abgeschickt werden (" + error + ")"
+        );
+        handleAddAlert("success", "", "Ihr Thread wurde erfolgreich angelegt!");
       });
   };
 
   /**
    * Fetch threads whenever the component has been mounted
    */
-  useEffect(fetchThreads, []); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    fetchThreads();
+    fetchForum();
+  }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>
-      <h3>Threads {forumId}</h3>
+      <ForumHeader forum={forum} handleSubmitNewThread={handleSubmitNewThread} handleAddAlert={handleAddAlert}></ForumHeader>
+
       <div className="threadList">
         <LoadingCircle
           isActive={isPending}
@@ -164,10 +210,8 @@ const ThreadList = ({handleAddAlert}) => {
             );
           })}
       </div>
-      {/* only show the form, if the user is logged in */}
-      {sessionStorage.getItem("accessToken") && (
-        <NewThreadForm handleSubmitForm={handleSubmitNewThread} />
-      )}
+      
+
     </React.Fragment>
   );
 };

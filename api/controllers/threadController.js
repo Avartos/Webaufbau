@@ -67,7 +67,10 @@ const findAll = (req, res) => {
   const forumId = req.params.forumId;
   const userId = (req.user) ? req.user.id : -1;
   let condition = {...threadCondition(userId)};
-
+  condition.where = {
+    forumsId: forumId,
+  }
+  console.log(forumId);
   //count all contributions before fetching the threads
   Contribution.count({
       group: ['threadsId'],

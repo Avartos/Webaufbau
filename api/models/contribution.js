@@ -3,6 +3,7 @@ const sequelize = require('../config/connection');
 const User = require('./user');
 const Thread = require('./thread');
 const Rating = require('./rating');
+const Forum = require('./forum');
 
 const Contribution = sequelize.define("Contribution", {
     usersId: Sequelize.INTEGER,

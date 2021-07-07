@@ -1,5 +1,6 @@
 const sequelize = require('../config/connection');
 const Forum = require('../models/forum');
+const SubscribedForum = require('../models/subscribedForum');
 
 const findAll = (req,res) => {
     Forum.findAll()
@@ -13,8 +14,16 @@ const findAll = (req,res) => {
 }
 
 const findOne = (req, res) => {
-    const ForumId = req.params.id;
-    Forum.findByPk(ForumId)
+    const forumId = req.params.id;
+    const userId = (req.user) ? req.user.id : -1;
+    Forum.findByPk(forumId, {
+        include: [{
+            model: SubscribedForum,
+            as: 'subscribedForums',
+            where: {usersId: userId},
+            required: false
+        }]
+    })
         .then(data => {
             res.json(data);
         })

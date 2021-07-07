@@ -6,10 +6,6 @@ const NewThreadForm = ({ handleSubmitForm }) => {
 
   return (
     <div className="newThreadForm">
-      <div className="header">
-        <span className="title">Neuen Thread hinzufügen</span>
-      </div>
-
       <form
         className="body"
         onSubmit={(e) => {
