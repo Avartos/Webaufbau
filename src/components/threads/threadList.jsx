@@ -5,6 +5,12 @@ import Thread from "./thread";
 import NewThreadForm from "./newThreadForm";
 import LoadingCircle from "../loadingCircle";
 
+/**
+ * This component includes all threads of a single forum and the form to create a new thread
+ * It also handles the functions to add a new thread or to subscribe existing threads
+ * @param {handleAddAlert} reference to the function to add alerts to the app
+ * @returns 
+ */
 const ThreadList = ({handleAddAlert}) => {
   const { forumId } = useParams("forumId");
 
@@ -24,6 +30,7 @@ const ThreadList = ({handleAddAlert}) => {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",
+        // undefined, if the user is not looged in
         accessToken: sessionStorage.getItem("accessToken"),
       },
     })

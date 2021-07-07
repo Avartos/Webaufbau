@@ -5,16 +5,19 @@ const Contribution = require('../models/contribution');
 const SubscribedThread = require('../models/subscribedThread');
 
 
-const currentUserId = 1;
-
+//the basic condition for thread requests
 const threadCondition = (userId) => {return {
+  //limits the attributes the result contains
   attributes: [
     'id',
     'title',
     'content',
+    //reformats the date
     [Sequelize.fn('date_format', Sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
     'usersId',
+    //get the username from the included table
     [Sequelize.col('user.userName'), 'creatorUserName'],
+    //get the user id from the subscribed thread include
     [Sequelize.col('subscribedThreads.usersId'), 'subscriptionUsersId'],
   ],
   include: [{
@@ -51,6 +54,7 @@ const threadCondition = (userId) => {return {
         as: 'user',
         attributes: ['userName']
       }],
+      //only get the most recent contribution
       limit: 1
     }
   ],
@@ -58,14 +62,13 @@ const threadCondition = (userId) => {return {
 
 /**
  * Returns all threads from the given forum id
- * @param {*} req 
- * @param {*} res 
  */
 const findAll = (req, res) => {
   const forumId = req.params.forumId;
   const userId = (req.user) ? req.user.id : -1;
   let condition = {...threadCondition(userId)};
 
+  //count all contributions before fetching the threads
   Contribution.count({
       group: ['threadsId'],
       include: [{
@@ -94,8 +97,6 @@ const findAll = (req, res) => {
 
 /**
  * Returns the thread that has the given id
- * @param {*} req 
- * @param {*} res 
  */
 const findOne = (req, res) => {
   const id = req.params.id;
@@ -127,8 +128,6 @@ const findOne = (req, res) => {
 
 /**
  * Adds a new thread to the given forum id
- * @param {*} req 
- * @param {*} res 
  */
 const add = (req, res) => {
   const forumId = req.params.forumId;
@@ -152,20 +151,17 @@ const add = (req, res) => {
 
 /**
  * deletes the thread that has the given id
- * @param {*} req 
- * @param {*} res 
  */
+//TODO: remove or implement
 const deleteOne = (req, res) => {
-  // const id = req.params.id;
-  // threads = threads.filter(thread => parseInt(thread.id) !== parseInt(id));
   res.sendStatus(200);
 }
 
 /**
  * UThis function is used to map the found contribution counts to the threads
- * @param {*} threads
- * @param {*} dataCounts 
- * @returns 
+ * @param {*} threads     the array of threads
+ * @param {*} dataCounts  the array of counts that should be mapped to the threads
+ * @returns mapped list of threads and counts
  */
 const addCountsToData = (threads, contributionCounts) => {
   const mappedArray = threads.map(entry => {

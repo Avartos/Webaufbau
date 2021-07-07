@@ -27,7 +27,6 @@ const NavBar = () => {
       </Link>
       <div className="wrapper-nav-middle">
         <SearchBar />
-
       </div>
     </nav>
   );

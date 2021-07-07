@@ -3,7 +3,6 @@ const Sequelize = require('sequelize');
 /**
  * This file contains the basic setup for the database connection with sequelize
  */
-
 const sequelize = new Sequelize(
     //Database
     "Squid", 

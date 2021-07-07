@@ -1,8 +1,10 @@
-const {
-    verify
-} = require("jsonwebtoken");
+const {verify} = require("jsonwebtoken");
 
-//next
+/**
+ * Checks, if the user is logged in
+ * If the user is logged in the actual controller method gets called
+ * If the user is not logged in the request is rejected
+ */
 const validateToken = (req, res, next) => {
     const accessToken = req.header("accessToken");
 
@@ -13,7 +15,7 @@ const validateToken = (req, res, next) => {
     try {
         verify(accessToken, "i677hf8kuah2basb0fasjb234faksbf", (err, decodedToken) => {
             req.user = decodedToken;
-            if(decodedToken) {
+            if (decodedToken) {
                 next();
             }
         })
@@ -24,6 +26,9 @@ const validateToken = (req, res, next) => {
     }
 };
 
+/**
+ * Checks, if an access token is available and extracts the username
+ */
 const extractUserFromToken = (req, res, next) => {
     const accessToken = req.header("accessToken");
 

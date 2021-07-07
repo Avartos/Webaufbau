@@ -3,9 +3,12 @@ const Contribution = require('../models/contribution');
 const User = require('../models/user');
 const Rating = require('../models/rating');
 
-//basic condition for contribution search
-
-
+/**
+ * returns a basic condition setup for contribution queries
+ * @param {*} offset the offset for the limit
+ * @param {*} userId the id of the current logged in user
+ * @returns 
+ */
 const contributionCondition = (offset, userId) => {
     return {
         attributes: [
@@ -14,12 +17,14 @@ const contributionCondition = (offset, userId) => {
             'content',
             'id',
             'threadsId',
+            //formattings for the dates that are fetched from the database
             [Sequelize.fn('date_format', Sequelize.col('contribution.createdAt'), '%d.%m.%Y'), 'createdAt'],
             [Sequelize.fn('date_format', Sequelize.col('contribution.updatedAt'), '%d.%m.%Y'), 'updatedAt'],
         ],
         include: [{
                 model: User,
                 as: 'user',
+                //to include the user without any attributes listed
                 attributes: []
             },
         ],
@@ -37,10 +42,10 @@ const findAll = (req, res) => {
     let condition = {
         ...contributionCondition(offset, userId)
     };
+    
     condition.where = {
         'threadsId': threadId
     };
-
 
     //check if the result should be limited
     if (limit > 0) {
@@ -54,11 +59,11 @@ const findAll = (req, res) => {
         ];
     }
 
-    console.log(condition);
-
+    //find all ratings first to map them to the contribution
     Rating.findAll({
             attributes: [
                 'contributionsId',
+                //the sum of all ratings thet belong to a contribution
                 [Sequelize.fn('sum', Sequelize.col('rating')), 'actualRating'],
             ],
             group: ['contributionsId'],
@@ -83,11 +88,13 @@ const findOne = (req, res) => {
     const id = req.params.id;
     const userId = (req.user) ? req.user.id : null;
     let condition = {
-        ...contributionCondition(0, 1)
+        ...contributionCondition(0, userId)
     };
+    //find all ratings first to map them to the contribution
     Rating.findAll({
             attributes: [
                 'contributionsId',
+                //the sum of all ratings that belong to the contribution
                 [Sequelize.fn('sum', Sequelize.col('rating')), 'actualRating'],
             ],
             group: ['contributionsId'],
@@ -146,10 +153,10 @@ const update = (req, res) => {
 }
 
 /**
- * UThis function is used to map the found contribution counts to the threads
- * @param {*} threads
- * @param {*} dataCounts 
- * @returns 
+ * maps the found ratings to the contributions
+ * @param {*} contributions     the array of contributions that should be mapped
+ * @param {*} ratings           the array of ratings that should be mapped to the contributions
+ * @returns a mapped array of contributions with ratings
  */
 const addRatingsToContributions = (contributions, ratings) => {
     const mappedArray = contributions.map(contribution => {

@@ -15,7 +15,6 @@ import ThreadStatistics from "./threadStatistics";
 const Thread = (props) => {
   //variables for preview Fetch
   const [isPending, setIsPending] = useState(false);
-  const [error, setError] = useState(null);
 
   //the contributions that are used as preview
   const [contributions, setContributions] = useState(null);
@@ -23,9 +22,15 @@ const Thread = (props) => {
   //used to animate the height of the preview list based on the actual content height
   const [previewHeight, setPreviewHeight] = useState(0);
 
+  //the date of the last post, can be either the 
+  //date of the thread or the date of the last contribution
   const [lastPostDate, setLastPostDate] = useState(props.thread.createdAt);
+
+  //the username of the last poster, can be either the username of the 
+  //thread author or the username of the last contribution author
   const [lastPoster, setLastPoster] = useState(props.thread.creatorUserName);
 
+  //the number of contributions that is max. displayed below a thread
   const contributionLimit = 5;
 
   //used to reference to the preview list
@@ -61,27 +66,29 @@ const Thread = (props) => {
       .then((data) => {
         setContributions(data);
         setIsPending(false);
-        setError(null);
         console.log(data);
       })
       .catch((error) => {
         if (error.name === "AbortError") {
           console.log("fetch abortet");
         } else {
-          setError(error.message);
           setIsPending(false);
         }
       });
     return () => console.log(abortController.abort());
   };
 
-  //determines target height of the previewList depending on current unfold State
+  /**
+   *  determines target height of the previewList depending on current unfold State
+   */
   const calculatePreviewHeight = () => {
     const height = props.isUnfolded ? previewRef.current.clientHeight : 0;
     setPreviewHeight(height);
   };
 
-  //used to change the last post information, if there are already contributions
+  /**
+   *  used to change the last post information, if there are already contributions
+   */
   const determineLastPostData = () => {
     if (props.thread.contributionCount !== 0) {
       setLastPostDate(props.thread.contributions[0].createdAt);

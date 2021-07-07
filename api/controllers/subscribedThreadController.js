@@ -3,8 +3,6 @@ const Contribution = require('../models/contribution');
 const SubscribedThread = require('../models/subscribedThread');
 const Thread = require('../models/thread');
 
-const currentUserId = 1;
-
 const findAll = (req, res) => {
     SubscribedThread.findAll()
         .then(data => {
@@ -67,7 +65,7 @@ const add = (req, res) => {
 const findNew = (req, res) => {
     SubscribedThread.findAll({
             where: {
-                usersId: currentUserId,
+                // usersId: currentUserId,
                 // timeStamp: {
                 //     [Sequelize.Op.lt]: sequelize.col('threads.contributions.createdAt')
                 // }
