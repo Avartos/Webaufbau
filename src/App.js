@@ -8,10 +8,11 @@ import FavBar from "./components/favBar";
 import ForumList from "./components/forumList";
 import Contributions from "./components/contributions";
 import ThreadList from "./components/threads/threadList";
-import Login from "./components/login";
-import SignUp from "./components/signUp";
+import Login from "./components/accountHandling/login";
+import SignUp from "./components/accountHandling//signUp";
 import Account from "./components/profile";
 import ApiTokenForm from "./components/apiTokenForm";
+import SearchBar from "./components/searchBar";
 
 import AlertList from "./components/userAlerts/alertList";
 
@@ -46,8 +47,10 @@ function App() {
     <Router>
       <div className="App">
         <NavBar />
+        
         <FavBar />
         <div className="content">
+        <SearchBar isMobile={true}/>
           <AlertList
             messages={alerts}
             handleRemoveAlert={handleRemoveAlert}

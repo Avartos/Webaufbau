@@ -55,7 +55,7 @@ const Login = ({ handleAddAlert }) => {
           }}
         >
           <div>
-            <label>Benutzername: </label>
+            <label>Benutzername</label>
             <input
               placeholder="Benutzername"
               className="loginInput"
@@ -68,7 +68,7 @@ const Login = ({ handleAddAlert }) => {
           </div>
 
           <div>
-            <label>Password: </label>
+            <label>Password</label>
             <input
               placeholder="Passwort"
               className="loginInput"
