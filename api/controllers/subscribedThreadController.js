@@ -61,39 +61,88 @@ const add = (req, res) => {
         });
 }
 
-// TODO: Need to filter subscriptions, where the timestamp is older than one contribution
 const findNew = (req, res) => {
+    const userId = 1;
     SubscribedThread.findAll({
+            attributes: [
+                'usersId',
+                'timeStamp',
+                'threadsId',
+                [Sequelize.col('thread.title'), 'threadTitle'],
+            ],
             where: {
-                // usersId: currentUserId,
-                // timeStamp: {
-                //     [Sequelize.Op.lt]: sequelize.col('threads.contributions.createdAt')
-                // }
+                usersId: userId
             },
             include: [{
                 model: Thread,
-                as: 'threads',
+                as: 'thread',
+                attributes: [
+                    'id',
+                    // 'contributions'
+                ],
                 include: [{
                     model: Contribution,
                     as: 'contributions',
+                    //ignore all posts that where written by the requesting user
                     where: {
-                        createdAt: {
-                                [Sequelize.Op.lt]: new Date()
-                            }
+                        usersId: {
+                            [Sequelize.Op.ne]: userId
+                        }
                     }
-                }]
+                }],
             }],
             order: [
-                [{model: Thread, as: 'threads'}, {model: Contribution, as: 'contributions'}, 'createdAt', 'DESC']
-            ]
+                [{
+                        model: Thread,
+                        as: 'thread'
+                    },
+                    {
+                        model: Contribution,
+                        as: 'contributions'
+                    }, 'createdAt', 'desc'
+                ]
+            ],
         })
         .then(data => {
-            res.json(data);
+            const filteredSubscriptions = extractUnreadNotifications(data);
+            res.json(filteredSubscriptions);
         })
         .catch(error => {
-            console.log('Error:\t', error);
-            res.sendStatus(500);
+            console.error('Error:\t', error);
         })
+}
+
+/**
+ * Checks which subscriptions have contributions that are newer than the 
+ * @param {*} threadSubscriptions subscriptions with thread and contributions attached
+ * @returns thre new notficiations without contributions
+ */
+const extractUnreadNotifications = (threadSubscriptions) => {
+    let newNotifications = threadSubscriptions.filter(subscription => {
+        const lastReadDate = new Date(subscription.dataValues.timeStamp);
+        const contributions = (subscription.dataValues.thread) ? subscription.dataValues.thread.dataValues.contributions : null;
+        //check if the thread has any contributions
+        if (contributions && contributions[0] && contributions.length > 0) {
+            const lastContributionDate = new Date(contributions[0].dataValues.createdAt);
+            //check if the date of the latest contribution is newer than the last checked timestamp
+            if (lastContributionDate.getTime() > lastReadDate.getTime()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    })
+
+    //remove unneccessary contribution - attributes
+    newNotifications = newNotifications.map(notification => {
+        delete notification.dataValues.thread;
+        return notification;
+    })
+
+
+    return newNotifications;
 }
 
 module.exports = {

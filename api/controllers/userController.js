@@ -70,7 +70,9 @@ const findOneByName = (req, res) => {
         bcrypt
           .compare(password, user.login.passwordHash)
           .then((match) => {
-            if (!match) console.log("No No");
+            if (!match) {
+              res.sendStatus(403);
+            }
 
             //sign create the token
             const accessToken = sign({

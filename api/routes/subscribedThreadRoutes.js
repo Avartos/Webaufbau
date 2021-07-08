@@ -12,6 +12,8 @@ router.get('/:id', subscribedThreadController.findOne);
 // delete subscription by id for the current user
 router.delete('/:id', validateToken,subscribedThreadController.deleteOne);
 // add a new subscription for the current user
-router.post('/:id',validateToken, subscribedThreadController.add)
+router.post('/:id',validateToken, subscribedThreadController.add);
+
+// router.get('new/:id', subscribedThreadController.findNewEntries);
 
 module.exports = router;
