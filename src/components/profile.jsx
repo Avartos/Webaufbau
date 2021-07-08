@@ -11,7 +11,7 @@ const Profile = (props) => {
     const [username, setUsername] = useState("Squid#2027");
     const [email, setEmail] = useState("squiddy@pool.de");
 
-    if (props.roll == "user")
+    if (props.roll === "user")
     {
         return(
             <div className="wrapper-account">
@@ -29,7 +29,7 @@ const Profile = (props) => {
                 </div>
             </div>
         );
-    } else if (props.roll == "admin")
+    } else if (props.roll === "admin")
     {
         return(
             <div className="wrapper-account">

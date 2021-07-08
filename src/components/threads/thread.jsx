@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import { Link } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
-import CreateIcon from "@material-ui/icons/Create";
+import {ReactComponent as EditIcon} from '../../assets/icons/pencil.svg';
+
 
 import PreviewList from "./previewList";
 import SubscribeButton from "../subscribeButton";
@@ -37,6 +38,7 @@ const Thread = (props) => {
   //used to reference to the preview list
   const previewRef = React.useRef(null);
 
+  //toggles the visibility of the input field to change the thread data
   const [isEditMode, setIsEditMode] = useState(false);
   const [title, setTitle] = useState();
   const [body, setBody] = useState();
@@ -103,6 +105,7 @@ const Thread = (props) => {
   //automatically determine last post information on component mount
   useEffect(determineLastPostData, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+  //close edit mode and reset values when user aborts
   const handleAbortEdit = () => {
     setTitle(props.thread.title);
     setBody(props.thread.content);
@@ -121,7 +124,6 @@ const Thread = (props) => {
       title: title,
       content: body,
     };
-    console.log("Test");
     fetch(`http://localhost:3001/api/threads/`, {
       method: "PUT",
       headers: {
@@ -171,9 +173,12 @@ const Thread = (props) => {
             }}
           />
         )}
-        <div className="wrapperButton">
-          <CreateIcon onClick={handleToggleEditMode}></CreateIcon>
-        </div>
+        {props.thread.isEditable && (
+          <div className="wrapperButton">
+            <EditIcon className="editButton" onClick={handleToggleEditMode}></EditIcon>
+            {/* <CreateIcon ></CreateIcon> */}
+          </div>
+        )}
 
         {/* hide the subscribe button, if the user is not logged in */}
         {sessionStorage.getItem("accessToken") && (

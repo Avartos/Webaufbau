@@ -75,7 +75,8 @@ const findOneByName = (req, res) => {
             //sign create the token
             const accessToken = sign({
                 userName: user.userName,
-                id: user.id
+                id: user.id,
+                isAdmin: user.login.isAdmin,
               },
               "i677hf8kuah2basb0fasjb234faksbf"
             );

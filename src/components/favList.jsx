@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-import { CSSTransition } from "react-transition-group";
+import React from "react";
 
 import { ReactComponent as SplatIcon } from "../assets/icons/splat.svg";
 import FavThreadList from "./favThreadList";

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import ForumStatictics from './forumStatistics';
 import SubscribeButton from "./subscribeButton";

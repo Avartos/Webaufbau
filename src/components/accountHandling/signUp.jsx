@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Alert from "@material-ui/lab/Alert";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 const Signin = ({ handleAddAlert }) => {
   const [userName, setUserName] = useState("");
@@ -10,7 +10,6 @@ const Signin = ({ handleAddAlert }) => {
   const [requiredFieldsAreOk, setRequiredFieldsAreOk] = useState("");
   const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState("");
   const [isInvalidPasswordFormat, setIsInvalidPasswordFormat] = useState("");
-  const [error, setError] = useState(null);
 
   let history = useHistory();
 
@@ -43,12 +42,8 @@ const Signin = ({ handleAddAlert }) => {
           "Sie wurden erfolgreich registriert."
         );
         history.push("/login");
-        console.log("dance");
       })
       .catch((error) => {
-        setError(
-          "Das Formular konnte nicht abgeschickt werden (" + error + ")"
-        );
         handleAddAlert(
           "error",
           "Fehler",

@@ -66,6 +66,8 @@ const threadCondition = (userId) => {return {
 const findAll = (req, res) => {
   const forumId = req.params.forumId;
   const userId = (req.user) ? req.user.id : -1;
+  const user = (req.user) ? req.user : null;
+
   let condition = {...threadCondition(userId)};
   condition.where = {
     forumsId: forumId,
@@ -86,6 +88,7 @@ const findAll = (req, res) => {
       Thread.findAll(condition)
         .then(threadData => {
           let mappedData = addCountsToData(threadData, data);
+          mappedData = addVisibilityToThreads(mappedData, user);
           res.json(mappedData);
         })
         .catch(error => {
@@ -104,6 +107,7 @@ const findAll = (req, res) => {
 const findOne = (req, res) => {
   const id = req.params.id;
   const userId = (req.user) ? req.user.id : -1;
+  const user = (req.user) ? req.user : null;
   let condition = {...threadCondition(userId)};
   condition.where = {'id' : id};
 
@@ -117,6 +121,7 @@ const findOne = (req, res) => {
       Thread.findAll(condition)
         .then(threadData => {
           let mappedData = addCountsToData(threadData, data);
+          mappedData = addVisibilityToThreads(mappedData, user);
           res.json(mappedData);
         })
         .catch(error => {
@@ -153,12 +158,15 @@ const add = (req, res) => {
 }
 
 const update = (req, res) => {
-  console.log('Test');
-  res.send(200);
   const receivedThread = req.body;
-  const userId = req.user.id;
+  const userId = (req.user) ? req.user.id : -1;
+  const isAdmin = (req.user) ? req.user.isAdmin : false
   Thread.findByPk(receivedThread.id)
   .then(thread => {
+    if(userId !== thread.usersId && !isAdmin) {
+      throw Error(`@user${userId} tried to modify @thread${receivedThread.id}`);
+    }
+
     thread.update({
       title: receivedThread.title,
       content: receivedThread.content
@@ -172,7 +180,7 @@ const update = (req, res) => {
     })
   })
   .catch(error => {
-    res.sendStatus(500);
+    res.sendStatus(403);
     console.error('Error:\t', error);
   })
 }
@@ -191,17 +199,37 @@ const deleteOne = (req, res) => {
  * @param {*} dataCounts  the array of counts that should be mapped to the threads
  * @returns mapped list of threads and counts
  */
-const addCountsToData = (threads, contributionCounts) => {
-  const mappedArray = threads.map(entry => {
-    let matchingCount = contributionCounts.find(countEntry => entry.id === countEntry.threadsId);
-    if (matchingCount) {
-      entry.dataValues.contributionCount = matchingCount.count;
-    } else {
-      entry.dataValues.contributionCount = 0;
-    }
-    return entry;
+ const addCountsToData = (threads, contributionCounts) => {
+  const mappedThreads = threads.map(thread => {
+    let matchingCount = contributionCounts.find(countEntry => thread.id === countEntry.threadsId);
+    return mapCountToThread(thread, matchingCount);
   });
-  return mappedArray;
+  return mappedThreads;
+}
+
+const mapCountToThread = (thread, contributionCount) => {
+  if (contributionCount) {
+    thread.dataValues.contributionCount = contributionCount.count;
+  } else {
+    thread.dataValues.contributionCount = 0;
+  }
+  return thread;
+}
+
+const addVisibilityToThreads = (threads, user) => {
+  const mappedThreads = threads.map(thread => {
+    return addVisibilityLevelToThread(thread, user);
+  });
+  return mappedThreads;
+}
+
+const addVisibilityLevelToThread = (thread, user) => {
+  if(user && (user.id === thread.dataValues.usersId || user.isAdmin)) {
+    thread.dataValues.isEditable = true;
+  } else {
+    thread.dataValues.isEditable = false;
+  }
+  return thread;
 }
 
 module.exports = {
