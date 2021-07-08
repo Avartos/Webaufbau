@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const Login = ({handleAddAlert}) => {
+const Login = ({ handleAddAlert }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState(null);
 
   let history = useHistory();
 
@@ -22,31 +21,25 @@ const Login = ({handleAddAlert}) => {
       body: JSON.stringify(user),
     })
       .then((response) => {
+        if (response.status === 401) {
+          throw Error("Nutzername oder Passwort sind falsch.");
+        }
         if (!response.ok) {
-          alert(response.data.error);
-          //TODO: Error renaming
-          throw error("BubbelBabbel");
+          throw Error("Ein unbekannter Fehler ist aufgetreten.");
         }
         return response.json();
       })
       .then((data) => {
         sessionStorage.setItem("accessToken", data);
         handleAddAlert(
-          'success',
-          'Hallo',
-          'Sie wurden erfolgreich angemeldet!'
+          "success",
+          "Hallo",
+          "Sie wurden erfolgreich angemeldet!"
         );
         history.push("/");
       })
       .catch((error) => {
-        setError(
-          "Das Formular konnte nicht abgeschickt werden (" + error + ")"
-        );
-        handleAddAlert(
-          "error",
-          "Fehler",
-          "Das Formular konnte nicht abgeschickt werden."
-        );
+        handleAddAlert("error", "Fehler", error.message);
       });
   };
 
@@ -55,14 +48,14 @@ const Login = ({handleAddAlert}) => {
       <div className="header">
         <span className="title">Login</span>
       </div>
-      <div className="loginBody">
+      <div className="body">
         <form
           onSubmit={(e) => {
             handleSubmit(e);
           }}
         >
           <div>
-            <label className="loginLabel">Benutzername: </label>
+            <label>Benutzername: </label>
             <input
               placeholder="Benutzername"
               className="loginInput"
@@ -75,7 +68,7 @@ const Login = ({handleAddAlert}) => {
           </div>
 
           <div>
-            <label className="loginLabel">Password: </label>
+            <label>Password: </label>
             <input
               placeholder="Passwort"
               className="loginInput"

@@ -64,7 +64,8 @@ const findOneByName = (req, res) => {
     })
     .then((user) => {
       if (!user) {
-        console.log("nutzer nicht gefunden");
+        res.sendStatus(401);
+        console.error('Error:\t', `Login for user ${userName} failed`);
       } else {
         bcrypt
           .compare(password, user.login.passwordHash)

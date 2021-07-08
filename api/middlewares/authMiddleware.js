@@ -20,9 +20,7 @@ const validateToken = (req, res, next) => {
             }
         })
     } catch (err) {
-        res.json({
-            error: err
-        })
+        res.sendStatus(403);
     }
 };
 

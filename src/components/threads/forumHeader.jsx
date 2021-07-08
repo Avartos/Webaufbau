@@ -83,7 +83,8 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
               setFormIsUnfolded(!formIsUnfolded);
             }}
           >
-            Neuen Thread anlegen
+            {!formIsUnfolded && <span>Neuen Thread anlegen</span>}
+            {formIsUnfolded && <span>Formular schließen</span>}
           </button>
           <div className="wrapperForm" style={{ height: formHeight }}>
             <CSSTransition

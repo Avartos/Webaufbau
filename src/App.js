@@ -9,7 +9,7 @@ import ForumList from "./components/forumList";
 import Contributions from "./components/contributions";
 import ThreadList from "./components/threads/threadList";
 import Login from "./components/login";
-import Signin from "./components/signin";
+import SignUp from "./components/signUp";
 import Account from "./components/profile";
 import ApiTokenForm from "./components/apiTokenForm";
 
@@ -59,7 +59,7 @@ function App() {
             <Route exact path="/contributions/:id"><Contributions /></Route>
             
             {/* Login Routes */}
-            <Route exact path="/registration"><Signin handleAddAlert={handleAddAlert} /></Route>
+            <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>
             <Route excact path="/login"><Login handleAddAlert={handleAddAlert} /></Route>
             
             {/* account */}
