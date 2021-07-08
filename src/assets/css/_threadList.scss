@@ -96,6 +96,54 @@
         border-top: 0.1em solid black;
         width: 100%;
       }
+
+      textArea {
+        width: 100%;
+        resize: none;
+      }
+
+      .saveChangeButton {
+        @include basicButton(
+          white,
+          $buttonColor,
+          $buttonHoverColor,
+          $buttonPressedColor
+        );
+
+        margin: 10px auto;
+        padding: 15px;
+        font-weight: bold;
+        // display: inline-block;
+        width: 180px;
+        float: right;
+        border: none;
+        border-radius: 5px;
+      }
+
+      .abortButton {
+        @include basicButton(
+          white,
+          #ce4d02,
+          #6e4800,
+          orange
+        );
+
+        margin: 10px auto;
+        padding: 15px;
+        font-weight: bold;
+        width: 180px;
+        border: none;
+        float: right;
+        border-radius: 5px;
+
+        &:hover {
+          background-color: #6e4800;
+        }
+
+        &:active {
+          background-color: #3d2800;
+        } 
+      }
     }
 
     .threadStatistics {

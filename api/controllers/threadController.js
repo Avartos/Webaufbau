@@ -152,6 +152,31 @@ const add = (req, res) => {
     });
 }
 
+const update = (req, res) => {
+  console.log('Test');
+  res.send(200);
+  const receivedThread = req.body;
+  const userId = req.user.id;
+  Thread.findByPk(receivedThread.id)
+  .then(thread => {
+    thread.update({
+      title: receivedThread.title,
+      content: receivedThread.content
+    })
+    .then((data) => {
+      res.sendStatus(200);
+    })
+    .catch(error => {
+      res.sendStatus(500);
+      console.error('Error:\t', error);
+    })
+  })
+  .catch(error => {
+    res.sendStatus(500);
+    console.error('Error:\t', error);
+  })
+}
+
 /**
  * deletes the thread that has the given id
  */
@@ -161,7 +186,7 @@ const deleteOne = (req, res) => {
 }
 
 /**
- * UThis function is used to map the found contribution counts to the threads
+ * This function is used to map the found contribution counts to the threads
  * @param {*} threads     the array of threads
  * @param {*} dataCounts  the array of counts that should be mapped to the threads
  * @returns mapped list of threads and counts
@@ -184,4 +209,5 @@ module.exports = {
   findOne,
   deleteOne,
   add,
+  update
 }

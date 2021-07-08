@@ -1,4 +1,6 @@
-const {verify} = require("jsonwebtoken");
+const {
+    verify
+} = require("jsonwebtoken");
 
 /**
  * Checks, if the user is logged in
@@ -8,15 +10,16 @@ const {verify} = require("jsonwebtoken");
 const validateToken = (req, res, next) => {
     const accessToken = req.header("accessToken");
 
-    if (!accessToken) return res.json({
-        error: "User is not logged in!"
-    });
+    if (!accessToken)
+        res.sendStatus(403);
 
     try {
         verify(accessToken, "i677hf8kuah2basb0fasjb234faksbf", (err, decodedToken) => {
             req.user = decodedToken;
             if (decodedToken) {
                 next();
+            } else {
+                res.sendStatus(403);
             }
         })
     } catch (err) {
