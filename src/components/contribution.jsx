@@ -55,18 +55,19 @@ function Contribution({ contribution, isReply = false }) {
 
     return (
         <div className="contribution">
-            <p className="contributorSquid">From: {contribution.contributorSquid}</p>
-            <p className="conText">{contribution.contributionText}</p>
-            {!isReply && !reply && <button className="contributionButtons" onClick={() => setReply(true)}> <ReplyIcon /> </button>}
-            {!isReply && reply && <div><AddNewContributionForm /><button onClick={() => setReply(false)}>Verwerfen</button></div>}
+            
+            <p className="header">From: {contribution.contributorSquid}</p>
+            <p className="body">{contribution.contributionText}</p>
+            <div className="counterOfLikes">
 
-            <div id="CounterOfLikes">
-
-                <button className="contributionButtons" onClick={() => setCount(count - 1)}> <RemoveIcon /> </button>
+                <button className="counterButton" onClick={() => setCount(count - 1)}> <RemoveIcon /> </button>
                 <p>{count}</p>
-                <button className="contributionButtons" onClick={() => setCount(count + 1)}> <AddIcon /> </button>
+                <button className="counterButton" onClick={() => setCount(count + 1)}> <AddIcon /> </button>
 
             </div>
+            {!isReply && !reply && <button className="replyButton" onClick={() => setReply(true)}> <ReplyIcon /> </button>}
+            {!isReply && reply && <div><AddNewContributionForm /><button className="discardContribution" onClick={() => setReply(false)}>Verwerfen</button></div>}
+
             <div className="replies">
                 {replies.map((reply) => {
                     return (
@@ -77,6 +78,7 @@ function Contribution({ contribution, isReply = false }) {
                     );
                 })}
             </div>
+            
         </div>
     )
 }

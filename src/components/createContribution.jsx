@@ -18,8 +18,9 @@ const NewContributionForm = ({ handleSubmitForm }) => {
                         setContributionText("");
                     }}
                 >
+                <div className="createArea">
 
-                    <textarea
+                    <textarea className="textarea"
                         required
                         value={contributionText}
                         onChange={(e) => {
@@ -27,8 +28,11 @@ const NewContributionForm = ({ handleSubmitForm }) => {
                         }}
                         placeholder="Gib deinen Beitrag zum Thema!"
                     ></textarea>
-
-                    <button>Absenden</button>
+                    <div className="buttonArea">
+                        <button>Anfügen</button>
+                        <button>Absenden</button>
+                    </div>
+                    </div>
                 </form>
             </div>
         )
@@ -45,7 +49,7 @@ const NewContributionForm = ({ handleSubmitForm }) => {
     return (
         <div>
             {!visible && <button className="addContribution" onClick={openForm}>+</button>}
-            {visible && <div><AddNewContributionForm /><button onClick={closeForm}>Verwerfen</button></div>}
+            {visible && <div><AddNewContributionForm /><button className="discardContribution" onClick={closeForm}>Verwerfen</button></div>}
         </div>
     )
 };

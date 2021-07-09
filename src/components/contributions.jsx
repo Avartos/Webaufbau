@@ -38,6 +38,7 @@ const Contributions = () => {
     }
 
     return (
+        <div className="contributions">
         <React.Fragment>
             <DescriptionThread thread={{
                 title: "Katzentatzen <3",
@@ -61,6 +62,7 @@ const Contributions = () => {
                 })}
             </div>
         </React.Fragment>
+        </div>
     );
 }
 
