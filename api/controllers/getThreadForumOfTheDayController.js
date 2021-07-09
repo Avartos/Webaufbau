@@ -28,7 +28,7 @@ const getOneForum = (req,res) => {
     const forumId = req.params.id;
 
     Thread.count({
-        group: ['forumId'],
+        group: ['forumsId'],
         where: {forumsId: forumId}
     })
         .then(data => {
@@ -38,11 +38,12 @@ const getOneForum = (req,res) => {
                     model: Thread,
                     as: 'threads',
                     where: {forumsId: forumId},
-                    required: false
+                    required: false,
+                    attributes:[]
                 }],
             })
                 .then(threadData => {
-                    let mappedData = addCountsToData(threadData, data);
+                    let mappedData = addThreadCountsToData([threadData], data);
                     res.json(mappedData);
                 })
                 .catch(error => {
@@ -57,13 +58,13 @@ const getOneForum = (req,res) => {
 }
 
 
-const addCountsToData = (threads, counts) => {
+const addThreadCountsToData = (threads, counts) => {
     const mappedArray = threads.map(entry => {
         let matchingCount = counts.find(countEntry => entry.id === countEntry.threadsId);
         if (matchingCount) {
-            entry.dataValues.contributionCount = matchingCount.count;
+            entry.dataValues.threadCount = matchingCount.count;
         } else {
-            entry.dataValues.contributionCount = 0;
+            entry.dataValues.threadCount = 0;
         }
         return entry;
     });
