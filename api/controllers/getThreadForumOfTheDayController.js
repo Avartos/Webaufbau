@@ -7,6 +7,7 @@ const getOneThread = (req,res) => {
     const threadId = req.params.id;
 
     Thread.findByPk(threadId, {
+        attributes:['title'],
         include: [{
             model: Contribution,
             as: 'contributions',
@@ -26,19 +27,50 @@ const getOneThread = (req,res) => {
 const getOneForum = (req,res) => {
     const forumId = req.params.id;
 
-    Forum.findByPk(forumId, {
-        include:[{
-            model: Thread,
-            as: 'threads',
-            where: {forumsId: forumId},
-            required: false
-        }]
+    Thread.count({
+        group: ['forumId'],
+        where: {forumsId: forumId}
     })
         .then(data => {
-            res.json(data);
+            Forum.findByPk(forumId, {
+                attributes:['title'],
+                include:[{
+                    model: Thread,
+                    as: 'threads',
+                    where: {forumsId: forumId},
+                    required: false
+                }],
+            })
+                .then(threadData => {
+                    let mappedData = addCountsToData(threadData, data);
+                    res.json(mappedData);
+                })
+                .catch(error => {
+                    console.error('Error:\t', error);
+                    res.sendStatus(500);
+                })
         })
         .catch(error => {
             console.log('Error:\t', error)
             res.sendStatus(500);
         });
+}
+
+
+const addCountsToData = (threads, counts) => {
+    const mappedArray = threads.map(entry => {
+        let matchingCount = counts.find(countEntry => entry.id === countEntry.threadsId);
+        if (matchingCount) {
+            entry.dataValues.contributionCount = matchingCount.count;
+        } else {
+            entry.dataValues.contributionCount = 0;
+        }
+        return entry;
+    });
+    return mappedArray;
+}
+
+module.exports = {
+    getOneThread,
+    getOneForum
 }
