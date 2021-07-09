@@ -1,12 +1,13 @@
-import React from "react";
+import React, {useState} from "react";
 
 import { ReactComponent as SplatIcon } from "../assets/icons/splat.svg";
 import FavThreadList from "./favThreadList";
 
 const FavList = (props) => {
-  
 
-  return (
+
+
+    return (
     <div className="favList">
       <ul>
         <div className="title">

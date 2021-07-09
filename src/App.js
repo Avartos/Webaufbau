@@ -48,7 +48,7 @@ function App() {
       <div className="App">
         <NavBar />
         
-        <FavBar />
+        <FavBar handleAddAlert = {handleAddAlert} />
         <div className="content">
         <SearchBar isMobile={true}/>
           <AlertList

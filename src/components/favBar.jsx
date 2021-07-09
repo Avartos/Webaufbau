@@ -1,65 +1,45 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import FavList from "./favList";
 
 const FavBar = () => {
-  const [favorite, setFavorite] = useState([
-    {
-      id: 0,
-      forum: "Forumtitle 1",
-      threads: ["Threadtitle 1", "Threadtitle 2"],
-    },
-    {
-      id: 1,
-      forum: "Senf macht spaß",
-      threads: ["Threadtitle 1", "Threadtitle 2"],
-    },
-    {
-      id: 2,
-      forum: "Vogelfreunde Erfurt",
-      threads: ["Threadtitle 1", "Threadtitle 2"],
-    },
-    {
-      id: 3,
-      forum: "Kochen mit Zimt",
-      threads: ["Threadtitle 1", "Threadtitle 2"],
-    },
-  ]);
+  const [favorite, setFavorite] = useState([]);
+  const [popular, setPopular] = useState([]);
+  const [latest, setLatest] = useState([]);
 
-  const [popular, setPopular] = useState([
-    {
-      id: 4,
-      forum: "Forumtitle 1",
-      threads: ["Threadtitle 1", "Threadtitle 2"],
-    },
-    { id: 5, forum: "Fußball", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { id: 6, forum: "Schwimmen", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { id: 7, forum: "Erfurt", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    { id: 8, forum: "FH-Erfurt", threads: ["Threadtitle 1", "Threadtitle 2"] },
-  ]);
+    const fetchFavorites = (handleAddAlert) => {
+        //used to stop fetching when forcing reload
+        const abortController = new AbortController();
+        fetch(`http://localhost:3001/api/favBar/threads`, {
+            signal: abortController.signal,
+            headers: {
+                "Content-Type": "application/json",
+                // undefined, if the user is not looged in
+                accessToken: sessionStorage.getItem("accessToken"),
+            },
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw Error(
+                        "Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut."
+                    );
+                }
+                return res.json();
+            })
+            .then((data) => {
+                setFavorite(data);
+                console.log(data);
+            })
+            .catch((error) => {
+                if (error.name === "AbortError") {
+                    console.log("fetch abortet");
+                } else {
+                    handleAddAlert("error", "Fehler", error.message);
+                }
+            });
+        return () => console.log(abortController.abort());
+    };
 
-  const [latest, setLatest] = useState([
-    {
-      id: 9,
-      forum: "Forumtitle 1",
-      threads: ["Threadtitle 1", "Threadtitle 2"],
-    },
-    { id: 10, forum: "BUGA22", threads: ["Threadtitle 1", "Threadtitle 2"] },
-    {
-      id: 11,
-      forum: "Fragen zu REACT",
-      threads: ["Threadtitle 1", "Threadtitle 2"],
-    },
-    {
-      id: 12,
-      forum: "Schützenverein Erfurt",
-      threads: ["Threadtitle 1", "Threadtitle 2"],
-    },
-    {
-      id: 13,
-      forum: "Ein neues Forum",
-      threads: ["Threadtitle 1", "Threadtitle 2"],
-    },
-  ]);
+    useEffect(fetchFavorites,[]);
 
   return (
     <React.Fragment>

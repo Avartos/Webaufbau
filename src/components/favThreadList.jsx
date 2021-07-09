@@ -28,7 +28,7 @@ const FavThreadList = ({ item }) => {
         <span onClick={handleToggleUnfolded}>
           <ArrowForwardIosIcon className={dropDownClass} />
           <span className="forumTitle">
-            {item.forum}
+            {item.forumTitle}
           </span>
         </span>
         <div style={{ height: threadListHeight }}>
@@ -41,13 +41,13 @@ const FavThreadList = ({ item }) => {
             nodeRef={threadListRef}
           >
             <ul ref={threadListRef}>
-              {item.threads.map((thread) => {
-                return (
-                  <li className="favThread" key={thread}>
-                    {thread}
-                  </li>
-                );
-              })}
+              {/*{item.threads.map((thread) => {*/}
+              {/*  return (*/}
+              {/*    <li className="favThread" key={thread}>*/}
+              {/*      {thread}*/}
+              {/*    </li>*/}
+              {/*  );*/}
+              {/*})}*/}
             </ul>
           </CSSTransition>
         </div>
