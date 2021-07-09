@@ -1,6 +1,6 @@
 import React from 'react';
 import SearchBar from "./searchBar";
-import Bell from "./bell";
+import Bell from "./notifications/bell";
 import ProfileDropdown from "./profileDropdown";
 import { Link } from "react-router-dom";
 import { ReactComponent as LogoIcon } from "../assets/icons/logo.svg";
@@ -17,7 +17,7 @@ const NavBar = () => {
             </label>
           </li>
           <li>
-            <Bell />
+          {sessionStorage.getItem("accessToken") && <Bell />}
           </li>
           <li>
             <ProfileDropdown />

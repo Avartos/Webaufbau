@@ -6,6 +6,7 @@
 /* #region forum header */
 .forumHeader {
   @include contentCard($threadHeaderColor, $threadBodyColor);
+  width: 100%;
   .header {
     .title {
       text-align: center !important;
@@ -44,10 +45,7 @@
 
 /* #region threads*/
 .thread {
-  width: 100%;
-  @media (min-width: $minDesktopWidth) {
-    width: auto !important;
-  }
+
   @include contentCard($threadHeaderColor, $threadBodyColor);
   transition: ease-in-out 0.2s;
 

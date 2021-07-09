@@ -3,13 +3,13 @@ const SubscribedForum = require('../models/subscribedForum');
 const Forum = require('../models/forum');
 const Thread = require('../models/thread');
 
-const findAll = (req,res) => {
+const findAll = (req, res) => {
     SubscribedForum.findAll()
         .then(data => {
             res.json(data);
         })
         .catch(error => {
-            console.log('Error:\t', error);
+            console.error('Error:\t', error);
             res.sendStatus(500);
         })
 }
@@ -21,7 +21,7 @@ const findOne = (req, res) => {
             res.json(data);
         })
         .catch(error => {
-            console.log('Error:\t', error)
+            console.error('Error:\t', error)
             res.sendStatus(500);
         });
 }
@@ -62,7 +62,7 @@ const deleteOne = (req, res) => {
 }
 
 const findNew = (req, res) => {
-    const userId = 1;
+    const userId = (req.user) ? req.user.id : -1;
     SubscribedForum.findAll({
             attributes: [
                 'usersId',
@@ -117,7 +117,7 @@ const findNew = (req, res) => {
  * @param {*} threadSubscriptions subscriptions with thread and contributions attached
  * @returns thre new notficiations without contributions
  */
- const extractUnreadNotifications = (forumSubscriptions) => {
+const extractUnreadNotifications = (forumSubscriptions) => {
     let newNotifications = forumSubscriptions.filter(subscription => {
         const lastReadDate = new Date(subscription.dataValues.timeStamp);
         const threads = (subscription.dataValues.forum) ? subscription.dataValues.forum.dataValues.threads : null;
@@ -143,11 +143,41 @@ const findNew = (req, res) => {
     return newNotifications;
 }
 
+const updateTimestamp = (req, res) => {
+    const forumId = req.params.id;
+    const userId = (req.user) ? req.user.id : -1;
+
+    SubscribedForum.findOne({
+            where: {
+                forumsId: forumId,
+                usersId: userId
+            }
+        })
+        .then(forum => {
+            // res.json(forum);
+            forum.update({
+                    timeStamp: Sequelize.fn('NOW'),
+                })
+                .then(data => {
+                    res.json(data);
+                })
+                .catch(error => {
+                    console.error('Error:\t', error);
+                    res.sendStatus(500);
+                })
+        })
+        .catch(error => {
+            console.error('Error:\t', error);
+            res.sendStatus(500);
+        })
+}
+
 
 module.exports = {
     findAll,
     findOne,
     add,
     deleteOne,
-    findNew
+    findNew,
+    updateTimestamp
 }
