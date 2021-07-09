@@ -59,11 +59,11 @@
       }
 
       Button:hover {
-        background-color: var(--buttonHoverColor);
+        background-color: $buttonHoverColor;
       }
     
       form button:active {
-        background-color: var(--buttonPressedColor);
+        background-color: $buttonPressedColor;
       }
       
       .errorMessage{

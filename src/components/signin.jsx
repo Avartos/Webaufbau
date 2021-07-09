@@ -49,6 +49,17 @@ const Signin = ({ handleAddAlert }) => {
       });
   };
 
+
+
+
+  const equalPasswords = (password, passwordTwo) => {
+    if (password !== passwordTwo) {
+      setComparePasswords("Die Passwörter sind nicht gleich");
+    } else {
+      setComparePasswords("");
+    }
+  };
+
   const checkPasswordConditions = (password) => {
     if (password) {
       let hasLength = password.length >= 8;
@@ -56,30 +67,22 @@ const Signin = ({ handleAddAlert }) => {
       let hasUpperCase = password.match(/[A-Z]/m);
       let hasNumber = password.match(/[0-9]/m);
       let hasSpecial = password.match(
-        /[@#^!"'ยง$%&/()=*\-+,.;:_<>?|\\{}\[\]]/m
+          /[@#^!"'ยง$%&/()=*\-+,.;:_<>?|\\{}\[\]]/m
       );
 
       if (
-        !hasLength ||
-        !hasLowerCase ||
-        !hasUpperCase ||
-        !hasNumber ||
-        !hasSpecial
+          !hasLength ||
+          !hasLowerCase ||
+          !hasUpperCase ||
+          !hasNumber ||
+          !hasSpecial
       ) {
         setPasswordConditions(
-          "Ihr Passwort muss mindestes 8 Zeichen lang sein, aus Groß-, Kleinbuchstaben, Zahlen und Sonderzeichen bestehen!"
+            "Ihr Passwort muss mindestes 8 Zeichen lang sein, aus Groß-, Kleinbuchstaben, Zahlen und Sonderzeichen bestehen!"
         );
       } else {
         setPasswordConditions("");
       }
-    }
-  };
-
-  const equalPasswords = (password, passwordTwo) => {
-    if (password !== passwordTwo) {
-      setComparePasswords("Die Passwörter sind nicht gleich");
-    } else {
-      setComparePasswords("");
     }
   };
 
