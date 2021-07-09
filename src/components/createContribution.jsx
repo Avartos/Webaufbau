@@ -1,14 +1,25 @@
 import { Duo } from '@material-ui/icons';
 import React, { useState } from 'react'
+import { useRef } from 'react';
 
 
 const NewContributionForm = ({ handleSubmitForm }) => {
 
-    const [visible, setVisible] = React.useState(false)
+    const [visible, setVisible] = useState(false)
 
-    const AddNewContributionForm = () => {
+    const AddNewContributionForm = ({ onDiscard }) => {
         const [contributionText, setContributionText] = useState("");
         const [currentUser, setCurrentUser] = useState("Squidy50");
+
+        const input = useRef(null)
+
+        const onInputChange = ({ target }) => {
+            const files = target.files
+
+            if (files.length > 0)
+                console.log("found files for input", files)
+        }
+
         return (
             <div className="newContributionForm">
 
@@ -18,17 +29,23 @@ const NewContributionForm = ({ handleSubmitForm }) => {
                         setContributionText("");
                     }}
                 >
+                    <div className="createArea">
 
-                    <textarea
-                        required
-                        value={contributionText}
-                        onChange={(e) => {
-                            setContributionText(e.target.value);
-                        }}
-                        placeholder="Gib deinen Beitrag zum Thema!"
-                    ></textarea>
-
-                    <button>Absenden</button>
+                        <textarea className="textarea"
+                            required
+                            value={contributionText}
+                            onChange={(e) => {
+                                setContributionText(e.target.value);
+                            }}
+                            placeholder="Gib deinen Beitrag zum Thema!"
+                        ></textarea>
+                        <input type="file" style={{ display: "none" }} ref={input} onChange={onInputChange} accept="image/*" />
+                        <div className="buttonArea">
+                            <button className="discardContribution" onClick={onDiscard} type="button">Verwerfen</button>
+                            {/* <button type="button" onClick={() => input.current.click()}>Anfügen</button> */}
+                            <button>Absenden</button>
+                        </div>
+                    </div>
                 </form>
             </div>
         )
@@ -38,14 +55,14 @@ const NewContributionForm = ({ handleSubmitForm }) => {
         event.preventDefault();
         setVisible(true)
     }
-    const closeForm = (event) => {
-        event.preventDefault();
+    const closeForm = () => {
+        console.log("discard 1")
         setVisible(false)
     }
     return (
         <div>
             {!visible && <button className="addContribution" onClick={openForm}>+</button>}
-            {visible && <div><AddNewContributionForm /><button onClick={closeForm}>Verwerfen</button></div>}
+            {visible && <div><AddNewContributionForm onDiscard={closeForm} /></div>}
         </div>
     )
 };

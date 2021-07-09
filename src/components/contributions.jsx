@@ -38,6 +38,7 @@ const Contributions = () => {
     }
 
     return (
+        <div className="contributions">
         <React.Fragment>
             <DescriptionThread thread={{
                 title: "Katzentatzen <3",
@@ -52,15 +53,17 @@ const Contributions = () => {
             }}/>
             <NewContributionForm handleSubmitForm={handleSubmitNewContribution} />
             <div className="contributionsList">
-                {contributions.map((contribution) => {
+                {contributions.map((contribution, index) => {
                     return (
                         <Contribution
                             contribution={contribution}
+                            key={index}
                         />
                     );
                 })}
             </div>
         </React.Fragment>
+        </div>
     );
 }
 

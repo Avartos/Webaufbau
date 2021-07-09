@@ -78,7 +78,6 @@ const findNew = (req, res) => {
                 as: 'thread',
                 attributes: [
                     'id',
-                    // 'contributions'
                 ],
                 include: [{
                     model: Contribution,
