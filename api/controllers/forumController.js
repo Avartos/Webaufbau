@@ -3,7 +3,16 @@ const Forum = require('../models/forum');
 const SubscribedForum = require('../models/subscribedForum');
 
 const findAll = (req,res) => {
-    Forum.findAll()
+    Forum.findAll(
+        {attributes: [
+            'id',
+            [sequelize.col('title'), 'name'],
+            [sequelize.col('shortDescription'), 'description'],
+            'createdAt',
+            'updatedAt'
+        ]}
+    )
+    
         .then(data => {
             res.json(data);
         })
