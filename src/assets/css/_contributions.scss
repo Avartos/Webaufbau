@@ -9,17 +9,6 @@
     @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
 }
 
-.discardContribution {
-    @include basicButton($aCFontColor, $dAbuttonColor, $aCHoverColor, $buttonPressedColor);
-    border-radius: 20px;
-    padding: 5px;
-    margin: 5px;
-    display: flex;
-    margin-top: -55px;
-    margin-left: 930px
-    
-}
-
 .newContributionForm {
     @include contentCard($nCFHeaderColor, $nCFBodyColor);
 
@@ -39,6 +28,10 @@
         border-radius: 20px;
         padding: 5px;
         margin: 5px;
+
+        &.discardContribution {
+            @include basicButton($aCFontColor, $dAbuttonColor, $aCHoverColor, $buttonPressedColor);
+        }
     }
 
 }
@@ -138,7 +131,7 @@
 .buttonArea {
     display: flex;
     justify-content: flex-end;
-    padding-left: 990px;
+    width: 100%;
 }
 
 .contibutionAllButtons {

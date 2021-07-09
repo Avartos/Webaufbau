@@ -53,10 +53,11 @@ const Contributions = () => {
             }}/>
             <NewContributionForm handleSubmitForm={handleSubmitNewContribution} />
             <div className="contributionsList">
-                {contributions.map((contribution) => {
+                {contributions.map((contribution, index) => {
                     return (
                         <Contribution
                             contribution={contribution}
+                            key={index}
                         />
                     );
                 })}
