@@ -3,11 +3,12 @@ const Thread = require('../models/thread');
 const User = require('../models/user');
 const SubscribedThread = require('../models/subscribedThread');
 const Forum = require('../models/forum');
+const Contribution = require('../models/contribution')
 const SubscribedForum = require('../models/subscribedForum');
 
 
 const findFavorites = (req, res) =>  {
-    //TODO: make userID variable
+    // const userID = req.user.id;
     const userID = 1;
     Forum.findAll({
         attributes: [['title', 'forumTitle']],
@@ -34,8 +35,14 @@ const findFavorites = (req, res) =>  {
 }
 
 const findPopular = (req, res) =>  {
-    Thread.findAll({
-    //TODO: find a good query
+    Contribution.findAll({
+    attributes: [
+    ],
+    include: {
+        model: Thread,
+        as: 'thread',
+        attributes: ['title'],
+    }
 
     }).then((data) => {
         res.json(data);
@@ -45,6 +52,7 @@ const findPopular = (req, res) =>  {
 }
 
 const findLatest = (req, res) =>  {
+    const limit = parseInt(req.query.limit);
     Thread.findAll({
         attributes: [['title', 'threadTitle'],
         'updatedAt'],
@@ -53,8 +61,8 @@ const findLatest = (req, res) =>  {
                 'updatedAt', 'desc'
             ]
         ],
-        //TODO: make limit variable
-        limit: 5
+
+        limit: limit
 
     }).then((data) => {
         res.json(data);

@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from "react";
-import FavList from "./favList";
+import {ReactComponent as SplatIcon} from "../assets/icons/splat.svg";
+import FavThreadList from "./favThreadList";
 
-const FavBar = () => {
+const FavBar = ({handleAddAlert}) => {
   const [favorite, setFavorite] = useState([]);
   const [popular, setPopular] = useState([]);
   const [latest, setLatest] = useState([]);
 
-    const fetchFavorites = (handleAddAlert) => {
+    const fetchFavorites = () => {
         //used to stop fetching when forcing reload
         const abortController = new AbortController();
         fetch(`http://localhost:3001/api/favBar/favorites`, {
@@ -71,10 +72,10 @@ const FavBar = () => {
             });
         return () => console.log(abortController.abort());
     };
-    const fetchLatest = (handleAddAlert) => {
+    const fetchLatest = () => {
         //used to stop fetching when forcing reload
         const abortController = new AbortController();
-        fetch(`http://localhost:3001/api/favBar/latest`, {
+        fetch(`http://localhost:3001/api/favBar/latest?limit=5`, {
             signal: abortController.signal,
             headers: {
                 "Content-Type": "application/json",
@@ -114,9 +115,45 @@ const FavBar = () => {
     <React.Fragment>
       <input type="checkbox" id="favToggle" className="favToggle" />
       <div className="favBar">
-        <FavList className="favorite" key="favorite" list={favorite} />
-        <FavList className="popular" key="popular" list={popular} />
-        <FavList className="latest" key="latest" list={latest} />
+          <div className="favList">
+              <ul>
+                  <div className="title">
+                      <SplatIcon className="splatIcon" />
+                      <span>Favoriten</span>
+                  </div>
+                  {favorite.map((item) => {
+                      return(
+                          <FavThreadList item={item}></FavThreadList>
+                      )
+                  })}
+              </ul>
+          </div>
+          <div className="favList">
+              <ul>
+                  <div className="title">
+                      <SplatIcon className="splatIcon" />
+                      <span>Popular</span>
+                  </div>
+                  {popular.map((title) => {
+                      return(
+                          <li>{title.thread.title}</li>
+                      )
+                  })}
+              </ul>
+          </div>
+          <div className="favList">
+              <ul>
+                  <div className="title">
+                      <SplatIcon className="splatIcon" />
+                      <span>Latest</span>
+                  </div>
+                  {latest.map((title) => {
+                      return(
+                          <li>{title.threadTitle}</li>
+                      )
+                  })}
+              </ul>
+          </div>
       </div>
     </React.Fragment>
   );
