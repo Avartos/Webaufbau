@@ -8,4 +8,6 @@ router.get('/', forumController.findAll);
 // get a forum with a given id
 router.get('/:id', authMiddleware.extractUserFromToken, forumController.findOne);
 
+router.get('/dirk', forumController.countThreads);
+
 module.exports = router;
