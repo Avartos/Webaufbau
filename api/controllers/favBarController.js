@@ -41,7 +41,7 @@ const findPopular = (req, res) =>  {
     include: {
         model: Thread,
         as: 'thread',
-        attributes: ['title'],
+        attributes: [['title', 'threadTitle']],
     }
 
     }).then((data) => {
@@ -55,7 +55,8 @@ const findLatest = (req, res) =>  {
     const limit = parseInt(req.query.limit);
     Thread.findAll({
         attributes: [['title', 'threadTitle'],
-        'updatedAt'],
+        'updatedAt',
+        ['id', 'threadID']],
         order: [
             [
                 'updatedAt', 'desc'
