@@ -1,0 +1,94 @@
+@import "./variables";
+@import "./mixins/buttonPreset";
+@import "./mixins/contentCard";
+
+nav {
+  .wrapperButton {
+    position: absolute;
+    left: 50%;
+    top: 0;
+    transform: translate(-50%, 50%);
+    @media (min-width: $minDesktopWidth) {
+      top: 50%;
+      transform: translate(-50%, -60%);
+    }
+
+    @include buttonContainer($mobileHeaderHeight * 0.7);
+
+    @media (min-width: $minDesktopWidth) {
+      @include buttonContainer($headerHeight * 0.8);
+    }
+
+    .profileDropDownButton {
+      margin: auto auto;
+      @include squaredButton($mobileHeaderHeight * 0.5, 0, 0.5);
+
+      @media (min-width: $minDesktopWidth) {
+        @include squaredButton($headerHeight * 0.5, 0, 0.5);
+      }
+      position: relative;
+
+      .avatar {
+        width: 70%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 90%);
+        @media (min-width: $minDesktopWidth) {
+          transform: translate(-50%, -50%);
+        }
+        top: 0;
+      }
+
+      .avatarFrame {
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, 50%);
+        @media (min-width: $minDesktopWidth) {
+          transform: translate(-50%, -50%);
+        }
+        position: absolute;
+        z-index: 2;
+        overflow: hidden;
+        border-radius: 50px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+.profileDropdown {
+  @include contentCard($threadHeaderColor, $threadBodyColor);
+  position: absolute;
+  transform: translate(15%, 80px);
+  @media (min-width: $minDesktopWidth) {
+    top: 120px;
+    transform: translate(25%, 0);
+  }
+  right: 0px;
+  width: 350px;
+  background-color: white;
+  transition: height ease-in-out 0.2s;
+
+  * {
+    text-decoration: none;
+  }
+
+  .header {
+    span {
+      margin: auto auto;
+    }
+  }
+
+  .body {
+    span {
+      text-align: left;
+      color: black;
+      padding: 10px;
+      transition: ease-in-out 0.2s;
+      &:hover {
+        color: $highlightedFontColor;
+      }
+    }
+  }
+}

@@ -13,6 +13,7 @@ import SignUp from "./components/accountHandling//signUp";
 import Account from "./components/profile";
 import ApiTokenForm from "./components/apiTokenForm";
 import SearchBar from "./components/searchBar";
+import MyProfile from "./components/accountHandling/myProfile";
 
 import AlertList from "./components/userAlerts/alertList";
 
@@ -62,13 +63,19 @@ function App() {
             <Route exact path="/contributions/:id"><Contributions /></Route>
             
             {/* Login Routes */}
-            <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>
-            <Route excact path="/login"><Login handleAddAlert={handleAddAlert} /></Route>
+            {!sessionStorage.getItem('accessToken') &&
+            <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>}
+            
+            {!sessionStorage.getItem('accessToken') &&
+            <Route excact path="/login"><Login handleAddAlert={handleAddAlert} /></Route>}
             
             {/* account */}
-            <Route exact path="/profile1"><Account roll="user" /></Route>
-            <Route exact path="/profile2"><Account roll="admin" /></Route>
-            <Route exact path="/tokenrequest"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>
+            {sessionStorage.getItem('accessToken') &&
+            <Route exact path="/my_profile"><MyProfile /></Route>}
+            {sessionStorage.getItem('accessToken') &&
+            <Route exact path="/administration"><Account roll="admin" /></Route>}
+            {sessionStorage.getItem('accessToken') && sessionStorage.getItem('isAdmin') &&
+            <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
             
             {/* 404 */}
             <Route path="/">

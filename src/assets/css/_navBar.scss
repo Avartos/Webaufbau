@@ -1,6 +1,7 @@
 @import "./variables";
 @import "./mixins/buttonPreset";
 @import "./notifications";
+@import "./profileDropdown";
 
 nav {
   grid-area: header;

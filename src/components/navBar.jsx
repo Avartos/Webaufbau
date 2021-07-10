@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useState } from "react";
 import SearchBar from "./searchBar";
 import Bell from "./notifications/bell";
-import ProfileDropdown from "./profileDropdown";
+import LoginButton from "./loginButton";
 import { Link } from "react-router-dom";
 import { ReactComponent as LogoIcon } from "../assets/icons/logo.svg";
-import "../assets/css/_navBar.scss";
+import ProfileButton from "./accountHandling/profileButton";
 
 const NavBar = () => {
+  const [notificationsUnfolded, setNotificationsUnfolded] = useState(false);
+  const [profileUnfolded, setProfileUnfolded] = useState(false);
+
+  const handleToggleProfileUnfold = () => {
+    if (!profileUnfolded) {
+      setNotificationsUnfolded(false);
+    }
+    setProfileUnfolded(!profileUnfolded);
+  };
+
+  const handleToggleNotificationsUnfold = () => {
+    if (!notificationsUnfolded) {
+      setProfileUnfolded(false);
+    }
+    setNotificationsUnfolded(!notificationsUnfolded);
+  };
+
   return (
     <React.Fragment>
       <nav>
@@ -17,10 +34,21 @@ const NavBar = () => {
             </label>
           </li>
           <li>
-          {sessionStorage.getItem("accessToken") && <Bell />}
+            {sessionStorage.getItem("accessToken") && (
+              <Bell
+                handleToggleUnfold={handleToggleNotificationsUnfold}
+                isUnfolded={notificationsUnfolded}
+              />
+            )}
           </li>
           <li>
-            <ProfileDropdown />
+            {!sessionStorage.getItem("accessToken") && <LoginButton />}
+            {sessionStorage.getItem("accessToken") && (
+              <ProfileButton
+                handleToggleUnfold={handleToggleProfileUnfold}
+                isUnfolded={profileUnfolded}
+              ></ProfileButton>
+            )}
           </li>
         </ul>
 

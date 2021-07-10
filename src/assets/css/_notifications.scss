@@ -7,8 +7,10 @@
   .header {
     display: inline-block;
     width: 100%;
-    .title span {
-      text-align: center !important;
+    .title {
+      font-size: 1.3em !important;
+      padding-top: 7px;
+      margin: auto auto;
 
     }
   }

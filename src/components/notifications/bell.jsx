@@ -5,7 +5,6 @@ import classNames from "classnames";
 import { CSSTransition } from "react-transition-group";
 
 const Bell = (props) => {
-  const [isUnfolded, setIsUnfolded] = useState(false);
 
   const [threadNotifications, setThreadNotifications] = useState([]);
   const [forumNotifications, setForumNotifications] = useState([]);
@@ -14,7 +13,7 @@ const Bell = (props) => {
   const previewRef = React.useRef(null);
 
   const calculatePreviewHeight = () => {
-    const height = isUnfolded ? 300 : 0;
+    const height = props.isUnfolded ? 300 : 0;
     setPreviewHeight(height);
     console.log(height);
   };
@@ -75,7 +74,7 @@ const Bell = (props) => {
     const interval = setInterval(() => {
       fetchForumNotifications();
       fetchThreadNotifications();
-    }, 60000);
+    }, 300000);
   }, []);
 
   const updateNotification = (url, targetFetch) => {
@@ -136,7 +135,7 @@ const Bell = (props) => {
 
         <BellIcon
           className={"headerButton"}
-          onClick={() => setIsUnfolded(!isUnfolded)}
+          onClick={() => props.handleToggleUnfold()}
         />
       </div>
       <div
@@ -144,7 +143,7 @@ const Bell = (props) => {
         style={{ height: previewHeight }}
       >
         <CSSTransition
-          in={isUnfolded}
+          in={props.isUnfolded}
           timeout={500}
           unmountOnExit
           onEnter={calculatePreviewHeight}
