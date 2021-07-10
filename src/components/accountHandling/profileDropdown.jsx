@@ -12,7 +12,6 @@ const ProfileDropDown = (props) => {
   const calculatePreviewHeight = () => {
     const height = props.isUnfolded ? previewRef.current.clientHeight : 0;
     setPreviewHeight(height);
-    console.log(height);
   };
 
   const handleLogout = () => {
@@ -20,8 +19,6 @@ const ProfileDropDown = (props) => {
     //refresh page to make sure all components reload the token
     history.go(0);
   };
-
-  console.log(props.isUnfolded);
 
   return (
     <div className="profileDropdown" style={{ height: previewHeight }}>

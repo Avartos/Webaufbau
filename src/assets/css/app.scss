@@ -60,3 +60,7 @@ body {
 .MuiCircularProgress-colorPrimary {
   color: $highlightedFontColor !important;
 }
+
+.MuiAlert-icon {
+  z-index: 0 !important;
+}

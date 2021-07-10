@@ -21,6 +21,9 @@ function App() {
   // contains all alerts that can be added by different components.
   const [alerts, setAlerts] = useState([]);
 
+  //used to update the navbar profile picture icon when selecting a new one in "my profile"
+  const [currentProfilePicture, setCurrentProfilePicture] = useState(sessionStorage.getItem('profilePicture'));
+
   /**
    * Adds an alert to the alert list
    * @param {*} severity The type of alert (error, success, info)
@@ -44,10 +47,14 @@ function App() {
     setAlerts([...filteredAlerts]);
   };
 
+  const handleUpdateProfilePicture = () => {
+    setCurrentProfilePicture(sessionStorage.getItem('profilePicture'));
+  } 
+
   return (
     <Router>
       <div className="App">
-        <NavBar />
+        <NavBar profilePicturePath={currentProfilePicture}/>
         
         <FavBar />
         <div className="content">
@@ -71,7 +78,7 @@ function App() {
             
             {/* account */}
             {sessionStorage.getItem('accessToken') &&
-            <Route exact path="/my_profile"><MyProfile /></Route>}
+            <Route exact path="/my_profile"><MyProfile handleUpdateProfilePicture={handleUpdateProfilePicture} handleAddAlert={handleAddAlert}/></Route>}
             {sessionStorage.getItem('accessToken') &&
             <Route exact path="/administration"><Account roll="admin" /></Route>}
             {sessionStorage.getItem('accessToken') && sessionStorage.getItem('isAdmin') &&

@@ -6,7 +6,7 @@ import { Link } from "react-router-dom";
 import { ReactComponent as LogoIcon } from "../assets/icons/logo.svg";
 import ProfileButton from "./accountHandling/profileButton";
 
-const NavBar = () => {
+const NavBar = (props) => {
   const [notificationsUnfolded, setNotificationsUnfolded] = useState(false);
   const [profileUnfolded, setProfileUnfolded] = useState(false);
 
@@ -47,6 +47,7 @@ const NavBar = () => {
               <ProfileButton
                 handleToggleUnfold={handleToggleProfileUnfold}
                 isUnfolded={profileUnfolded}
+                profilePicturePath={props.profilePicturePath}
               ></ProfileButton>
             )}
           </li>

@@ -104,11 +104,11 @@ const findOneByName = (req, res) => {
             }
             res.json(tokenObject);
           })
-
           .catch((error) => {
-            console.log(
-              "dis hat nich geklappt. der nutzer oder das passwort stimmen nich"
-            );
+            console.log(error => {
+              console.error('Error:\t', error);
+              res.sendStatus(500);
+            });
           });
       }
     })
@@ -153,10 +153,94 @@ const add = (req, res) => {
   });
 };
 
+const updateImage = (req, res) => {
+  const userId = req.user.id;
+  const imageId = req.params.id;
+  User.findByPk(userId, {
+      include: {
+        model: Image,
+        as: 'image'
+      }
+    })
+    .then(user => {
+      user.update({
+          imagesId: imageId
+        })
+        .then(user => {
+          //search image to return
+          Image.findByPk(imageId)
+            .then(image => {
+              console.log(image);
+              res.json(image);
+            })
+        });
+    })
+    .catch(error => {
+      res.sendStatus(500);
+      console.error('Error:\t', error);
+    });
+}
+
+const updatePassword = (req, res) => {
+  const userId = req.user.id;
+  const password = req.body.currentPassword;
+  const newPassword = req.body.newPassword;
+  const repeatedPassword = req.body.repeatedPassword;
+
+  //find user from database
+  Login.findOne({
+      attributes: [
+        'id',
+        // 'usersId',
+        'passwordHash'
+      ],
+      include: [{
+        model: User,
+        as: 'user',
+        where: {
+          id: userId
+        },
+        attributes: []
+      }]
+    })
+    .then(login => {
+      //check if the password matches the saved password
+      bcrypt
+        .compare(password, login.dataValues.passwordHash)
+        .then((match) => {
+          if (!match) {
+            res.sendStatus(403);
+          } else {
+            //check if both new passwords are equal
+            if (newPassword === repeatedPassword) {
+              bcrypt.hash(newPassword, 10)
+                .then((hash) => {
+                  //save the new hash to the database
+                  login.update({
+                      passwordHash: hash
+                    })
+                    .then(data => {
+                      res.sendStatus(200);
+                    })
+                });
+            } else {
+              res.sendStatus(500);
+            }
+          }
+        });
+    })
+    .catch(error => {
+      console.error('Error:\t', error);
+      res.sendStatus(500);
+    });
+}
+
 module.exports = {
   findAll,
   findOne,
   update,
   add,
   findOneByName,
+  updateImage,
+  updatePassword
 };
