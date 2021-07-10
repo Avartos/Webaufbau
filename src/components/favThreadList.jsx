@@ -41,13 +41,9 @@ const FavThreadList = ({ item }) => {
             nodeRef={threadListRef}
           >
             <ul ref={threadListRef}>
-              {/*{item.threads.map((thread) => {*/}
-              {/*  return (*/}
-              {/*    <li className="favThread" key={thread}>*/}
-              {/*      {thread}*/}
-              {/*    </li>*/}
-              {/*  );*/}
-              {/*})}*/}
+              {item.threads.map((value, index) => {
+                return <li key={index}>{value.threadTitle}</li>
+              })}
             </ul>
           </CSSTransition>
         </div>

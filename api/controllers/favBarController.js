@@ -8,19 +8,22 @@ const SubscribedForum = require('../models/subscribedForum');
 
 const findFavorites = (req, res) =>  {
     const userID = 1;
-    SubscribedThread.findAll({
-        attributes: ['usersId', 'threadsId',
-                        [Sequelize.col('thread.title'), 'threadTitle'],
-                        [Sequelize.col('thread.forum.title'), 'forumTitle']
-                    ],
-       where: {usersId: userID},
-        include: [{model:Thread,
-                    as: 'thread',
-                    attributes:[],
-        include: [{model:Forum,
-                    as: 'forum',
-                    attributes:[]}
-                    ]}]
+    Forum.findAll({
+        attributes: [['title', 'forumTitle']],
+        include: [{
+            model:Thread,
+            as: 'threads',
+            attributes: [
+                ['title', 'threadTitle'],
+                ['id', 'threadID']
+            ],
+            include: [{
+                model: SubscribedThread,
+                as: 'subscribedThreads',
+                where: {usersId: userID},
+                attributes: []
+            }]
+        }]
     }).then((data) => {
         res.json(data);
     }).catch((error) => {
