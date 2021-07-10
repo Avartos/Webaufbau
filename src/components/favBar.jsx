@@ -9,7 +9,7 @@ const FavBar = () => {
     const fetchFavorites = (handleAddAlert) => {
         //used to stop fetching when forcing reload
         const abortController = new AbortController();
-        fetch(`http://localhost:3001/api/favBar/threads`, {
+        fetch(`http://localhost:3001/api/favBar/favorites`, {
             signal: abortController.signal,
             headers: {
                 "Content-Type": "application/json",
@@ -39,7 +39,76 @@ const FavBar = () => {
         return () => console.log(abortController.abort());
     };
 
-    useEffect(fetchFavorites,[]);
+    const fetchPopular = (handleAddAlert) => {
+        //used to stop fetching when forcing reload
+        const abortController = new AbortController();
+        fetch(`http://localhost:3001/api/favBar/popular`, {
+            signal: abortController.signal,
+            headers: {
+                "Content-Type": "application/json",
+                // undefined, if the user is not looged in
+                accessToken: sessionStorage.getItem("accessToken"),
+            },
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw Error(
+                        "Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut."
+                    );
+                }
+                return res.json();
+            })
+            .then((data) => {
+                setPopular(data);
+                console.log(data);
+            })
+            .catch((error) => {
+                if (error.name === "AbortError") {
+                    console.log("fetch abortet");
+                } else {
+                    handleAddAlert("error", "Fehler", error.message);
+                }
+            });
+        return () => console.log(abortController.abort());
+    };
+    const fetchLatest = (handleAddAlert) => {
+        //used to stop fetching when forcing reload
+        const abortController = new AbortController();
+        fetch(`http://localhost:3001/api/favBar/latest`, {
+            signal: abortController.signal,
+            headers: {
+                "Content-Type": "application/json",
+                // undefined, if the user is not looged in
+                accessToken: sessionStorage.getItem("accessToken"),
+            },
+        })
+            .then((res) => {
+                if (!res.ok) {
+                    throw Error(
+                        "Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut."
+                    );
+                }
+                return res.json();
+            })
+            .then((data) => {
+                setLatest(data);
+                console.log(data);
+            })
+            .catch((error) => {
+                if (error.name === "AbortError") {
+                    console.log("fetch abortet");
+                } else {
+                    handleAddAlert("error", "Fehler", error.message);
+                }
+            });
+        return () => console.log(abortController.abort());
+    };
+
+    useEffect(() => {
+        fetchFavorites();
+        fetchPopular();
+        fetchLatest();
+    },[]);
 
   return (
     <React.Fragment>

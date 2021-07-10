@@ -4,6 +4,8 @@ const favBarController = require('../controllers/favBarController');
 
 
 
-router.get('/threads', favBarController.findFavorites )
+router.get('/favorites', favBarController.findFavorites )
+router.get('/popular', favBarController.findPopular )
+router.get('/latest', favBarController.findLatest )
 
 module.exports = router;
