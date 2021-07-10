@@ -12,7 +12,7 @@ const Forum = (props) => {
                         <SubscribeButton
                             parentId={props.id}
                             isSubscribed={props.isSubscribed}
-                            handleSubscribe={props.handleSubscribeThread}
+                            handleSubscribe={props.handleSubscribeForum}
                         />
                     </div>
                     </div>
