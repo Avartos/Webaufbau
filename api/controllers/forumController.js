@@ -48,24 +48,26 @@ const findOne = (req, res) => {
 }
 
 const countThreads = (req, res) => {
-    const forumId = 1;
-    Thread.count({
-        group: ['threadsId'],
+    Forum.findAll({
+        attributes: [
+            ['id','forumsID'],
+            ['title','forumTitle'],
+            [sequelize.fn('COUNT', 'threads.id'), 'threadCount']
+        ],
         include: [{
-          model: Forum,
-          as: 'forum',
-          where: {
-            forumsId: forumId
-          }
+            model: Thread,
+            as: 'threads',
+            attributes: [
+                'id',
+                'title',
+            ]
         }],
-      })
-      .then(data => {
+        group: ['forumsId']
+    }).then((data) => {
         res.json(data);
+    }).catch((error) => {
+        console.error("Error:\t",error);
     })
-    .catch(error => {
-        console.log('Error:\t', error)
-        res.sendStatus(500);
-    });
 }
 
 

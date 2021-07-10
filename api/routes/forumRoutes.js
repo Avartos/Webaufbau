@@ -5,9 +5,10 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 // get all forums
 router.get('/', forumController.findAll);
+
+router.get('/dirk', forumController.countThreads);
 // get a forum with a given id
 router.get('/:id', authMiddleware.extractUserFromToken, forumController.findOne);
 
-router.get('/dirk', forumController.countThreads);
 
 module.exports = router;
