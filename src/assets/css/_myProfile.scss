@@ -1,0 +1,12 @@
+@import "./variables";
+@import "./mixins/contentCard";
+
+.myProfile {
+    @include contentCard($threadHeaderColor, $threadBodyColor);
+
+    .header {
+        span {
+            margin: auto auto;
+        }
+    }
+}

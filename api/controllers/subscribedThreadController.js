@@ -9,7 +9,7 @@ const findAll = (req, res) => {
             res.json(data);
         })
         .catch(error => {
-            console.log('Error:\t', error);
+            console.error('Error:\t', error);
             res.sendStatus(500);
         })
 }
@@ -21,7 +21,7 @@ const findOne = (req, res) => {
             res.json(data);
         })
         .catch(error => {
-            console.log('Error:\t', error)
+            console.error('Error:\t', error)
             res.sendStatus(500);
         });
 }
@@ -45,7 +45,6 @@ const deleteOne = (req, res) => {
 const add = (req, res) => {
     const threadId = req.params.id;
     const userId = (req.user.id) ? req.user.id : -1;
-    console.log(userId);
     const newSubscription = SubscribedThread.build({
         usersId: userId,
         threadsId: threadId,
@@ -62,7 +61,7 @@ const add = (req, res) => {
 }
 
 const findNew = (req, res) => {
-    const userId = 1;
+    const userId = (req.user) ? req.user.id : -1;
     SubscribedThread.findAll({
             attributes: [
                 'usersId',
@@ -144,10 +143,40 @@ const extractUnreadNotifications = (threadSubscriptions) => {
     return newNotifications;
 }
 
+
+const updateTimestamp = (req, res) => {
+    const threadId = req.params.id;
+    const userId = (req.user) ? req.user.id : -1;
+
+    SubscribedThread.findOne({
+            where: {
+                threadsId: threadId,
+                usersId: userId
+            }
+        })
+        .then(thread => {
+            thread.update({
+                    timeStamp: Sequelize.fn('NOW'),
+                })
+                .then(data => {
+                    res.json(data);
+                })
+                .catch(error => {
+                    console.error('Error:\t', error);
+                    res.sendStatus(500);
+                })
+        })
+        .catch(error => {
+            console.error('Error:\t', error);
+            res.sendStatus(500);
+        })
+}
+
 module.exports = {
     findAll,
     findOne,
     deleteOne,
     add,
     findNew,
+    updateTimestamp
 }

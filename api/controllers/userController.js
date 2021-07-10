@@ -2,7 +2,10 @@ const User = require("../models/user.js");
 const Login = require("../models/login.js");
 const Image = require("../models/image.js");
 const bcrypt = require("bcrypt");
-const {sign} = require("jsonwebtoken");
+const {
+  sign
+} = require("jsonwebtoken");
+const Sequelize = require('sequelize');
 
 const findAll = (req, res) => {
   User.findAll({
@@ -27,7 +30,7 @@ const findAll = (req, res) => {
 };
 
 const findOne = (req, res) => {
-  const userId = req.params.id;
+  const userId = (req.user) ? req.user.id : -1;
 
   User.findByPk(userId, {
       include: [{
@@ -54,21 +57,33 @@ const findOneByName = (req, res) => {
   const password = req.body.passwordHash;
 
   User.findOne({
+      attributes: [
+        'userName',
+        'id',
+        [Sequelize.col('login.passwordHash'), 'passwordHash'],
+        [Sequelize.col('login.isAdmin'), 'isAdmin'],
+        [Sequelize.col('login.isEnabled'), 'isEnabled'],
+        [Sequelize.col('image.profilePicturePath'), 'profilePicturePath'],
+      ],
       where: {
         userName: userName
       },
       include: [{
         model: Login,
         as: "login"
+      }, {
+        model: Image,
+        as: 'image'
       }],
     })
     .then((user) => {
-      if (!user) {
+      user = user.dataValues;
+      if (!user || !user.isEnabled) {
         res.sendStatus(401);
         console.error('Error:\t', `Login for user ${userName} failed`);
       } else {
         bcrypt
-          .compare(password, user.login.passwordHash)
+          .compare(password, user.passwordHash)
           .then((match) => {
             if (!match) {
               res.sendStatus(403);
@@ -78,12 +93,16 @@ const findOneByName = (req, res) => {
             const accessToken = sign({
                 userName: user.userName,
                 id: user.id,
-                isAdmin: user.login.isAdmin,
+                isAdmin: user.isAdmin,
               },
               "i677hf8kuah2basb0fasjb234faksbf"
             );
-
-            res.json(accessToken);
+            const tokenObject = {
+              accessToken: accessToken,
+              profilePicturePath: user.profilePicturePath,
+              isAdmin: user.isAdmin,
+            }
+            res.json(tokenObject);
           })
 
           .catch((error) => {

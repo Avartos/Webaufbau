@@ -10,8 +10,10 @@ const {
 const validateToken = (req, res, next) => {
     const accessToken = req.header("accessToken");
 
-    if (!accessToken)
+    if (!accessToken) {
+        console.log('Hallo');
         res.sendStatus(403);
+    }
 
     try {
         verify(accessToken, "i677hf8kuah2basb0fasjb234faksbf", (err, decodedToken) => {

@@ -1,4 +1,4 @@
-import { ReactComponent as ProfilePicture} from "../assets/icons/profilePicture.svg";
+// import { ReactComponent as ProfilePicture} from "../assets/icons/profilePicture.svg";
 import React, {useState} from "react";
 import ProfileStats from "./profileStats"
 import ProfileButtons from "./profileButtons"
@@ -24,7 +24,7 @@ const Profile = (props) => {
                         <ProfileButtons roll={props.roll}/>
                     </div>
                     <div className="right">
-                        <ProfilePicture/>
+                        {/* <ProfilePicture/> */}
                     </div>
                 </div>
             </div>
@@ -43,7 +43,7 @@ const Profile = (props) => {
                         <ProfileButtons roll={props.roll}/>
                     </div>
                     <div className="right">
-                        <ProfilePicture/>
+                        {/* <ProfilePicture/> */}
                     </div>
                 </div>
             </div>

@@ -7,7 +7,9 @@ const { validateToken } = require('../middlewares/authMiddleware');
 // get all subscribed forums for the current user
 router.get('/', subscribedForumController.findAll);
 
-router.get('/new', subscribedForumController.findNew);
+router.get('/new', validateToken, subscribedForumController.findNew);
+router.put('/:id', validateToken,  subscribedForumController.updateTimestamp);
+
 
 // get one specific subscribed forum by a given id
 router.get('/:id', subscribedForumController.findOne);

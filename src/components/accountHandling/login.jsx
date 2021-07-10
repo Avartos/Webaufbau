@@ -30,7 +30,9 @@ const Login = ({ handleAddAlert }) => {
         return response.json();
       })
       .then((data) => {
-        sessionStorage.setItem("accessToken", data);
+        sessionStorage.setItem("accessToken", data.accessToken);
+        sessionStorage.setItem('profilePicture', data.profilePicturePath);
+        sessionStorage.setItem('isAdmin', data.isAdmin);
         handleAddAlert(
           "success",
           "Hallo",

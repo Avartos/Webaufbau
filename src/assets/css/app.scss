@@ -1,6 +1,5 @@
 @import "./navBar";
 @import "./variables";
-@import "./header";
 @import "./favBar";
 @import "./threadList";
 @import "./login";
@@ -9,11 +8,13 @@
 @import "./tokenForm";
 @import "./searchBar";
 @import "./contributions";
+@import "./myProfile";
 
 .App {
   text-align: center;
   height: 100vh;
   display: grid;
+  width: 100%;
   grid-template-columns: 1fr;
 
   grid-template-rows: $mobileHeaderHeight auto;
@@ -29,6 +30,7 @@
       "header  header header"
       "sidebar content ."
   }
+  // overflow-x: hidden;
 }
 
 html,

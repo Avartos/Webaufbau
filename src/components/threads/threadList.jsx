@@ -5,7 +5,6 @@ import Thread from "./thread";
 import LoadingCircle from "../loadingCircle";
 import ForumHeader from "./forumHeader";
 
-
 /**
  * This component includes all threads of a single forum and the form to create a new thread
  * It also handles the functions to add a new thread or to subscribe existing threads
@@ -185,7 +184,7 @@ const ThreadList = ({ handleAddAlert }) => {
   useEffect(() => {
     fetchThreads();
     fetchForum();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [forumId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>

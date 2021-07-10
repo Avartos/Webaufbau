@@ -1,10 +1,14 @@
 @import "./variables";
 @import "./mixins/buttonPreset";
+@import "./notifications";
+@import "./profileDropdown";
 
 nav {
   grid-area: header;
   background-color: $headerBackgroundColor;
   position: relative;
+  width: 100%;
+  z-index: 999;
 
   .wrapperLogo {
     height: $mobileHeaderHeight * 0.7;
