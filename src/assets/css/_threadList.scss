@@ -6,6 +6,7 @@
 /* #region forum header */
 .forumHeader {
   @include contentCard($threadHeaderColor, $threadBodyColor);
+  width: 100%;
   .header {
     .title {
       text-align: center !important;
@@ -21,21 +22,22 @@
   }
 
   .unfoldButton {
-      @include basicButton(
-        white,
-        $buttonColor,
-        $buttonHoverColor,
-        $buttonPressedColor
-      );
-      width: 100%;
-      height: 25px;
-    
-      span {
-        font-size: 1.5em;
-        font-weight: bold;
-        text-align: center;
-        margin: auto auto;
-  }}
+    @include basicButton(
+      white,
+      $buttonColor,
+      $buttonHoverColor,
+      $buttonPressedColor
+    );
+    width: 100%;
+    height: 25px;
+
+    span {
+      font-size: 1em;
+      font-weight: bold;
+      text-align: center;
+      margin: auto auto;
+    }
+  }
 
   margin-bottom: 25px;
 }
@@ -43,10 +45,7 @@
 
 /* #region threads*/
 .thread {
-  width: 100%;
-  @media (min-width: $minDesktopWidth) {
-    width: auto !important;
-  }
+
   @include contentCard($threadHeaderColor, $threadBodyColor);
   transition: ease-in-out 0.2s;
 
@@ -54,11 +53,19 @@
     box-shadow: 0 0 0 3px $hoverBorder;
   }
 
-  .header .title {
-    cursor: pointer;
-    transition: 0.2s ease-in-out;
-    &:hover {
-      color: $highlightedFontColor;
+  .header {
+    input {
+      border: 1px solid black;
+      border-radius: 5px;
+      font-size: 1em;
+    }
+    .title {
+      cursor: pointer;
+      transition: 0.2s ease-in-out;
+      overflow: hidden;
+      &:hover {
+        color: $highlightedFontColor;
+      }
     }
   }
 
@@ -94,6 +101,51 @@
         content: "";
         border-top: 0.1em solid black;
         width: 100%;
+      }
+
+      textArea {
+        width: 100%;
+        resize: none;
+        border: 1px solid black;
+        border-radius: 5px;
+        padding: 5px;
+      }
+
+      .saveChangeButton {
+        @include basicButton(
+          white,
+          $buttonColor,
+          $buttonHoverColor,
+          $buttonPressedColor
+        );
+
+        margin: 10px auto;
+        padding: 15px;
+        font-weight: bold;
+        width: 180px;
+        float: right;
+        border: none;
+        border-radius: 5px;
+      }
+
+      .abortButton {
+        @include basicButton(white, #ce4d02, #6e4800, orange);
+
+        margin: 10px auto;
+        padding: 15px;
+        font-weight: bold;
+        width: 180px;
+        border: none;
+        float: right;
+        border-radius: 5px;
+
+        &:hover {
+          background-color: #6e4800;
+        }
+
+        &:active {
+          background-color: #3d2800;
+        }
       }
     }
 
@@ -153,8 +205,9 @@
   }
 }
 
-.callButton {
+.editButton {
   margin: auto auto;
+  padding-top: 5px;
   @include squaredButton($threadHeaderSize, 2, 0.5);
 }
 
@@ -206,7 +259,7 @@
     margin: 5px auto;
     padding: 5px 0px;
     flex-grow: 1;
-    width: 95%;
+    width: 100%;
     resize: none;
     display: block;
   }

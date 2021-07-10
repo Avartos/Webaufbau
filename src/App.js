@@ -8,10 +8,11 @@ import FavBar from "./components/favBar";
 import ForumList from "./components/forumList";
 import Contributions from "./components/contributions";
 import ThreadList from "./components/threads/threadList";
-import Login from "./components/login";
-import Signin from "./components/signin";
+import Login from "./components/accountHandling/login";
+import SignUp from "./components/accountHandling//signUp";
 import Account from "./components/profile";
 import ApiTokenForm from "./components/apiTokenForm";
+import SearchBar from "./components/searchBar";
 
 import AlertList from "./components/userAlerts/alertList";
 
@@ -46,8 +47,10 @@ function App() {
     <Router>
       <div className="App">
         <NavBar />
+        
         <FavBar />
         <div className="content">
+        <SearchBar isMobile={true}/>
           <AlertList
             messages={alerts}
             handleRemoveAlert={handleRemoveAlert}
@@ -59,7 +62,7 @@ function App() {
             <Route exact path="/contributions/:id"><Contributions /></Route>
             
             {/* Login Routes */}
-            <Route exact path="/registration"><Signin handleAddAlert={handleAddAlert} /></Route>
+            <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>
             <Route excact path="/login"><Login handleAddAlert={handleAddAlert} /></Route>
             
             {/* account */}

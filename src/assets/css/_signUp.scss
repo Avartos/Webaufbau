@@ -1,8 +1,8 @@
-@import "./variables";
-@import "./mixins/contentCard";
-@import "./mixins/buttonPreset";
+@import './variables';
+@import './mixins/contentCard';
+@import './mixins/buttonPreset';
 
-.login {
+.signUp {
   @include contentCard($threadHeaderColor, $threadBodyColor);
   display: block !important;
   background-color: $threadBodyColor;
@@ -35,11 +35,15 @@
     );
 
     margin: 25px auto;
-    padding: 5px;
+    padding: 7px;
     font-weight: bold;
     display: block;
-    width: 100px;
+    width: 150px;
     border: none;
     border-radius: 5px;
+  }
+
+  .error {
+    margin: 15px auto;
   }
 }

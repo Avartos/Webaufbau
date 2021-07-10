@@ -3,9 +3,10 @@
 @mixin header($headerColor) {
     background-color: #{$headerColor};
     display: flex;
+    max-width: 100%;
     height: $threadHeaderSize;
     font-weight: bold;
-    font-size: 1.3em;
+    font-size: 1.1em;
 
     .title {
         flex-grow: 1;

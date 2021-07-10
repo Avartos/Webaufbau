@@ -1,0 +1,141 @@
+@import "./variables";
+@import "./mixins/contentCard";
+@import "./mixins/buttonPreset";
+@import "./mixins/statistics";
+
+
+.addContribution {
+    width: 100%;
+    @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+}
+
+.newContributionForm {
+    @include contentCard($nCFHeaderColor, $nCFBodyColor);
+
+    textarea {
+        margin: 5px;
+        outline: none;
+        resize: none;
+        min-width: 95%;
+        height: 7em;
+        border: 1px solid #FF9838;
+        border-radius: 10px;
+        padding: 10px;
+    }
+
+    button {
+        @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+        border-radius: 20px;
+        padding: 5px;
+        margin: 5px;
+
+        &.discardContribution {
+            @include basicButton($aCFontColor, $dAbuttonColor, $aCHoverColor, $buttonPressedColor);
+        }
+    }
+
+}
+
+.descriptionThread {
+    @include contentCard($threadHeaderColor, $threadBodyColor);
+
+    header {
+        margin-left: 5px;
+    }
+
+    .statistics {
+        @include statistics;
+        display: flex;
+        float: right;
+        padding-right: 40px;
+        padding-bottom: 10px;
+    }
+
+    .body {
+        text-align: left;
+    }
+}
+
+.contributions {
+    background-color: #FEFCFD;
+    border-radius: 10px;
+}
+
+.contribution {
+    position: relative;
+    padding: 5px;
+    padding-left: 20px;
+    text-align: left;
+    display:flex;
+    flex-direction: column;
+}
+
+.contribution:nth-child(even){
+    background-color: #BFCDE0;
+
+    .replyButton {
+       // @include basicButton($aCAnswerFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+        background-color: #bfcde000;
+    }
+
+    .newContributionForm {
+        .body {background-color: #BFCDE0;}
+    }
+}
+
+.replyButton {
+    //@include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+    border: none;
+    position: absolute;
+    bottom: 5px;
+    right: 130px;
+    top: 45px;
+    background-color: #fefcfd00;
+    color: $buttonColor;
+    //display: flex;
+   // justify-content: flex-end;
+   // padding-right: 120px;
+    height: 40px;
+    padding-top: 20px;
+
+}
+
+.counterOfLikes {
+    padding-bottom: 10px;
+    float: right;
+    display: flex;
+    margin-top: -42px;
+    margin-right: 10px;
+    justify-content: flex-end;
+
+    p {
+        margin: 8px;
+    }
+}
+
+
+.counterButton {
+    @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+    margin-right: 0;
+}
+
+.createArea{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: right;
+    margin: 0 auto 0 auto;
+    
+    
+}
+
+.buttonArea {
+    display: flex;
+    justify-content: flex-end;
+    width: 100%;
+}
+
+.contibutionAllButtons {
+    display: flex;
+    justify-content: flex-end;
+}
+

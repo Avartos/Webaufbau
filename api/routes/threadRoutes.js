@@ -12,4 +12,6 @@ router.delete('/:id', threadController.deleteOne);
 // post a new thread to the given forum
 router.post('/:forumId', authMiddleware.validateToken ,threadController.add);
 
+router.put('', authMiddleware.validateToken, threadController.update);
+
 module.exports = router;

@@ -1,13 +1,15 @@
-const sequelize = require('../config/connection');
+const Sequelize = require('sequelize');
 const SubscribedForum = require('../models/subscribedForum');
+const Forum = require('../models/forum');
+const Thread = require('../models/thread');
 
-const findAll = (req,res) => {
+const findAll = (req, res) => {
     SubscribedForum.findAll()
         .then(data => {
             res.json(data);
         })
         .catch(error => {
-            console.log('Error:\t', error);
+            console.error('Error:\t', error);
             res.sendStatus(500);
         })
 }
@@ -19,7 +21,7 @@ const findOne = (req, res) => {
             res.json(data);
         })
         .catch(error => {
-            console.log('Error:\t', error)
+            console.error('Error:\t', error)
             res.sendStatus(500);
         });
 }
@@ -59,9 +61,123 @@ const deleteOne = (req, res) => {
     });
 }
 
+const findNew = (req, res) => {
+    const userId = (req.user) ? req.user.id : -1;
+    SubscribedForum.findAll({
+            attributes: [
+                'usersId',
+                'timeStamp',
+                'forumsId',
+                [Sequelize.col('forum.title'), 'forumTitle'],
+            ],
+            where: {
+                usersId: userId
+            },
+            include: [{
+                model: Forum,
+                as: 'forum',
+                attributes: [
+                    'id',
+                ],
+                include: [{
+                    model: Thread,
+                    as: 'threads',
+                    //ignore all posts that where written by the requesting user
+                    where: {
+                        usersId: {
+                            [Sequelize.Op.ne]: userId
+                        }
+                    }
+                }],
+            }],
+            order: [
+                [{
+                        model: Forum,
+                        as: 'forum'
+                    },
+                    {
+                        model: Thread,
+                        as: 'threads'
+                    }, 'createdAt', 'desc'
+                ]
+            ],
+        })
+        .then(data => {
+            const filteredSubscriptions = extractUnreadNotifications(data);
+            res.json(filteredSubscriptions);
+        })
+        .catch(error => {
+            console.error('Error:\t', error.message);
+            res.sendStatus(500);
+        })
+}
+
+/**
+ * Checks which subscriptions have contributions that are newer than the 
+ * @param {*} threadSubscriptions subscriptions with thread and contributions attached
+ * @returns thre new notficiations without contributions
+ */
+const extractUnreadNotifications = (forumSubscriptions) => {
+    let newNotifications = forumSubscriptions.filter(subscription => {
+        const lastReadDate = new Date(subscription.dataValues.timeStamp);
+        const threads = (subscription.dataValues.forum) ? subscription.dataValues.forum.dataValues.threads : null;
+        //check if the thread has any contributions
+        if (threads && threads[0] && threads.length > 0) {
+            const lastThreadDate = new Date(threads[0].dataValues.createdAt);
+            //check if the date of the latest contribution is newer than the last checked timestamp
+            if (lastThreadDate.getTime() > lastReadDate.getTime()) {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    })
+
+    //remove unneccessary contribution - attributes
+    newNotifications = newNotifications.map(notification => {
+        delete notification.dataValues.forum;
+        return notification;
+    })
+    return newNotifications;
+}
+
+const updateTimestamp = (req, res) => {
+    const forumId = req.params.id;
+    const userId = (req.user) ? req.user.id : -1;
+
+    SubscribedForum.findOne({
+            where: {
+                forumsId: forumId,
+                usersId: userId
+            }
+        })
+        .then(forum => {
+            // res.json(forum);
+            forum.update({
+                    timeStamp: Sequelize.fn('NOW'),
+                })
+                .then(data => {
+                    res.json(data);
+                })
+                .catch(error => {
+                    console.error('Error:\t', error);
+                    res.sendStatus(500);
+                })
+        })
+        .catch(error => {
+            console.error('Error:\t', error);
+            res.sendStatus(500);
+        })
+}
+
+
 module.exports = {
     findAll,
     findOne,
     add,
-    deleteOne
+    deleteOne,
+    findNew,
+    updateTimestamp
 }

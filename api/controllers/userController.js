@@ -64,17 +64,21 @@ const findOneByName = (req, res) => {
     })
     .then((user) => {
       if (!user) {
-        console.log("nutzer nicht gefunden");
+        res.sendStatus(401);
+        console.error('Error:\t', `Login for user ${userName} failed`);
       } else {
         bcrypt
           .compare(password, user.login.passwordHash)
           .then((match) => {
-            if (!match) console.log("No No");
+            if (!match) {
+              res.sendStatus(403);
+            }
 
             //sign create the token
             const accessToken = sign({
                 userName: user.userName,
-                id: user.id
+                id: user.id,
+                isAdmin: user.login.isAdmin,
               },
               "i677hf8kuah2basb0fasjb234faksbf"
             );

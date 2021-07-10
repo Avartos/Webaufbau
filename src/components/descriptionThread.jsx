@@ -5,13 +5,16 @@ function DescriptionThread({thread}) {
 
     return (
         <div className="descriptionThread">
-            <p className="threadName">{thread.title}</p>
-            <p className="threadDescription">{thread.description}</p>
+            <div className="header">
+                <p className="title">{thread.title}</p>
+            </div>
+            <p className="body">{thread.description}</p>
+            <div className="statistics"> 
             <table>
                 <tbody>
                     <tr>
                         <td>Erstellt am:</td>
-                        <td>{thread.createdAt}</td>
+                        <td className="highlighted">{thread.createdAt}</td>
                     </tr>
                     <tr>
                         <td>Anzahl Beiträge:</td>
@@ -23,10 +26,12 @@ function DescriptionThread({thread}) {
                     </tr>
                     <tr>
                         <td>Letzter Beitrag am:</td>
-                        <td>{thread.lastContribution.createdAt}</td>
+                        <td className="highlighted">{thread.lastContribution.createdAt}</td>
                     </tr>
                 </tbody>
             </table>
+            </div>
+            
         </div>
     )
 }

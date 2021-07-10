@@ -6,12 +6,17 @@ const { validateToken } = require('../middlewares/authMiddleware');
 // get all subscribed threads for a given user
 router.get('/all', subscribedThreadController.findAll);
 // get only the subscriptions that have new content
-router.get('/new', subscribedThreadController.findNew);
+router.get('/new', validateToken, subscribedThreadController.findNew);
+
+router.put('/:id', validateToken, subscribedThreadController.updateTimestamp);
+
 // get single subscription by id
 router.get('/:id', subscribedThreadController.findOne);
 // delete subscription by id for the current user
 router.delete('/:id', validateToken,subscribedThreadController.deleteOne);
 // add a new subscription for the current user
-router.post('/:id',validateToken, subscribedThreadController.add)
+router.post('/:id',validateToken, subscribedThreadController.add);
+
+// router.get('new/:id', subscribedThreadController.findNewEntries);
 
 module.exports = router;

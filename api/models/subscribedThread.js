@@ -19,6 +19,6 @@ const SubscribedThread = sequelize.define("SubscribedThread", {
 
 // Setup for thread-subscribedThreads mapping
 Thread.hasMany(SubscribedThread, {as:'subscribedThreads', foreignKey: 'threadsId'});
-SubscribedThread.belongsTo(Thread, {as: ' thread', foreignKey: 'threadsId'});
+SubscribedThread.belongsTo(Thread, {as: 'thread', foreignKey: 'threadsId'});
 
 module.exports = SubscribedThread;

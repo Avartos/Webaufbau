@@ -4,17 +4,19 @@
 @import "./favBar";
 @import "./threadList";
 @import "./login";
-@import "./signin";
+@import "./signUp";
 @import "./forumList";
 @import "./tokenForm";
-
+@import "./searchBar";
+@import "./contributions";
 
 .App {
   text-align: center;
   height: 100vh;
   display: grid;
+  width: 100%;
   grid-template-columns: 1fr;
-  
+
   grid-template-rows: $mobileHeaderHeight auto;
   grid-template-areas: 
   "header"
@@ -24,10 +26,11 @@
 
       grid-template-rows: $headerHeight auto;
       grid-template-columns: $favBarWidth 5fr $favBarWidth;
-      grid-template-areas: 
+      grid-template-areas:
       "header  header header"
       "sidebar content ."
   }
+  // overflow-x: hidden;
 }
 
 html,
@@ -57,4 +60,3 @@ body {
 .MuiCircularProgress-colorPrimary {
   color: $highlightedFontColor !important;
 }
-

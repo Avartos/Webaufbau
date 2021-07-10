@@ -12,7 +12,7 @@ const SubscribeButton = ({isSubscribed, handleSubscribe, parentId}) => {
       });
     
     return ( 
-        <SubscribeIcon onClick={() => handleSubscribe(parentId, isSubscribed)} className={subscribeClass}></SubscribeIcon>
+        <SubscribeIcon onClick={() => handleSubscribe(parentId, isSubscribed)} className={subscribeClass} title="Abonnieren"></SubscribeIcon>
      );
 }
 

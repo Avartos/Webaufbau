@@ -89,7 +89,7 @@ const ThreadList = ({ handleAddAlert }) => {
         if (error.name === "AbortError") {
           console.log("fetch abortet");
         } else {
-          handleAddAlert("error", "Fehler", 'Fehler beim laden des Forums.');
+          handleAddAlert("error", "Fehler", "Fehler beim laden des Forums.");
           setError(error.message);
           setIsPending(false);
         }
@@ -166,15 +166,15 @@ const ThreadList = ({ handleAddAlert }) => {
       },
       body: JSON.stringify(newThread),
     })
-      .then(() => {
+      .then((res) => {
+        if (!res.ok) {
+          throw Error("Das Formular konnte nicht abgeschickt werden.");
+        }
         fetchThreads();
-        handleAddAlert("error", "Fehler", error.message);
+        handleAddAlert("success", "", "Ihr Thread wurde erfolgreich angelegt!");
       })
       .catch((error) => {
-        setError(
-          "Das Formular konnte nicht abgeschickt werden (" + error + ")"
-        );
-        handleAddAlert("success", "", "Ihr Thread wurde erfolgreich angelegt!");
+        handleAddAlert("error", "Fehler", error.message);
       });
   };
 
@@ -184,11 +184,15 @@ const ThreadList = ({ handleAddAlert }) => {
   useEffect(() => {
     fetchThreads();
     fetchForum();
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [forumId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
     <React.Fragment>
-      <ForumHeader forum={forum} handleSubmitNewThread={handleSubmitNewThread} handleAddAlert={handleAddAlert}></ForumHeader>
+      <ForumHeader
+        forum={forum}
+        handleSubmitNewThread={handleSubmitNewThread}
+        handleAddAlert={handleAddAlert}
+      ></ForumHeader>
 
       <div className="threadList">
         <LoadingCircle
@@ -206,12 +210,11 @@ const ThreadList = ({ handleAddAlert }) => {
                 handleSubscribe={handleSubscribeThread}
                 handleTogglePreview={handleTogglePreview}
                 isUnfolded={thread.id === unfoldedThreadId}
+                handleAddAlert={handleAddAlert}
               />
             );
           })}
       </div>
-      
-
     </React.Fragment>
   );
 };

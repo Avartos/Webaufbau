@@ -97,6 +97,7 @@
 /* #region buttons */
 .subscribeButton {
   margin: auto auto;
+  z-index: -2;
   @include squaredButton($threadHeaderSize, 0, 0.5);
 
   &:not(.active) {

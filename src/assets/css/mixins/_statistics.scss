@@ -3,6 +3,7 @@
 @mixin statistics() {
   display: table;
   text-align: left;
+  max-height: 100px;
 
   .row {
     display: table-row;
