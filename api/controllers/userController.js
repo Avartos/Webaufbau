@@ -6,17 +6,29 @@ const {
   sign
 } = require("jsonwebtoken");
 const Sequelize = require('sequelize');
+const { CropLandscapeOutlined } = require("@material-ui/icons");
 
 const findAll = (req, res) => {
   User.findAll({
+      attributes: [
+        'id',
+        'userName',
+        [Sequelize.col('login.isAdmin'), 'isAdmin'],
+        [Sequelize.col('login.isEnabled'), 'isEnabled'],
+        [Sequelize.col('image.profilePicturePath'), 'profilePicturePath'],
+        [Sequelize.col('image.description'), 'imageDescription']
+
+      ],
       // join with tables login and image
       include: [{
           model: Login,
-          as: "login"
+          as: "login",
+          attributes: []
         },
         {
           model: Image,
-          as: "image"
+          as: "image",
+          attributes: []
         },
       ],
     })
@@ -117,17 +129,46 @@ const findOneByName = (req, res) => {
     });
 };
 
-const update = (req, res) => {
-  const user = req.body;
-  User.update(user)
-    .then((data) => {
-      res.json(data);
+const updateLogin = (req, res) => {
+  const userId = req.params.id;
+  const isAdmin = req.body.isAdmin;
+  const isEnabled = req.body.isEnabled;
+  const isCurrentUserAdmin = req.user.isAdmin;
+
+  if(!isCurrentUserAdmin) {
+    res.sendStatus(403);
+    return;
+  }
+
+  Login.findOne({
+    include: [{
+      model: User,
+      as: 'user',
+      where: {id: userId},
+      attributes: [],
+    }],
+    attributes: [
+      'id',
+      'isAdmin',
+      'isEnabled',
+      [Sequelize.col('user.id'), 'userId']
+    ]
+  })
+  .then(login => {
+    login.update({
+      isAdmin: isAdmin,
+      isEnabled: isEnabled
     })
-    .catch((error) => {
-      console.error("Error:\t", error);
-      res.sendStatus(500);
-    });
-};
+    .then(updatedLogin => {
+      console.log(updatedLogin);
+      res.json(updatedLogin);
+    })
+  })
+  .catch(error => {
+    console.error('Error:\t', error);
+    res.sendStatus(500);
+  })
+}
 
 const add = (req, res) => {
   const user = req.body;
@@ -238,7 +279,7 @@ const updatePassword = (req, res) => {
 module.exports = {
   findAll,
   findOne,
-  update,
+  updateLogin,
   add,
   findOneByName,
   updateImage,

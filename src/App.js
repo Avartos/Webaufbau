@@ -14,6 +14,7 @@ import Account from "./components/profile";
 import ApiTokenForm from "./components/apiTokenForm";
 import SearchBar from "./components/searchBar";
 import MyProfile from "./components/accountHandling/myProfile";
+import UserList from "./components/accountHandling/administration/userList";
 
 import AlertList from "./components/userAlerts/alertList";
 
@@ -80,7 +81,7 @@ function App() {
             {sessionStorage.getItem('accessToken') &&
             <Route exact path="/my_profile"><MyProfile handleUpdateProfilePicture={handleUpdateProfilePicture} handleAddAlert={handleAddAlert}/></Route>}
             {sessionStorage.getItem('accessToken') &&
-            <Route exact path="/administration"><Account roll="admin" /></Route>}
+            <Route exact path="/administration"><UserList/></Route>}
             {sessionStorage.getItem('accessToken') && sessionStorage.getItem('isAdmin') &&
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
             
