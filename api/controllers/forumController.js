@@ -33,8 +33,22 @@ const findOne = (req, res) => {
         });
 }
 
+const findByName = (req,res) => {
+    const query = req.query.q;
+    console.log('query');
+    Forum.findAll()
+        .then(data => {
+            res.json(data);
+        })
+        .catch(error => {
+            console.log('Error:\t', error);
+            res.sendStatus(500);
+        })
+}
+
 
 module.exports = {
     findAll,
     findOne,
+    findByName
 }

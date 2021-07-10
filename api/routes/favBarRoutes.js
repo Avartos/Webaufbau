@@ -6,7 +6,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 
 // router.get('/favorites', authMiddleware.validateToken, favBarController.findFavorites )
-router.get('/favorites', favBarController.findFavorites )
+router.get('/favorites', authMiddleware.validateToken, favBarController.findFavorites )
 router.get('/popular', favBarController.findPopular )
 router.get('/latest', favBarController.findLatest )
 

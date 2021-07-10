@@ -137,8 +137,8 @@ const FavBar = ({handleAddAlert}) => {
                   {popular.map((title) => {
                       return(
                           <li>
-                              <a href={'/threads/'+title.thread.threadID}>
-                                  {title.thread.threadTitle}
+                              <a href={'/threads/'+title.threadID}>
+                                  {title.threadTitle}
                               </a>
                           </li>
                       )

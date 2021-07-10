@@ -8,8 +8,7 @@ const SubscribedForum = require('../models/subscribedForum');
 
 
 const findFavorites = (req, res) =>  {
-    // const userID = req.user.id;
-    const userID = 1;
+    const userID = req.user.id;
     Forum.findAll({
         attributes: [['title', 'forumTitle']],
         include: [{
@@ -35,17 +34,18 @@ const findFavorites = (req, res) =>  {
 }
 
 const findPopular = (req, res) =>  {
-    Contribution.findAll({
-    attributes: [
-    ],
-    include: {
-        model: Thread,
-        as: 'thread',
-        attributes: [['title', 'threadTitle'],
-        ['id', 'threadID']
+    Thread.findAll({
+        attributes: [
+            ['id','threadID'],
+            ['title','threadTitle'],
+            [Sequelize.fn('COUNT', 'contributions.id'), 'contributionsCount']
         ],
-    }
-
+        include: [{
+            model: Contribution,
+            as: 'contributions',
+            attributes: []
+        }],
+        group: ['contributions.threadsId']
     }).then((data) => {
         res.json(data);
     }).catch((error) => {
