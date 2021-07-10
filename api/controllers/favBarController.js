@@ -41,7 +41,9 @@ const findPopular = (req, res) =>  {
     include: {
         model: Thread,
         as: 'thread',
-        attributes: [['title', 'threadTitle']],
+        attributes: [['title', 'threadTitle'],
+        ['id', 'threadID']
+        ],
     }
 
     }).then((data) => {
