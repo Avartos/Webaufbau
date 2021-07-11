@@ -44,6 +44,8 @@
       }
     }
 
+    position: relative;
+
     .listWrapper {
       transition: height ease-in-out 0.2s, width ease-in-out 0.2s;
       position: absolute;
@@ -96,8 +98,6 @@
         padding-top: 5px;
         padding-bottom: 5px;
         margin-bottom: 15px;
-        // padding: 5px;
-        // margin: 5px;
       }
 
       label {
@@ -118,7 +118,7 @@
         padding: 5px;
         font-weight: bold;
         display: block;
-        width: 100px;
+        width: 200px;
         border: none;
         border-radius: 5px;
       }

@@ -1,4 +1,4 @@
-import { ReactComponent as AvatarFrame } from "../../assets/icons/avatarFrame.svg";
+import {default as AvatarFrame} from "../../assets/icons/avatarFrame.svg";
 import React from "react";
 
 import ProfileDropDown from "./profileDropdown";
@@ -20,7 +20,7 @@ const ProfileButton = (props) => {
             alt="Avatar"
             className="avatar"
           />
-          <AvatarFrame className="avatarFrame"></AvatarFrame>
+          <img src={AvatarFrame}  className="avatarFrame" alt="" />
         </div>
       </div>
       <ProfileDropDown

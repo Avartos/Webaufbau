@@ -3,8 +3,9 @@ import SearchBar from "./searchBar";
 import Bell from "./notifications/bell";
 import LoginButton from "./loginButton";
 import { Link } from "react-router-dom";
-import { ReactComponent as LogoIcon } from "../assets/icons/logo.svg";
+// import { ReactComponent as LogoIcon } from "../assets/icons/logo.svg";
 import ProfileButton from "./accountHandling/profileButton";
+import { default as LogoIcon } from "../assets/icons/logo.svg";
 
 /**
  * This component represent the navigation bar
@@ -35,7 +36,7 @@ const NavBar = (props) => {
 
   const isLoggedIn = () => {
     return sessionStorage.getItem("accessToken") !== null;
-  }
+  };
 
   return (
     <React.Fragment>
@@ -65,9 +66,9 @@ const NavBar = (props) => {
             )}
           </li>
         </ul>
-
         <Link to="/" className="wrapperLogo">
-          <LogoIcon className="websiteLogo" />
+          <img className="websiteLogo" src={LogoIcon} alt="" />
+          {/* <LogoIcon className="websiteLogo" /> */}
         </Link>
         <SearchBar />
       </nav>

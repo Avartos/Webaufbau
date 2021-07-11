@@ -21,10 +21,10 @@ nav {
 
     .profileDropDownButton {
       margin: auto auto;
-      @include squaredButton($mobileHeaderHeight * 0.5, 0, 0.5);
+      @include squaredButton($mobileHeaderHeight * 0.6, 0, 0.5);
 
       @media (min-width: $minDesktopWidth) {
-        @include squaredButton($headerHeight * 0.5, 0, 0.5);
+        @include squaredButton($headerHeight * 0.6, 0, 0.5);
       }
       position: relative;
 

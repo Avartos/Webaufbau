@@ -62,6 +62,15 @@ function App() {
     setCurrentProfilePicture(sessionStorage.getItem('profilePicture'));
   } 
 
+  //used to determine, if the current user is logged in
+  const isLoggedIn = () => {
+    return sessionStorage.getItem('accessToken') !== null
+  }
+
+  const isAdmin = () => {
+    return (sessionStorage.getItem('accessToken') !== null && (sessionStorage.getItem('isAdmin') === '1'));
+  }
+
   return (
     <Router>
       <div className="App">
@@ -78,18 +87,18 @@ function App() {
             <Route exact path="/contributions/:id"><Contributions /></Route>
             
             {/* Login Routes */}
-            {!sessionStorage.getItem('accessToken') &&
+            {!isLoggedIn() &&
             <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>}
             
-            {!sessionStorage.getItem('accessToken') &&
+            {!isLoggedIn() &&
             <Route excact path="/login"><Login handleAddAlert={handleAddAlert} handleUpdateProfilePicture={handleUpdateProfilePicture}/></Route>}
             
             {/* account */}
-            {sessionStorage.getItem('accessToken') &&
+            {isLoggedIn() &&
             <Route exact path="/my_profile"><MyProfile handleUpdateProfilePicture={handleUpdateProfilePicture} handleAddAlert={handleAddAlert}/></Route>}
-            {sessionStorage.getItem('accessToken') && (sessionStorage.getItem('isAdmin') === '1') &&
+            {isAdmin() &&
             <Route exact path="/administration"><UserList/></Route>}
-            {sessionStorage.getItem('accessToken') && 
+            {isLoggedIn() && 
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
             
             {/* 404 */}
