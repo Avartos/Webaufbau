@@ -10,8 +10,17 @@ const findAll = (req,res) => {
             [sequelize.col('title'), 'name'],
             [sequelize.col('shortDescription'), 'description'],
             'createdAt',
-            'updatedAt'
+            'updatedAt',
+            [sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
         ],
+        include: [{
+            model: Thread,
+            as: 'threads',
+            attributes: [
+                'id'
+            ]
+        }],
+        group: ['forumsId'],
         include: [{
             model: SubscribedForum,
             as: 'subscribedForums'
@@ -58,8 +67,7 @@ const countThreads = (req, res) => {
             model: Thread,
             as: 'threads',
             attributes: [
-                'id',
-                'title',
+                'id'
             ]
         }],
         group: ['forumsId']

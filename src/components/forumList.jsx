@@ -41,11 +41,24 @@ const ForumList = () => {
  
         return ( 
             <React.Fragment>
-                Hi
-
+                {
+                forums.map((forum) => {
+                    return (
+                        <Forum 
+                            key={forum.id}
+                            name={forum.name}
+                            description={forum.description}
+                            numberOfThreads={forum.numberOfThreads}
+                            numberOfComments={forum.numberOfComments}
+                            lastActivityFrom={forum.lastActivityFrom}
+                            lastActivityAt={forum.lastActivityAt}
+                        />
+                    );
+                })
+                }
             </React.Fragment>
         );
     
-}
+};
  
 export default ForumList;
