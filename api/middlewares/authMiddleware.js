@@ -11,7 +11,6 @@ const validateToken = (req, res, next) => {
     const accessToken = req.header("accessToken");
 
     if (!accessToken) {
-        console.log('Hallo');
         res.sendStatus(403);
     }
 

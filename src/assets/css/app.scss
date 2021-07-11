@@ -9,6 +9,8 @@
 @import "./searchBar";
 @import "./contributions";
 @import "./myProfile";
+@import "./userList";
+@import "./profilePicture";
 
 .App {
   text-align: center;
@@ -35,6 +37,7 @@
 
 html,
 body {
+  overflow-x: hidden;
   height: 100vh;
   background-color: $rightBackgroundColor;
   margin: 0;
@@ -45,6 +48,7 @@ body {
 }
 
 .content {
+  
   background-image: url("../images/background.svg");
   background-attachment: fixed;
   background-color: $backgroundColor;
@@ -59,4 +63,8 @@ body {
 
 .MuiCircularProgress-colorPrimary {
   color: $highlightedFontColor !important;
+}
+
+.MuiAlert-icon {
+  z-index: 0 !important;
 }

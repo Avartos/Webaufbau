@@ -1,0 +1,40 @@
+@import "./variables";
+
+.userList {
+    display: table;
+    width: 80%;
+    margin: 0 auto;
+    font-size: 1.3em;
+    border-radius: 5px;
+    overflow: hidden;
+
+    .header {
+        border-radius: 5px 0px 0px 5px;
+        background-color: green;
+    }
+
+    .row {
+        display: table-row;
+        &:nth-child(even) {
+            background-color: $threadHeaderColor;
+        }
+
+        &:nth-child(odd) {
+            background-color: $threadBodyColor;
+        }
+
+        .cell {
+            display: table-cell;
+            vertical-align: middle;
+            padding: 5px;
+        }
+
+        .head {
+            font-weight: bold;
+        }
+    }
+
+    .profilePicture {
+        height: 60px;
+    }
+}
