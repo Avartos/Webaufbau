@@ -6,6 +6,8 @@ import Forum from './forum';
 const ForumList = () => {
     const [forums, setForums] = useState (); 
 
+    const [isPending, setIsPending] = useState(true);
+
     
     const fetchForums = (handleAddAlert) => {
         const abortController = new AbortController();
@@ -26,6 +28,7 @@ const ForumList = () => {
         })
         .then((data) => {
             setForums(data);
+            setIsPending(false);
           })
         .catch((error) => {
             if (error.name === "AbortError") {
@@ -63,7 +66,8 @@ const ForumList = () => {
     return ( 
         <React.Fragment>
             <div className="forumList">
-            {          
+            {!isPending &&
+                forums &&          
                 forums.map((forum) => {
                     return (
                         <Forum 
