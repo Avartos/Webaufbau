@@ -1,9 +1,32 @@
 const sequelize = require('../config/connection');
 const Forum = require('../models/forum');
 const SubscribedForum = require('../models/subscribedForum');
+const Thread = require('../models/thread');
 
 const findAll = (req,res) => {
-    Forum.findAll()
+    Forum.findAll(
+        {attributes: [
+            'id',
+            [sequelize.col('title'), 'name'],
+            [sequelize.col('shortDescription'), 'description'],
+            'createdAt',
+            'updatedAt',
+            [sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
+        ],
+        include: [{
+            model: Thread,
+            as: 'threads',
+            attributes: [
+                'id'
+            ]
+        }],
+        group: ['forumsId'],
+        include: [{
+            model: SubscribedForum,
+            as: 'subscribedForums'
+        }]}
+    )
+    
         .then(data => {
             res.json(data);
         })
@@ -33,8 +56,32 @@ const findOne = (req, res) => {
         });
 }
 
+// WIP
+const countThreads = (req, res) => {
+    Forum.findAll({
+        attributes: [
+            ['id','forumsID'],
+            ['title','forumTitle'],
+            [sequelize.fn('COUNT', 'threads.id'), 'threadCount']
+        ],
+        include: [{
+            model: Thread,
+            as: 'threads',
+            attributes: [
+                'id'
+            ]
+        }],
+        group: ['forumsId']
+    }).then((data) => {
+        res.json(data);
+    }).catch((error) => {
+        console.error("Error:\t",error);
+    })
+}
+
 
 module.exports = {
     findAll,
     findOne,
+    countThreads,
 }
