@@ -74,12 +74,27 @@
       }
     }
 
+    .favThread {
+      cursor: pointer;
+      display: block;
+      padding: 5px 5px 5px 35px;
+      font-size: 1em;
+      transition: all ease-in-out 0.2s;
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.733);
+      }
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+    }
+
     .favForum {
       > span {
         position: relative;
         display: block;
         margin-top: 5px;
-        padding: 15px 5px 15px 15px;
+        padding: 1px 5px 1px 15px;
         font-size: 1em;
         font-weight: bold;
         cursor: pointer;
@@ -113,11 +128,16 @@
       .favThread {
         cursor: pointer;
         display: block;
-        padding: 10px 5px 10px 35px;
+        padding: 5px 5px 5px 35px;
         font-size: 1em;
         transition: all ease-in-out 0.2s;
         &:hover {
           background-color: rgba(255, 255, 255, 0.733);
+        }
+
+        a {
+          text-decoration: none;
+          color: inherit;
         }
       }
     }

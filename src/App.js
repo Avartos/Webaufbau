@@ -19,6 +19,7 @@ import ThreadList from "./components/threads/threadList";
 import Login from "./components/accountHandling/login";
 import SignUp from "./components/accountHandling//signUp";
 import ApiTokenForm from "./components/apiTokenForm";
+import SearchList from "./components/searchList";
 import MyProfile from "./components/accountHandling/myProfile";
 import UserList from "./components/accountHandling/administration/userList";
 // #endregion
@@ -76,7 +77,7 @@ function App() {
       <div className="App">
         <NavBar profilePicturePath={currentProfilePicture}/>
         
-        <FavBar />
+        <FavBar handleAddAlert = {handleAddAlert} />
         <div className="content">
         <SearchBar isMobile={true}/>
           <AlertList messages={alerts} handleRemoveAlert={handleRemoveAlert} />
@@ -98,9 +99,10 @@ function App() {
             <Route exact path="/my_profile"><MyProfile handleUpdateProfilePicture={handleUpdateProfilePicture} handleAddAlert={handleAddAlert}/></Route>}
             {isAdmin() &&
             <Route exact path="/administration"><UserList/></Route>}
-            {isLoggedIn() && 
+            {isLoggedIn() &&
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
-            
+
+            <Route exact path="/search"><SearchList/></Route>
             {/* 404 */}
             <Route path="/">
               <h1> 404 - Page not Found </h1>
