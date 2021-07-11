@@ -146,12 +146,13 @@ const deleteOne = (req, res) => {
 
 const add = (req, res) => {
     const threadId = req.params.threadId;
-    const contribution = req.body;
+    const contributionText = req.body.contributionText;
+    console.log(contributionText);
     const userId = req.user.id;
     Contribution.create({
-        contributionText: contribution.contributionText,
+        content: contributionText,
         usersId: userId,
-        threadId: parseInt(threadId)
+        threadsId: parseInt(threadId)
       })
       .then(data => {
         console.log(userId);
