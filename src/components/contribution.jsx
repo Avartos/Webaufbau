@@ -9,7 +9,7 @@ import { useRef } from 'react';
 
 
 
-function Contribution({ contribution, isReply = false }) {
+function Contribution({ contribution, handleRate, isReply = false }) {
 
     const [count, setCount] = useState(0);
     const [reply, setReply] = useState(false);
@@ -74,8 +74,6 @@ function Contribution({ contribution, isReply = false }) {
         setReply(false)
     }
 
-console.log(contribution)
-
     return (
         <div className="contribution">
 
@@ -83,9 +81,9 @@ console.log(contribution)
             <p className="body">{contribution.content}</p>
             <div className="counterOfLikes">
 
-                <button className="counterButton" onClick={() => setCount(count - 1)}> <RemoveIcon /> </button>
+                <button className="counterButton" onClick={() => handleRate(1, contribution.id)}> <RemoveIcon /> </button>
                 <p>{contribution.actualRating}</p>
-                <button className="counterButton" onClick={() => setCount(count + 1)}> <AddIcon /> </button>
+                <button className="counterButton" onClick={() => handleRate(1, contribution.id)}> <AddIcon /> </button>
 
             </div>
             {!isReply && !reply && <button className="replyButton" onClick={() => setReply(true)}> <ReplyIcon /> </button>}

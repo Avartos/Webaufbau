@@ -1,8 +1,8 @@
 const sequelize = require('../config/connection');
-const rating = require('../models/rating');
+const Rating = require('../models/rating');
 
-const findAll = (req,res) => {
-    rating.findAll()
+const findAll = (req, res) => {
+    Rating.findAll()
         .then(data => {
             res.json(data);
         })
@@ -14,7 +14,7 @@ const findAll = (req,res) => {
 
 const findOne = (req, res) => {
     const ratingId = req.params.id;
-    rating.findByPk(ratingId)
+    Rating.findByPk(ratingId)
         .then(data => {
             res.json(data);
         })
@@ -24,8 +24,32 @@ const findOne = (req, res) => {
         });
 }
 
+const updateRating = (req, res) => {
+    const userId = req.user.id;
+    const contributionId = req.params.id;
+    const rating = req.body.rating;
+
+    Rating.findOne({ where: { usersId: userId, contributionsId: contributionId } })
+        .then(data => {
+            if (data) {
+                data.update({ rating: rating })
+
+                    .then(data => { res.sendStatus(200) })
+            }
+            else {
+                Rating.create({ usersId: userId, contributionsId: contributionId, rating: rating })
+
+                    .then(newRating => res.sendStatus(200));
+            }
+        })
+        .catch(error => {
+            res.sendStatus(500);
+        })
+}
+
 
 module.exports = {
     findAll,
     findOne,
+    updateRating
 }

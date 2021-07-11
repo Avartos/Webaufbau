@@ -24,14 +24,14 @@ import { useRef } from "react";
     };
 
     return (
-      <div className="newContributionForm">
-        <form
-          onSubmit={(e) => {
-            handleAddContribution(e, "tehehehest");
-          }}
-        >
-          <button>Test</button>
-        </form>
+     <div className="newContributionForm">
+{/*      
+               onSubmit={(e) => {
+    //         handleAddContribution(e, "tehehehest");
+    //       }}
+    //     >
+    //       <button>Test</button>
+    //     </form> */}
 
         <form
           className="body"
