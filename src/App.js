@@ -82,7 +82,7 @@ function App() {
             <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>}
             
             {!sessionStorage.getItem('accessToken') &&
-            <Route excact path="/login"><Login handleAddAlert={handleAddAlert} /></Route>}
+            <Route excact path="/login"><Login handleAddAlert={handleAddAlert} handleUpdateProfilePicture={handleUpdateProfilePicture}/></Route>}
             
             {/* account */}
             {sessionStorage.getItem('accessToken') &&
