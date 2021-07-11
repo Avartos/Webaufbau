@@ -69,9 +69,11 @@ const ForumList = () => {
             {!isPending &&
                 forums &&          
                 forums.map((forum) => {
+                    console.log(forum)
                     return (
                         <Forum 
                             key={forum.id}
+                            id={forum.id}
                             name={forum.name}
                             description={forum.description}
                             numberOfThreads={forum.numberOfThreads}
