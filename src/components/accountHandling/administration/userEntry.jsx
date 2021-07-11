@@ -1,12 +1,20 @@
 import ProfilePicture from "../../profilePicture";
 
+/**
+ * This components is a single entry for the admin panel
+ * It provides data of a single user
+ * @param {*} props
+ * @returns
+ */
 const UserEntry = (props) => {
+  //updates the user profile and changes the isAmdin value
   const handleToggleIsAdmin = () => {
     const isAdmin = props.user.isAdmin === 1 ? false : true;
     const isEnabled = props.user.isEnabled === 1 ? true : false;
     props.handleUpdateUserLogin(props.user.id, isAdmin, isEnabled);
   };
 
+  //updates the user profile and changes the isEnabled value
   const handleToggleIsEnabled = () => {
     const isEnabled = props.user.isEnabled === 1 ? false : true;
     const isAdmin = props.user.isAdmin === 1 ? true : false;

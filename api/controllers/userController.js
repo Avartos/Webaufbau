@@ -6,32 +6,38 @@ const {
   sign
 } = require("jsonwebtoken");
 const Sequelize = require('sequelize');
-const { CropLandscapeOutlined } = require("@material-ui/icons");
+const {
+  CropLandscapeOutlined
+} = require("@material-ui/icons");
 
+//returns all users with limited login and profile picutre information
 const findAll = (req, res) => {
-  User.findAll({
-      attributes: [
-        'id',
-        'userName',
-        [Sequelize.col('login.isAdmin'), 'isAdmin'],
-        [Sequelize.col('login.isEnabled'), 'isEnabled'],
-        [Sequelize.col('image.profilePicturePath'), 'profilePicturePath'],
-        [Sequelize.col('image.description'), 'imageDescription']
+  
+  const condition = {
+    attributes: [
+      'id',
+      'userName',
+      [Sequelize.col('login.isAdmin'), 'isAdmin'],
+      [Sequelize.col('login.isEnabled'), 'isEnabled'],
+      [Sequelize.col('image.profilePicturePath'), 'profilePicturePath'],
+      [Sequelize.col('image.description'), 'imageDescription']
 
-      ],
-      // join with tables login and image
-      include: [{
-          model: Login,
-          as: "login",
-          attributes: []
-        },
-        {
-          model: Image,
-          as: "image",
-          attributes: []
-        },
-      ],
-    })
+    ],
+    // join with tables login and image
+    include: [{
+        model: Login,
+        as: "login",
+        attributes: []
+      },
+      {
+        model: Image,
+        as: "image",
+        attributes: []
+      },
+    ],
+  };
+  
+  User.findAll(condition)
     .then((data) => {
       res.json(data);
     })
@@ -68,26 +74,28 @@ const findOneByName = (req, res) => {
   const userName = req.body.userName;
   const password = req.body.passwordHash;
 
-  User.findOne({
-      attributes: [
-        'userName',
-        'id',
-        [Sequelize.col('login.passwordHash'), 'passwordHash'],
-        [Sequelize.col('login.isAdmin'), 'isAdmin'],
-        [Sequelize.col('login.isEnabled'), 'isEnabled'],
-        [Sequelize.col('image.profilePicturePath'), 'profilePicturePath'],
-      ],
-      where: {
-        userName: userName
-      },
-      include: [{
-        model: Login,
-        as: "login"
-      }, {
-        model: Image,
-        as: 'image'
-      }],
-    })
+  const condition = {
+    attributes: [
+      'userName',
+      'id',
+      [Sequelize.col('login.passwordHash'), 'passwordHash'],
+      [Sequelize.col('login.isAdmin'), 'isAdmin'],
+      [Sequelize.col('login.isEnabled'), 'isEnabled'],
+      [Sequelize.col('image.profilePicturePath'), 'profilePicturePath'],
+    ],
+    where: {
+      userName: userName
+    },
+    include: [{
+      model: Login,
+      as: "login"
+    }, {
+      model: Image,
+      as: 'image'
+    }],
+  }
+
+  User.findOne(condition)
     .then((user) => {
       user = user.dataValues;
       if (!user || !user.isEnabled) {
@@ -129,22 +137,20 @@ const findOneByName = (req, res) => {
     });
 };
 
+//updates admin and the enabled state of the user
+//can be only performed by admins
 const updateLogin = (req, res) => {
   const userId = req.params.id;
   const isAdmin = req.body.isAdmin;
   const isEnabled = req.body.isEnabled;
-  const isCurrentUserAdmin = req.user.isAdmin;
 
-  if(!isCurrentUserAdmin) {
-    res.sendStatus(403);
-    return;
-  }
-
-  Login.findOne({
+  const condition = {
     include: [{
       model: User,
       as: 'user',
-      where: {id: userId},
+      where: {
+        id: userId
+      },
       attributes: [],
     }],
     attributes: [
@@ -153,56 +159,64 @@ const updateLogin = (req, res) => {
       'isEnabled',
       [Sequelize.col('user.id'), 'userId']
     ]
-  })
-  .then(login => {
-    login.update({
-      isAdmin: isAdmin,
-      isEnabled: isEnabled
+  }
+
+  Login.findOne(condition)
+    .then(login => {
+      login.update({
+          isAdmin: isAdmin,
+          isEnabled: isEnabled
+        })
+        .then(updatedLogin => {
+          console.log(updatedLogin);
+          res.json(updatedLogin);
+        })
     })
-    .then(updatedLogin => {
-      console.log(updatedLogin);
-      res.json(updatedLogin);
+    .catch(error => {
+      console.error('Error:\t', error);
+      res.sendStatus(500);
     })
-  })
-  .catch(error => {
-    console.error('Error:\t', error);
-    res.sendStatus(500);
-  })
 }
 
+// adds a new nuser to the database
 const add = (req, res) => {
   const user = req.body;
-  bcrypt.hash(req.body.passwordHash, 10).then((hash) => {
-    User.create({
-        userName: user.userName,
-        login: {
-          passwordHash: hash,
-        },
-      }, {
-        include: [{
-          model: Login,
-          as: "login"
-        }], // join between User and Login. as means joincolumn
-      })
-      .then((data) => {
-        res.json(data);
-      })
-      .catch((error) => {
-        console.error("Error:\t", error);
-        res.sendStatus(500);
-      });
-  });
+  bcrypt.hash(req.body.passwordHash, 10)
+    .then((hash) => {
+      User.create({
+          userName: user.userName,
+          login: {
+            passwordHash: hash,
+          },
+        }, {
+          include: [{
+            model: Login,
+            as: "login"
+          }], // join between User and Login. as means joincolumn
+        })
+        .then((data) => {
+          res.json(data);
+        })
+        .catch((error) => {
+          console.error("Error:\t", error);
+          res.sendStatus(500);
+        });
+    });
 };
 
+// updates the profile picture of the current user
 const updateImage = (req, res) => {
   const userId = req.user.id;
   const imageId = req.params.id;
-  User.findByPk(userId, {
-      include: {
-        model: Image,
-        as: 'image'
-      }
-    })
+
+  const condition = {
+    include: {
+      model: Image,
+      as: 'image'
+    }
+  }
+
+  User.findByPk(userId, condition)
     .then(user => {
       user.update({
           imagesId: imageId
@@ -211,7 +225,6 @@ const updateImage = (req, res) => {
           //search image to return
           Image.findByPk(imageId)
             .then(image => {
-              console.log(image);
               res.json(image);
             })
         });
@@ -222,28 +235,32 @@ const updateImage = (req, res) => {
     });
 }
 
+//changes the password of the user
 const updatePassword = (req, res) => {
   const userId = req.user.id;
+
   const password = req.body.currentPassword;
   const newPassword = req.body.newPassword;
   const repeatedPassword = req.body.repeatedPassword;
 
-  //find user from database
-  Login.findOne({
-      attributes: [
-        'id',
-        // 'usersId',
-        'passwordHash'
-      ],
-      include: [{
-        model: User,
-        as: 'user',
-        where: {
-          id: userId
-        },
-        attributes: []
-      }]
-    })
+  const condition = {
+    attributes: [
+      'id',
+      // 'usersId',
+      'passwordHash'
+    ],
+    include: [{
+      model: User,
+      as: 'user',
+      where: {
+        id: userId
+      },
+      attributes: []
+    }]
+  }
+
+  //find the login from database
+  Login.findOne(condition)
     .then(login => {
       //check if the password matches the saved password
       bcrypt
@@ -265,6 +282,7 @@ const updatePassword = (req, res) => {
                     })
                 });
             } else {
+              console.error('Error:\t', 'The given passwords do not match.');
               res.sendStatus(500);
             }
           }

@@ -1,8 +1,13 @@
 import { useState, useEffect } from "react";
-import { CSSTransition } from "react-transition-group";
 import ProfilePictureList from "./profilePictureList";
 import { ReactComponent as AvatarFrame } from "../../assets/icons/avatarFrame.svg";
 
+/**
+ * This component is used to open the profile picture list
+ * It also controls, when a new profile picture ist set and sends the update request to the backend
+ * @param {*} props
+ * @returns
+ */
 const ProfilePictureSelectButton = (props) => {
   const [isUnfolded, setIsUnfolded] = useState(false);
   const [isPending, setIsPending] = useState(true);
@@ -34,20 +39,15 @@ const ProfilePictureSelectButton = (props) => {
         if (error.name === "AbortError") {
           console.log("fetch abortet");
         } else {
-          setIsPending(false);
         }
       });
     return () => console.log(abortController.abort());
   };
 
+  //load profile pictures once, when the component is beeing loaded
   useEffect(() => {
     fetchProfilePictures();
   }, []);
-
-  const handleFetchProfilePictures = () => {
-    if (profilePictures) {
-    }
-  };
 
   const handleUpdateProfilePicture = (pictureId) => {
     //used to stop fetching when forcing reload
@@ -55,7 +55,7 @@ const ProfilePictureSelectButton = (props) => {
     setIsPending(true);
     fetch(`http://localhost:3001/api/users/image/${pictureId}`, {
       signal: abortController.signal,
-      method: 'PUT',
+      method: "PUT",
       headers: {
         "Content-Type": "application/json",
         accessToken: sessionStorage.getItem("accessToken"),
@@ -68,7 +68,9 @@ const ProfilePictureSelectButton = (props) => {
         return res.json();
       })
       .then((data) => {
-        sessionStorage.setItem('profilePicture' , data.profilePicturePath);
+        //update the profile picture path in the session
+        sessionStorage.setItem("profilePicture", data.profilePicturePath);
+        //makes sure to send the update to the navbar
         props.handleUpdateProfilePicture();
         setIsPending(false);
       })
@@ -80,7 +82,7 @@ const ProfilePictureSelectButton = (props) => {
         }
       });
     return () => console.log(abortController.abort());
-  }
+  };
 
   return (
     <div>
@@ -90,13 +92,21 @@ const ProfilePictureSelectButton = (props) => {
           onClick={() => setIsUnfolded(!isUnfolded)}
         >
           <AvatarFrame className="imageFrame"></AvatarFrame>
-          <img className="activeImage" src={`http://localhost:3001/profile_pictures/${sessionStorage.getItem('profilePicture')}`} alt="" />
+          <img
+            className="activeImage"
+            src={`http://localhost:3001/profile_pictures/${sessionStorage.getItem(
+              "profilePicture"
+            )}`}
+            alt=""
+          />
         </div>
-        <ProfilePictureList
-          pictures={profilePictures}
-          isUnfolded={isUnfolded}
-          handleUpdate={handleUpdateProfilePicture}
-        ></ProfilePictureList>
+        {!isPending && (
+          <ProfilePictureList
+            pictures={profilePictures}
+            isUnfolded={isUnfolded}
+            handleUpdate={handleUpdateProfilePicture}
+          ></ProfilePictureList>
+        )}
       </div>
     </div>
   );

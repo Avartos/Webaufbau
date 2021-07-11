@@ -5,6 +5,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 
 // get all threads that belong to the given forum
 router.get('/all/:forumId', authMiddleware.extractUserFromToken, threadController.findAll);
+
 // get the thread that belongs to the given id
 router.get('/:id', threadController.findOne);
 

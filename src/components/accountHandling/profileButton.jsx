@@ -1,10 +1,12 @@
 import { ReactComponent as AvatarFrame } from "../../assets/icons/avatarFrame.svg";
-import { useState, useEffect } from "react";
 import React from "react";
 
 import ProfileDropDown from "./profileDropdown";
-// import ProfileDropdown from "../profileDropdown";
 
+/**
+ * This component is used to unfold the profile options inside the navbar
+ * @param {*} props
+ */
 const ProfileButton = (props) => {
   return (
     <React.Fragment>

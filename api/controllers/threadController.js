@@ -61,9 +61,8 @@ const threadCondition = (userId) => {return {
   ],
 }}
 
-/**
- * Returns all threads from the given forum id
- */
+
+// returns all threads from the given forum id
 const findAll = (req, res) => {
   const forumId = req.params.forumId;
   const userId = (req.user) ? req.user.id : -1;
@@ -72,7 +71,6 @@ const findAll = (req, res) => {
   const orderBy = req.query.orderBy;
   const order = req.query.order === 'asc' ? 'asc' : 'desc'; 
   
-
   let condition = {...threadCondition(userId)};
   
   if(orderBy) {
@@ -110,9 +108,8 @@ const findAll = (req, res) => {
     })
 }
 
-/**
- * Returns the thread that has the given id
- */
+
+// Returns the thread that has the given id
 const findOne = (req, res) => {
   const id = req.params.id;
   const userId = (req.user) ? req.user.id : -1;
@@ -143,13 +140,12 @@ const findOne = (req, res) => {
     })
 }
 
-/**
- * Adds a new thread to the given forum id
- */
+// Adds a new thread to the given forum id
 const add = (req, res) => {
   const forumId = req.params.forumId;
   const thread = req.body;
   const userId = req.user.id;
+
   Thread.create({
       title: thread.title,
       content: thread.content,
@@ -218,6 +214,12 @@ const update = (req, res) => {
   return mappedThreads;
 }
 
+/**
+ * Adds a count value to the thread to show, how many contriubutions have been committed to the thread
+ * @param {*} thread            the target thread
+ * @param {*} contributionCount the contribution count that should be mapped, will be 0 if not defined
+ * @returns 
+ */
 const mapCountToThread = (thread, contributionCount) => {
   if (contributionCount) {
     thread.dataValues.contributionCount = contributionCount.count;
@@ -227,6 +229,12 @@ const mapCountToThread = (thread, contributionCount) => {
   return thread;
 }
 
+/**
+ * Adds visibility levels to all threads
+ * @param {*} threads a list of threads
+ * @param {*} user    the currently logged in user that should be compared with the thread
+ * @returns 
+ */
 const addVisibilityToThreads = (threads, user) => {
   const mappedThreads = threads.map(thread => {
     return addVisibilityLevelToThread(thread, user);
@@ -234,6 +242,13 @@ const addVisibilityToThreads = (threads, user) => {
   return mappedThreads;
 }
 
+/**
+ * Adds the visibility to one single thread. If the thread has been created by the given user 
+ * or the user has administrative privileges, the visibility level will be true
+ * @param {*} thread  the thread that should be extended
+ * @param {*} user    the user that should be compared
+ * @returns 
+ */
 const addVisibilityLevelToThread = (thread, user) => {
   if(user && (user.id === thread.dataValues.usersId || user.isAdmin)) {
     thread.dataValues.isEditable = true;

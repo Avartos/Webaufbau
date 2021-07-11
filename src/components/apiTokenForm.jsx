@@ -2,11 +2,17 @@ import React, { useState } from "react";
 import { CircularProgress } from "@material-ui/core";
 import classNames from "classnames";
 
+/**
+ * This component is used to provide the user a way to request a token from the backend to use the external squid api
+ * @param {*} param0
+ * @returns
+ */
 const ApiTokenForm = ({ handleAddAlert }) => {
   const [token, setToken] = useState(null);
 
   const [isPending, setIsPending] = useState(null);
 
+  //used to set the class name of the button to hide the text, when loading
   const tokenButtonClass = classNames({
     isLoading: isPending,
   });

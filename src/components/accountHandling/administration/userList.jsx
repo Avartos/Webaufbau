@@ -1,12 +1,21 @@
 import React, { useState, useEffect } from "react";
 import UserEntry from "./userEntry";
 
+/**
+ * This component lists all users in list form.
+ * It is used for administrative purposes.
+ */
 const UserList = () => {
   const [users, setUsers] = useState([]);
   const [isPending, setIsPending] = useState(true);
 
   const fetchUsers = () => {
-    fetch("http://localhost:3001/api/users/all")
+    fetch("http://localhost:3001/api/users/all", {
+      headers: {
+        "Content-Type": "application/json",
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
+    })
       .then((res) => {
         if (!res.ok) {
           throw Error("Error");
@@ -24,6 +33,7 @@ const UserList = () => {
     fetchUsers();
   }, []);
 
+  //updates a single user and updates the users state
   const handleUpdateUserLogin = (userId, isAdmin, isEnabled) => {
     const loginObject = {
       userId: userId,
@@ -49,14 +59,14 @@ const UserList = () => {
         const updatedUsers = users.map((user) => {
           if (user.id === data.userId) {
             user.isEnabled = data.isEnabled;
-            user.isAdmin   = data.isAdmin;
+            user.isAdmin = data.isAdmin;
           }
           return user;
         });
         setUsers([...updatedUsers]);
       })
       .catch((error) => {
-          setUsers([...users]);
+        setUsers([...users]);
       });
   };
 

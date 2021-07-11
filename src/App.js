@@ -3,20 +3,25 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 import "./assets/css/app.scss";
 
+// #region custom component imports
+//general components
 import NavBar from "./components/navBar";
 import FavBar from "./components/favBar";
+import SearchBar from "./components/searchBar";
+import AlertList from "./components/userAlerts/alertList";
+
+//forum components
 import ForumList from "./components/forumList";
 import Contributions from "./components/contributions";
 import ThreadList from "./components/threads/threadList";
+
+//account components
 import Login from "./components/accountHandling/login";
 import SignUp from "./components/accountHandling//signUp";
-import Account from "./components/profile";
 import ApiTokenForm from "./components/apiTokenForm";
-import SearchBar from "./components/searchBar";
 import MyProfile from "./components/accountHandling/myProfile";
 import UserList from "./components/accountHandling/administration/userList";
-
-import AlertList from "./components/userAlerts/alertList";
+// #endregion
 
 function App() {
   // contains all alerts that can be added by different components.
@@ -41,6 +46,10 @@ function App() {
     setAlerts([...alerts, newAlert]);
   };
 
+  /**
+   * Removes an alert by the given id
+   * @param {*} alertId the id of the alert that should be removed
+   */
   const handleRemoveAlert = (alertId) => {
     const filteredAlerts = alerts.filter((alert) => {
       return alert.id !== alertId;
@@ -48,6 +57,7 @@ function App() {
     setAlerts([...filteredAlerts]);
   };
 
+  //used to update the profile picture within the navbar, when the session storage gets changed
   const handleUpdateProfilePicture = () => {
     setCurrentProfilePicture(sessionStorage.getItem('profilePicture'));
   } 
@@ -60,10 +70,7 @@ function App() {
         <FavBar />
         <div className="content">
         <SearchBar isMobile={true}/>
-          <AlertList
-            messages={alerts}
-            handleRemoveAlert={handleRemoveAlert}
-          ></AlertList>
+          <AlertList messages={alerts} handleRemoveAlert={handleRemoveAlert} />
           <Switch>
             {/* Forum Routes */}
             <Route exact path="/"><ForumList /></Route>
@@ -80,7 +87,7 @@ function App() {
             {/* account */}
             {sessionStorage.getItem('accessToken') &&
             <Route exact path="/my_profile"><MyProfile handleUpdateProfilePicture={handleUpdateProfilePicture} handleAddAlert={handleAddAlert}/></Route>}
-            {sessionStorage.getItem('accessToken') && (sessionStorage.getItem('isAdmin') === true) &&
+            {sessionStorage.getItem('accessToken') && (sessionStorage.getItem('isAdmin') === '1') &&
             <Route exact path="/administration"><UserList/></Route>}
             {sessionStorage.getItem('accessToken') && 
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
