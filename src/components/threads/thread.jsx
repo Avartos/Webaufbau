@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 import { Link } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
-import {ReactComponent as EditIcon} from '../../assets/icons/pencil.svg';
-
+import { ReactComponent as EditIcon } from "../../assets/icons/pencil.svg";
 
 import PreviewList from "./previewList";
 import SubscribeButton from "../subscribeButton";
@@ -84,17 +83,13 @@ const Thread = (props) => {
     return () => console.log(abortController.abort());
   };
 
-  /**
-   *  determines target height of the previewList depending on current unfold State
-   */
+  // determines target height of the previewList depending on current unfold State
   const calculatePreviewHeight = () => {
     const height = props.isUnfolded ? previewRef.current.clientHeight : 0;
     setPreviewHeight(height);
   };
 
-  /**
-   *  used to change the last post information, if there are already contributions
-   */
+  // used to change the last post information, if there are already contributions
   const determineLastPostData = () => {
     if (props.thread.contributionCount !== 0) {
       setLastPostDate(props.thread.contributions[0].createdAt);
@@ -112,6 +107,8 @@ const Thread = (props) => {
     setIsEditMode(false);
   };
 
+  //used to switch from view to edit mode. 
+  //thread title and thread body are replaced by input fields, when in edit mode
   const handleToggleEditMode = () => {
     setTitle(props.thread.title);
     setBody(props.thread.content);
@@ -175,7 +172,10 @@ const Thread = (props) => {
         )}
         {props.thread.isEditable && (
           <div className="wrapperButton">
-            <EditIcon className="editButton" onClick={handleToggleEditMode}></EditIcon>
+            <EditIcon
+              className="editButton"
+              onClick={handleToggleEditMode}
+            ></EditIcon>
             {/* <CreateIcon ></CreateIcon> */}
           </div>
         )}

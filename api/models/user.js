@@ -16,6 +16,9 @@ const User = sequelize.define("User", {
 
 // setup for user-login mapping
 User.belongsTo(Login, {as: 'login', foreignKey: 'loginsId' });
+Login.hasOne(User, {as: 'user', foreignKey: 'loginsId'});
+
+// setup for user-image mapping
 User.belongsTo(Image, {as: 'image', foreignKey: 'imagesId'});
 
 

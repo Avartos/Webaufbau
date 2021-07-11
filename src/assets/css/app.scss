@@ -1,6 +1,5 @@
 @import "./navBar";
 @import "./variables";
-@import "./header";
 @import "./favBar";
 @import "./threadList";
 @import "./login";
@@ -9,6 +8,9 @@
 @import "./tokenForm";
 @import "./searchBar";
 @import "./contributions";
+@import "./myProfile";
+@import "./userList";
+@import "./profilePicture";
 
 .App {
   text-align: center;
@@ -35,6 +37,7 @@
 
 html,
 body {
+  overflow-x: hidden;
   height: 100vh;
   background-color: $rightBackgroundColor;
   margin: 0;
@@ -45,7 +48,9 @@ body {
 }
 
 .content {
+  
   background-image: url("../images/background.svg");
+  background-size: 100%;
   background-attachment: fixed;
   background-color: $backgroundColor;
   padding: 2em .5em 0em .5em;
@@ -59,4 +64,8 @@ body {
 
 .MuiCircularProgress-colorPrimary {
   color: $highlightedFontColor !important;
+}
+
+.MuiAlert-icon {
+  z-index: 0 !important;
 }

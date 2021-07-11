@@ -4,27 +4,33 @@ import { CSSTransition } from "react-transition-group";
 import SubscribeButton from "../subscribeButton";
 import NewThreadForm from "./newThreadForm";
 
+/**
+ * This component is used to display the current forum at the top of the thread list
+ * It also provides a quick way to add a new thread
+ * @param {*} param0
+ */
 const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
   const [formIsUnfolded, setFormIsUnfolded] = useState(false);
   const [formHeight, setFormHeight] = useState(0);
 
-
   const previewRef = React.useRef(null);
 
   useEffect(() => {
-    if(forum.subscribedForums && forum.subscribedForums.length) {
-        setIsSubscribed(true)
+    if (forum.subscribedForums && forum.subscribedForums.length) {
+      setIsSubscribed(true);
     } else {
-        setIsSubscribed(false);
+      setIsSubscribed(false);
     }
-  }, [forum])
+  }, [forum]);
 
+  //used to animate the form depending on whether the add new thread form is unfolded or not
   const calculateFormHeight = () => {
     const height = formIsUnfolded ? previewRef.current.clientHeight : 0;
     setFormHeight(height);
   };
 
+  //checks if the user is logged in to provide or deny access to the add thread form
   const userIsLoggedIn = () => {
     return sessionStorage.getItem("accessToken") != null;
   };
@@ -32,8 +38,9 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
   const handleSubmitForm = (e, title, body) => {
     setFormIsUnfolded(false);
     handleSubmitNewThread(e, title, body);
-  }
+  };
 
+  //used to subscribe the forum from the thread list view
   const handleSubscribeForum = (id) => {
     const subscribeMethod = isSubscribed ? "DELETE" : "POST";
     console.log(isSubscribed);
@@ -73,8 +80,6 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
         <p className="shortDescription">{forum.shortDescription}</p>
       </div>
 
-      {/* only show the form, if the user is logged in */}
-      {/* {sessionStorage.getItem("accessToken") && ( */}
       {userIsLoggedIn() && (
         <React.Fragment>
           <button

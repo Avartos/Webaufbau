@@ -3,6 +3,7 @@ const Thread = require('../models/thread');
 const User = require('../models/user');
 const Contribution = require('../models/contribution');
 const SubscribedThread = require('../models/subscribedThread');
+const Forum = require('../models/forum');
 
 
 //the basic condition for thread requests
@@ -60,15 +61,22 @@ const threadCondition = (userId) => {return {
   ],
 }}
 
-/**
- * Returns all threads from the given forum id
- */
+
+// returns all threads from the given forum id
 const findAll = (req, res) => {
   const forumId = req.params.forumId;
   const userId = (req.user) ? req.user.id : -1;
   const user = (req.user) ? req.user : null;
-
+  
+  const orderBy = req.query.orderBy;
+  const order = req.query.order === 'asc' ? 'asc' : 'desc'; 
+  
   let condition = {...threadCondition(userId)};
+  
+  if(orderBy) {
+    condition.order = [[orderBy, order]];  
+  }
+
   condition.where = {
     forumsId: forumId,
   }
@@ -100,9 +108,8 @@ const findAll = (req, res) => {
     })
 }
 
-/**
- * Returns the thread that has the given id
- */
+
+// Returns the thread that has the given id
 const findOne = (req, res) => {
   const id = req.params.id;
   const userId = (req.user) ? req.user.id : -1;
@@ -133,13 +140,12 @@ const findOne = (req, res) => {
     })
 }
 
-/**
- * Adds a new thread to the given forum id
- */
+// Adds a new thread to the given forum id
 const add = (req, res) => {
   const forumId = req.params.forumId;
   const thread = req.body;
   const userId = req.user.id;
+
   Thread.create({
       title: thread.title,
       content: thread.content,
@@ -147,8 +153,18 @@ const add = (req, res) => {
       forumsId: parseInt(forumId)
     })
     .then(data => {
-      console.log(userId);
-      res.json(data);
+      //update the updatedAt column of the forum
+      Forum.findByPk(forumId)
+      .then(forum => {
+        // necessary to change updated At, simple update would not work
+        forum.changed('updatedAt', true);
+        forum.update({
+          updatedAt: Sequelize.fn('NOW'),
+        })
+        .then(updatedForum => {
+          res.json(data);
+        })
+      })
     })
     .catch(error => {
       console.error('Error:\t', error);
@@ -185,14 +201,6 @@ const update = (req, res) => {
 }
 
 /**
- * deletes the thread that has the given id
- */
-//TODO: remove or implement
-const deleteOne = (req, res) => {
-  res.sendStatus(200);
-}
-
-/**
  * This function is used to map the found contribution counts to the threads
  * @param {*} threads     the array of threads
  * @param {*} dataCounts  the array of counts that should be mapped to the threads
@@ -206,6 +214,12 @@ const deleteOne = (req, res) => {
   return mappedThreads;
 }
 
+/**
+ * Adds a count value to the thread to show, how many contriubutions have been committed to the thread
+ * @param {*} thread            the target thread
+ * @param {*} contributionCount the contribution count that should be mapped, will be 0 if not defined
+ * @returns 
+ */
 const mapCountToThread = (thread, contributionCount) => {
   if (contributionCount) {
     thread.dataValues.contributionCount = contributionCount.count;
@@ -215,6 +229,12 @@ const mapCountToThread = (thread, contributionCount) => {
   return thread;
 }
 
+/**
+ * Adds visibility levels to all threads
+ * @param {*} threads a list of threads
+ * @param {*} user    the currently logged in user that should be compared with the thread
+ * @returns 
+ */
 const addVisibilityToThreads = (threads, user) => {
   const mappedThreads = threads.map(thread => {
     return addVisibilityLevelToThread(thread, user);
@@ -222,6 +242,13 @@ const addVisibilityToThreads = (threads, user) => {
   return mappedThreads;
 }
 
+/**
+ * Adds the visibility to one single thread. If the thread has been created by the given user 
+ * or the user has administrative privileges, the visibility level will be true
+ * @param {*} thread  the thread that should be extended
+ * @param {*} user    the user that should be compared
+ * @returns 
+ */
 const addVisibilityLevelToThread = (thread, user) => {
   if(user && (user.id === thread.dataValues.usersId || user.isAdmin)) {
     thread.dataValues.isEditable = true;
@@ -234,7 +261,6 @@ const addVisibilityLevelToThread = (thread, user) => {
 module.exports = {
   findAll,
   findOne,
-  deleteOne,
   add,
   update
 }

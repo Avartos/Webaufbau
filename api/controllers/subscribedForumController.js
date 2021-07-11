@@ -26,6 +26,7 @@ const findOne = (req, res) => {
         });
 }
 
+//adds a subscription for the given forum
 const add = (req, res) => {
     const forumId = req.params.id;
     const userId = (req.user.id) ? req.user.id : -1;
@@ -44,7 +45,7 @@ const add = (req, res) => {
         });
 }
 
-
+//removes a subscription for the given forum
 const deleteOne = (req, res) => {
     const forumId = req.params.id;
     const userId = (req.user.id) ? req.user.id : -1;
@@ -61,47 +62,55 @@ const deleteOne = (req, res) => {
     });
 }
 
+/**
+ * Returns a list of new notifications
+ * A notification is new, if the corresponding fourm has threads
+ * that where created after the timestamp that is saved within the subscription
+ */
 const findNew = (req, res) => {
     const userId = (req.user) ? req.user.id : -1;
-    SubscribedForum.findAll({
+
+    const condition = {
+        attributes: [
+            'usersId',
+            'timeStamp',
+            'forumsId',
+            [Sequelize.col('forum.title'), 'forumTitle'],
+        ],
+        where: {
+            usersId: userId
+        },
+        include: [{
+            model: Forum,
+            as: 'forum',
             attributes: [
-                'usersId',
-                'timeStamp',
-                'forumsId',
-                [Sequelize.col('forum.title'), 'forumTitle'],
+                'id',
             ],
-            where: {
-                usersId: userId
-            },
             include: [{
-                model: Forum,
-                as: 'forum',
-                attributes: [
-                    'id',
-                ],
-                include: [{
-                    model: Thread,
-                    as: 'threads',
-                    //ignore all posts that where written by the requesting user
-                    where: {
-                        usersId: {
-                            [Sequelize.Op.ne]: userId
-                        }
+                model: Thread,
+                as: 'threads',
+                //ignore all posts that where written by the requesting user
+                where: {
+                    usersId: {
+                        [Sequelize.Op.ne]: userId
                     }
-                }],
+                }
             }],
-            order: [
-                [{
-                        model: Forum,
-                        as: 'forum'
-                    },
-                    {
-                        model: Thread,
-                        as: 'threads'
-                    }, 'createdAt', 'desc'
-                ]
-            ],
-        })
+        }],
+        order: [
+            [{
+                    model: Forum,
+                    as: 'forum'
+                },
+                {
+                    model: Thread,
+                    as: 'threads'
+                }, 'createdAt', 'desc'
+            ]
+        ],
+    }
+
+    SubscribedForum.findAll(condition)
         .then(data => {
             const filteredSubscriptions = extractUnreadNotifications(data);
             res.json(filteredSubscriptions);
@@ -143,6 +152,7 @@ const extractUnreadNotifications = (forumSubscriptions) => {
     return newNotifications;
 }
 
+//updates the timestanmp of an subscription to mark it as read
 const updateTimestamp = (req, res) => {
     const forumId = req.params.id;
     const userId = (req.user) ? req.user.id : -1;

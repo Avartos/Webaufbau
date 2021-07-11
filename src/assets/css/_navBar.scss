@@ -1,6 +1,7 @@
 @import "./variables";
 @import "./mixins/buttonPreset";
 @import "./notifications";
+@import "./profileDropdown";
 
 nav {
   grid-area: header;
@@ -9,26 +10,7 @@ nav {
   width: 100%;
   z-index: 999;
 
-  .wrapperLogo {
-    height: $mobileHeaderHeight * 0.7;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    z-index: 1;
-    transform: translate(-50%, -50%);
-
-    @media (min-width: $minDesktopWidth) {
-      height: 200px;
-      top: 0;
-      left: 215px;
-      transform: translate(-50%, 0);
-    }
-
-    .websiteLogo {
-      height: 100%;
-      display: block;
-    }
-  }
+  
 
   
 
@@ -92,7 +74,7 @@ nav {
         transform: translate(-50%, -60%);
       }
 
-      @include buttonContainer($mobileHeaderHeight * 0.7);
+      @include buttonContainer($mobileHeaderHeight * 0.8);
 
       @media (min-width: $minDesktopWidth) {
         @include buttonContainer($headerHeight * 0.8);
@@ -100,10 +82,10 @@ nav {
 
       .headerButton {
         margin: auto auto;
-        @include squaredButton($mobileHeaderHeight * 0.5, 0, 0.5);
+        @include squaredButton($mobileHeaderHeight * 0.6, 0, 0.5);
 
         @media (min-width: $minDesktopWidth) {
-          @include squaredButton($headerHeight * 0.5, 0, 0.5);
+          @include squaredButton($headerHeight * 0.4, 0, 0.4 );
         }
 
         &:not(.active) {
@@ -124,5 +106,26 @@ nav {
         }
       }
     }
+  }
+}
+
+.wrapperLogo {
+  height: $mobileHeaderHeight * 0.7;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  z-index: 10000;
+  transform: translate(-50%, -50%);
+
+  @media (min-width: $minDesktopWidth) {
+    height: 200px;
+    top: 0;
+    left: 215px;
+    transform: translate(-50%, 0);
+  }
+
+  .websiteLogo {
+    height: 100%;
+    display: block;
   }
 }

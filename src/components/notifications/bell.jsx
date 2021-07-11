@@ -4,19 +4,23 @@ import NotificationList from "./notificationList";
 import classNames from "classnames";
 import { CSSTransition } from "react-transition-group";
 
+/**
+ * This component is used to control notifications
+ * It automatically fetches for new notifications (every 5 minutes)
+ * @param {*} props
+ * @returns
+ */
 const Bell = (props) => {
-  const [isUnfolded, setIsUnfolded] = useState(false);
-
+  //two separate notification arrays since there can be twi different types of notifications
   const [threadNotifications, setThreadNotifications] = useState([]);
   const [forumNotifications, setForumNotifications] = useState([]);
 
-  const [previewHeight, setPreviewHeight] = useState(0);
-  const previewRef = React.useRef(null);
+  const [notificationListHeight, setNotificationListHeight] = useState(0);
+  const notificationListRef = React.useRef(null);
 
-  const calculatePreviewHeight = () => {
-    const height = isUnfolded ? 300 : 0;
-    setPreviewHeight(height);
-    console.log(height);
+  const calculateNotificationListHeight = () => {
+    const height = props.isUnfolded ? 300 : 0;
+    setNotificationListHeight(height);
   };
 
   const fetchNotifications = (url, fetchThreads) => {
@@ -68,14 +72,15 @@ const Bell = (props) => {
     );
   };
 
+  //used to fetch notifications initially and start the interval to fetch after 5 minutes
   useEffect(() => {
     fetchForumNotifications();
     fetchThreadNotifications();
-    //refresh notifications automatically after 60 seconds
+    //refresh notifications automatically after 5 minutes
     const interval = setInterval(() => {
       fetchForumNotifications();
       fetchThreadNotifications();
-    }, 60000);
+    }, 300000);
   }, []);
 
   const updateNotification = (url, targetFetch) => {
@@ -123,6 +128,7 @@ const Bell = (props) => {
     );
   };
 
+  //used to show and hide the pulsating notification icon
   const notificationClass = classNames({
     visible:
       threadNotifications.length !== 0 || forumNotifications.length !== 0,
@@ -136,22 +142,22 @@ const Bell = (props) => {
 
         <BellIcon
           className={"headerButton"}
-          onClick={() => setIsUnfolded(!isUnfolded)}
+          onClick={() => props.handleToggleUnfold()}
         />
       </div>
       <div
         className="notificationsUnfoldable"
-        style={{ height: previewHeight }}
+        style={{ height: notificationListHeight }}
       >
         <CSSTransition
-          in={isUnfolded}
+          in={props.isUnfolded}
           timeout={500}
           unmountOnExit
-          onEnter={calculatePreviewHeight}
-          onExit={calculatePreviewHeight}
-          nodeRef={previewRef}
+          onEnter={calculateNotificationListHeight}
+          onExit={calculateNotificationListHeight}
+          nodeRef={notificationListRef}
         >
-          <div ref={previewRef}>
+          <div ref={notificationListRef}>
             <NotificationList
               threadNotifications={threadNotifications}
               forumNotifications={forumNotifications}

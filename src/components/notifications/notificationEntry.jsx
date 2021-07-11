@@ -1,16 +1,23 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import classNames from "classnames";
 import { CSSTransition } from "react-transition-group";
 import CloseIcon from "@material-ui/icons/Close";
 
+/**
+ * This component represents a single notification within the notification list
+ * @param {*} props 
+ * @returns 
+ */
 const NotificationEntry = (props) => {
   const entryRef = React.useRef(null);
   const [isVisible, setIsVisible] = useState(true);
 
+  //used to animate the movement of the notification to the right side after marked as read
   const [transformPositon, setTransformPosition] = useState(0);
-  const [notificationHeight, setNotificationHeight] = useState();
+  //used to animate the height of the notification to make it look like the notifications below move upwards
+  const [notificationHeight, setNotificationHeight] = useState(0);
 
+  //calculates the new height of the notification depending on its actual content height
   const calculateEntryHeight = () => {
     const height = isVisible ? entryRef.current.clientHeight : 0;
     setNotificationHeight(height);
@@ -31,13 +38,16 @@ const NotificationEntry = (props) => {
         in={isVisible}
         timeout={500}
         unmountOnExit
+        // remove the notification from the list after the timeout elapsed
         onExited={() => {
           props.handleMarkAsRead(props.id);
         }}
+        // start the exit animation
         onExit={() => {
           setTransformPosition(700);
           calculateEntryHeight();
         }}
+        // set the initial height
         onEnter={() => {
           calculateEntryHeight();
         }}

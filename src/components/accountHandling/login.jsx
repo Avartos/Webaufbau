@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const Login = ({ handleAddAlert }) => {
+const Login = ({ handleAddAlert, handleUpdateProfilePicture }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -30,12 +30,15 @@ const Login = ({ handleAddAlert }) => {
         return response.json();
       })
       .then((data) => {
-        sessionStorage.setItem("accessToken", data);
+        sessionStorage.setItem("accessToken", data.accessToken);
+        sessionStorage.setItem('profilePicture', data.profilePicturePath);
+        sessionStorage.setItem('isAdmin', data.isAdmin);
         handleAddAlert(
           "success",
           "Hallo",
           "Sie wurden erfolgreich angemeldet!"
         );
+        handleUpdateProfilePicture();
         history.push("/");
       })
       .catch((error) => {

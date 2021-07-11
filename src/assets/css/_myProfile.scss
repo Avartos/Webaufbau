@@ -1,0 +1,127 @@
+@import "./variables";
+@import "./mixins/contentCard";
+@import "./mixins/buttonPreset";
+
+.myProfile {
+  @include contentCard($threadHeaderColor, $threadBodyColor);
+
+  .header {
+    span {
+      margin: auto auto;
+    }
+  }
+
+  .body {
+    h3 {
+      margin-bottom: 15px;
+    }
+
+    .pictureSelectButton {
+      margin: 25px auto;
+      @include buttonContainer(80px * 0.7);
+      .currentImage {
+        @include squaredButton(80px, 0, 0.5);
+        width: 80px;
+        height: 80px;
+        position: relative;
+
+        .imageFrame {
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-60%, -50%);
+          width: 100%;
+          z-index: 2;
+        }
+
+        .activeImage {
+          position: absolute;
+          top: 50%;
+          transform: translate(-60%, -50%);
+          z-index: 1;
+          width: 70%;
+        }
+      }
+    }
+
+    position: relative;
+
+    .listWrapper {
+      transition: height ease-in-out 0.2s, width ease-in-out 0.2s;
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
+      overflow: hidden;
+      z-index: 10;
+    }
+
+    .pictureList {
+      margin: 5px 5px 0px 5px;
+      border: solid $buttonColor 2px;
+      background-color: white;
+      border-radius: 5px;
+      width: 300px;
+      height: 300px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-evenly;
+      overflow-x: hidden;
+      overflow-y: scroll;
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+
+      .picturePreview {
+        display: block;
+        margin: 5px;
+        height: 50px;
+        width: 50px;
+        background-color: grey;
+        transition: ease-in-out .1s;
+        cursor: pointer;
+
+        &:hover {
+            filter:brightness(50%);
+        }
+
+        &:active {
+            filter: brightness(80%);
+        }
+
+      }
+    }
+
+    form {
+      margin-top: 25px;
+      input {
+        display: block;
+        width: 100%;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        margin-bottom: 15px;
+      }
+
+      label {
+        text-align: left;
+        display: block;
+        margin-bottom: 5px;
+      }
+
+      button {
+        @include basicButton(
+          white,
+          $buttonColor,
+          $buttonHoverColor,
+          $buttonPressedColor
+        );
+
+        margin: 25px auto;
+        padding: 5px;
+        font-weight: bold;
+        display: block;
+        width: 200px;
+        border: none;
+        border-radius: 5px;
+      }
+    }
+  }
+}

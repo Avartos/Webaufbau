@@ -10,8 +10,10 @@ const {
 const validateToken = (req, res, next) => {
     const accessToken = req.header("accessToken");
 
-    if (!accessToken)
+    if (!accessToken) {
         res.sendStatus(403);
+        return;
+    }
 
     try {
         verify(accessToken, "i677hf8kuah2basb0fasjb234faksbf", (err, decodedToken) => {
@@ -20,12 +22,27 @@ const validateToken = (req, res, next) => {
                 next();
             } else {
                 res.sendStatus(403);
+                return;
             }
         })
     } catch (err) {
         res.sendStatus(403);
+        return;
     }
 };
+
+/**
+ * Used to check, if the current user has administrative permissions
+ * Should be called after validateToken (will always send 403 otherwise)
+ */
+const validateAdminStatus = (req, res, next) => {
+    if(req.user && req.user.isAdmin === 1) {
+        next();
+    } else {
+        res.sendStatus(403);
+        return;
+    }
+}
 
 /**
  * Checks, if an access token is available and extracts the username
@@ -46,5 +63,6 @@ const extractUserFromToken = (req, res, next) => {
 
 module.exports = {
     validateToken,
-    extractUserFromToken
+    extractUserFromToken,
+    validateAdminStatus
 };
