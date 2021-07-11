@@ -56,6 +56,7 @@ const findOne = (req, res) => {
         });
 }
 
+// WIP
 const countThreads = (req, res) => {
     Forum.findAll({
         attributes: [
