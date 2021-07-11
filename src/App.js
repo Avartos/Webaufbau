@@ -19,8 +19,7 @@ import ThreadList from "./components/threads/threadList";
 import Login from "./components/accountHandling/login";
 import SignUp from "./components/accountHandling//signUp";
 import ApiTokenForm from "./components/apiTokenForm";
-import SearchBar from "./components/searchBar";
-import SearchList from "./components/searchList"
+import SearchList from "./components/searchList";
 import MyProfile from "./components/accountHandling/myProfile";
 import UserList from "./components/accountHandling/administration/userList";
 // #endregion
