@@ -1,13 +1,14 @@
 import { Duo } from '@material-ui/icons';
 import React, { useState } from 'react'
 import { useRef } from 'react';
+//import { add } from '../../api/controllers/threadController';
 
 
 const NewContributionForm = ({ handleSubmitForm }) => {
 
     const [visible, setVisible] = useState(false)
 
-    const AddNewContributionForm = ({ onDiscard }) => {
+    const AddNewContributionForm = ({ onDiscard, add, handleAddContribution}) => {
         const [contributionText, setContributionText] = useState("");
         const [currentUser, setCurrentUser] = useState("Squidy50");
 
@@ -25,7 +26,8 @@ const NewContributionForm = ({ handleSubmitForm }) => {
 
                 <form className="body"
                     onSubmit={(e) => {
-                        handleSubmitForm(e, contributionText, currentUser);
+                        console.log("Test")
+                        handleAddContribution(e, contributionText);
                         setContributionText("");
                     }}
                 >

@@ -137,6 +137,7 @@ const findOne = (req, res) => {
 /**
  * Adds a new thread to the given forum id
  */
+
 const add = (req, res) => {
   const forumId = req.params.forumId;
   const thread = req.body;

@@ -59,7 +59,7 @@ function App() {
             {/* Forum Routes */}
             <Route exact path="/"><ForumList /></Route>
             <Route exact path="/threads/:forumId"><ThreadList handleAddAlert={handleAddAlert} /></Route>
-            <Route exact path="/contributions/:id"><Contributions /></Route>
+            <Route exact path="/contributions/:threadId"><Contributions handleAddAlert={handleAddAlert} /></Route>
             
             {/* Login Routes */}
             <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>

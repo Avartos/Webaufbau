@@ -74,16 +74,17 @@ function Contribution({ contribution, isReply = false }) {
         setReply(false)
     }
 
+console.log(contribution)
 
     return (
         <div className="contribution">
 
-            <p className="header">From: {contribution.contributorSquid}</p>
-            <p className="body">{contribution.contributionText}</p>
+            <p className="header">From: {contribution.creatorUserName}</p>
+            <p className="body">{contribution.content}</p>
             <div className="counterOfLikes">
 
                 <button className="counterButton" onClick={() => setCount(count - 1)}> <RemoveIcon /> </button>
-                <p>{count}</p>
+                <p>{contribution.actualRating}</p>
                 <button className="counterButton" onClick={() => setCount(count + 1)}> <AddIcon /> </button>
 
             </div>
