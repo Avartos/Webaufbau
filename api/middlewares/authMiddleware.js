@@ -42,8 +42,6 @@ const extractUserFromToken = (req, res, next) => {
         console.error('Error:', error);
         res.sendStatus(500);
     }
-
-
 }
 
 module.exports = {

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, {useEffect, useState} from "react";
 import Alert from "@material-ui/lab/Alert";
 import { useHistory } from "react-router-dom";
 
@@ -6,6 +6,10 @@ const Signin = ({ handleAddAlert }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
   const [passwordTwo, setPasswordTwo] = useState("");
+
+  useEffect(() => {
+    createUserName();
+  }, [])
 
   const [requiredFieldsAreOk, setRequiredFieldsAreOk] = useState("");
   const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState("");
@@ -29,6 +33,7 @@ const Signin = ({ handleAddAlert }) => {
       userName: userName,
       passwordHash: password,
     };
+
 
     fetch(`http://localhost:3001/api/users`, {
       method: "POST",
@@ -84,6 +89,13 @@ const Signin = ({ handleAddAlert }) => {
     }
   };
 
+  const createUserName=()=>{
+    let randomNumber = Math.floor(Math.random()*(30000-10+1)+10);
+    setUserName("Squid"+randomNumber);
+    return;
+  };
+
+
   return (
     <div className="signUp">
       <div className="header">
@@ -101,9 +113,10 @@ const Signin = ({ handleAddAlert }) => {
             className="signinInput"
             type="text"
             value={userName}
-            onChange={(e) => {
+            /*onChange={(e) => {
               setUserName(e.target.value);
-            }}
+            }}*/
+            readOnly={true}
           ></input>
 
           <label>Password</label>
