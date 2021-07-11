@@ -35,8 +35,14 @@ const findOne = (req, res) => {
 
 const findByName = (req,res) => {
     const query = req.query.q;
-    console.log('query');
-    Forum.findAll()
+    Forum.findAll({
+        where: {
+            title:[
+                {
+                    substring: query
+                }]
+            }
+        })
         .then(data => {
             res.json(data);
         })
