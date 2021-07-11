@@ -3,6 +3,7 @@ const Thread = require('../models/thread');
 const User = require('../models/user');
 const Contribution = require('../models/contribution');
 const SubscribedThread = require('../models/subscribedThread');
+const Forum = require('../models/forum');
 
 
 //the basic condition for thread requests
@@ -67,8 +68,17 @@ const findAll = (req, res) => {
   const forumId = req.params.forumId;
   const userId = (req.user) ? req.user.id : -1;
   const user = (req.user) ? req.user : null;
+  
+  const orderBy = req.query.orderBy;
+  const order = req.query.order === 'asc' ? 'asc' : 'desc'; 
+  
 
   let condition = {...threadCondition(userId)};
+  
+  if(orderBy) {
+    condition.order = [[orderBy, order]];  
+  }
+
   condition.where = {
     forumsId: forumId,
   }
@@ -147,8 +157,18 @@ const add = (req, res) => {
       forumsId: parseInt(forumId)
     })
     .then(data => {
-      console.log(userId);
-      res.json(data);
+      //update the updatedAt column of the forum
+      Forum.findByPk(forumId)
+      .then(forum => {
+        // necessary to change updated At, simple update would not work
+        forum.changed('updatedAt', true);
+        forum.update({
+          updatedAt: Sequelize.fn('NOW'),
+        })
+        .then(updatedForum => {
+          res.json(data);
+        })
+      })
     })
     .catch(error => {
       console.error('Error:\t', error);
@@ -182,14 +202,6 @@ const update = (req, res) => {
     res.sendStatus(403);
     console.error('Error:\t', error);
   })
-}
-
-/**
- * deletes the thread that has the given id
- */
-//TODO: remove or implement
-const deleteOne = (req, res) => {
-  res.sendStatus(200);
 }
 
 /**
@@ -234,7 +246,6 @@ const addVisibilityLevelToThread = (thread, user) => {
 module.exports = {
   findAll,
   findOne,
-  deleteOne,
   add,
   update
 }

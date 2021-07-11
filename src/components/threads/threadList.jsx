@@ -28,7 +28,7 @@ const ThreadList = ({ handleAddAlert }) => {
   const fetchThreads = () => {
     //used to stop fetching when forcing reload
     const abortController = new AbortController();
-    fetch(`http://localhost:3001/api/threads/all/${forumId}`, {
+    fetch(`http://localhost:3001/api/threads/all/${forumId}?orderBy=updatedAt&order=desc`, {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",

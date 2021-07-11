@@ -38,7 +38,7 @@ const ProfileDropDown = (props) => {
             <Link to="/my_profile">
               <span onClick={props.handleToggleUnfold}>Mein Konto</span>
             </Link>
-            {sessionStorage.getItem("isAdmin") && (
+            {sessionStorage.getItem("isAdmin") === '1' && (
               <Link to="/administration">
                 <span onClick={props.handleToggleUnfold}>Nutzerverwaltung</span>
               </Link>

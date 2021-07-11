@@ -15,7 +15,6 @@ const Bell = (props) => {
   const calculatePreviewHeight = () => {
     const height = props.isUnfolded ? 300 : 0;
     setPreviewHeight(height);
-    console.log(height);
   };
 
   const fetchNotifications = (url, fetchThreads) => {

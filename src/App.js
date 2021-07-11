@@ -80,9 +80,9 @@ function App() {
             {/* account */}
             {sessionStorage.getItem('accessToken') &&
             <Route exact path="/my_profile"><MyProfile handleUpdateProfilePicture={handleUpdateProfilePicture} handleAddAlert={handleAddAlert}/></Route>}
-            {sessionStorage.getItem('accessToken') &&
+            {sessionStorage.getItem('accessToken') && (sessionStorage.getItem('isAdmin') === true) &&
             <Route exact path="/administration"><UserList/></Route>}
-            {sessionStorage.getItem('accessToken') && sessionStorage.getItem('isAdmin') &&
+            {sessionStorage.getItem('accessToken') && 
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
             
             {/* 404 */}
