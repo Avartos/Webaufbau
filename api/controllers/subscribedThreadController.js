@@ -3,6 +3,7 @@ const Contribution = require('../models/contribution');
 const SubscribedThread = require('../models/subscribedThread');
 const Thread = require('../models/thread');
 
+//returns all subscriptions
 const findAll = (req, res) => {
     SubscribedThread.findAll()
         .then(data => {
@@ -26,6 +27,7 @@ const findOne = (req, res) => {
         });
 }
 
+//removes a subscription for the given thread
 const deleteOne = (req, res) => {
     const threadId = req.params.id;
     const userId = (req.user.id) ? req.user.id : -1;
@@ -42,6 +44,7 @@ const deleteOne = (req, res) => {
     });
 }
 
+//adds a new subscription for the given thread
 const add = (req, res) => {
     const threadId = req.params.id;
     const userId = (req.user.id) ? req.user.id : -1;
@@ -60,47 +63,55 @@ const add = (req, res) => {
         });
 }
 
+/**
+ * Returns a list of new notifications
+ * A notification is new, if the corresponding thread has contributions 
+ * that where created after the timestamp that is saved within the subscription
+ */
 const findNew = (req, res) => {
     const userId = (req.user) ? req.user.id : -1;
-    SubscribedThread.findAll({
+
+    const condition = {
+        attributes: [
+            'usersId',
+            'timeStamp',
+            'threadsId',
+            [Sequelize.col('thread.title'), 'threadTitle'],
+        ],
+        where: {
+            usersId: userId
+        },
+        include: [{
+            model: Thread,
+            as: 'thread',
             attributes: [
-                'usersId',
-                'timeStamp',
-                'threadsId',
-                [Sequelize.col('thread.title'), 'threadTitle'],
+                'id',
             ],
-            where: {
-                usersId: userId
-            },
             include: [{
-                model: Thread,
-                as: 'thread',
-                attributes: [
-                    'id',
-                ],
-                include: [{
-                    model: Contribution,
-                    as: 'contributions',
-                    //ignore all posts that where written by the requesting user
-                    where: {
-                        usersId: {
-                            [Sequelize.Op.ne]: userId
-                        }
+                model: Contribution,
+                as: 'contributions',
+                //ignore all posts that where written by the requesting user
+                where: {
+                    usersId: {
+                        [Sequelize.Op.ne]: userId
                     }
-                }],
+                }
             }],
-            order: [
-                [{
-                        model: Thread,
-                        as: 'thread'
-                    },
-                    {
-                        model: Contribution,
-                        as: 'contributions'
-                    }, 'createdAt', 'desc'
-                ]
-            ],
-        })
+        }],
+        order: [
+            [{
+                    model: Thread,
+                    as: 'thread'
+                },
+                {
+                    model: Contribution,
+                    as: 'contributions'
+                }, 'createdAt', 'desc'
+            ]
+        ],
+    }
+
+    SubscribedThread.findAll(condition)
         .then(data => {
             const filteredSubscriptions = extractUnreadNotifications(data);
             res.json(filteredSubscriptions);

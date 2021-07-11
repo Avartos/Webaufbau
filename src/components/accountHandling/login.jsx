@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 
-const Login = ({ handleAddAlert }) => {
+const Login = ({ handleAddAlert, handleUpdateProfilePicture }) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -38,6 +38,7 @@ const Login = ({ handleAddAlert }) => {
           "Hallo",
           "Sie wurden erfolgreich angemeldet!"
         );
+        handleUpdateProfilePicture();
         history.push("/");
       })
       .catch((error) => {

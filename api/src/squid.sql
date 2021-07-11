@@ -247,14 +247,28 @@ COMMIT;
 -- -----------------------------------------------------
 -- Data for table `squid`.`Images`
 -- -----------------------------------------------------
+
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (1, 'url', 'green_squid', NULL, DEFAULT);
-INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (2, 'url', 'pruple_squid', NULL, DEFAULT);
-INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (3, 'url', 'red_squid', NULL, DEFAULT);
-INSERT INTO `squid`.`Images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES (4, 'url', 'blue_squid', NULL, DEFAULT);
-
+INSERT INTO `images` (`id`, `profilePicturePath`, `description`, `updatedAt`, `createdAt`) VALUES
+(1, 'bowtie01.png', 'Pink - Schleife', NULL, '2021-07-11 12:26:47'),
+(2, 'bowtie02.png', 'Blau - Schleife', NULL, '2021-07-11 12:26:47'),
+(3, 'bowtie03.png', 'Orange - Schleife', NULL, '2021-07-11 12:26:47'),
+(4, 'bowtie04.png', 'Grün - Schleife', NULL, '2021-07-11 12:26:47'),
+(5, 'monocle01.png', 'Pink - Monokel', NULL, '2021-07-11 12:27:58'),
+(6, 'monocle02.png', 'Blau - Monokel', NULL, '2021-07-11 12:27:58'),
+(7, 'monocle03.png', 'Orange - Monokel', NULL, '2021-07-11 12:27:58'),
+(8, 'monocle04.png', 'Grün - Monokel', NULL, '2021-07-11 12:27:58'),
+(9, 'pure01.png', 'Pink', NULL, '2021-07-11 12:28:45'),
+(10, 'pure02.png', 'Blau', NULL, '2021-07-11 12:28:45'),
+(11, 'pure03.png', 'Orange', NULL, '2021-07-11 12:28:45'),
+(12, 'pure04.png', 'Grün', NULL, '2021-07-11 12:28:45'),
+(13, 'tie01.png', 'Pink - Krawatte', NULL, '2021-07-11 12:29:48'),
+(14, 'tie02.png', 'Blau - Krawatte', NULL, '2021-07-11 12:29:48'),
+(15, 'tie03.png', 'Orange - Krawatte', NULL, '2021-07-11 12:29:48'),
+(16, 'tie04.png', 'Grün - Krawatte', NULL, '2021-07-11 12:29:48');
 COMMIT;
+
 
 
 -- -----------------------------------------------------
@@ -262,10 +276,10 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (1, '\'2001-01-01 00:00:01', '\'2006-01-01 00:00:01', 'Squid1', 1, 1);
-INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (2, '\'2001-01-01 00:00:01', '\'2003-01-01 00:00:01', 'Squid2', 2, 2);
-INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (3, '\'2001-01-01 00:00:01', '\'2019-01-01 00:00:01', 'Squid3', 3, 2);
-INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (4, '\'2001-01-01 00:00:01', '\'2015-01-01 00:00:01', 'Squid4', 4, 4);
+INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (1, '\'2001-01-01 00:00:01', '\'2006-01-01 00:00:01', 'Squid1', 1, null);
+INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (2, '\'2001-01-01 00:00:01', '\'2003-01-01 00:00:01', 'Squid2', 2, null);
+INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (3, '\'2001-01-01 00:00:01', '\'2019-01-01 00:00:01', 'Squid3', 3, null);
+INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (4, '\'2001-01-01 00:00:01', '\'2015-01-01 00:00:01', 'Squid4', 4, null);
 
 COMMIT;
 

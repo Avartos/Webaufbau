@@ -2,13 +2,17 @@ import React, { useState, useEffect } from "react";
 import ProfilePictureSelectButton from "./profilePictureSelectButton";
 import Alert from "@material-ui/lab/Alert";
 
+/**
+ * This component is used to control the own profile
+ * It allows users to choose another profile picture or to change the current password
+ */
 const MyProfile = (props) => {
   const [isPending, setIsPending] = useState(true);
   const [user, setUser] = useState();
 
   const [currentPassword, setCurrentPassword] = useState("");
   const [password, setPassword] = useState("");
-  const [passwordTwo, setPasswordTwo] = useState("");
+  const [repeatedPassword, setRepeatedPassword] = useState("");
 
   const [requiredFieldsAreOk, setRequiredFieldsAreOk] = useState("");
   const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState("");
@@ -98,7 +102,7 @@ const MyProfile = (props) => {
     const passwordObject = {
       currentPassword: currentPassword,
       newPassword: password,
-      repeatedPassword: passwordTwo,
+      repeatedPassword: repeatedPassword,
     };
 
     fetch(`http://localhost:3001/api/users/`, {
@@ -177,9 +181,9 @@ const MyProfile = (props) => {
               <input
                 placeholder="Passwort wiederholen"
                 type="password"
-                value={passwordTwo}
+                value={repeatedPassword}
                 onChange={(e) => {
-                  setPasswordTwo(e.target.value);
+                  setRepeatedPassword(e.target.value);
                   equalPasswords(password, e.target.value);
                 }}
               ></input>

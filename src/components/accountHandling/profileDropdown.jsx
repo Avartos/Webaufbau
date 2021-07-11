@@ -6,31 +6,33 @@ import { Link } from "react-router-dom";
 const ProfileDropDown = (props) => {
   const history = useHistory();
 
-  const [previewHeight, setPreviewHeight] = useState(0);
-  const previewRef = React.useRef(null);
+  const [profileOptionsHeight, setProfileOptionsHeight] = useState(0);
+  const profileOptionsRef = React.useRef(null);
 
-  const calculatePreviewHeight = () => {
-    const height = props.isUnfolded ? previewRef.current.clientHeight : 0;
-    setPreviewHeight(height);
+  //calculates the new height of the profile options list to animate it with css transitions
+  const calculateProfileOptionsHeight = () => {
+    const height = props.isUnfolded ? profileOptionsRef.current.clientHeight : 0;
+    setProfileOptionsHeight(height);
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem("accessToken");
+    //clears token and other data from the session storage
+    sessionStorage.clear();
     //refresh page to make sure all components reload the token
     history.go(0);
   };
 
   return (
-    <div className="profileDropdown" style={{ height: previewHeight }}>
+    <div className="profileDropdown" style={{ height: profileOptionsHeight }}>
       <CSSTransition
         in={props.isUnfolded}
         timeout={500}
         unmountOnExit
-        onEnter={calculatePreviewHeight}
-        onExit={calculatePreviewHeight}
-        nodeRef={previewRef}
+        onEnter={calculateProfileOptionsHeight}
+        onExit={calculateProfileOptionsHeight}
+        nodeRef={profileOptionsRef}
       >
-        <div ref={previewRef}>
+        <div ref={profileOptionsRef}>
           <div className="header">
             <span>Profiloptionen</span>
           </div>
@@ -38,7 +40,7 @@ const ProfileDropDown = (props) => {
             <Link to="/my_profile">
               <span onClick={props.handleToggleUnfold}>Mein Konto</span>
             </Link>
-            {sessionStorage.getItem("isAdmin") && (
+            {sessionStorage.getItem("isAdmin") === '1' && (
               <Link to="/administration">
                 <span onClick={props.handleToggleUnfold}>Nutzerverwaltung</span>
               </Link>

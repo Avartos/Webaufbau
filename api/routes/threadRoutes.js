@@ -6,13 +6,14 @@ const authMiddleware = require('../middlewares/authMiddleware');
 router.get('/search', threadController.findByName)
 // get all threads that belong to the given forum
 router.get('/all/:forumId', authMiddleware.extractUserFromToken, threadController.findAll);
+
 // get the thread that belongs to the given id
 router.get('/:id', threadController.findOne);
-// delete the thread by a given id
-router.delete('/:id', threadController.deleteOne);
-// post a new thread to the given forum
-router.post('/:forumId', authMiddleware.validateToken ,threadController.add);
 
+// post a new thread to the given forum
+router.post('/:forumId', authMiddleware.validateToken, threadController.add);
+
+// update title or content of an existing thread
 router.put('', authMiddleware.validateToken, threadController.update);
 
 module.exports = router;

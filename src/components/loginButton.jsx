@@ -1,8 +1,12 @@
 import { ReactComponent as ProfileIcon } from "../assets/icons/profile.svg";
 import { Link } from "react-router-dom";
 
+/**
+ * This component is used to provide a simple button to logi in, when broiwsing the website without beeing logged in
+ * @param {*} props 
+ * @returns 
+ */
 const LoginButton = (props) => {
-  //state = {};
 
   return (
     <div className="wrapperButton">

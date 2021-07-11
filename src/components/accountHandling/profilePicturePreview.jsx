@@ -1,3 +1,7 @@
+
+/**
+ * This component represents a single clickable icon in the profile picture list
+ */
 const ProfilePicturePreview = (props) => {
   return (
     <img
