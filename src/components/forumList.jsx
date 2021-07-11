@@ -1,3 +1,4 @@
+import { ControlCameraOutlined } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 
 import Forum from './forum';
@@ -25,7 +26,6 @@ const ForumList = () => {
         })
         .then((data) => {
             setForums(data);
-            console.log(data);
           })
         .catch((error) => {
             if (error.name === "AbortError") {
@@ -37,11 +37,33 @@ const ForumList = () => {
         return () => console.log(abortController.abort()); 
     }
 
+    const handleSubscribeForum = (id, isSubscribed) => {
+    /*    const subscribeMethod = isSubscribed ? "DELETE" : "POST";
+    
+        fetch(`http://localhost:3001/api/forum/subscriptions/${id}`, {
+          method: subscribeMethod,
+          headers: {
+            "Content-Type": "application/json",
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        })
+          .then((req) => {
+            if (!req.ok) {
+              throw Error("Das Forum konnte nicht abonniert werden.");
+            }
+          })
+          .catch((error) => {
+            setError(error);
+            handleAddAlert("error", "Fehler", error.message);
+          });*/
+      };
+
     useEffect(fetchForums, []);
  
-        return ( 
-            <React.Fragment>
-                {
+    return ( 
+        <React.Fragment>
+            <div className="forumList">
+            {          
                 forums.map((forum) => {
                     return (
                         <Forum 
@@ -52,12 +74,13 @@ const ForumList = () => {
                             numberOfComments={forum.numberOfComments}
                             lastActivityFrom={forum.lastActivityFrom}
                             lastActivityAt={forum.lastActivityAt}
+                            handleSubscribeForum={handleSubscribeForum}
                         />
                     );
-                })
-                }
-            </React.Fragment>
-        );
+            	})}
+            </div>
+        </React.Fragment>
+    );
     
 };
  
