@@ -28,7 +28,6 @@ const FavBar = ({handleAddAlert}) => {
             })
             .then((data) => {
                 setFavorite(data);
-                console.log(data);
             })
             .catch((error) => {
                 if (error.name === "AbortError") {
@@ -61,7 +60,6 @@ const FavBar = ({handleAddAlert}) => {
             })
             .then((data) => {
                 setPopular(data);
-                console.log(data);
             })
             .catch((error) => {
                 if (error.name === "AbortError") {
@@ -93,7 +91,6 @@ const FavBar = ({handleAddAlert}) => {
             })
             .then((data) => {
                 setLatest(data);
-                console.log(data);
             })
             .catch((error) => {
                 if (error.name === "AbortError") {
@@ -106,7 +103,9 @@ const FavBar = ({handleAddAlert}) => {
     };
 
     useEffect(() => {
-        fetchFavorites();
+        if (sessionStorage.getItem('accessToken')) {
+            fetchFavorites();
+        }
         fetchPopular();
         fetchLatest();
     },[]);
@@ -123,7 +122,9 @@ const FavBar = ({handleAddAlert}) => {
                   </div>
                   {favorite.map((item) => {
                       return(
-                          <FavThreadList item={item}></FavThreadList>
+                          <React.Fragment>
+                              {(item.threads.length !== 0) && <FavThreadList item={item}></FavThreadList>}
+                          </React.Fragment>
                       )
                   })}
               </ul>
@@ -138,7 +139,7 @@ const FavBar = ({handleAddAlert}) => {
                       return(
                           <li className='favThread'>
                               <a href={'/threads/'+title.threadID}>
-                                  {title.threadTitle}
+                                  {title.threadTitle+" ("+title.contributionsCount+")"}
                               </a>
                           </li>
                       )

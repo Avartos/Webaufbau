@@ -1,3 +1,4 @@
+const Sequelize = require('sequelize')
 const sequelize = require('../config/connection');
 const Forum = require('../models/forum');
 const SubscribedForum = require('../models/subscribedForum');
@@ -33,14 +34,26 @@ const findOne = (req, res) => {
         });
 }
 
+const getQueryParametersMapped = (query) =>
+{
+    const queryArray = query.split(' ');
+    const mappedArray = queryArray.map((queryString) => {
+        return ({
+            [Sequelize.Op.substring]: queryString
+        });
+    });
+    return mappedArray;
+}
+
 const findByName = (req,res) => {
     const query = req.query.q;
+    const queryArray = getQueryParametersMapped(query)
     Forum.findAll({
         where: {
-            title:[
+            title:
                 {
-                    substring: query
-                }]
+                    [Sequelize.Op.or]: queryArray
+                }
             }
         })
         .then(data => {

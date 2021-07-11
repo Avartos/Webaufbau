@@ -41,7 +41,6 @@ const FavThreadList = ({ item }) => {
             nodeRef={threadListRef}
           >
             <ul ref={threadListRef}>
-              {console.log(item)}
               {item.threads.map((item) => {
                 return <li className='favThread'>
                   <a href={'/threads/'+item.threadID}>

@@ -1,4 +1,4 @@
-const Sequelize = require('../config/connection');
+const Sequelize = require('sequelize')
 const Thread = require('../models/thread');
 const User = require('../models/user');
 const Contribution = require('../models/contribution');
@@ -231,8 +231,40 @@ const addVisibilityLevelToThread = (thread, user) => {
   return thread;
 }
 
+const getQueryParametersMapped = (query) =>
+{
+  const queryArray = query.split(' ');
+  const mappedArray = queryArray.map((queryString) => {
+    return ({
+      [Sequelize.Op.substring]: queryString
+    });
+  });
+  return mappedArray;
+}
+
+const findByName = (req,res) => {
+  const query = req.query.q;
+  const queryArray = getQueryParametersMapped(query)
+  Thread.findAll({
+    where: {
+      title:
+          {
+            [Sequelize.Op.or]: queryArray
+          }
+    }
+  })
+      .then(data => {
+        res.json(data);
+      })
+      .catch(error => {
+        console.log('Error:\t', error);
+        res.sendStatus(500);
+      })
+}
+
 module.exports = {
   findAll,
+  findByName,
   findOne,
   deleteOne,
   add,

@@ -22,7 +22,8 @@ const findFavorites = (req, res) =>  {
                 model: SubscribedThread,
                 as: 'subscribedThreads',
                 where: {usersId: userID},
-                attributes: []
+                attributes: [],
+                required: true
             }]
         }]
     }).then((data) => {
@@ -45,7 +46,8 @@ const findPopular = (req, res) =>  {
             as: 'contributions',
             attributes: []
         }],
-        group: ['contributions.threadsId']
+        group: ['contributions.threadsId'],
+        order: [[Sequelize.fn('COUNT', 'contributions.id'), 'desc']]
     }).then((data) => {
         res.json(data);
     }).catch((error) => {

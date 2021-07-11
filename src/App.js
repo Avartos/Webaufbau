@@ -13,6 +13,7 @@ import SignUp from "./components/accountHandling//signUp";
 import Account from "./components/profile";
 import ApiTokenForm from "./components/apiTokenForm";
 import SearchBar from "./components/searchBar";
+import SearchList from "./components/searchList"
 import MyProfile from "./components/accountHandling/myProfile";
 import UserList from "./components/accountHandling/administration/userList";
 
@@ -84,7 +85,8 @@ function App() {
             <Route exact path="/administration"><UserList/></Route>}
             {sessionStorage.getItem('accessToken') && sessionStorage.getItem('isAdmin') &&
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
-            
+
+            <Route exact path="/search"><SearchList/></Route>
             {/* 404 */}
             <Route path="/">
               <h1> 404 - Page not Found </h1>
