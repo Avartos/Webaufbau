@@ -136,7 +136,7 @@ const FavBar = ({handleAddAlert}) => {
                   </div>
                   {popular.map((title) => {
                       return(
-                          <li className='threadItem'>
+                          <li className='favThread'>
                               <a href={'/threads/'+title.threadID}>
                                   {title.threadTitle}
                               </a>
@@ -153,7 +153,7 @@ const FavBar = ({handleAddAlert}) => {
                   </div>
                   {latest.map((title) => {
                       return(
-                          <li>
+                          <li className='favThread'>
                               <a href={'/threads/'+title.threadID}>
                                 {title.threadTitle}
                               </a>
