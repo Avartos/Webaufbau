@@ -89,7 +89,6 @@ const GifApi = () => {
         <React.Fragment>
 
             <img id="preview_gif" src="" alt=""/>
-            <button onClick={grab_data()}>hallo</button>
 
         </React.Fragment>
     )
