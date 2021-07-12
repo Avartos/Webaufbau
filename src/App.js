@@ -156,6 +156,7 @@ function App() {
             <Route exact path="/search"><SearchList/></Route>
             {/* 404 */}
             <Route path="/">
+              <h1>Error 404: Page not found</h1>
               <GifApi/>
             </Route>
           </Switch>

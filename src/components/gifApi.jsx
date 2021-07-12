@@ -5,9 +5,11 @@ const GifApi = () => {
     // set words to search for
     const searchWords = ['404', 'technical difficulties', 'cry', 'anger', 'explosion'];
     // set the apikey and limit
-    const apikey = "OUXM9BQB1TTQ";
-    const lmt = 10;
-    var alreadyLoaded = false;
+    const [apikey, setApikey] = useState("OUXM9BQB1TTQ");
+
+    const [limit, setLimit] = useState(10);
+
+    const [isPending, setIsPending] = useState(true);
 
     // url Async requesting function
     function httpGetAsync(theUrl, callback)
@@ -45,7 +47,7 @@ const GifApi = () => {
         // parse the json response
         let response_objects = JSON.parse(responsetext);
 
-        let randomNumber = getRandomNumber(lmt);
+        let randomNumber = getRandomNumber(limit);
         console.log("Array " + randomNumber);
 
         var top_10_gifs = response_objects["results"];
@@ -62,9 +64,9 @@ const GifApi = () => {
     // function to call the trending and category endpoints
     function grab_data()
     {
-        if(!alreadyLoaded)
+        if(isPending)
         {
-        alreadyLoaded = true;
+        setIsPending(false);
         let randomNumber = getRandomNumber(searchWords.length);
         console.log("Wordlenght " + randomNumber);
 
@@ -74,7 +76,7 @@ const GifApi = () => {
 
         // using default locale of en_US
         let search_url = "https://g.tenor.com/v1/search?q=" + search_term + "&key=" +
-            apikey + "&limit=" + lmt;
+            apikey + "&limit=" + limit;
 
         httpGetAsync(search_url,tenorCallback_search);
 
@@ -87,10 +89,10 @@ const GifApi = () => {
 
     return(
         <React.Fragment>
-
-            {grab_data()}
-            <img id="preview_gif" src="" alt=""/>
-
+            <div className="gifApi">
+                {grab_data()}
+                <img id="preview_gif" src="" alt=""/>
+            </div>
         </React.Fragment>
     )
 }
