@@ -17,6 +17,7 @@ const subscribedForumRoutes = require('./routes/subscribedForumRoutes');
 const subscribedThreadRoutes = require('./routes/subscribedThreadRoutes');
 const getThreadForumOfTheDayRoutes = require('./routes/getThreadForumOfTheDayRoutes');
 const favBarRoutes = require('./routes/favBarRoutes');
+const apiTokenRoutes = require('./routes/apiTokenRoutes');
 // #endregion
 
 //jsonwebtoken
@@ -50,6 +51,7 @@ app.use('/api/forums', forumRoutes);
 app.use('/api/ratings', ratingRoutes);
 app.use('/squid/getThreadForumOfTheDay', getThreadForumOfTheDayRoutes);
 app.use('/api/favBar', favBarRoutes);
+app.use('/api/apiToken', apiTokenRoutes);
 // #endregion
 
 // 404 page

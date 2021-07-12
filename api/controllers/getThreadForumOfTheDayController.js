@@ -2,6 +2,7 @@ const sequelize = require('../config/connection');
 const Forum = require('../models/forum');
 const Thread = require('../models/thread');
 const Contribution = require('../models/contribution');
+const Sequelize =  require('sequelize');
 
 const getOneThread = (req,res) => {
     const threadId = req.params.id;
@@ -11,15 +12,15 @@ const getOneThread = (req,res) => {
         where: {threadsId: threadId}
     })
         .then(data => {
-            Thread.findByPk(threadId, {
+            Thread.findOne({
                 attributes:['title'],
                 include: [{
                     model: Contribution,
                     as: 'contributions',
-                    where: {threadsId: threadId},
                     required: false,
                     attributes:[]
-                }]
+                }],
+                order: [sequelize.random()],
             })
                 .then(threadData => {
                     let mappedData = addContributionCountsToData([threadData], data);
@@ -44,15 +45,15 @@ const getOneForum = (req,res) => {
         where: {forumsId: forumId}
     })
         .then(data => {
-            Forum.findByPk(forumId, {
+            Forum.findOne({
                 attributes:['title'],
                 include:[{
                     model: Thread,
                     as: 'threads',
-                    where: {forumsId: forumId},
                     required: false,
                     attributes:[]
                 }],
+                order: [sequelize.random()],
             })
                 .then(forumData => {
                     let mappedData = addThreadCountsToData([forumData], data);

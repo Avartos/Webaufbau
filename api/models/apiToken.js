@@ -7,3 +7,5 @@ const ApiToken = sequelize.define("ApiToken", {
         type: Sequelize.STRING(256),
     }
 });
+
+module.exports = ApiToken;
