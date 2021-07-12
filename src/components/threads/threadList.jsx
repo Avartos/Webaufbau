@@ -11,7 +11,7 @@ import ForumHeader from "./forumHeader";
  * @param {handleAddAlert} reference to the function to add alerts to the app
  * @returns
  */
-const ThreadList = ({ handleAddAlert }) => {
+const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
   const { forumId } = useParams("forumId");
 
   const [threads, setThreads] = useState();
@@ -125,6 +125,7 @@ const ThreadList = ({ handleAddAlert }) => {
           ? null
           : true;
         setThreads([...updatedThreads]);
+        handleUpdateFavbar();
       })
       .catch((error) => {
         setError(error);

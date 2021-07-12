@@ -1,50 +1,91 @@
-import React, { useState } from 'react';
+import { ControlCameraOutlined } from '@material-ui/icons';
+import React, { useEffect, useState } from 'react';
 
 import Forum from './forum';
 
-const ForumList = () => {
-    const [forums, setForums] = useState (
-        [
-            {id: 1, name:"Name1", description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas sed tempus urna. Pellentesque sit amet porttitor eget dolor morbi non arcu risus. Dui accumsan sit amet nulla facilisi. Justo donec enim diam vulputate ut pharetra. Feugiat nibh sed pulvinar proin gravida hendrerit lectus.", numberOfThreads: 1, numberOfComments: 2, lastActivityFrom: "Squidy", lastActivityAt: "02.02.2020"},
-            {id: 2, name:"Name2", description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas sed tempus urna. Pellentesque sit amet porttitor eget dolor morbi non arcu risus. Dui accumsan sit amet nulla facilisi. Justo donec enim diam vulputate ut pharetra. Feugiat nibh sed pulvinar proin gravida hendrerit lectus.", numberOfThreads: 123, numberOfComments: 212, lastActivityFrom: "Crabby", lastActivityAt: "01.01.2021"},
-            {id: 3, name:"Name3", description:"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Fames ac turpis egestas sed tempus urna. Pellentesque sit amet porttitor eget dolor morbi non arcu risus. Dui accumsan sit amet nulla facilisi. Justo donec enim diam vulputate ut pharetra. Feugiat nibh sed pulvinar proin gravida hendrerit lectus.", numberOfThreads: 1321, numberOfComments: 9, lastActivityFrom: "Fish", lastActivityAt: "21.12.2012"}
-        ]
-    ); 
- 
-        return ( 
-            <React.Fragment>
-                <div className="forumList">
-                    <Forum 
-                        key={forums[0].id}
-                        name={forums[0].name}
-                        description={forums[0].description}
-                        numberOfThreads={forums[0].numberOfThreads}
-                        numberOfComments={forums[0].numberOfComments}
-                        lastActivityFrom={forums[0].lastActivityFrom}
-                        lastActivityAt={forums[0].lastActivityAt}
-                    />
-                    <Forum 
-                        key={forums[1].id}
-                        name={forums[1].name}
-                        description={forums[1].description}
-                        numberOfThreads={forums[1].numberOfThreads}
-                        numberOfComments={forums[1].numberOfComments}
-                        lastActivityFrom={forums[1].lastActivityFrom}
-                        lastActivityAt={forums[1].lastActivityAt}
-                    />
-                    <Forum 
-                        key={forums[1].id}
-                        name={forums[1].name}
-                        description={forums[1].description}
-                        numberOfThreads={forums[1].numberOfThreads}
-                        numberOfComments={forums[1].numberOfComments}
-                        lastActivityFrom={forums[1].lastActivityFrom}
-                        lastActivityAt={forums[1].lastActivityAt}
-                    />
-                </div>
-            </React.Fragment>
-        );
+const ForumList = ({handleAddAlert}) => {
+    const [forums, setForums] = useState (); 
+
+    const [isPending, setIsPending] = useState(true);
+
     
-}
+    const fetchForums = () => {
+        const abortController = new AbortController();
+        fetch('http://localhost:3001/api/forums', {
+            signal: abortController.signal,
+            headers: {
+                "Content-Type": "application/json",
+                accessToken: sessionStorage.getItem("accessToken"),
+            }
+        })
+        .then((res) => {
+            if (!res.ok) {
+                throw Error(
+                    "Fehler beim Anzeigen der Foren! Bitte versuchen Sie es später erneut."
+                );
+            }
+            return res.json();
+        })
+        .then((data) => {
+            setForums(data);
+            setIsPending(false);
+          })
+        .catch((error) => {
+            if (error.name === "AbortError") {
+              console.log("fetch abortet");
+            } else {
+              handleAddAlert("error", "Fehler", error.message);
+            }
+          });
+        return () => console.log(abortController.abort()); 
+    }
+
+    const handleSubscribeForum = (id, isSubscribed) => {
+    /*    const subscribeMethod = isSubscribed ? "DELETE" : "POST";
+    
+        fetch(`http://localhost:3001/api/forum/subscriptions/${id}`, {
+          method: subscribeMethod,
+          headers: {
+            "Content-Type": "application/json",
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        })
+          .then((req) => {
+            if (!req.ok) {
+              throw Error("Das Forum konnte nicht abonniert werden.");
+            }
+          })
+          .catch((error) => {
+            setError(error);
+            handleAddAlert("error", "Fehler", error.message);
+          });*/
+      };
+
+    useEffect(fetchForums, []);
+ 
+    return ( 
+        <React.Fragment>
+            <div className="forumList">
+            {!isPending &&
+                forums &&          
+                forums.map((forum) => {
+                    return (
+                        <Forum 
+                            key={forum.id}
+                            name={forum.name}
+                            description={forum.description}
+                            numberOfThreads={forum.numberOfThreads}
+                            numberOfComments={forum.numberOfComments}
+                            lastActivityFrom={forum.lastActivityFrom}
+                            lastActivityAt={forum.lastActivityAt}
+                            handleSubscribeForum={handleSubscribeForum}
+                        />
+                    );
+            	})}
+            </div>
+        </React.Fragment>
+    );
+    
+};
  
 export default ForumList;

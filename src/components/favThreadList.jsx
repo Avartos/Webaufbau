@@ -2,8 +2,9 @@ import React, { useState } from "react";
 import { CSSTransition } from "react-transition-group";
 import classNames from "classnames";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
+import { Link } from "react-router-dom";
 
-const FavThreadList = ({ item }) => {
+const FavThreadList = ({ forum }) => {
   const [threadListHeight, setThreadListHeight] = useState(0);
   const threadListRef = React.useRef(null);
   const [isUnfolded, setIsUnfolded] = useState(false);
@@ -24,12 +25,10 @@ const FavThreadList = ({ item }) => {
 
   return (
     <React.Fragment>
-      <li className="favForum" key={item.id}>
+      <li className="favForum">
         <span onClick={handleToggleUnfolded}>
           <ArrowForwardIosIcon className={dropDownClass} />
-          <span className="forumTitle">
-            {item.forum}
-          </span>
+          <span className="forumTitle">{forum.title}</span>
         </span>
         <div style={{ height: threadListHeight }}>
           <CSSTransition
@@ -41,10 +40,12 @@ const FavThreadList = ({ item }) => {
             nodeRef={threadListRef}
           >
             <ul ref={threadListRef}>
-              {item.threads.map((thread) => {
+              {forum.threads.map((thread) => {
                 return (
-                  <li className="favThread" key={thread}>
-                    {thread}
+                  <li className="favThread" key={`favThread${thread.id}`}>
+                    <Link to={`/contributions/${thread.id}`}>
+                      <span>{thread.title}</span>
+                    </Link>
                   </li>
                 );
               })}
