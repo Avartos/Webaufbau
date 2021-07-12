@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import Tenor from "react-tenor";
-
-import "react-tenor/dist/styles.css";
 
 const GifApi = () => {
 
     // set words to search for
-    const searchWords = ['404', 'Rammstein', 'Pizza', 'Ball', 'Schule'];
+    const searchWords = ['404', 'technical difficulties', 'cry', 'anger', 'explosion'];
     // set the apikey and limit
     const apikey = "OUXM9BQB1TTQ";
     const lmt = 10;
+    var alreadyLoaded = false;
 
     // url Async requesting function
     function httpGetAsync(theUrl, callback)
@@ -48,15 +46,13 @@ const GifApi = () => {
         let response_objects = JSON.parse(responsetext);
 
         let randomNumber = getRandomNumber(lmt);
-        console.log(randomNumber);
+        console.log("Array " + randomNumber);
 
         var top_10_gifs = response_objects["results"];
 
-        // load the GIFs -- for our example we will load the first GIFs preview size (nanogif) and share size (tinygif)
+        // load the GIF into the img
 
-        document.getElementById("preview_gif").src = top_10_gifs[randomNumber]["media"][0]["nanogif"]["url"];
-
-        document.getElementById("share_gif").src = top_10_gifs[randomNumber]["media"][0]["tinygif"]["url"];
+        document.getElementById("preview_gif").src = top_10_gifs[randomNumber]["media"][0]["gif"]["url"];
 
         return;
 
@@ -66,8 +62,11 @@ const GifApi = () => {
     // function to call the trending and category endpoints
     function grab_data()
     {
+        if(!alreadyLoaded)
+        {
+        alreadyLoaded = true;
         let randomNumber = getRandomNumber(searchWords.length);
-        console.log(randomNumber);
+        console.log("Wordlenght " + randomNumber);
 
         // test search term
         let search_term = searchWords[randomNumber];
@@ -81,6 +80,7 @@ const GifApi = () => {
 
         // data will be loaded by each call's callback
         return;
+        }
     };
 
 
@@ -90,7 +90,6 @@ const GifApi = () => {
 
             {grab_data()}
             <img id="preview_gif" src="" alt=""/>
-            {/*<Tenor token="OUXM9BQB1TTQ" onSelect={result => console.log(result)} />*/}
 
         </React.Fragment>
     )
