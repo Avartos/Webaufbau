@@ -13,7 +13,10 @@ const SearchList = () => {
         //used to stop fetching when forcing reload
         const abortController = new AbortController();
         setIsPending(true);
-        fetch(`http://localhost:3001/api/threads/search?q=`, {
+        var threads = [];
+        var forums = [];
+        fetch(`http://localhost:3001/api/threads/search?q=${query}`,
+            {
             signal: abortController.signal,
             headers: {
                 "Content-Type": "application/json",
@@ -21,25 +24,48 @@ const SearchList = () => {
                 accessToken: sessionStorage.getItem("accessToken"),
             },
         })
-            .then((res) => {
-                if (!res.ok) {
-                    throw Error(
-                        "Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut."
-                    );
-                }
-                return res.json();
+        .then((res) => {
+            if (!res.ok) {
+                throw Error(
+                    "Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut."
+                );
+            }
+            return res.json();
+        })
+        .then((data) => {
+            threads = data;
+        })
+        .then(
+            fetch(`http://localhost:3001/api/forums/search?q=${query}`,
+                {
+                signal: abortController.signal,
+                headers: {
+                    "Content-Type": "application/json",
+                    // undefined, if the user is not looged in
+                    accessToken: sessionStorage.getItem("accessToken"),
+                },
             })
-            .then((data) => {
-                setResult(data);
+        .then((res) => {
+            if (!res.ok) {
+                throw Error(
+                    "Fehler beim Abrufen der Forums! Bitte versuchen Sie es später erneut."
+                );
+            }
+            return res.json();
+        })
+        .then((data) => {
+            forums = data;
+            var mergedArrays = [...threads, ...forums]
+            setResult(mergedArrays);
+            setIsPending(false);
+        }))
+        .catch((error) => {
+            if (error.name === "AbortError") {
+                console.log("fetch abortet");
+            } else {
                 setIsPending(false);
-            })
-            .catch((error) => {
-                if (error.name === "AbortError") {
-                    console.log("fetch abortet");
-                } else {
-                    setIsPending(false);
-                }
-            });
+            }
+        });
         return () => console.log(abortController.abort());
     };
 
@@ -53,11 +79,13 @@ const SearchList = () => {
                 result.map((entry => {
                     return(
                         <React.Fragment>
-                            <div>
-                                {entry.title}
-                            </div>
-                            <div>
-                                {entry.content}
+                            <div className="searchList">
+                                <div>
+                                    {entry.title}
+                                </div>
+                                <div>
+                                    {/*{entry.content}*/}
+                                </div>
                             </div>
                         </React.Fragment>
                     )
