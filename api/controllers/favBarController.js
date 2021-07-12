@@ -11,6 +11,7 @@ const findFavorites = (req, res) => {
     const userID = req.user.id;
     Forum.findAll({
         attributes: [
+            'id',
             'title'
         ],
         include: [{
@@ -44,7 +45,7 @@ const findPopular = (req, res) => {
             'id',
             'forumsId',
             'title',
-             [Sequelize.fn('COUNT', 'contributions.id'), 'contributionsCount']
+            [Sequelize.fn('COUNT', 'contributions.id'), 'contributionsCount']
         ],
         include: [{
             model: Contribution,

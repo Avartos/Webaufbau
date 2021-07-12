@@ -8,8 +8,6 @@ const FavBar = (props) => {
     return sessionStorage.getItem("accessToken");
   };
 
-  console.log(props);
-
   return (
     <React.Fragment>
       <input type="checkbox" id="favToggle" className="favToggle" />
@@ -23,9 +21,9 @@ const FavBar = (props) => {
               </div>
               {props.favouriteThreads.map((forum) => {
                 return (
-                  <React.Fragment>
+                  <React.Fragment key={`favForum${forum.id}`}>
                     {forum.threads.length !== 0 && (
-                      <FavThreadList forum={forum}></FavThreadList>
+                      <FavThreadList forum={forum} ></FavThreadList>
                     )}
                   </React.Fragment>
                 );
@@ -41,7 +39,7 @@ const FavBar = (props) => {
             </div>
             {props.popularThreads.map((thread) => {
               return (
-                <li className="favThread" key={`fav${thread.id}`}>
+                <li className="favThread" key={`popular${thread.id}`}>
                   <Link to={`/contributions/${thread.id}`}>
                     <span>
                       {thread.title +
@@ -63,7 +61,7 @@ const FavBar = (props) => {
             </div>
             {props.latestThreads.map((thread) => {
               return (
-                <li className="favThread">
+                <li className="favThread" key={`latest${thread.id}`}>
                   <Link to={`/contributions/${thread.id}`}>
                     <span>
                       {thread.title}
