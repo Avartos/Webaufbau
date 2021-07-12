@@ -157,7 +157,7 @@ const Thread = (props) => {
       <div className="header">
         {!isEditMode && (
           <Link className="title" to={`/contributions/${props.thread.id}`}>
-            Thread: {props.thread.title}
+            {props.thread.title}
           </Link>
         )}
         {isEditMode && (
