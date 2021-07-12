@@ -76,9 +76,9 @@ const UserList = () => {
       {!isPending && (
         <React.Fragment>
           <div className="row header">
+            <span className="cell head">Profilbild</span>
             <span className="cell head">User ID</span>
             <span className="cell head">Username</span>
-            <span className="cell head">Profilbild</span>
             <span className="cell head">Ist Admin</span>
             <span className="cell head">Ist Aktiviert</span>
           </div>

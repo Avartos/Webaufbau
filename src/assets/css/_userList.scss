@@ -1,40 +1,76 @@
 @import "./variables";
 
 .userList {
+  display: block;
+  @media (min-width: $minDesktopWidth) {
     display: table;
-    width: 80%;
-    margin: 0 auto;
-    font-size: 1.3em;
-    border-radius: 5px;
-    overflow: hidden;
+  }
+  width: 80%;
+  margin: 0 auto;
+  font-size: 1.3em;
+  border-radius: 5px;
+  overflow: hidden;
 
-    .header {
-        border-radius: 5px 0px 0px 5px;
-        background-color: green;
+  text-align: left;
+  @media (min-width: $minDesktopWidth) {
+    text-align: center;
+  }
+
+  .header {
+    display: none;
+    @media (min-width: $minDesktopWidth) {
+      display: initial;
+    }
+    border-radius: 5px 0px 0px 5px;
+    background-color: green;
+  }
+
+  .mobile {
+    display: inline-block;
+    font-weight: bold;
+
+    @media (min-width: $minDesktopWidth) {
+      display: none;
+    }
+  }
+
+  .row {
+    @media (min-width: $minDesktopWidth) {
+      display: table-row;
+    }
+    &:nth-child(even) {
+      background-color: $threadHeaderColor;
     }
 
-    .row {
-        display: table-row;
-        &:nth-child(even) {
-            background-color: $threadHeaderColor;
-        }
-
-        &:nth-child(odd) {
-            background-color: $threadBodyColor;
-        }
-
-        .cell {
-            display: table-cell;
-            vertical-align: middle;
-            padding: 5px;
-        }
-
-        .head {
-            font-weight: bold;
-        }
+    &:nth-child(odd) {
+      background-color: $threadBodyColor;
     }
 
-    .profilePicture {
-        height: 60px;
+    .cell {
+      display: block;
+      input, .value {
+        float: right;
+        @media (min-width: $minDesktopWidth) {
+            float: initial;
+        }
+      }
+      @media (min-width: $minDesktopWidth) {
+        display: table-cell;
+      }
+      vertical-align: middle;
+      padding: 5px;
     }
+
+    .head {
+      font-weight: bold;
+    }
+  }
+
+  .profilePicture {
+    position: relative;
+    left: -50%;
+    transform: translate(35%, 0);
+    text-align: center;
+    height: 60px;
+  }
 }
