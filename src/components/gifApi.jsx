@@ -88,6 +88,7 @@ const GifApi = () => {
     return(
         <React.Fragment>
 
+            {grab_data()}
             <img id="preview_gif" src="" alt=""/>
             {/*<Tenor token="OUXM9BQB1TTQ" onSelect={result => console.log(result)} />*/}
 
