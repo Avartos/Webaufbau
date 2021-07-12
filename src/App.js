@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-
+import io from "socket.io-client"
 
 import "./assets/css/app.scss";
 
@@ -24,6 +24,10 @@ import SearchList from "./components/searchList";
 import MyProfile from "./components/accountHandling/myProfile";
 import UserList from "./components/accountHandling/administration/userList";
 // #endregion
+
+import WebChat from "./components/webChat";
+import SquidVoiceChat from "./components/squidVoiceCall";
+
 
 function App() {
   // contains all alerts that can be added by different components.
@@ -121,6 +125,19 @@ function App() {
   //loads all information into the favbar when website has been opened
   useEffect(handleUpdateFavbar, []);
   
+  const [socket, setSocket] = useState(null);
+  const handleConnectSocket = () => {
+    if(isLoggedIn()) {
+      setSocket(io.connect('http://localhost:3001'));
+    }
+  }
+
+
+  useEffect(() => {
+    handleConnectSocket();
+    console.log(socket);
+  }, [])
+  
   
   return (
     <Router>
@@ -142,7 +159,7 @@ function App() {
             <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>}
             
             {!isLoggedIn() &&
-            <Route excact path="/login"><Login handleAddAlert={handleAddAlert} handleUpdateProfilePicture={handleUpdateProfilePicture} handleUpdateFavbar={handleUpdateFavbar}/></Route>}
+            <Route excact path="/login"><Login handleAddAlert={handleAddAlert} handleUpdateProfilePicture={handleUpdateProfilePicture} handleUpdateFavbar={handleUpdateFavbar} handleConnectSocket={handleConnectSocket}/></Route>}
             
             {/* account */}
             {isLoggedIn() &&
@@ -153,6 +170,8 @@ function App() {
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
 
             <Route exact path="/search"><SearchList/></Route>
+            {isLoggedIn() && socket &&
+            <Route exact path="/call"><WebChat socket={socket}></WebChat></Route>}
             {/* 404 */}
             <Route path="/">
               <h1> 404 - Page not Found </h1>

@@ -58,6 +58,7 @@ const extractUserFromToken = (req, res, next) => {
     } catch (error) {
         console.error('Error:', error);
         res.sendStatus(500);
+        return;
     }
 
 
