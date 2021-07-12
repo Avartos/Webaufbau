@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Tenor from "react-tenor";
 
 import "react-tenor/dist/styles.css";
 
