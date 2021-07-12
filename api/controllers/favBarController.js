@@ -7,21 +7,25 @@ const Contribution = require('../models/contribution')
 const SubscribedForum = require('../models/subscribedForum');
 
 
-const findFavorites = (req, res) =>  {
+const findFavorites = (req, res) => {
     const userID = req.user.id;
     Forum.findAll({
-        attributes: [['title', 'forumTitle']],
+        attributes: [
+            'title'
+        ],
         include: [{
-            model:Thread,
+            model: Thread,
             as: 'threads',
             attributes: [
-                ['title', 'threadTitle'],
-                ['id', 'threadID']
+                'title',
+                'id',
             ],
             include: [{
                 model: SubscribedThread,
                 as: 'subscribedThreads',
-                where: {usersId: userID},
+                where: {
+                    usersId: userID
+                },
                 attributes: [],
                 required: true
             }]
@@ -29,17 +33,18 @@ const findFavorites = (req, res) =>  {
     }).then((data) => {
         res.json(data);
     }).catch((error) => {
-        console.error("Error:\t",error);
+        console.error("Error:\t", error);
     })
 
 }
 
-const findPopular = (req, res) =>  {
+const findPopular = (req, res) => {
     Thread.findAll({
         attributes: [
-            ['id','threadID'],
-            ['title','threadTitle'],
-            [Sequelize.fn('COUNT', 'contributions.id'), 'contributionsCount']
+            'id',
+            'forumsId',
+            'title',
+             [Sequelize.fn('COUNT', 'contributions.id'), 'contributionsCount']
         ],
         include: [{
             model: Contribution,
@@ -47,32 +52,33 @@ const findPopular = (req, res) =>  {
             attributes: []
         }],
         group: ['contributions.threadsId'],
-        order: [[Sequelize.fn('COUNT', 'contributions.id'), 'desc']]
+        order: [
+            [Sequelize.fn('COUNT', 'contributions.id'), 'desc']
+        ]
     }).then((data) => {
         res.json(data);
     }).catch((error) => {
-        console.error("Error:\t",error);
+        console.error('Error:\t', error);
+        res.sendStatus(500);
     })
 }
 
-const findLatest = (req, res) =>  {
+const findLatest = (req, res) => {
     const limit = parseInt(req.query.limit);
     Thread.findAll({
-        attributes: [['title', 'threadTitle'],
-        'updatedAt',
-        ['id', 'threadID']],
-        order: [
-            [
-                'updatedAt', 'desc'
-            ]
+        attributes: ['title',
+            'updatedAt',
+            'id'
         ],
-
+        order: [
+            ['updatedAt', 'desc']
+        ],
         limit: limit
 
     }).then((data) => {
         res.json(data);
     }).catch((error) => {
-        console.error("Error:\t",error);
+        console.error("Error:\t", error);
     })
 }
 

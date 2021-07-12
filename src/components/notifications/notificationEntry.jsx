@@ -5,8 +5,8 @@ import CloseIcon from "@material-ui/icons/Close";
 
 /**
  * This component represents a single notification within the notification list
- * @param {*} props 
- * @returns 
+ * @param {*} props
+ * @returns
  */
 const NotificationEntry = (props) => {
   const entryRef = React.useRef(null);
@@ -19,7 +19,7 @@ const NotificationEntry = (props) => {
 
   //calculates the new height of the notification depending on its actual content height
   const calculateEntryHeight = () => {
-    const height = isVisible ? entryRef.current.clientHeight : 0;
+    const height = isVisible ? 50 : 0;
     setNotificationHeight(height);
   };
 
@@ -54,17 +54,17 @@ const NotificationEntry = (props) => {
         nodeRef={entryRef}
         className="notificationFader"
       >
-        <React.Fragment>
-          <span className="preText">{props.preText}</span>
-          <Link to={props.targetUrl} onClick={() => setIsVisible(false)}>
-            <span className="title">{props.title}</span>
-          </Link>
+          <React.Fragment>
+            <span className="preText">{props.preText}</span>
+            <Link to={props.targetUrl} onClick={() => setIsVisible(false)}>
+              <span className="title">{props.title}</span>
+            </Link>
 
-          <CloseIcon
-            className="closeIcon"
-            onClick={() => setIsVisible(false)}
-          ></CloseIcon>
-        </React.Fragment>
+            <CloseIcon
+              className="closeIcon"
+              onClick={() => setIsVisible(false)}
+            ></CloseIcon>
+          </React.Fragment>
       </CSSTransition>
     </div>
   );

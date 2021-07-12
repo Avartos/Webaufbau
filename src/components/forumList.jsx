@@ -3,13 +3,13 @@ import React, { useEffect, useState } from 'react';
 
 import Forum from './forum';
 
-const ForumList = () => {
+const ForumList = ({handleAddAlert}) => {
     const [forums, setForums] = useState (); 
 
     const [isPending, setIsPending] = useState(true);
 
     
-    const fetchForums = (handleAddAlert) => {
+    const fetchForums = () => {
         const abortController = new AbortController();
         fetch('http://localhost:3001/api/forums', {
             signal: abortController.signal,
