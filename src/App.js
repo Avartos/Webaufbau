@@ -142,6 +142,8 @@ function App() {
           <AlertList messages={alerts} handleRemoveAlert={handleRemoveAlert} />
           <Switch>
             {/* Forum Routes */}
+            {/* redirect to start page if user is logged in */}
+            {isLoggedIn() && <Route exact path="(/login|/registration)"><ForumList handleAddAlert={handleAddAlert}/></Route>}
             <Route exact path="/"><ForumList handleAddAlert={handleAddAlert}/></Route>
             <Route exact path="/threads/:forumId"><ThreadList handleAddAlert={handleAddAlert} handleUpdateFavbar={handleUpdateFavbar} /></Route>
             <Route exact path="/contributions/:threadId"><Contributions handleAddAlert={handleAddAlert} /></Route>
@@ -150,8 +152,7 @@ function App() {
             {!isLoggedIn() &&
             <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>}
 
-            {!isLoggedIn() &&
-            <Route excact path="/login"><Login handleAddAlert={handleAddAlert} handleUpdateProfilePicture={handleUpdateProfilePicture} handleUpdateFavbar={handleUpdateFavbar}/></Route>}
+            {!isLoggedIn() && <Route excact path="/login"><Login handleAddAlert={handleAddAlert} handleUpdateProfilePicture={handleUpdateProfilePicture} handleUpdateFavbar={handleUpdateFavbar}/></Route>}
             
             {/* account */}
             {isLoggedIn() &&
