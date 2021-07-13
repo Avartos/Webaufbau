@@ -196,6 +196,7 @@ const add = (req, res) => {
                                 login: {
                                     passwordHash: hash,
                                 },
+                                imagesId: 1,
                             }, {
                                 include: [{
                                     model: Login,
