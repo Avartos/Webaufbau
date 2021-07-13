@@ -19,6 +19,7 @@ const ProfileDropDown = (props) => {
     //clears token and other data from the session storage
     sessionStorage.clear();
     //refresh page to make sure all components reload the token
+    history.push('/');
     history.go(0);
   };
 

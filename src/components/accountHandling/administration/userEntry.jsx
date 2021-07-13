@@ -23,12 +23,14 @@ const UserEntry = (props) => {
 
   return (
     <div className="userEntry row">
-      <span className="cell">{props.user.id}</span>
-      <span className="cell">{props.user.userName}</span>
       <span className="cell">
         <ProfilePicture path={props.user.profilePicturePath}></ProfilePicture>
       </span>
+      <span className="cell"><span className="mobile">Id</span><span className="value">{props.user.id}</span></span>
+      <span className="cell"><span className="mobile">Nutzername</span><span className="value">{props.user.userName}</span></span>
+      
       <span className="cell">
+        <span className="mobile">Ist Administrator</span>
         <input
           type="checkbox"
           onChange={handleToggleIsAdmin}
@@ -36,6 +38,7 @@ const UserEntry = (props) => {
         />
       </span>
       <span className="cell">
+        <span className="mobile">Ist Enabled</span>
         <input
           type="checkbox"
           onChange={handleToggleIsEnabled}
