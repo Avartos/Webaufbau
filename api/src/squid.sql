@@ -246,11 +246,11 @@ COMMIT;
 
 USE `squid`;
 INSERT INTO `logins` (`id`, `createdAt`, `updatedAt`, `passwordHash`, `isAdmin`, `isEnabled`) VALUES
-(5, '2021-07-11 17:31:21', '2021-07-11 17:31:21', '$2b$10$gNyyRMhOdW9UjLhpZt4y.uOiHI1MEfXowIOjLoNhqb5.mWEhHZsgS', 0, 1),
+(5, '2021-07-11 17:31:21', '2021-07-11 17:31:21', '$2b$10$gNyyRMhOdW9UjLhpZt4y.uOiHI1MEfXowIOjLoNhqb5.mWEhHZsgS', 1, 1),
 (6, '2021-07-12 16:20:09', '2021-07-12 16:20:09', '$2b$10$.Ny/E3yk0CaH2on0GmI1/eBMLiur1NULy2UVYHncjBXo0qAJFjE7m', 0, 1),
 (7, '2021-07-12 16:54:59', '2021-07-12 16:54:59', '$2b$10$LmCeQUwYCxVsdbJZug8wRuCnLrlVnPq/jkrDmkB5OTLtCuEj3DCGe', 0, 1),
 (8, '2021-07-13 05:20:49', '2021-07-13 05:20:49', '$2b$10$b7Xrz0Co1Fk1apUbMOA3iOfOZAvaNVwRfZZrvA8Vg4b8C9cH/MoEC', 0, 1),
-(9, '2021-07-13 06:22:30', '2021-07-13 06:22:30', '$2b$10$0xj7cjqDQ5ULJzISIa1NW.d/ecKQ/3zoKI3nEpTCldxPDhanVXcm2', 0, 1),
+(9, '2021-07-13 06:22:30', '2021-07-13 06:22:30', '$2b$10$0xj7cjqDQ5ULJzISIa1NW.d/ecKQ/3zoKI3nEpTCldxPDhanVXcm2', 1, 1),
 (10, '2021-07-13 06:22:48', '2021-07-13 06:22:48', '$2b$10$3xaGRMl6y3FLw.DJJZZoZu07N1HhDniK3kUJk1myuQXfkkz1ksZz.', 0, 1),
 (12, '2021-07-13 06:27:13', '2021-07-13 06:27:13', '$2b$10$goB1knLx0Bywg1yv6LZY4O29KezadDx54rsxb8JvSK/bT34tQBz22', 0, 1),
 (13, '2021-07-13 06:27:50', '2021-07-13 06:27:50', '$2b$10$pW0SlN0oi3YW3j1EklQCaON/tmODGDB5QqTxxkBlEVZh6EYWiOYrG', 0, 1),

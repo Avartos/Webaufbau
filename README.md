@@ -1,37 +1,85 @@
 # SQUID
+
+## Installation
+
+Zunächst die Datenbank wiederherstellen. Hierfür muss mariaDB verwendet werden.
+
+```
+Port: 3306
+Nutzername: root
+Passwort: kein Passwort
+```
+
+Die DatenbankDatei befindet sich im Verzeichnis:
+[./api/src/squid.sql](./api/src/squid.sql)
+
+Anschließend das Backend sowie das Frontend starten.
+Das Backend befindet sich im Ordner api, für das Frontend genügt im Hauptverzeichnis:
+
+```cmd
+npm start
+```
+
+Um die Webseite auf z.B. anderen Geräten zu testen, sollte im Ordner in der Konfigurationsdatei der Pfad zum Server angepasst werden. (Anstelle von localhost die tatsächliche IP-Adresse). Die Datei befiundet sich unter:
+
+```
+./src/core/config.jsx
+```
+
+Für die Webseite gibt es bereits einige Vordefinierte User.
+Folgende Nutzer stehen zur Verfügung:
+```
+Squid1 (Administrator)
+Squid2
+Squid3
+Squid7601
+Squid5628
+Squid12251
+Squid11020
+Squid1230
+```
+
+```
+Standardpasswort: QWEasd123!
+```
+
 ## Allgemein
+
 Github-Repository:
 https://github.com/Avartos/Webaufbau
 
 Team-Mitglieder:
+
 - Dirk Hofmann (Munchkin129)
 - John Klippstein (Avartos)
 - Matthias Gabel (f0rkster)
 - Saskia Wohlers (schnoernja)
 - Robin Beck (LittleBigPlaye)
 
-
-
 ## Was ist Squid?
+
 Squid ist ein Forum, in dem sich Nutzer austauschen können. Dabei soll die Anonymität der Nutzer gewahrt werden, indem jeder User nur den Namen 'Squid' gefolgt von einer Nummer trägt.
 
-
 ## Funktionalitäten von Squid
+
 Squid beinhaltet folgende Funktionalitäten:
+
 - Allgemeine Forenfunktionen
-    - Anlegen von Foren
-    - Anlegen von Threads
-    - Antworten auf Threads
-    - Abonnieren von Threads und Foren
-    - Suchen nach Foren und Threads
-    - Bewerten von Antworten auf ein Post in einem Thread
-    - Beanchrichtigung bei neuen Aktivitäten in Abonnierten Foren
+  - Anlegen von Foren
+  - Anlegen von Threads
+  - Antworten auf Threads
+  - Abonnieren von Threads und Foren
+  - Suchen nach Foren und Threads
+  - Bewerten von Antworten auf ein Post in einem Thread
+  - Beanchrichtigung bei neuen Aktivitäten in Abonnierten Foren
 - Kontoverwaltung
-    - Auswahl eines eigenen Profilbildes aus einer Auswahl vorgegebener Profilbilder
-    - Änderung des Passwortes
+  - Auswahl eines eigenen Profilbildes aus einer Auswahl vorgegebener Profilbilder
+  - Änderung des Passwortes
 
 ## Verworfene Funktionalitäten
+
 Es waren mehr Funktionalitäten geplan, leider mussten diese aufgrund von Zeitmangel verworfen werden:
+
 - Durchführung von Voicecalls (wurde getestet, hat aber nicht stabil genug funktioniert und war zu kurzfristig)
 - Anhängen von Dateien/ Bildern / Dokumenten an Posts
 - Implementierung von Straw Poll als externe API
@@ -39,7 +87,6 @@ Es waren mehr Funktionalitäten geplan, leider mussten diese aufgrund von Zeitma
 ## Nutzung fremd API
 
 Als Fremd API wurde eine API von Tenor eingebunden. Diese zeigt auf der 404 Seite nach Suchkriterien festgelegte, zufällige gifs an.
-
 
 ## Nutzung - Eigene API
 
@@ -50,26 +97,29 @@ Es werden ein zufälliger Thread sowie ein zufälliges Forum zurückgeliefert.
 ---
 
 ## Ursprüngliche Ideen
-### Beiträge 
 
--	Erstellen von Kategorien 
--	Erstellen von Threads 
--	Antworten auf Threads 
--	Einbetten von Bildern, Sounds, html (?), markdown 
--	Direktes Erwähnen von anderen Nutzern mit @ 
--	Eigene Syntax für Smileys / Symbole 
--	Kleine Vorschau auf eingebettete Links zu anderen Webseiten 
--	Markierung von Beiträgen als Spoiler 
--	Name für alle Nutzer „Squidy“ + Zahl
+### Beiträge
 
-### Kommunikation 
--	Schreiben in Threads 
--	Schreiben per Direktnachricht 
--	Voice-Calls (EasyRTC, SimpleWebRTC, PeerJS)
+- Erstellen von Kategorien
+- Erstellen von Threads
+- Antworten auf Threads
+- Einbetten von Bildern, Sounds, html (?), markdown
+- Direktes Erwähnen von anderen Nutzern mit @
+- Eigene Syntax für Smileys / Symbole
+- Kleine Vorschau auf eingebettete Links zu anderen Webseiten
+- Markierung von Beiträgen als Spoiler
+- Name für alle Nutzer „Squidy“ + Zahl
+
+### Kommunikation
+
+- Schreiben in Threads
+- Schreiben per Direktnachricht
+- Voice-Calls (EasyRTC, SimpleWebRTC, PeerJS)
 
 ### API-Ideen
--	Hook-Up Links für Benachrichtigungen (stellen wir bereit)
--	StrawPoll anzeigen lassen (nutzen wir)
+
+- Hook-Up Links für Benachrichtigungen (stellen wir bereit)
+- StrawPoll anzeigen lassen (nutzen wir)
 
 ---
 
