@@ -1,6 +1,8 @@
 import { ControlCameraOutlined } from '@material-ui/icons';
 import React, { useEffect, useState } from 'react';
 
+import config from '../core/config';
+
 import Forum from './forum';
 
 const ForumList = ({handleAddAlert}) => {
@@ -11,7 +13,7 @@ const ForumList = ({handleAddAlert}) => {
     
     const fetchForums = () => {
         const abortController = new AbortController();
-        fetch('http://localhost:3001/api/forums', {
+        fetch(`${config.serverPath}/api/forums`, {
             signal: abortController.signal,
             headers: {
                 "Content-Type": "application/json",

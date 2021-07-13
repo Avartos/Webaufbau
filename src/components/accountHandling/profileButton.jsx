@@ -1,5 +1,6 @@
 import {default as AvatarFrame} from "../../assets/icons/avatarFrame.svg";
 import React from "react";
+import config from "../../core/config";
 
 import ProfileDropDown from "./profileDropdown";
 
@@ -16,7 +17,7 @@ const ProfileButton = (props) => {
           onClick={() => props.handleToggleUnfold()}
         >
           <img
-            src={`http://localhost:3001/profile_pictures/${props.profilePicturePath}`}
+            src={`${config.serverPath}/profile_pictures/${props.profilePicturePath}`}
             alt="Avatar"
             className="avatar"
           />

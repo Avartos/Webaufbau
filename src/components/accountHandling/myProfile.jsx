@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import ProfilePictureSelectButton from "./profilePictureSelectButton";
 import Alert from "@material-ui/lab/Alert";
+import config from "../../core/config";
 
 /**
  * This component is used to control the own profile
@@ -56,7 +57,7 @@ const MyProfile = (props) => {
     //used to stop fetching when forcing reload
     const abortController = new AbortController();
     setIsPending(true);
-    fetch(`http://localhost:3001/api/users/`, {
+    fetch(`${config.serverPath}/api/users/`, {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",
@@ -105,7 +106,7 @@ const MyProfile = (props) => {
       repeatedPassword: repeatedPassword,
     };
 
-    fetch(`http://localhost:3001/api/users/`, {
+    fetch(`${config.serverPath}/api/users/`, {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(passwordObject),

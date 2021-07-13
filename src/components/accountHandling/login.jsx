@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
+import config from "../../core/config";
 
 const Login = ({ handleAddAlert, handleUpdateProfilePicture, handleUpdateFavbar }) => {
   const [userName, setUserName] = useState("");
@@ -15,7 +16,7 @@ const Login = ({ handleAddAlert, handleUpdateProfilePicture, handleUpdateFavbar 
       passwordHash: password,
     };
 
-    fetch(`http://localhost:3001/api/users/login`, {
+    fetch(`${config.serverPath}/api/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(user),

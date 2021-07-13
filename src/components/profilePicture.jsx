@@ -1,4 +1,6 @@
 import { ReactComponent as AvatarFrame } from "../assets/icons/avatarFrame.svg";
+import config from "../core/config";
+
 
 /**
  * This component represents the profile picture
@@ -10,7 +12,7 @@ const ProfilePicture = ({path}) => {
     return ( 
         <div className="profilePicture">
             <AvatarFrame className="frame"></AvatarFrame>
-            <img className="image" src={`http://localhost:3001/profile_pictures/${path}`} alt="" />
+            <img className="image" src={`${config.serverPath}/profile_pictures/${path}`} alt="" />
         </div>
      );
 }

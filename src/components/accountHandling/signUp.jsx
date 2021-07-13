@@ -2,6 +2,7 @@ import React, {useEffect, useState} from "react";
 import Alert from "@material-ui/lab/Alert";
 import {useHistory} from "react-router-dom";
 import {Error} from "@material-ui/icons";
+import config from "../../core/config";
 
 const Signin = ({handleAddAlert}) => {
     const [userName, setUserName] = useState("");
@@ -36,7 +37,7 @@ const Signin = ({handleAddAlert}) => {
         };
 
 
-        fetch(`http://localhost:3001/api/users`, {
+        fetch(`${config.serverPath}/api/users`, {
             method: "POST",
             headers: {"Content-Type": "application/json"},
             body: JSON.stringify(user),

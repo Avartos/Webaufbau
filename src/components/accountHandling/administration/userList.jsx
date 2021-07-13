@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import UserEntry from "./userEntry";
+import config from "../../../core/config";
 
 /**
  * This component lists all users in list form.
@@ -10,7 +11,7 @@ const UserList = () => {
   const [isPending, setIsPending] = useState(true);
 
   const fetchUsers = () => {
-    fetch("http://localhost:3001/api/users/all", {
+    fetch(`${config.serverPath}/api/users/all`, {
       headers: {
         "Content-Type": "application/json",
         accessToken: sessionStorage.getItem("accessToken"),
@@ -41,7 +42,7 @@ const UserList = () => {
       isEnabled: isEnabled,
     };
 
-    fetch(`http://localhost:3001/api/users/update/${userId}`, {
+    fetch(`${config.serverPath}/api/users/update/${userId}`, {
       method: "PUT",
       body: JSON.stringify(loginObject),
       headers: {

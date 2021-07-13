@@ -1,6 +1,7 @@
 import {Link, useLocation} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import {CircularProgress} from "@material-ui/core";
+import config from '../core/config';
 
 const SearchList = () => {
     let title = new URLSearchParams(useLocation().search).get("q");
@@ -15,7 +16,7 @@ const SearchList = () => {
         setIsPending(true);
         var threads = [];
         var forums = [];
-        fetch(`http://localhost:3001/api/threads/search?q=${query}`,
+        fetch(`${config.serverPath}/api/threads/search?q=${query}`,
             {
             signal: abortController.signal,
             headers: {
@@ -36,7 +37,7 @@ const SearchList = () => {
             threads = data;
         })
         .then(
-            fetch(`http://localhost:3001/api/forums/search?q=${query}`,
+            fetch(`${config.serverPath}/api/forums/search?q=${query}`,
                 {
                 signal: abortController.signal,
                 headers: {

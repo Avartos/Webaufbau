@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import ProfilePictureList from "./profilePictureList";
 import { ReactComponent as AvatarFrame } from "../../assets/icons/avatarFrame.svg";
+import config from "../../core/config";
 
 /**
  * This component is used to open the profile picture list
@@ -18,7 +19,7 @@ const ProfilePictureSelectButton = (props) => {
     //used to stop fetching when forcing reload
     const abortController = new AbortController();
     setIsPending(true);
-    fetch(`http://localhost:3001/api/images/`, {
+    fetch(`${config.serverPath}/api/images/`, {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",
@@ -53,7 +54,7 @@ const ProfilePictureSelectButton = (props) => {
     //used to stop fetching when forcing reload
     const abortController = new AbortController();
     setIsPending(true);
-    fetch(`http://localhost:3001/api/users/image/${pictureId}`, {
+    fetch(`${config.serverPath}/api/users/image/${pictureId}`, {
       signal: abortController.signal,
       method: "PUT",
       headers: {
@@ -94,7 +95,7 @@ const ProfilePictureSelectButton = (props) => {
           <AvatarFrame className="imageFrame"></AvatarFrame>
           <img
             className="activeImage"
-            src={`http://localhost:3001/profile_pictures/${sessionStorage.getItem(
+            src={`${config.serverPath}/profile_pictures/${sessionStorage.getItem(
               "profilePicture"
             )}`}
             alt=""

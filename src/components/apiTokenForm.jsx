@@ -21,11 +21,7 @@ const ApiTokenForm = ({ handleAddAlert }) => {
   const handleRequestToken = (e) => {
     e.preventDefault();
     const abortController = new AbortController();
-<<<<<<< HEAD
     fetch(`${config.serverPath}/api/foreign_api/generate`, {
-=======
-    fetch(`http://localhost:3001/api/apiToken/`, {
->>>>>>> d1dd038521b808c687ce09d61b66d4b187819800
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",
