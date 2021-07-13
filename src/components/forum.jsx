@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from "react-router-dom";
 
 import ForumStatictics from './forumStatistics';
 import SubscribeButton from "./subscribeButton";
@@ -7,8 +8,9 @@ const Forum = (props) => {
         return (  
             <div className="forum">
                 <div className="header">
-                    {console.log(props)}
-                    <span className="title"><a href={"/threads/" + props.id}>Forum: {props.name}</a></span> 
+                    <Link className="title" to={`/threads/${props.id}`}>
+                        Forum: {props.name}
+                    </Link> 
                     <div className="wrapperButton">
                         <SubscribeButton
                             parentId={props.id}

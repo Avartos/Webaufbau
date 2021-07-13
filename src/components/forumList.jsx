@@ -41,25 +41,7 @@ const ForumList = ({handleAddAlert}) => {
     }
 
     const handleSubscribeForum = (id, isSubscribed) => {
-    /*    const subscribeMethod = isSubscribed ? "DELETE" : "POST";
-    
-        fetch(`http://localhost:3001/api/forum/subscriptions/${id}`, {
-          method: subscribeMethod,
-          headers: {
-            "Content-Type": "application/json",
-            accessToken: sessionStorage.getItem("accessToken"),
-          },
-        })
-          .then((req) => {
-            if (!req.ok) {
-              throw Error("Das Forum konnte nicht abonniert werden.");
-            }
-          })
-          .catch((error) => {
-            setError(error);
-            handleAddAlert("error", "Fehler", error.message);
-          });*/
-      };
+    };
 
     useEffect(fetchForums, []);
  
