@@ -69,9 +69,11 @@ const ForumList = ({handleAddAlert}) => {
             {!isPending &&
                 forums &&          
                 forums.map((forum) => {
+                    console.log(forum)
                     return (
                         <Forum 
-                            key={forum.id}
+                            key={forum.forumsID}
+                            id={forum.forumsID}
                             name={forum.name}
                             description={forum.description}
                             numberOfThreads={forum.numberOfThreads}

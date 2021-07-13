@@ -235,12 +235,26 @@ SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
 -- Data for table `squid`.`Logins`
 -- -----------------------------------------------------
 START TRANSACTION;
-USE `squid`;
-INSERT INTO `squid`.`Logins` (`id`, `createdAt`, `updatedAt`, `passwordHash`, `isAdmin`, `isEnabled`) VALUES (1, '\'2002-01-01 00:00:01', '\'2010-01-01 00:00:01', 'johnistcool', NULL, NULL);
-INSERT INTO `squid`.`Logins` (`id`, `createdAt`, `updatedAt`, `passwordHash`, `isAdmin`, `isEnabled`) VALUES (2, '\'2002-01-01 00:00:01', '\'2003-01-01 00:00:01', 'matthiasistcool', NULL, NULL);
-INSERT INTO `squid`.`Logins` (`id`, `createdAt`, `updatedAt`, `passwordHash`, `isAdmin`, `isEnabled`) VALUES (3, '\'2002-01-01 00:00:01', '\'2005-01-01 00:00:01', 'dirkundrobinsindauchaberesgibtnur4user', NULL, NULL);
-INSERT INTO `squid`.`Logins` (`id`, `createdAt`, `updatedAt`, `passwordHash`, `isAdmin`, `isEnabled`) VALUES (4, '\'2002-01-01 00:00:01', '\'2013-01-01 00:00:01', 'saskiaistauchcool', NULL, NULL);
 
+--
+-- Daten für Tabelle `apitokens`
+--
+
+INSERT INTO `apitokens` (`id`, `createdAt`, `updatedAt`, `apiToken`) VALUES
+(1, '2021-07-12 16:58:10', '2021-07-12 16:58:10', '5667b840-e332-11eb-90b8-ffd58ffc48b4');
+COMMIT;
+
+USE `squid`;
+INSERT INTO `logins` (`id`, `createdAt`, `updatedAt`, `passwordHash`, `isAdmin`, `isEnabled`) VALUES
+(5, '2021-07-11 17:31:21', '2021-07-11 17:31:21', '$2b$10$gNyyRMhOdW9UjLhpZt4y.uOiHI1MEfXowIOjLoNhqb5.mWEhHZsgS', 0, 1),
+(6, '2021-07-12 16:20:09', '2021-07-12 16:20:09', '$2b$10$.Ny/E3yk0CaH2on0GmI1/eBMLiur1NULy2UVYHncjBXo0qAJFjE7m', 0, 1),
+(7, '2021-07-12 16:54:59', '2021-07-12 16:54:59', '$2b$10$LmCeQUwYCxVsdbJZug8wRuCnLrlVnPq/jkrDmkB5OTLtCuEj3DCGe', 0, 1),
+(8, '2021-07-13 05:20:49', '2021-07-13 05:20:49', '$2b$10$b7Xrz0Co1Fk1apUbMOA3iOfOZAvaNVwRfZZrvA8Vg4b8C9cH/MoEC', 0, 1),
+(9, '2021-07-13 06:22:30', '2021-07-13 06:22:30', '$2b$10$0xj7cjqDQ5ULJzISIa1NW.d/ecKQ/3zoKI3nEpTCldxPDhanVXcm2', 0, 1),
+(10, '2021-07-13 06:22:48', '2021-07-13 06:22:48', '$2b$10$3xaGRMl6y3FLw.DJJZZoZu07N1HhDniK3kUJk1myuQXfkkz1ksZz.', 0, 1),
+(12, '2021-07-13 06:27:13', '2021-07-13 06:27:13', '$2b$10$goB1knLx0Bywg1yv6LZY4O29KezadDx54rsxb8JvSK/bT34tQBz22', 0, 1),
+(13, '2021-07-13 06:27:50', '2021-07-13 06:27:50', '$2b$10$pW0SlN0oi3YW3j1EklQCaON/tmODGDB5QqTxxkBlEVZh6EYWiOYrG', 0, 1),
+(14, '2021-07-13 07:04:39', '2021-07-13 07:04:39', '$2b$10$7VaNmon2usQyi2l7nGuho.ZQLHQc4cbmbv54yubAy4Kl11mARB4My', 0, 1);
 COMMIT;
 
 
@@ -276,10 +290,16 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (1, '\'2001-01-01 00:00:01', '\'2006-01-01 00:00:01', 'Squid1', 1, null);
-INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (2, '\'2001-01-01 00:00:01', '\'2003-01-01 00:00:01', 'Squid2', 2, null);
-INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (3, '\'2001-01-01 00:00:01', '\'2019-01-01 00:00:01', 'Squid3', 3, null);
-INSERT INTO `squid`.`Users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES (4, '\'2001-01-01 00:00:01', '\'2015-01-01 00:00:01', 'Squid4', 4, null);
+INSERT INTO `users` (`id`, `createdAt`, `updatedAt`, `userName`, `loginsId`, `imagesId`) VALUES
+(1, '0000-00-00 00:00:00', '2021-07-13 06:29:25', 'Squid1', 9, 1),
+(2, '0000-00-00 00:00:00', '2021-07-13 06:29:27', 'Squid2', 10, 2),
+(3, '0000-00-00 00:00:00', '2021-07-13 06:29:30', 'Squid3', 12, 3),
+(4, '0000-00-00 00:00:00', '2021-07-13 06:29:33', 'Squid4', 13, 4),
+(5, '2021-07-11 17:31:21', '2021-07-11 17:31:36', 'Squid7601', 5, 16),
+(6, '2021-07-12 16:20:09', '2021-07-13 06:29:36', 'Squid5628', 6, 5),
+(7, '2021-07-12 16:54:59', '2021-07-12 17:20:45', 'Squid12251', 7, 7),
+(8, '2021-07-13 05:20:49', '2021-07-13 05:20:49', 'Squid11020', 8, 1),
+(13, '2021-07-13 07:04:39', '2021-07-13 07:04:39', 'Squid1230', 14, 1);
 
 COMMIT;
 
@@ -289,10 +309,15 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`Forums` (`id`, `title`, `createdAt`, `updatedAt`, `shortDescription`) VALUES (1, 'Science Fiction', '\'2001-01-01 00:00:01', '\'2008-06-03 00:00:01', NULL);
-INSERT INTO `squid`.`Forums` (`id`, `title`, `createdAt`, `updatedAt`, `shortDescription`) VALUES (2, 'Tiere & Co', '\'2001-01-01 00:00:01', '\'2015-10-10 00:00:01', NULL);
-INSERT INTO `squid`.`Forums` (`id`, `title`, `createdAt`, `updatedAt`, `shortDescription`) VALUES (3, 'Studium', '\'2001-01-01 00:00:01', '\'2003-01-05 00:00:01', NULL);
-INSERT INTO `squid`.`Forums` (`id`, `title`, `createdAt`, `updatedAt`, `shortDescription`) VALUES (4, 'BuGa Erfurt 20/21', '\'2010-01-01 00:00:01', '\'2021-06-10 00:00:01', NULL);
+INSERT INTO `forums` (`id`, `title`, `createdAt`, `updatedAt`, `shortDescription`) VALUES
+(1, 'Science Fiction', '2021-07-08 05:49:22', '2021-07-13 05:49:28', 'Star Trek oder Star Wars? Docotr Who wäre nichts ohne seine Telefonzelle? Euch steht frei euch hier darüber auszutauschen'),
+(2, 'Tiere & Co', '2021-07-13 05:49:29', '2021-07-13 05:49:32', 'Ihr seid auf der Suche nach der richtigen Hunderasse für euch, oder braucht Pflegetipps für eurer Haustier? Hier könnt ihr fündig werden.'),
+(3, 'Studium', '2021-07-10 05:49:34', '2021-07-13 05:49:35', 'Nichts kann belastender sein, als ein forderndes Studium. Holt euch hier Tipps um den Stress zu bewältigen, oder vllt Hilfe für ein bestimmtes Modul/Fach zu finden'),
+(4, 'BuGa Erfurt 20/21', '2021-07-04 05:49:36', '2021-07-13 05:49:41', 'Die Pflanzenwelt auf der BuGa hat euch so beeindruckt, dass ihr eure High- und Lowlights mit anderen teilen möchtet? Ihr findet bestimmt viele interessierte Leser hier'),
+(5, 'Kinofilme', '2021-07-13 05:27:53', NULL, 'Der perfekte Ort um über aktuelle oder alte Kinofilme zu reden.'),
+(6, 'Spiel Spiele Spiele', '2021-07-13 05:27:53', NULL, 'Euer Lieblingsspiel verdient einen Platz um es in den Himmel zu loben, oder ihr wollt einfacch diskutieren was gerade so in der Welt der Spiele los ist? Da seid ihr hier genau richtig.'),
+(7, 'Technik', '2021-07-13 05:33:42', NULL, 'Alles über Technik und Basteleien'),
+(8, 'Reise und Urlaub', '2021-07-13 05:33:42', NULL, 'Ihr möchtet darüber über die schönsten Orte der Welt diskutieren und erfahren wo man sich am betsen erholen kann? Na dann los. ');
 
 COMMIT;
 
@@ -302,11 +327,22 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (1, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Harry Potter', 'Dieser Thread enthält alles rund um Hogwarts! ', 1, 1);
-INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (2, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Katzentatzen', 'Katzentazen sind süß!', 2, 2);
-INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (3, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Studizeugs', 'Hier geht\'s ums Studieren! Teilt euer Wissen', 3, 3);
-INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (4, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Blumen', 'Grüne Daumen sind willkommen!', 4, 4);
-INSERT INTO `squid`.`Threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES (5, '\'2001-09-03 10:10:59\'', '\'2005-10-04 20:10:59\'', 'Prüfungsabgabe', 'Grüne DauPrüfungsabgabe verkackt ', 1, 3);
+INSERT INTO `threads` (`id`, `createdAt`, `updatedAt`, `title`, `Content`, `usersId`, `forumsId`) VALUES
+(1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Harry Potter', 'Dieser Thread enthält alles rund um Hogwarts! ', 1, 1),
+(2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Katzentatzen', 'Katzentazen sind süß!', 2, 2),
+(3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Studizeugs', 'Hier geht\'s ums Studieren! Teilt euer Wissen', 3, 3),
+(4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Blumen', 'Grüne Daumen sind willkommen!', 4, 4),
+(5, '0000-00-00 00:00:00', '2021-07-13 05:39:05', 'Prüfungsabgabe', 'Wann war nochmal die Abgabe?', 1, 3),
+(8, '2021-07-13 05:42:04', NULL, 'Was brauchen wir um mit einem Raumschiff zum Mars  zu  fliegen? ', 'Habt ihr vllt Ideen, was noch benötigt  wird,  um endlich ein  Raumschiff zu  entwickeln, mit den man in ein paar Tagen zum Mars fliegen kann?', 4, 1),
+(9, '2021-07-13 05:42:04', NULL, 'Zeitreisen', 'Wohin  würdet ihr  gerne Reisen, wenn ein Sprung in die Vergangenheit möglich wäre? ', 3, 1),
+(10, '2021-07-13 05:55:00', NULL, 'TomorrowWar', 'Zeitreisende überbringen eine dringende Botschaft: 30 Jahre in der Zukunft verliert die Menschheit einen Krieg gegen tödliche Aliens. Die einzige Hoffnung ruht auf Soldaten und Zivilisten, die in der Zukunft mitkämpfen sollen. Fest entschlossen, die Welt für seine Tochter zu retten, schließt sich Dan Forester mit einer Wissenschaftlerin und seinem Vater zusammen, um das Schicksal zu wenden.', 4, 5),
+(11, '2021-07-13 05:55:00', NULL, 'Shanghai Knights', 'Auf der Suche nach den Mördern seines Vaters verschlägt es Chon Wang und seinen Kumpel Roy O\'Bannon ins viktorianische London, wo sie auf Wangs Schwester Lin stoßen. Auch sie will den Mord rächen und folgte deshalb dem Übeltäter Lord Rathbone und dessen Schlägertruppe nach England. Bei ihren Nachforschungen stoßen die drei auf eine große Verschwörung rund um die königliche Familie.\r\n', 2, 5),
+(12, '2021-07-13 06:04:56', NULL, 'Neuer Rechner', 'Ich möchte mir einen neuen Rechner zusammenstellen. Worauf muss ich denn achten?', 1, 7),
+(13, '2021-07-13 06:04:56', NULL, 'SmartHome', 'Was nutzt ihr um euer SmartHome zu steuern?', 2, 7),
+(14, '2021-07-13 06:35:29', '0000-00-00 00:00:00', 'Final Fantasy', 'Welches ist denn euer Lieblingsteil?', 5, 6),
+(15, '2021-07-13 06:35:29', NULL, 'The Witcher 3', 'braucht es wirklich noch eine 4K für die NextGen-Konsolen', 7, 6),
+(16, '2021-07-13 06:54:14', NULL, 'Reiseziele 2022', 'Wo soll es für euch im Jahre 2022 hingehen, wenn es die Pandemie zulässt?', 1, 8),
+(17, '2021-07-13 06:54:14', NULL, 'Mein schönster Urlaub', 'Wo habt ihr euren schönsten Urlaub verbracht?', 3, 8);
 
 COMMIT;
 
@@ -316,11 +352,31 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`Contributions` (`id`, `createdAt`, `updatedAt`, `content`, `threadsId`, `usersId`) VALUES (1, '\'2002-01-01 00:00:01', '\'2005-01-01 00:00:01', 'Hermine ist doof :(', 1, 1);
-INSERT INTO `squid`.`Contributions` (`id`, `createdAt`, `updatedAt`, `content`, `threadsId`, `usersId`) VALUES (2, '\'2002-01-01 00:00:01', '\'2006-01-01 00:00:01', 'katzen sind nicht besser als Hunde', 2, 3);
-INSERT INTO `squid`.`Contributions` (`id`, `createdAt`, `updatedAt`, `content`, `threadsId`, `usersId`) VALUES (3, '\'2002-01-01 00:00:01', '\'2010-01-01 00:00:01', 'wann müssen wir noch das Webaufbau-Projekt abgeben? gar kein Bock', 3, 3);
-INSERT INTO `squid`.`Contributions` (`id`, `createdAt`, `updatedAt`, `content`, `threadsId`, `usersId`) VALUES (4, '\'2002-01-01 00:00:01', '\'2007-01-01 00:00:01', 'Pusteblumen in meiner Nase. Schnee im Sommer.', 4, 2);
-
+INSERT INTO `contributions` (`id`, `createdAt`, `updatedAt`, `content`, `threadsId`, `usersId`) VALUES
+(1, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Hermine ist doof :(', 1, 1),
+(2, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'katzen sind nicht besser als Hunde', 2, 3),
+(3, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'wann müssen wir noch das Webaufbau-Projekt abgeben? gar kein Bock', 3, 3),
+(4, '0000-00-00 00:00:00', '0000-00-00 00:00:00', 'Pusteblumen in meiner Nase. Schnee im Sommer.', 4, 2),
+(5, '2021-07-13 05:44:32', NULL, 'Ich glaube wir benötigen eine hinreichende Energiequelle, um überhaupt erstmal einen Antrieb zu bauen, der eine solche Geschwindigkeit erzeugt diese Strecke in ein paar Tagen zu schaffen.', 8, 1),
+(6, '2021-07-13 05:44:32', NULL, 'Hä? Wir kommen doch vom Mars.  Warum willst du wieder dahin? \r\n\r\nKommt in meine Telegrammgruppe!!!', 8, 2),
+(7, '2021-07-13 05:46:41', NULL, 'Ich würde gerne in meinen Ort immer 10 Jahre zurückreisen bis zu seiner Entstehung um die Veränderungen zu sehen. ', 9, 1),
+(8, '2021-07-13 05:46:41', NULL, 'Ich würde ins alte Ägypten reisen und Cleopatra vom Thron schubsen, um mich selber darauf zu setzen', 9, 2),
+(9, '2021-07-13 06:02:42', NULL, 'Ein sehr geiler Film ', 10, 1),
+(10, '2021-07-13 06:02:42', NULL, 'Wow ein realistischer Blick in unsere Zukunft', 10, 2),
+(11, '2021-07-13 06:03:26', NULL, 'Der Asiate hatte schon bessere Filme', 11, 2),
+(12, '2021-07-13 06:03:26', NULL, 'Super lustig, den kann ich nur empfehlen', 11, 1),
+(13, '2021-07-13 06:12:56', NULL, 'Du musst aufpassen, dass du keinen Flaschenhals mit der Hardware erzeugt', 12, 4),
+(14, '2021-07-13 06:12:56', NULL, 'GRAFIKKARTE!!!!!!!!!!!!!11111!!!!', 12, 3),
+(15, '2021-07-13 06:14:43', NULL, 'Was soll denn ein Smarthome sein?', 13, 6),
+(16, '2021-07-13 06:14:43', NULL, 'mit nem Py', 13, 8),
+(17, '2021-07-13 06:37:40', NULL, 'FF 9 ist der beste Teil der Serie', 14, 6),
+(18, '2021-07-13 06:37:40', NULL, 'Nicht geht über FF7\r\nDas Spiel hat die beste Story der Serie', 14, 1),
+(19, '2021-07-13 06:39:13', NULL, 'langsam reicht es. es ist ja fast so schlimm wie GTAV', 15, 3),
+(20, '2021-07-13 06:39:13', NULL, 'Ja warum nicht? Es wird ja kostenlos angeboten, wie ich das mitbekommen habe', 15, 2),
+(21, '2021-07-13 07:01:41', NULL, 'Meinen schönsten Urlaub hatte ich in Kroatien. Ich war mit meinen Freunden dort und hatten eine wilde Zeit', 17, 8),
+(22, '2021-07-13 07:01:41', NULL, 'Der schönste Urlaub war jetzt erst gewesen. Ich beim Finalspiel der EM mit 60.000 anderen und keinen hat es interessiert was mit Corona ist. Das war echt mal entspannden. Nur doof das ich jetzt gerade krank bin. ', 17, 6),
+(23, '2021-07-13 07:04:13', '2021-07-13 07:05:10', 'Ich möchte nach Dubei und mir nen reichen Scheisch suche. Keenen Bock mehr auf abhartzen\r\n\r\nLG \r\nTschantal', 16, 13),
+(24, '2021-07-13 07:04:13', NULL, 'Ich möchte eine Burgentour durch Europa machen und mir die alten Gemäuer ansehen', 16, 5);
 COMMIT;
 
 
@@ -329,10 +385,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`SubscribedThreads` (`threadsId`, `usersId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES (1, 1, '\'2002-01-01 00:00:01', NULL, DEFAULT);
-INSERT INTO `squid`.`SubscribedThreads` (`threadsId`, `usersId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES (2, 1, '\'2002-01-01 00:00:01', NULL, DEFAULT);
-INSERT INTO `squid`.`SubscribedThreads` (`threadsId`, `usersId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES (3, 1, '\'2002-01-01 00:00:01', NULL, DEFAULT);
-INSERT INTO `squid`.`SubscribedThreads` (`threadsId`, `usersId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES (4, 4, '\'2002-01-01 00:00:01', NULL, DEFAULT);
+INSERT INTO `subscribedthreads` (`threadsId`, `usersId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES
+(1, 1, '0000-00-00 00:00:00', NULL, '2021-07-11 17:30:08'),
+(2, 1, '0000-00-00 00:00:00', NULL, '2021-07-11 17:30:08'),
+(3, 1, '0000-00-00 00:00:00', NULL, '2021-07-11 17:30:08'),
+(4, 4, '0000-00-00 00:00:00', NULL, '2021-07-11 17:30:08');
 
 COMMIT;
 
@@ -342,10 +399,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`SubscribedForums` (`usersId`, `forumsId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES (1, 1, '\'2002-01-01 00:00:01', NULL, DEFAULT);
-INSERT INTO `squid`.`SubscribedForums` (`usersId`, `forumsId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES (2, 1, '\'2002-01-01 00:00:01', NULL, DEFAULT);
-INSERT INTO `squid`.`SubscribedForums` (`usersId`, `forumsId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES (3, 3, '\'2002-01-01 00:00:01', NULL, DEFAULT);
-INSERT INTO `squid`.`SubscribedForums` (`usersId`, `forumsId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES (4, 4, '\'2002-01-01 00:00:01', NULL, DEFAULT);
+INSERT INTO `subscribedforums` (`usersId`, `forumsId`, `timeStamp`, `updatedAt`, `createdAt`) VALUES
+(1, 1, '0000-00-00 00:00:00', NULL, '2021-07-11 17:30:08'),
+(2, 1, '0000-00-00 00:00:00', NULL, '2021-07-11 17:30:08'),
+(3, 3, '0000-00-00 00:00:00', NULL, '2021-07-11 17:30:08'),
+(4, 4, '0000-00-00 00:00:00', NULL, '2021-07-11 17:30:08');
 
 COMMIT;
 
@@ -355,10 +413,11 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `squid`;
-INSERT INTO `squid`.`Ratings` (`contributionsId`, `usersId`, `rating`, `createdAt`, `updatedAt`) VALUES (1, 1, +1, DEFAULT, NULL);
-INSERT INTO `squid`.`Ratings` (`contributionsId`, `usersId`, `rating`, `createdAt`, `updatedAt`) VALUES (1, 2, -1, DEFAULT, NULL);
-INSERT INTO `squid`.`Ratings` (`contributionsId`, `usersId`, `rating`, `createdAt`, `updatedAt`) VALUES (1, 3, +1, DEFAULT, NULL);
-INSERT INTO `squid`.`Ratings` (`contributionsId`, `usersId`, `rating`, `createdAt`, `updatedAt`) VALUES (2, 3, +1, DEFAULT, NULL);
+INSERT INTO `ratings` (`contributionsId`, `usersId`, `rating`, `createdAt`, `updatedAt`) VALUES
+(1, 1, 1, '2021-07-11 17:30:08', NULL),
+(1, 2, -1, '2021-07-11 17:30:08', NULL),
+(1, 3, 1, '2021-07-11 17:30:08', NULL),
+(2, 3, 1, '2021-07-11 17:30:08', NULL);
 
 COMMIT;
 

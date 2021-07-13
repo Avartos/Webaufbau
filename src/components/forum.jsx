@@ -7,7 +7,8 @@ const Forum = (props) => {
         return (  
             <div className="forum">
                 <div className="header">
-                    <span className="title">Forum: {props.name}</span>
+                    {console.log(props)}
+                    <span className="title"><a href={"/threads/" + props.id}>Forum: {props.name}</a></span> 
                     <div className="wrapperButton">
                         <SubscribeButton
                             parentId={props.id}
