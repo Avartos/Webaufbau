@@ -72,8 +72,8 @@ const ForumList = () => {
                     console.log(forum)
                     return (
                         <Forum 
-                            key={forum.id}
-                            id={forum.id}
+                            key={forum.forumsID}
+                            id={forum.forumsID}
                             name={forum.name}
                             description={forum.description}
                             numberOfThreads={forum.numberOfThreads}
