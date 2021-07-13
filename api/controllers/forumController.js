@@ -24,6 +24,7 @@ const findAll = (req,res) => {
         res.json(data);
     }).catch((error) => {
         console.error("Error:\t",error);
+        res.sendStatus(500);
     })
 }
 
