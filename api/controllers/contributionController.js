@@ -140,6 +140,31 @@ const deleteOne = (req, res) => {
         })
 }
 
+/**
+ * Adds a new contribution to the given thread id
+ */
+
+const add = (req, res) => {
+    const threadId = req.params.threadId;
+    const contributionText = req.body.contributionText;
+    console.log(contributionText);
+    const userId = req.user.id;
+    Contribution.create({
+        content: contributionText,
+        usersId: userId,
+        threadsId: parseInt(threadId)
+      })
+      .then(data => {
+        console.log(userId);
+        res.json(data);
+      })
+      .catch(error => {
+        console.error('Error:\t', error);
+        res.sendStatus(500);
+      });
+  }
+  
+
 const update = (req, res) => {
     const contribution = req.body;
     Contribution.update(contribution)
@@ -175,5 +200,6 @@ module.exports = {
     findAll,
     findOne,
     deleteOne,
-    update
+    update,
+    add
 }

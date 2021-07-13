@@ -67,14 +67,14 @@ const findAll = (req, res) => {
   const forumId = req.params.forumId;
   const userId = (req.user) ? req.user.id : -1;
   const user = (req.user) ? req.user : null;
-  
+
   const orderBy = req.query.orderBy;
-  const order = req.query.order === 'asc' ? 'asc' : 'desc'; 
-  
+  const order = req.query.order === 'asc' ? 'asc' : 'desc';
+
   let condition = {...threadCondition(userId)};
-  
+
   if(orderBy) {
-    condition.order = [[orderBy, order]];  
+    condition.order = [[orderBy, order]];
   }
 
   condition.where = {
@@ -218,7 +218,7 @@ const update = (req, res) => {
  * Adds a count value to the thread to show, how many contriubutions have been committed to the thread
  * @param {*} thread            the target thread
  * @param {*} contributionCount the contribution count that should be mapped, will be 0 if not defined
- * @returns 
+ * @returns
  */
 const mapCountToThread = (thread, contributionCount) => {
   if (contributionCount) {
@@ -233,7 +233,7 @@ const mapCountToThread = (thread, contributionCount) => {
  * Adds visibility levels to all threads
  * @param {*} threads a list of threads
  * @param {*} user    the currently logged in user that should be compared with the thread
- * @returns 
+ * @returns
  */
 const addVisibilityToThreads = (threads, user) => {
   const mappedThreads = threads.map(thread => {
@@ -243,11 +243,11 @@ const addVisibilityToThreads = (threads, user) => {
 }
 
 /**
- * Adds the visibility to one single thread. If the thread has been created by the given user 
+ * Adds the visibility to one single thread. If the thread has been created by the given user
  * or the user has administrative privileges, the visibility level will be true
  * @param {*} thread  the thread that should be extended
  * @param {*} user    the user that should be compared
- * @returns 
+ * @returns
  */
 const addVisibilityLevelToThread = (thread, user) => {
   if(user && (user.id === thread.dataValues.usersId || user.isAdmin)) {

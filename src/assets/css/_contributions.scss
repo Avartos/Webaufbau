@@ -4,6 +4,7 @@
 @import "./mixins/statistics";
 
 
+
 .addContribution {
     width: 100%;
     @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
@@ -11,6 +12,9 @@
 
 .newContributionForm {
     @include contentCard($nCFHeaderColor, $nCFBodyColor);
+
+    padding-top: 30px;
+    width: 100%;
 
     textarea {
         margin: 5px;
@@ -36,23 +40,24 @@
 
 }
 
-.descriptionThread {
-    @include contentCard($threadHeaderColor, $threadBodyColor);
 
-    header {
-        margin-left: 5px;
-    }
-
-    .statistics {
-        @include statistics;
-        display: flex;
-        float: right;
-        padding-right: 40px;
-        padding-bottom: 10px;
-    }
+.forumHeader {
 
     .body {
-        text-align: left;
+
+        .statistics {
+            @include statistics;
+            display: flex;
+            float: right;
+            padding-right: 40px;
+            padding-bottom: 10px;
+        }
+
+        .shortDescription {
+            text-align: left;
+            width: 65%;
+            word-wrap: break-word;
+        }
     }
 }
 
@@ -68,13 +73,16 @@
     text-align: left;
     display:flex;
     flex-direction: column;
-}
+
+    .body {
+        word-wrap: break-word;
+    }
+} 
 
 .contribution:nth-child(even){
     background-color: #BFCDE0;
 
     .replyButton {
-       // @include basicButton($aCAnswerFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
         background-color: #bfcde000;
     }
 
@@ -84,7 +92,6 @@
 }
 
 .replyButton {
-    //@include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
     border: none;
     position: absolute;
     bottom: 5px;
@@ -92,12 +99,13 @@
     top: 45px;
     background-color: #fefcfd00;
     color: $buttonColor;
-    //display: flex;
-   // justify-content: flex-end;
-   // padding-right: 120px;
-    height: 40px;
     padding-top: 20px;
 
+    &:hover {
+        background-color:rgba(0, 0, 0, 0);
+        color: $buttonHoverColor
+      }
+    
 }
 
 .counterOfLikes {
@@ -119,13 +127,11 @@
     margin-right: 0;
 }
 
-.createArea{
+.createArea {
     display: flex;
     flex-wrap: wrap;
     justify-content: right;
     margin: 0 auto 0 auto;
-    
-    
 }
 
 .buttonArea {
@@ -138,4 +144,3 @@
     display: flex;
     justify-content: flex-end;
 }
-

@@ -64,7 +64,7 @@ function App() {
   //used to update the profile picture within the navbar, when the session storage gets changed
   const handleUpdateProfilePicture = () => {
     setCurrentProfilePicture(sessionStorage.getItem('profilePicture'));
-  } 
+  }
 
   //used to determine, if the current user is logged in
   const isLoggedIn = () => {
@@ -126,11 +126,11 @@ function App() {
     fetchFavBarContent(`${config.serverPath}/api/favBar/latest?limit=5`, setLatestThreads);
     fetchFavBarContent(`${config.serverPath}/api/favBar/popular?limit=5`, setPopularThreads);
   }
-  
+
   //loads all information into the favbar when website has been opened
   useEffect(handleUpdateFavbar, []);
-  
-  
+
+
   return (
     <Router>
       <div className="App">
@@ -143,13 +143,13 @@ function App() {
           <Switch>
             {/* Forum Routes */}
             <Route exact path="/"><ForumList handleAddAlert={handleAddAlert}/></Route>
-            <Route exact path="/threads/:forumId"><ThreadList handleAddAlert={handleAddAlert} handleUpdateFavbar={handleUpdateFavbar}/></Route>
-            <Route exact path="/contributions/:id"><Contributions /></Route>
+            <Route exact path="/threads/:forumId"><ThreadList handleAddAlert={handleAddAlert} handleUpdateFavbar={handleUpdateFavbar} /></Route>
+            <Route exact path="/contributions/:threadId"><Contributions handleAddAlert={handleAddAlert} /></Route>
             
             {/* Login Routes */}
             {!isLoggedIn() &&
             <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>}
-            
+
             {!isLoggedIn() &&
             <Route excact path="/login"><Login handleAddAlert={handleAddAlert} handleUpdateProfilePicture={handleUpdateProfilePicture} handleUpdateFavbar={handleUpdateFavbar}/></Route>}
             

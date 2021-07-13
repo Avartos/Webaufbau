@@ -1,37 +1,60 @@
-import { Duo } from '@material-ui/icons';
-import React, { useState } from 'react'
-import { useRef } from 'react';
+import { Duo } from "@material-ui/icons";
+import React, { useState } from "react";
+import { useRef } from "react";
+//import { add } from '../../api/controllers/threadController';
+
+const NewContributionForm = ({ handleAddContribution }) => {
 
 
-const NewContributionForm = ({ handleSubmitForm }) => {
+    const openForm = (event) => {
+        event.preventDefault();
+        setVisible(true);
+    };
+    const closeForm = () => {
+        console.log("discard 1");
+        setVisible(false);
+    };
 
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(false);
 
-    const AddNewContributionForm = ({ onDiscard }) => {
+    const AddNewContributionForm = ({
+        onDiscard,
+        add,
+        // handleAddContribution,
+    }) => {
         const [contributionText, setContributionText] = useState("");
         const [currentUser, setCurrentUser] = useState("Squidy50");
 
-        const input = useRef(null)
+        const input = useRef(null);
 
         const onInputChange = ({ target }) => {
-            const files = target.files
+            const files = target.files;
 
-            if (files.length > 0)
-                console.log("found files for input", files)
-        }
+            if (files.length > 0) console.log("found files for input", files);
+        };
 
         return (
             <div className="newContributionForm">
+                {/*      
+               onSubmit={(e) => {
+    //         handleAddContribution(e, "tehehehest");
+    //       }}
+    //     >
+    //       <button>Test</button>
+    //     </form> */}
 
-                <form className="body"
+                <form
+                    className="body"
                     onSubmit={(e) => {
-                        handleSubmitForm(e, contributionText, currentUser);
+                        e.preventDefault();
+                        // console.log("Test")
+                        handleAddContribution(e, contributionText);
                         setContributionText("");
                     }}
                 >
                     <div className="createArea">
-
-                        <textarea className="textarea"
+                        <textarea
+                            className="textarea"
                             required
                             value={contributionText}
                             onChange={(e) => {
@@ -39,7 +62,7 @@ const NewContributionForm = ({ handleSubmitForm }) => {
                             }}
                             placeholder="Gib deinen Beitrag zum Thema!"
                         ></textarea>
-                        <input type="file" style={{ display: "none" }} ref={input} onChange={onInputChange} accept="image/*" />
+                        {/* <input type="file" style={{ display: "none" }} ref={input} onChange={onInputChange} accept="image/*" /> */}
                         <div className="buttonArea">
                             <button className="discardContribution" onClick={onDiscard} type="button">Verwerfen</button>
                             {/* <button type="button" onClick={() => input.current.click()}>Anfügen</button> */}
@@ -48,23 +71,14 @@ const NewContributionForm = ({ handleSubmitForm }) => {
                     </div>
                 </form>
             </div>
-        )
-    }
+        );}
 
-    const openForm = (event) => {
-        event.preventDefault();
-        setVisible(true)
-    }
-    const closeForm = () => {
-        console.log("discard 1")
-        setVisible(false)
-    }
-    return (
-        <div>
-            {!visible && <button className="addContribution" onClick={openForm}>+</button>}
-            {visible && <div><AddNewContributionForm onDiscard={closeForm} /></div>}
-        </div>
-    )
-};
+        return (
+            <div>
+                {!visible && (<button className="addContribution" onClick={openForm}>+</button>)}
+                {visible && (<div><AddNewContributionForm onDiscard={closeForm} /></div>)} </div>
+        );
+    };
+
 
 export default NewContributionForm;

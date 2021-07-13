@@ -9,6 +9,8 @@ router.get('/all/:threadId', authMiddleware.extractUserFromToken, contributionsC
 router.get('/:id', contributionsController.findOne);
 // delete the contribution with the given id
 router.delete('/:id', contributionsController.deleteOne);
+//add the contribution with the given id
+router.post('/:threadId', authMiddleware.validateToken, contributionsController.add)
 // update the contribution with the given id
 router.put('/:id', contributionsController.update);
 
