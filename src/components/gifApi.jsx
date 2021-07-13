@@ -11,6 +11,8 @@ const GifApi = () => {
 
     const [isPending, setIsPending] = useState(true);
 
+    const [gif, setGif] = useState('');
+
     // url Async requesting function
     function httpGetAsync(theUrl, callback)
     {
@@ -54,7 +56,7 @@ const GifApi = () => {
 
         // load the GIF into the img
 
-        document.getElementById("preview_gif").src = top_10_gifs[randomNumber]["media"][0]["gif"]["url"];
+        setGif(top_10_gifs[randomNumber]["media"][0]["gif"]["url"]);
 
         return;
 
@@ -64,8 +66,6 @@ const GifApi = () => {
     // function to call the trending and category endpoints
     function grab_data()
     {
-        if(isPending)
-        {
         setIsPending(false);
         let randomNumber = getRandomNumber(searchWords.length);
         console.log("Wordlenght " + randomNumber);
@@ -82,16 +82,16 @@ const GifApi = () => {
 
         // data will be loaded by each call's callback
         return;
-        }
     };
 
+    
 
 
     return(
         <React.Fragment>
             <div className="gifApi">
                 {grab_data()}
-                <img id="preview_gif" src="" alt=""/>
+                <img id="preview_gif" src={gif} alt=""/>
             </div>
         </React.Fragment>
     )

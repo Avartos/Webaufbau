@@ -4,7 +4,7 @@ const forumController = require('../controllers/forumController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
 // get all forums
-router.get('/', forumController.findAll);
+router.get('/', authMiddleware.extractUserFromToken, forumController.findAll);
 // WIP
 router.get('/dirk', forumController.countThreads);
 

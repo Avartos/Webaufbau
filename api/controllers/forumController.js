@@ -5,14 +5,15 @@ const SubscribedForum = require('../models/subscribedForum');
 const Thread = require('../models/thread');
 
 const findAll = (req,res) => {
+    const userId = (req.user) ? req.user.id : -1;
     Forum.findAll({
         attributes: [
             ['id','forumsID'],
             ['title','name'],
-            'createdAt',
-            'updatedAt',
+            [Sequelize.fn('date_format', Sequelize.col('forum.createdAt'), '%d.%m.%Y'), 'createdAt'],
+            [Sequelize.fn('date_format', Sequelize.col('forum.updatedAt'), '%d.%m.%Y'), 'updatedAt'],
             ['shortDescription','description'],
-
+            [sequelize.col('subscribedForums.usersId'), 'subscriptionUsersId'],
             [sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
         ],
         include: [{
@@ -21,8 +22,16 @@ const findAll = (req,res) => {
             attributes: [
                 'id'
             ]
-        }],
-        group: ['forumsId']
+        },
+        {
+            model: SubscribedForum,
+            as: 'subscribedForums',
+            required: false,
+            where: {usersId: userId},
+            attributes:[]
+        }
+        ],
+        group: ['forumsId'],
     }).then((data) => {
         res.json(data);
     }).catch((error) => {
