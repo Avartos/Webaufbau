@@ -10,6 +10,7 @@ import NavBar from "./components/navBar";
 import FavBar from "./components/favBar";
 import SearchBar from "./components/searchBar";
 import AlertList from "./components/userAlerts/alertList";
+import GifApi from "./components/gifApi";
 
 //forum components
 import ForumList from "./components/forumList";
@@ -155,7 +156,8 @@ function App() {
             <Route exact path="/search"><SearchList/></Route>
             {/* 404 */}
             <Route path="/">
-              <h1> 404 - Page not Found </h1>
+              <h1>Error 404: Page not found</h1>
+              <GifApi/>
             </Route>
           </Switch>
         </div>
