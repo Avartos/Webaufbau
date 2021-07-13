@@ -11,6 +11,8 @@ const Contributions = ({ handleAddAlert }) => {
     const [thread, setThread] = useState(null);
     const { threadId } = useParams("threadId");
 
+    const [visible, setVisible] = useState(false);
+
     const fetchContributions = () => {
         const abortController = new AbortController();
         fetch(`http://localhost:3001/api/contributions/all/${threadId}`, {
@@ -77,35 +79,45 @@ const Contributions = ({ handleAddAlert }) => {
 
     useEffect(fetchThreadHeader, []);
 
-    const handleAddContribution = (e, contributionText) => {
+    const handleAddContribution = async (e, contributionText) => {
         e.preventDefault();
 
         let newContribution = {
             contributionText: contributionText,
         };
 
-        fetch(`http://localhost:3001/api/contributions/${threadId}`, {
+        const response = await fetch(`http://localhost:3001/api/contributions/${threadId}`, {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
                 accessToken: sessionStorage.getItem("accessToken"),
             },
             body: JSON.stringify(newContribution),
-        })
-            .then((res) => {
-                if (!res.ok) {
-                    throw Error("Das Formular konnte nicht abgeschickt werden.");
-                }
-                fetchContributions();
-                handleAddAlert(
-                    "success",
-                    "",
-                    "Ihr Beitrag wurde erfolgreich angelegt!"
-                );
-            })
-            .catch((error) => {
-                handleAddAlert("error", "Fehler", error.message);
-            });
+        });
+
+        if (!response.ok) {
+            return handleAddAlert("error", "Fehler", "Das Formular konnte nicht abgeschickt werden.");
+        }
+        fetchContributions();
+        handleAddAlert(
+            "success",
+            "",
+            "Ihr Beitrag wurde erfolgreich angelegt!"
+        );
+        // .then((res) => {
+        //     if (!res.ok) {
+        //         throw Error("Das Formular konnte nicht abgeschickt werden.");
+        //     }
+        //     fetchContributions();
+        //     handleAddAlert(
+        //         "success",
+        //         "",
+        //         "Ihr Beitrag wurde erfolgreich angelegt!"
+        //     );
+        // })
+        // .catch((error) => {
+        //     handleAddAlert("error", "Fehler", error.message);
+        // });
     };
 
     const handleRate = (rate, contributionId) => {
@@ -146,6 +158,11 @@ const Contributions = ({ handleAddAlert }) => {
 
     // setContributions([...contributions, newContribution]);
 
+    const openForm = (event) => {
+        event.preventDefault();
+        setVisible(true)
+    }
+
     return (
         <div className="contributions">
             <React.Fragment>
@@ -159,7 +176,7 @@ const Contributions = ({ handleAddAlert }) => {
                 {/* <NewContributionForm handleSubmitForm={handleSubmitNewContribution} /> */}
                 <div className="contributionsList">
                     {contributions.map((contribution, index) => {
-                        return <Contribution contribution={contribution} key={index} handleRate={handleRate} />;
+                        return <Contribution handleAddAlert={handleAddAlert} threadId={threadId} contribution={contribution} key={index} handleRate={handleRate} />;
                     })}
                 </div>
             </React.Fragment>

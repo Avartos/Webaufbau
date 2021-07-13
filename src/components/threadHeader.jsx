@@ -72,13 +72,13 @@ const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert }) => {
         </div>
       </div>
       <div className="body">
-        
+        <div className="statistics">
         <ThreadStatistics
           createdAt={thread[0].createdAt}
           numberOfPosts={thread[0].contributionCount}
           lastPoster={lastPoster}
           lastPostDate={lastPostDate}
-        />
+        /></div>
         <p className="shortDescription">{thread[0].content}</p>
       </div>
       <NewContributionForm handleAddContribution={handleAddContribution} />

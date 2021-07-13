@@ -9,9 +9,9 @@ import { useRef } from 'react';
 
 
 
-function Contribution({ contribution, handleRate, isReply = false }) {
+function Contribution({ contribution, handleRate, threadId, handleAddAlert, isReply = false }) {
 
-    const [count, setCount] = useState(0);
+    // const [count, setCount] = useState(0);
     const [reply, setReply] = useState(false);
     const [replies, setReplies] = useState(contribution.replies || []);
 
@@ -38,7 +38,6 @@ function Contribution({ contribution, handleRate, isReply = false }) {
                         setContributionText("");
                     }}
                 >
-
                     <textarea
                         required
                         value={contributionText}
@@ -47,7 +46,7 @@ function Contribution({ contribution, handleRate, isReply = false }) {
                         }}
                         placeholder="Gib deinen Beitrag zum Thema!"
                     ></textarea>
-                    <input type="file" style={{ display: "none" }} ref={input} onChange={onInputChange} accept="image/*" />
+                    {/* <input type="file" style={{ display: "none" }} ref={input} onChange={onInputChange} accept="image/*" /> */}
                     <div className="buttonArea">
                         <button className="discardContribution" onClick={onDiscard} type="button">Verwerfen</button>
                         {/* <button type="button" onClick={() => input.current.click()}>Anfügen</button> */}
@@ -58,13 +57,36 @@ function Contribution({ contribution, handleRate, isReply = false }) {
         )
     }
 
-    const handleSubmitForm = (e, contributionText, currentUser) => {
+    const handleSubmitForm = async (e, contributionText, currentUser) => {
         e.preventDefault();
+
+        const text = `@${contribution.creatorUserName} ${contributionText}`;
+
         let newContribution = {
             //id: nextId,
-            contributionText: contributionText,
-            contributorSquid: currentUser,
+            content: text,
+            creatorUserName: currentUser,
         }
+
+        const response = await fetch(`http://localhost:3001/api/contributions/${threadId}`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                accessToken: sessionStorage.getItem("accessToken"),
+            },
+            body: JSON.stringify({
+                contributionText: text
+            }),
+        });
+
+        if (!response.ok) {
+            return handleAddAlert("error", "Fehler", "Das Formular konnte nicht abgeschickt werden.");
+        }
+        handleAddAlert(
+            "success",
+            "",
+            "Ihr Beitrag wurde erfolgreich angelegt!"
+        );
 
         setReplies([...replies, newContribution]);
     }
@@ -81,7 +103,7 @@ function Contribution({ contribution, handleRate, isReply = false }) {
             <p className="body">{contribution.content}</p>
             <div className="counterOfLikes">
 
-                <button className="counterButton" onClick={() => handleRate(1, contribution.id)}> <RemoveIcon /> </button>
+                <button className="counterButton" onClick={() => handleRate(-1, contribution.id)}> <RemoveIcon /> </button>
                 <p>{contribution.actualRating}</p>
                 <button className="counterButton" onClick={() => handleRate(1, contribution.id)}> <AddIcon /> </button>
 
@@ -93,6 +115,8 @@ function Contribution({ contribution, handleRate, isReply = false }) {
                 {replies.map((reply) => {
                     return (
                         <Contribution
+                            handleAddAlert={handleAddAlert}
+                            threadId={threadId}
                             contribution={reply}
                             isReply={true}
                         />

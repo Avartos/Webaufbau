@@ -13,6 +13,9 @@
 .newContributionForm {
     @include contentCard($nCFHeaderColor, $nCFBodyColor);
 
+    padding-top: 30px;
+    width: 100%;
+
     textarea {
         margin: 5px;
         outline: none;
@@ -37,25 +40,24 @@
 
 }
 
-.descriptionThread {
-    @include contentCard($threadHeaderColor, $threadBodyColor);
 
-    header {
-        margin-left: 5px;
-    }
-
-    .statistics {
-        @include statistics;
-        display: flex;
-        float: right;
-        padding-right: 40px;
-        padding-bottom: 10px;
-    }
+.forumHeader {
 
     .body {
-        text-align: left;
-        width: 65%;
-        word-wrap: break-word;
+
+        .statistics {
+            @include statistics;
+            display: flex;
+            float: right;
+            padding-right: 40px;
+            padding-bottom: 10px;
+        }
+
+        .shortDescription {
+            text-align: left;
+            width: 65%;
+            word-wrap: break-word;
+        }
     }
 }
 
@@ -97,13 +99,13 @@
     top: 45px;
     background-color: #fefcfd00;
     color: $buttonColor;
-    height: 40px;
     padding-top: 20px;
 
-    // &hover {
-    //     color: $buttonHoverColor;
-    // }
-
+    &:hover {
+        background-color:rgba(0, 0, 0, 0);
+        color: $buttonHoverColor
+      }
+    
 }
 
 .counterOfLikes {
