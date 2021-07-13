@@ -11,9 +11,7 @@ const Forum = (props) => {
     <div className="forum">
       <div className="header">
         {console.log(props)}
-        <span className="title">
-          <Link to={`/threads/${props.id}`}>Forum: {helper.shortenString(props.name, config.shortenedTitleLength, '...')}</Link>
-        </span>
+          <Link className="title" to={`/threads/${props.id}`}>Forum: {helper.shortenString(props.name, config.shortenedTitleLength, '...')}</Link>
         <div className="wrapperButton">
           <SubscribeButton
             parentId={props.id}
