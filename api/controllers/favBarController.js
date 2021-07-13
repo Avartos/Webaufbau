@@ -42,6 +42,7 @@ const findFavorites = (req, res) => {
 }
 
 const findPopular = (req, res) => {
+    const limit = parseInt(req.query.limit);
     Thread.findAll({
         attributes: [
             'id',
@@ -59,7 +60,7 @@ const findPopular = (req, res) => {
             [Sequelize.fn('COUNT', 'contributions.id'), 'desc']
         ]
     }).then((data) => {
-        res.json(data.slice(0,5));
+        res.json(data.slice(0,limit));
     }).catch((error) => {
         console.error('Error:\t', error);
         res.sendStatus(500);

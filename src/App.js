@@ -124,7 +124,7 @@ function App() {
       fetchFavBarContent(`${config.serverPath}/api/favBar/favorites`, setFavouriteThreads);
     }
     fetchFavBarContent(`${config.serverPath}/api/favBar/latest?limit=5`, setLatestThreads);
-    fetchFavBarContent(`${config.serverPath}/api/favBar/popular`, setPopularThreads);
+    fetchFavBarContent(`${config.serverPath}/api/favBar/popular?limit=5`, setPopularThreads);
   }
   
   //loads all information into the favbar when website has been opened
