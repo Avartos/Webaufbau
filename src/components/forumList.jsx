@@ -43,25 +43,7 @@ const ForumList = ({handleAddAlert}) => {
     }
 
     const handleSubscribeForum = (id, isSubscribed) => {
-    /*    const subscribeMethod = isSubscribed ? "DELETE" : "POST";
-    
-        fetch(`http://localhost:3001/api/forum/subscriptions/${id}`, {
-          method: subscribeMethod,
-          headers: {
-            "Content-Type": "application/json",
-            accessToken: sessionStorage.getItem("accessToken"),
-          },
-        })
-          .then((req) => {
-            if (!req.ok) {
-              throw Error("Das Forum konnte nicht abonniert werden.");
-            }
-          })
-          .catch((error) => {
-            setError(error);
-            handleAddAlert("error", "Fehler", error.message);
-          });*/
-      };
+    };
 
     useEffect(fetchForums, []);
  
@@ -79,9 +61,9 @@ const ForumList = ({handleAddAlert}) => {
                             name={forum.name}
                             description={forum.description}
                             numberOfThreads={forum.numberOfThreads}
-                            numberOfComments={forum.numberOfComments}
+                            createdAt={forum.createdAt}
                             lastActivityFrom={forum.lastActivityFrom}
-                            lastActivityAt={forum.lastActivityAt}
+                            updatedAt={forum.updatedAt}
                             handleSubscribeForum={handleSubscribeForum}
                         />
                     );

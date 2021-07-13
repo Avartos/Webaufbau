@@ -9,7 +9,10 @@ const findAll = (req,res) => {
         attributes: [
             ['id','forumsID'],
             ['title','name'],
+            'createdAt',
+            'updatedAt',
             ['shortDescription','description'],
+
             [sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
         ],
         include: [{
@@ -85,22 +88,9 @@ const findByName = (req,res) => {
 
 // WIP
 const countThreads = (req, res) => {
-    Forum.findAll({
-        attributes: [
-            ['id','forumsID'],
-            ['title','name'],
-            ['shortDescription','description'],
-            [sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
-        ],
-        include: [{
-            model: Thread,
-            as: 'threads',
-            attributes: [
-                'id'
-            ]
-        }],
-        group: ['forumsId']
-    }).then((data) => {
+    Forum.findAll(
+
+    ).then((data) => {
         res.json(data);
     }).catch((error) => {
         console.error("Error:\t",error);
