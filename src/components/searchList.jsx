@@ -1,4 +1,4 @@
-import {useLocation} from 'react-router-dom'
+import {Link, useLocation} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import {CircularProgress} from "@material-ui/core";
 
@@ -80,12 +80,11 @@ const SearchList = () => {
                     return(
                         <React.Fragment>
                             <div className="searchList">
-                                <div>
-                                    {entry.title}
-                                </div>
-                                <div>
-                                    {/*{entry.content}*/}
-                                </div>
+                                <Link to={`${entry.link}`}>
+                                    <div>
+                                        {entry.title}
+                                    </div>
+                                </Link>
                             </div>
                         </React.Fragment>
                     )

@@ -273,6 +273,10 @@ const findByName = (req,res) => {
   const query = req.query.q;
   const queryArray = getQueryParametersMapped(query)
   Thread.findAll({
+    attributes: [
+      'title',
+      [Sequelize.fn("concat", "/contributions/",Sequelize.col('id')),'link']
+    ],
     where: {
       title:
           {

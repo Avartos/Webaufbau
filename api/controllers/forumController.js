@@ -72,6 +72,10 @@ const findByName = (req,res) => {
     const query = req.query.q;
     const queryArray = getQueryParametersMapped(query)
     Forum.findAll({
+        attributes: [
+            'title',
+            [sequelize.fn("concat", "/threads/",sequelize.col('id')),'link']
+        ],
         where: {
             title:
                 {
