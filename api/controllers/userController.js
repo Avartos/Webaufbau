@@ -185,6 +185,9 @@ const add = (req, res) => {
         where: {userName: user.userName}
     })
         .then((data) => {
+            /*
+            * Check for existing username
+            * */
                 if (data) {
                     console.error("Error:\t", `User ${user.userName} already exists!`);
                     res.sendStatus(418);
