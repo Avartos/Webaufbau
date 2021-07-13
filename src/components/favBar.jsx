@@ -3,10 +3,14 @@ import { ReactComponent as SplatIcon } from "../assets/icons/splat.svg";
 import FavThreadList from "./favThreadList";
 import { Link } from "react-router-dom";
 
+import config from "../core/config";
+import helper from "../core/helperFunctions";
+
 const FavBar = (props) => {
   const isLoggedIn = () => {
     return sessionStorage.getItem("accessToken");
   };
+  console.log(props.favouriteThreads);
 
   return (
     <React.Fragment>
@@ -40,9 +44,9 @@ const FavBar = (props) => {
             {props.popularThreads.map((thread) => {
               return (
                 <li className="favThread" key={`popular${thread.id}`}>
-                  <Link to={`/contributions/${thread.id}`}>
+                  <Link to={`/contributions/${thread.id}`} title={thread.title}>
                     <span>
-                      {thread.title +
+                      {helper.shortenString(thread.title, config.favBarStringLength-3, '...') +
                         " (" +
                         thread.contributionsCount +
                         ")"}
@@ -62,9 +66,9 @@ const FavBar = (props) => {
             {props.latestThreads.map((thread) => {
               return (
                 <li className="favThread" key={`latest${thread.id}`}>
-                  <Link to={`/contributions/${thread.id}`}>
+                  <Link to={`/contributions/${thread.id}`} title={thread.title}>
                     <span>
-                      {thread.title}
+                      {helper.shortenString(thread.title, config.favBarStringLength, '...')}
                     </span>
                   </Link>
                 </li>

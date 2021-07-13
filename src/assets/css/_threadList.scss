@@ -76,9 +76,11 @@
       }
 
       .shortDescription {
+        width: 90%;
         margin-bottom: 0px;
         margin-right: 25px;
         width: auto !important;
+        overflow-wrap: break-word;
         &::after {
           display: none !important;
         }

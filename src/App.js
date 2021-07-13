@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 
 
 import "./assets/css/app.scss";
+import config from'./core/config';
 
 // #region custom component imports
 //general components
@@ -112,10 +113,10 @@ function App() {
   //used to update the favbar when subscribing a new thread or logging in
   const handleUpdateFavbar = () => {
     if(isLoggedIn()) {
-      fetchFavBarContent('http://localhost:3001/api/favBar/favorites', setFavouriteThreads);
+      fetchFavBarContent(`${config.serverPath}/api/favBar/favorites`, setFavouriteThreads);
     }
-    fetchFavBarContent('http://localhost:3001/api/favBar/latest?limit=5', setLatestThreads);
-    fetchFavBarContent('http://localhost:3001/api/favBar/popular', setPopularThreads);
+    fetchFavBarContent(`${config.serverPath}/api/favBar/latest?limit=5`, setLatestThreads);
+    fetchFavBarContent(`${config.serverPath}/api/favBar/popular`, setPopularThreads);
   }
   
   //loads all information into the favbar when website has been opened

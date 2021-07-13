@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { CircularProgress } from "@material-ui/core";
 import classNames from "classnames";
+import config from "../core/config";
 
 /**
  * This component is used to provide the user a way to request a token from the backend to use the external squid api
@@ -20,7 +21,7 @@ const ApiTokenForm = ({ handleAddAlert }) => {
   const handleRequestToken = (e) => {
     e.preventDefault();
     const abortController = new AbortController();
-    fetch(`http://localhost:3001/api/foreign_api/generate`, {
+    fetch(`${config.serverPath}/api/foreign_api/generate`, {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",

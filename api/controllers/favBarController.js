@@ -20,7 +20,9 @@ const findFavorites = (req, res) => {
             attributes: [
                 'title',
                 'id',
+                
             ],
+            required: true,
             include: [{
                 model: SubscribedThread,
                 as: 'subscribedThreads',

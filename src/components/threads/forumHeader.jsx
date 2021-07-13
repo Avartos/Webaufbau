@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
 
+import config from '../../core/config';
+import helper from "../../core/helperFunctions";
+
 import SubscribeButton from "../subscribeButton";
 import NewThreadForm from "./newThreadForm";
 
@@ -44,7 +47,7 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
   const handleSubscribeForum = (id) => {
     const subscribeMethod = isSubscribed ? "DELETE" : "POST";
     console.log(isSubscribed);
-    fetch(`http://localhost:3001/api/forums/subscriptions/${id}`, {
+    fetch(`${config.serverPath}/api/forums/subscriptions/${id}`, {
       method: subscribeMethod,
       headers: {
         "Content-Type": "application/json",
@@ -65,7 +68,7 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
   return (
     <div className="forumHeader">
       <div className="header">
-        <h2 className="title">{forum.title}</h2>
+        <h2 className="title">{helper.shortenString(forum.title, config.shortenedTitleLength, '...')}</h2>
         <div className="wrapperButton">
           {sessionStorage.getItem("accessToken") && (
             <SubscribeButton

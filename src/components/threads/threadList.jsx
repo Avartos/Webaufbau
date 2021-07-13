@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
+import config from "../../core/config";
+
 import Thread from "./thread";
 import LoadingCircle from "../loadingCircle";
 import ForumHeader from "./forumHeader";
@@ -17,6 +19,7 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
   const [threads, setThreads] = useState();
   // used to check if the fetch is in progress
   const [isPending, setIsPending] = useState(true);
+  const [forumIsPending, setForumIsPending] = useState(true);
   // used to store fetch errors inside, null if there were no fetch errors
   const [error, setError] = useState(null);
 
@@ -28,14 +31,17 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
   const fetchThreads = () => {
     //used to stop fetching when forcing reload
     const abortController = new AbortController();
-    fetch(`http://localhost:3001/api/threads/all/${forumId}?orderBy=updatedAt&order=desc`, {
-      signal: abortController.signal,
-      headers: {
-        "Content-Type": "application/json",
-        // undefined, if the user is not looged in
-        accessToken: sessionStorage.getItem("accessToken"),
-      },
-    })
+    fetch(
+      `${config.serverPath}/api/threads/all/${forumId}?orderBy=updatedAt&order=desc`,
+      {
+        signal: abortController.signal,
+        headers: {
+          "Content-Type": "application/json",
+          // undefined, if the user is not looged in
+          accessToken: sessionStorage.getItem("accessToken"),
+        },
+      }
+    )
       .then((res) => {
         if (!res.ok) {
           throw Error(
@@ -64,7 +70,7 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
   const fetchForum = () => {
     //used to stop fetching when forcing reload
     const abortController = new AbortController();
-    fetch(`http://localhost:3001/api/forums/${forumId}`, {
+    fetch(`${config.serverPath}/api/forums/${forumId}`, {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",
@@ -82,7 +88,7 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
       })
       .then((data) => {
         setForum(data);
-        setIsPending(false);
+        setForumIsPending(false);
         setError(null);
       })
       .catch((error) => {
@@ -91,7 +97,7 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
         } else {
           handleAddAlert("error", "Fehler", "Fehler beim laden des Forums.");
           setError(error.message);
-          setIsPending(false);
+          setForumIsPending(false);
         }
       });
     return () => console.log(abortController.abort());
@@ -106,7 +112,7 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
   const handleSubscribeThread = (id, isSubscribed) => {
     const subscribeMethod = isSubscribed ? "DELETE" : "POST";
 
-    fetch(`http://localhost:3001/api/threads/subscriptions/${id}`, {
+    fetch(`${config.serverPath}/api/threads/subscriptions/${id}`, {
       method: subscribeMethod,
       headers: {
         "Content-Type": "application/json",
@@ -159,7 +165,7 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
       content: body,
     };
 
-    fetch(`http://localhost:3001/api/threads/${forumId}`, {
+    fetch(`${config.serverPath}/api/threads/${forumId}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -189,11 +195,13 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
 
   return (
     <React.Fragment>
-      <ForumHeader
-        forum={forum}
-        handleSubmitNewThread={handleSubmitNewThread}
-        handleAddAlert={handleAddAlert}
-      ></ForumHeader>
+      {!forumIsPending && (
+        <ForumHeader
+          forum={forum}
+          handleSubmitNewThread={handleSubmitNewThread}
+          handleAddAlert={handleAddAlert}
+        ></ForumHeader>
+      )}
 
       <div className="threadList">
         <LoadingCircle

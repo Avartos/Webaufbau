@@ -4,6 +4,9 @@ import classNames from "classnames";
 import ArrowForwardIosIcon from "@material-ui/icons/ArrowForwardIos";
 import { Link } from "react-router-dom";
 
+import config from "../core/config";
+import helper from "../core/helperFunctions";
+
 const FavThreadList = ({ forum }) => {
   const [threadListHeight, setThreadListHeight] = useState(0);
   const threadListRef = React.useRef(null);
@@ -28,7 +31,7 @@ const FavThreadList = ({ forum }) => {
       <li className="favForum">
         <span onClick={handleToggleUnfolded}>
           <ArrowForwardIosIcon className={dropDownClass} />
-          <span className="forumTitle">{forum.title}</span>
+          <span className="forumTitle" title={forum.title}>{helper.shortenString(forum.title, config.favBarStringLength, '...')}</span>
         </span>
         <div style={{ height: threadListHeight }}>
           <CSSTransition
@@ -43,8 +46,8 @@ const FavThreadList = ({ forum }) => {
               {forum.threads.map((thread) => {
                 return (
                   <li className="favThread" key={`favThread${thread.id}`}>
-                    <Link to={`/contributions/${thread.id}`}>
-                      <span>{thread.title}</span>
+                    <Link to={`/contributions/${thread.id}`} title={thread.title}>
+                      <span>{helper.shortenString(thread.title, config.favBarStringLength, '...')}</span>
                     </Link>
                   </li>
                 );

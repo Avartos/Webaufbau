@@ -4,6 +4,9 @@ import { Link } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
 import { ReactComponent as EditIcon } from "../../assets/icons/pencil.svg";
 
+import helper from '../../core/helperFunctions';
+import config from '../../core/config';
+
 import PreviewList from "./previewList";
 import SubscribeButton from "../subscribeButton";
 import ThreadStatistics from "./threadStatistics";
@@ -55,7 +58,7 @@ const Thread = (props) => {
     const abortController = new AbortController();
     setIsPending(true);
     fetch(
-      `http://localhost:3001/api/contributions/all/${props.thread.id}?limit=${contributionLimit}&offset=0&orderBy=createdAt&order=desc`,
+      `${config.serverPath}/api/contributions/all/${props.thread.id}?limit=${contributionLimit}&offset=0&orderBy=createdAt&order=desc`,
       {
         signal: abortController.signal,
         headers: {
@@ -121,7 +124,7 @@ const Thread = (props) => {
       title: title,
       content: body,
     };
-    fetch(`http://localhost:3001/api/threads/`, {
+    fetch(`${config.serverPath}/api/threads/`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -156,8 +159,8 @@ const Thread = (props) => {
     <div className="thread">
       <div className="header">
         {!isEditMode && (
-          <Link className="title" to={`/contributions/${props.thread.id}`}>
-            {props.thread.title}
+          <Link className="title" to={`/contributions/${props.thread.id}`} title={props.thread.title}>
+            {helper.shortenString(props.thread.title, config.shortenedTitleLength, '...')}
           </Link>
         )}
         {isEditMode && (
@@ -193,7 +196,7 @@ const Thread = (props) => {
       </div>
       <div className="body">
         {!isEditMode && (
-          <p className="shortDescription">{props.thread.content}</p>
+          <p className="shortDescription">{helper.shortenString(props.thread.content, config.shortenedDescriptionLength, '...')}</p>
         )}
         {isEditMode && (
           <div className="shortDescription">
