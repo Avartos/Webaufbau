@@ -15,7 +15,8 @@ const SearchBar = (props) => {
   const handleSubmit = (e) => {
       e.preventDefault();
       const encodedURISearch = encodeURI(search);
-      history.push({pathname: `/search`, search:'q='+encodedURISearch})
+      props.handleSearch(encodedURISearch);
+      history.push({pathname: `/search`, search:'q='+encodedURISearch});
   }
 
   return (

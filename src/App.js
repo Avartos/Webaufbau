@@ -78,6 +78,13 @@ function App() {
   const [favouriteThreads, setFavouriteThreads] = useState([]);
   const [popularThreads, setPopularThreads] = useState([]);
   const [latestThreads, setLatestThreads] = useState([]);
+  const [searchThreadResults, setSearchThreadResults] = useState([]);
+  const [searchForumResults, setSearchForumResults] = useState([]);
+
+  const handleSearch = (query) => {
+      fetchFavBarContent(`${config.serverPath}/api/threads/search?q=${query}`, setSearchThreadResults)
+      fetchFavBarContent(`${config.serverPath}/api/forums/search?q=${query}`, setSearchForumResults)
+  }
 
   const fetchFavBarContent = (targetUrl, targetSetter) => {
       //used to stop fetching when forcing reload
@@ -127,11 +134,11 @@ function App() {
   return (
     <Router>
       <div className="App">
-        <NavBar profilePicturePath={currentProfilePicture}/>
+        <NavBar profilePicturePath={currentProfilePicture} handleSearch={handleSearch}/>
         
         <FavBar favouriteThreads={favouriteThreads} latestThreads={latestThreads} popularThreads={popularThreads}/>
         <div className="content">
-        <SearchBar isMobile={true}/>
+        <SearchBar isMobile={true} handleSearch={handleSearch}/>
           <AlertList messages={alerts} handleRemoveAlert={handleRemoveAlert} />
           <Switch>
             {/* Forum Routes */}
@@ -154,7 +161,7 @@ function App() {
             {isLoggedIn() &&
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
 
-            <Route exact path="/search"><SearchList/></Route>
+            <Route exact path="/search"><SearchList searchForumResults={searchForumResults} searchThreadResults={searchThreadResults}/></Route>
             {/* 404 */}
             <Route path="/">
               <h1>Error 404: Page not found</h1>

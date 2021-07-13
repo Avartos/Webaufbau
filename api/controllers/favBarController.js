@@ -59,7 +59,7 @@ const findPopular = (req, res) => {
             [Sequelize.fn('COUNT', 'contributions.id'), 'desc']
         ]
     }).then((data) => {
-        res.json(data);
+        res.json(data.slice(0,5));
     }).catch((error) => {
         console.error('Error:\t', error);
         res.sendStatus(500);

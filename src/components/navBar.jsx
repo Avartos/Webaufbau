@@ -70,7 +70,7 @@ const NavBar = (props) => {
           <img className="websiteLogo" src={LogoIcon} alt="" />
           {/* <LogoIcon className="websiteLogo" /> */}
         </Link>
-        <SearchBar />
+        <SearchBar handleSearch={props.handleSearch}/>
       </nav>
     </React.Fragment>
   );
