@@ -77,9 +77,9 @@ const ForumList = ({handleAddAlert}) => {
                             name={forum.name}
                             description={forum.description}
                             numberOfThreads={forum.numberOfThreads}
-                            numberOfComments={forum.numberOfComments}
+                            createdAt={forum.createdAt}
                             lastActivityFrom={forum.lastActivityFrom}
-                            lastActivityAt={forum.lastActivityAt}
+                            updatedAt={forum.updatedAt}
                             handleSubscribeForum={handleSubscribeForum}
                         />
                     );

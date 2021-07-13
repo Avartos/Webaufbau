@@ -21,9 +21,9 @@ const Forum = (props) => {
                         <p className="shortDescription">{props.description}</p>
                         <ForumStatictics 
                             numberOfThreads={props.numberOfThreads}
-                            numberOfComments={props.numberOfComments}
+                            createdAt={props.createdAt}
                             lastActivityFrom={props.lastActivityFrom}
-                            lastActivityAt={props.lastActivityAt}/>
+                            updatedAt={props.updatedAt}/>
                     </div>
                 </div>
         );
