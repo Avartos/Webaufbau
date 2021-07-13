@@ -5,13 +5,11 @@ const SubscribedForum = require('../models/subscribedForum');
 const Thread = require('../models/thread');
 
 const findAll = (req,res) => {
-    Forum.findAll(
-        {attributes: [
-            'id',
-            [sequelize.col('title'), 'name'],
-            [sequelize.col('shortDescription'), 'description'],
-            'createdAt',
-            'updatedAt',
+    Forum.findAll({
+        attributes: [
+            ['id','forumsID'],
+            ['title','name'],
+            ['shortDescription','description'],
             [sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
         ],
         include: [{
@@ -21,20 +19,13 @@ const findAll = (req,res) => {
                 'id'
             ]
         }],
-        group: ['forumsId'],
-        include: [{
-            model: SubscribedForum,
-            as: 'subscribedForums'
-        }]}
-    )
-
-        .then(data => {
-            res.json(data);
-        })
-        .catch(error => {
-            console.log('Error:\t', error);
-            res.sendStatus(500);
-        })
+        group: ['forumsId']
+    }).then((data) => {
+        res.json(data);
+    }).catch((error) => {
+        console.error("Error:\t",error);
+        res.sendStatus(500);
+    })
 }
 
 const findOne = (req, res) => {
@@ -93,8 +84,9 @@ const countThreads = (req, res) => {
     Forum.findAll({
         attributes: [
             ['id','forumsID'],
-            ['title','forumTitle'],
-            [sequelize.fn('COUNT', 'threads.id'), 'threadCount']
+            ['title','name'],
+            ['shortDescription','description'],
+            [sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
         ],
         include: [{
             model: Thread,
