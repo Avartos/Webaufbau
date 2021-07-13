@@ -43,7 +43,32 @@ const ForumList = ({handleAddAlert}) => {
     }
 
     const handleSubscribeForum = (id, isSubscribed) => {
-    };
+        const subscribeMethod = isSubscribed ? "DELETE" : "POST";
+    
+        fetch(`${config.serverPath}/api/forums/subscriptions/${id}`, {
+          method: subscribeMethod,
+          headers: {
+            "Content-Type": "application/json",
+            accessToken: sessionStorage.getItem("accessToken"),
+          },
+        })
+          .then((req) => {
+            if (!req.ok) {
+              throw Error("Das Forum konnte nicht abonniert werden.");
+            }
+            let updatedForums = forums;
+            console.log(updatedForums);
+            const index = updatedForums.findIndex((forum) => forum.forumsID === id);
+            updatedForums[index].subscriptionUsersId = updatedForums[index]
+              .subscriptionUsersId
+              ? null
+              : true;
+            setForums([...updatedForums]);
+          })
+          .catch((error) => {
+            handleAddAlert("error", "Fehler", error.message);
+          });
+      };
 
     useEffect(fetchForums, []);
  
@@ -65,6 +90,7 @@ const ForumList = ({handleAddAlert}) => {
                             lastActivityFrom={forum.lastActivityFrom}
                             updatedAt={forum.updatedAt}
                             handleSubscribeForum={handleSubscribeForum}
+                            subscriptionUsersId={forum.subscriptionUsersId}
                         />
                     );
             	})}
