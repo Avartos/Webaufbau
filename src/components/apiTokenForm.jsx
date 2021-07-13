@@ -9,9 +9,9 @@ import config from "../core/config";
  * @returns
  */
 const ApiTokenForm = ({ handleAddAlert }) => {
-  const [token, setToken] = useState(null);
+  const [token, setToken] = useState('');
 
-  const [isPending, setIsPending] = useState(null);
+  const [isPending, setIsPending] = useState(false);
 
   //used to set the class name of the button to hide the text, when loading
   const tokenButtonClass = classNames({
@@ -21,7 +21,7 @@ const ApiTokenForm = ({ handleAddAlert }) => {
   const handleRequestToken = (e) => {
     e.preventDefault();
     const abortController = new AbortController();
-    fetch(`${config.serverPath}/api/foreign_api/generate`, {
+    fetch(`${config.serverPath}/api/apiToken`, {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",
@@ -71,7 +71,7 @@ const ApiTokenForm = ({ handleAddAlert }) => {
         <button
           class={tokenButtonClass}
           onClick={handleRequestToken}
-          disabled={token != null}
+          disabled={token !== ''}
         >
           Token Anfordern
           {isPending && !token && (

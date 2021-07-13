@@ -21,8 +21,8 @@ const apiTokenRoutes = require('./routes/apiTokenRoutes');
 // #endregion
 
 //jsonwebtoken
-const jwt = require('jsonwebtoken');
-const sequelize = require('./config/connection');
+// const jwt = require('jsonwebtoken');
+// const sequelize = require('./config/connection');
 
 //set up express app
 const app = express();

@@ -3,7 +3,7 @@ const config = {
     numberOfThreads: 5,
     numberOfContributionPreviews: 5,
     shortenedDescriptionLength: 250,
-    shortenedTitleLength: 25,
+    shortenedTitleLength: 50,
     favBarStringLength: 20,
 };
 

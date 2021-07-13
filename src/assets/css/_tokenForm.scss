@@ -18,11 +18,17 @@
 
     button {
       position: relative;
-        padding: 15px;
+      padding: 15px;
       font-size: 1.1em;
       border-radius: 5px;
       display: block;
       margin: 15px auto;
+      @include basicButton(
+      white,
+      $buttonColor,
+      $buttonHoverColor,
+      $buttonPressedColor
+    );
       transition: color ease-in-out .2s;
 
       &.isLoading {
