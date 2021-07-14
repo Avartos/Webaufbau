@@ -8,13 +8,43 @@
   @include contentCard($threadHeaderColor, $threadBodyColor);
   width: 100%;
   .header {
+    margin: auto auto;
     .title {
+      position: absolute;
+      left: 50%;
+      transform: translate(-50%, 0);
       text-align: center !important;
+      font-size: 1em;
     }
   }
 
   .body {
     text-align: justify;
+  }
+
+  .wrapperReturn {
+    position: absolute;
+    height: $threadHeaderSize;
+    width: $threadHeaderSize;
+    padding: 5px;
+    padding-left: 15px;
+    img {
+      margin: auto;
+      height: 60%;
+      &:active {
+        height: 40%;
+      }
+      &:hover {
+        filter: grayscale(100%) brightness(40%) sepia(100%) hue-rotate(-50deg)
+          saturate(600%) contrast(0.8);
+      }
+      transition: ease-in-out 0.2s;
+    }
+    
+
+    
+
+    
   }
 
   .wrapperForm {
@@ -45,7 +75,6 @@
 
 /* #region threads*/
 .thread {
-
   @include contentCard($threadHeaderColor, $threadBodyColor);
   transition: ease-in-out 0.2s;
 
@@ -188,8 +217,6 @@
     }
   }
 }
-
-
 
 /* #region threadHeader */
 

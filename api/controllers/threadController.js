@@ -16,6 +16,7 @@ const threadCondition = (userId) => {return {
     //reformats the date
     [Sequelize.fn('date_format', Sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
     'usersId',
+    'forumsId',
     //get the username from the included table
     [Sequelize.col('user.userName'), 'creatorUserName'],
     //get the user id from the subscribed thread include

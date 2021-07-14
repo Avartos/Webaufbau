@@ -2,10 +2,6 @@ import React, { useState } from "react";
 import ReplyIcon from "@material-ui/icons/Reply";
 import RemoveIcon from "@material-ui/icons/Remove";
 import AddIcon from "@material-ui/icons/Add";
-import { Create } from "@material-ui/icons";
-import CreatedContribution from "./createContribution";
-import Contributions from "./contributions";
-import { useRef } from "react";
 import config from "../core/config";
 import ProfilePicture from "./profilePicture";
 import classNames from "classnames";
@@ -157,7 +153,6 @@ function Contribution({
               onClick={handleToggleEditMode}
               title="bearbeiten"
             ></EditIcon>
-            {/* <CreateIcon ></CreateIcon> */}
           </div>
         )}
         <p className="title">Von: {contribution.creatorUserName}</p>

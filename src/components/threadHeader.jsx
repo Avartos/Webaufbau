@@ -1,10 +1,17 @@
 import React, { useState, useEffect } from "react";
 import ThreadStatistics from "./threads/threadStatistics";
 import NewContributionForm from "./createContribution";
+import ReturnIcon from "../assets/icons/returnIcon.svg";
+import { Link } from "react-router-dom";
 
 import SubscribeButton from "./subscribeButton";
 
-const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert, handleUpdateFavbar }) => {
+const ThreadHeader = ({
+  thread,
+  handleAddContribution,
+  handleAddAlert,
+  handleUpdateFavbar,
+}) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   const [lastPostDate, setLastPostDate] = useState(thread[0].createdAt);
@@ -35,7 +42,7 @@ const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert, handleUpd
   };
 
   useEffect(() => {
-    console.log('Thread', thread);
+    console.log("Thread", thread);
     if (thread.length > 0 && thread[0].subscriptionUsersId !== null) {
       setIsSubscribed(true);
     } else {
@@ -58,7 +65,7 @@ const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert, handleUpd
           throw Error("Das Forum konnte nicht abonniert werden.");
         }
         setIsSubscribed(!isSubscribed);
-        handleUpdateFavbar()
+        handleUpdateFavbar();
       })
       .catch((error) => {
         handleAddAlert("error", "Fehler", error.message);
@@ -80,15 +87,29 @@ const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert, handleUpd
             />
           )}
         </div>
+        <Link to={`/threads/${thread[0].forumsId}`} className="wrapperReturn" title="Zurück zum Forum">
+            {console.log(`/threads/${thread[0].forumsId}`)}
+            <img src={ReturnIcon} />
+        </Link>
+        <div className="wrapperButton">
+          {sessionStorage.getItem("accessToken") && (
+            <SubscribeButton
+              parentId={thread.id}
+              isSubscribed={isSubscribed}
+              handleSubscribe={handleSubscribeThread}
+            />
+          )}
+        </div>
       </div>
       <div className="body">
         <div className="statistics">
-        <ThreadStatistics
-          createdAt={thread[0].createdAt}
-          numberOfPosts={thread[0].contributionCount}
-          lastPoster={lastPoster}
-          lastPostDate={lastPostDate}
-        /></div>
+          <ThreadStatistics
+            createdAt={thread[0].createdAt}
+            numberOfPosts={thread[0].contributionCount}
+            lastPoster={lastPoster}
+            lastPostDate={lastPostDate}
+          />
+        </div>
         <p className="shortDescription">{thread[0].content}</p>
       </div>
       <NewContributionForm handleAddContribution={handleAddContribution} />
