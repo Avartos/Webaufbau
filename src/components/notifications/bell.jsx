@@ -80,7 +80,7 @@ const Bell = (props) => {
     const interval = setInterval(() => {
       fetchForumNotifications();
       fetchThreadNotifications();
-    }, 300000);
+    }, 5000);
   }, []);
 
   const updateNotification = (url, targetFetch) => {

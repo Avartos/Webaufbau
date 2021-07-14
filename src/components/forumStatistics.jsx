@@ -1,5 +1,10 @@
 import React from 'react';
 
+/**
+ * This component is used to display forum information in table-form (without native table tag)
+ * @param {*} props 
+ * @returns 
+ */
 const ForumStatictics = (props) => {
         return (  
             <div className="forumStatistics">
