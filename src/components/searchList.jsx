@@ -8,7 +8,7 @@ const SearchList = (props) => {
     const [result, setResult] = useState([]);
 
     useEffect(() => {
-        setResult([...props.searchThreadResults, ...props.searchForumResults])
+        setResult([...props.searchForumResults, ...props.searchThreadResults])
 
     },[props])
 

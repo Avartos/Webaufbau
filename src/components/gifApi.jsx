@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 
 const GifApi = () => {
 
@@ -14,7 +14,7 @@ const GifApi = () => {
     const [gif, setGif] = useState('');
 
     // url Async requesting function
-    function httpGetAsync(theUrl, callback)
+    const httpGetAsync = (theUrl, callback) =>
     {
         // create the request object
         var xmlHttp = new XMLHttpRequest();
@@ -38,13 +38,13 @@ const GifApi = () => {
     };
 
     // get a random number between 0 and max-1
-    function getRandomNumber(max)
+    const getRandomNumber = (max) =>
     {
         return Math.floor(Math.random() * max);
     };
 
     // callback for the top 8 GIFs of search
-    function tenorCallback_search(responsetext)
+    const tenorCallback_search = (responsetext) =>
     {
         // parse the json response
         let response_objects = JSON.parse(responsetext);
@@ -64,25 +64,29 @@ const GifApi = () => {
 
 
     // function to call the trending and category endpoints
-    function grab_data()
+    const grab_data = () =>
     {
-        setIsPending(false);
-        let randomNumber = getRandomNumber(searchWords.length);
-        console.log("Wordlenght " + randomNumber);
+        if(isPending) {
+            setIsPending(false);
+            let randomNumber = getRandomNumber(searchWords.length);
+            console.log("Wordlenght " + randomNumber);
 
-        // test search term
-        let search_term = searchWords[randomNumber];
-        console.log(searchWords[randomNumber]);
+            // test search term
+            let search_term = searchWords[randomNumber];
+            console.log(searchWords[randomNumber]);
 
-        // using default locale of en_US
-        let search_url = "https://g.tenor.com/v1/search?q=" + search_term + "&key=" +
-            apikey + "&limit=" + limit;
+            // using default locale of en_US
+            let search_url = "https://g.tenor.com/v1/search?q=" + search_term + "&key=" +
+                apikey + "&limit=" + limit;
 
-        httpGetAsync(search_url,tenorCallback_search);
+            httpGetAsync(search_url, tenorCallback_search);
 
-        // data will be loaded by each call's callback
-        return;
+            // data will be loaded by each call's callback
+            return;
+        }
     };
+
+    useEffect(grab_data)
 
     
 
@@ -90,7 +94,6 @@ const GifApi = () => {
     return(
         <React.Fragment>
             <div className="gifApi">
-                {grab_data()}
                 <img id="preview_gif" src={gif} alt=""/>
             </div>
         </React.Fragment>
