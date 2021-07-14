@@ -213,7 +213,7 @@ const Thread = (props) => {
           />
         )}
         {props.thread.isEditable && (
-          <div className="wrapperButton">
+          <div className="wrapperEdit">
             <EditIcon
               className="editButton"
               onClick={handleToggleEditMode}

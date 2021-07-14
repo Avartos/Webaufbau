@@ -92,10 +92,15 @@
   }
 
   .header {
+    position: relative;
     input {
       border: 1px solid black;
+      margin-right: 75px !important;
+      flex-grow: 0 !important;
       border-radius: 5px;
       font-size: 1em;
+      width: 100%;
+      // width: 80%;
     }
     .title {
       cursor: pointer;
@@ -256,12 +261,18 @@
     }
   }
 }
-
-.editButton {
-  margin: auto auto;
-  padding-top: 5px;
-  @include squaredButton($threadHeaderSize, 2, 0.5);
+.wrapperEdit{
+  position: absolute;
+  right: 50px;
+  top: -13px;
+  
+  .editButton {
+    margin: auto auto;
+    padding-top: 5px;
+    @include squaredButton($threadHeaderSize, 2, 0.5);
+  }
 }
+
 
 .loadMoreButton {
   @include basicButton(

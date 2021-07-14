@@ -120,6 +120,10 @@
   .header {
     margin-left: 55px;
     font-weight: bold;
+    &:hover {
+      color: black !important;
+      cursor: initial !important;
+    }
   }
 }
 

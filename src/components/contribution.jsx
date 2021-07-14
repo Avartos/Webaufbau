@@ -16,6 +16,7 @@ function Contribution({
   handleSubmitContribution,
   isReply = false,
   isReplyButtonVisible = true,
+  isEditable = true,
 }) {
   // const [count, setCount] = useState(0);
   const [reply, setReply] = useState(false);
@@ -146,7 +147,7 @@ function Contribution({
         <ProfilePicture path={contribution.picturePath} />
       </div>
       <div className="header">
-        {contribution.isEditable && (
+        {contribution.isEditable && isEditable && (
           <div className="wrapperButton">
             <EditIcon
               className="editButton"

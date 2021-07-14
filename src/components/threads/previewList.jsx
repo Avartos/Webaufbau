@@ -16,6 +16,7 @@ const PreviewList = ({ contributions, handleRate }) => {
             contribution={contribution}
             isReplyButtonVisible={false}
             handleRate={handleRate}
+            isEditable={false}
           ></Contribution>
         );
       })}
