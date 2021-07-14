@@ -4,7 +4,7 @@ import NewContributionForm from "./createContribution";
 
 import SubscribeButton from "./subscribeButton";
 
-const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert }) => {
+const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert, handleUpdateFavbar }) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
 
   const [lastPostDate, setLastPostDate] = useState(thread[0].createdAt);
@@ -34,6 +34,15 @@ const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert }) => {
     return sessionStorage.getItem("accessToken") != null;
   };
 
+  useEffect(() => {
+    console.log('Thread', thread);
+    if (thread.length > 0 && thread[0].ubscriptionUsersId !== null) {
+      setIsSubscribed(true);
+    } else {
+      setIsSubscribed(false);
+    }
+  }, [thread]);
+
   const handleSubscribeThread = (id) => {
     const subscribeMethod = isSubscribed ? "DELETE" : "POST";
     console.log(isSubscribed);
@@ -49,6 +58,7 @@ const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert }) => {
           throw Error("Das Forum konnte nicht abonniert werden.");
         }
         setIsSubscribed(!isSubscribed);
+        handleUpdateFavbar()
       })
       .catch((error) => {
         handleAddAlert("error", "Fehler", error.message);

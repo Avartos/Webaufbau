@@ -146,7 +146,7 @@ function App() {
             {isLoggedIn() && <Route exact path="(/login|/registration)"><ForumList handleAddAlert={handleAddAlert}/></Route>}
             <Route exact path="/"><ForumList handleAddAlert={handleAddAlert}/></Route>
             <Route exact path="/threads/:forumId"><ThreadList handleAddAlert={handleAddAlert} handleUpdateFavbar={handleUpdateFavbar} /></Route>
-            <Route exact path="/contributions/:threadId"><Contributions handleAddAlert={handleAddAlert} /></Route>
+            <Route exact path="/contributions/:threadId"><Contributions handleAddAlert={handleAddAlert} handleUpdateFavbar={handleUpdateFavbar}/></Route>
             
             {/* Login Routes */}
             {!isLoggedIn() &&

@@ -6,7 +6,7 @@ import NewContributionForm from "./createContribution";
 import { useEffect } from "react";
 import ThreadHeader from "./threadHeader";
 
-const Contributions = ({ handleAddAlert }) => {
+const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
     const [contributions, setContributions] = useState([]);
     const [thread, setThread] = useState(null);
     const { threadId } = useParams("threadId");
@@ -176,6 +176,8 @@ const Contributions = ({ handleAddAlert }) => {
                         thread={thread}
                         handleAddContribution={handleAddContribution}
                         handleAddAlert={handleAddAlert}
+                        handleUpdateFavbar={handleUpdateFavbar}
+                        fetchThreadHeader={fetchThreadHeader}
                     />
                 )}
                 {/* <NewContributionForm handleSubmitForm={handleSubmitNewContribution} /> */}
