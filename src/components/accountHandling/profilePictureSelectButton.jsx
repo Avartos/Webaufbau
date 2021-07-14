@@ -74,6 +74,7 @@ const ProfilePictureSelectButton = (props) => {
         //makes sure to send the update to the navbar
         props.handleUpdateProfilePicture();
         setIsPending(false);
+        setIsUnfolded(false);
       })
       .catch((error) => {
         if (error.name === "AbortError") {
