@@ -5,9 +5,9 @@ const GifApi = (prop) => {
     // set words to search for
     const searchWords = prop.searchList;
     // set the apikey and limit
-    const [apikey, setApikey] = useState("OUXM9BQB1TTQ");
+    const apikey = "OUXM9BQB1TTQ";
 
-    const [limit, setLimit] = useState(10);
+    const limit = 10;
 
     const [isPending, setIsPending] = useState(true);
 
@@ -22,7 +22,7 @@ const GifApi = (prop) => {
         // set the state change callback to capture when the response comes in
         xmlHttp.onreadystatechange = function()
         {
-            if (xmlHttp.readyState == 4 && xmlHttp.status == 200)
+            if (xmlHttp.readyState === 4 && xmlHttp.status === 200)
             {
                 callback(xmlHttp.responseText);
             }
