@@ -15,6 +15,7 @@ const ProfileButton = (props) => {
         <div
           className="profileDropDownButton"
           onClick={() => props.handleToggleUnfold()}
+          title={sessionStorage.getItem('userName')}
         >
           <img
             src={`${config.serverPath}/profile_pictures/${props.profilePicturePath}`}

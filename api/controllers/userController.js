@@ -121,6 +121,7 @@ const findOneByName = (req, res) => {
                             accessToken: accessToken,
                             profilePicturePath: user.profilePicturePath,
                             isAdmin: user.isAdmin,
+                            userName: user.userName,
                         }
                         res.json(tokenObject);
                     })

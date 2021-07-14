@@ -35,7 +35,7 @@ const ProfileDropDown = (props) => {
       >
         <div ref={profileOptionsRef}>
           <div className="header">
-            <span>Profiloptionen</span>
+            <span>Hallo @{sessionStorage.getItem('userName')}!</span>
           </div>
           <div className="body">
             <Link to="/my_profile">

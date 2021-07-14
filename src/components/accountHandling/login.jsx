@@ -34,6 +34,7 @@ const Login = ({ handleAddAlert, handleUpdateProfilePicture, handleUpdateFavbar 
         sessionStorage.setItem("accessToken", data.accessToken);
         sessionStorage.setItem('profilePicture', data.profilePicturePath);
         sessionStorage.setItem('isAdmin', data.isAdmin);
+        sessionStorage.setItem('userName', data.userName);
         handleAddAlert(
           "success",
           "Hallo",
