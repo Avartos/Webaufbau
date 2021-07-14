@@ -14,24 +14,29 @@ const SearchList = (props) => {
 
     return (
         <div>
-            {console.log(result)}
             {
+                result.length === 0 &&(
+                            <span className="searchList">
+                                Kein Forum/Thread gefunden :'(
+                            </span>
+                        )}
+                        {
                 result.map((entry => {
-                    return(
+                    return (
                         <React.Fragment>
-                                <Link to={`${entry.link}`} className="searchList">
-                                    <div className="inner">
-                                        <div className="flag">
-                                            {entry.flag}
-                                        </div>
-                                        <div className="title">
-                                            {entry.title}
-                                        </div>
+                            <Link to={`${entry.link}`} className="searchList">
+                                <div className="inner">
+                                    <div className="flag">
+                                        {entry.flag}
                                     </div>
-                                </Link>
+                                    <div className="title">
+                                        {entry.title}
+                                    </div>
+                                </div>
+                            </Link>
                         </React.Fragment>)
-                }))
-            }
+                }))}
+
         </div>
     )
 }

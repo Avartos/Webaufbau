@@ -10,7 +10,6 @@ const FavBar = (props) => {
   const isLoggedIn = () => {
     return sessionStorage.getItem("accessToken");
   };
-  console.log(props.favouriteThreads);
 
   return (
     <React.Fragment>
