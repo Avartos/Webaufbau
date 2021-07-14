@@ -4,6 +4,34 @@
 @import "./mixins/statistics";
 
 
+.pictureWrapper {
+    position: absolute;
+    top: 5px;
+    left: 15px;
+
+
+    .profilePicture {
+        position: relative;
+        height: 50px;
+
+        .frame {
+            height: 100%;
+            position: absolute;
+            z-index: 1;
+            overflow: hidden;
+            border-radius: 25px;
+        }
+        
+        .image {
+            height: 70%;
+            position: absolute;
+            z-index: 0;
+            left: 50%;
+            top: 50%;
+            transform: translate(20%, -50%);
+        }
+    }
+}
 
 .addContribution {
     width: 100%;
@@ -13,7 +41,6 @@
 .newContributionForm {
     @include contentCard($nCFHeaderColor, $nCFBodyColor);
 
-    padding-top: 30px;
     width: 100%;
 
     textarea {
@@ -76,6 +103,11 @@
 
     .body {
         word-wrap: break-word;
+    }
+
+    .header {
+        margin-left: 55px;
+        font-weight: bold;
     }
 } 
 

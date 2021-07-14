@@ -6,10 +6,11 @@ import { Create } from '@material-ui/icons';
 import CreatedContribution from './createContribution';
 import Contributions from './contributions';
 import { useRef } from 'react';
+import config from '../core/config';
+import ProfilePicture from './profilePicture';
 
 
-
-function Contribution({ contribution, handleRate, threadId, handleAddAlert, isReply = false }) {
+function Contribution({ contribution, handleRate, threadId, handleAddAlert, handleSubmitContribution, isReply = false }) {
 
     // const [count, setCount] = useState(0);
     const [reply, setReply] = useState(false);
@@ -17,7 +18,7 @@ function Contribution({ contribution, handleRate, threadId, handleAddAlert, isRe
 
     const AddNewContributionForm = ({ onDiscard }) => {
         const [contributionText, setContributionText] = useState("");
-        const [currentUser, setCurrentUser] = useState("Squidy50");
+        const [currentUser, setCurrentUser] = useState("");
 
         const input = useRef(null)
 
@@ -34,7 +35,7 @@ function Contribution({ contribution, handleRate, threadId, handleAddAlert, isRe
 
                 <form className="body"
                     onSubmit={(e) => {
-                        handleSubmitForm(e, contributionText, currentUser);
+                        handleSubmitContribution(e, contributionText, contribution.creatorUserName);
                         setContributionText("");
                     }}
                 >
@@ -98,7 +99,11 @@ function Contribution({ contribution, handleRate, threadId, handleAddAlert, isRe
 
     return (
         <div className="contribution">
-
+            <div className="pictureWrapper">
+            <ProfilePicture 
+                path={contribution.picturePath}
+            />
+            </div>
             <p className="header">From: {contribution.creatorUserName}</p>
             <p className="body">{contribution.content}</p>
             <div className="counterOfLikes">
