@@ -20,12 +20,14 @@ const SearchList = (props) => {
                     return(
                         <React.Fragment>
                                 <Link to={`${entry.link}`} className="searchList">
-                                            <div className="flag">
-                                                {entry.flag}
-                                            </div>
-                                            <div className="title">
-                                                {entry.title}
-                                            </div>
+                                    <div className="inner">
+                                        <div className="flag">
+                                            {entry.flag}
+                                        </div>
+                                        <div className="title">
+                                            {entry.title}
+                                        </div>
+                                    </div>
                                 </Link>
                         </React.Fragment>)
                 }))
