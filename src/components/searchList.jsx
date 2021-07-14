@@ -19,13 +19,14 @@ const SearchList = (props) => {
                 result.map((entry => {
                     return(
                         <React.Fragment>
-                            <div className="searchList">
-                                <Link to={`${entry.link}`}>
-                                    <div>
-                                        {entry.title}
-                                    </div>
+                                <Link to={`${entry.link}`} className="searchList">
+                                            <div className="flag">
+                                                {entry.flag}
+                                            </div>
+                                            <div className="title">
+                                                {entry.title}
+                                            </div>
                                 </Link>
-                            </div>
                         </React.Fragment>)
                 }))
             }

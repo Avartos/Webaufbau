@@ -1,7 +1,27 @@
 @import "./variables";
+@import "./mixins/contentCard";
 
 .searchList {
-  background: $threadBodyColor !important;
+
+  @include header($threadBodyColor);
+
   margin: 5px;
-  padding: 10px;
+  text-decoration: none;
+  padding: 10px 50px;
+  display: flex;
+  flex-direction: row;
+  color: inherit;
+  justify-content: center;
+  align-items: center;
+
+  .flag {
+    //align-self: flex-start;
+  }
+
+  .title {
+    margin: unset;
+    margin-left: 10px;
+    //align-self: flex-start;
+  }
+
 }
