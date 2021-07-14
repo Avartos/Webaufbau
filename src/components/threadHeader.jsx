@@ -93,15 +93,7 @@ const ThreadHeader = ({
             {console.log(`/threads/${thread[0].forumsId}`)}
             <img src={ReturnIcon} />
         </Link>
-        <div className="wrapperButton">
-          {sessionStorage.getItem("accessToken") && (
-            <SubscribeButton
-              parentId={thread.id}
-              isSubscribed={isSubscribed}
-              handleSubscribe={handleSubscribeThread}
-            />
-          )}
-        </div>
+        
       </div>
       <div className="body">
         <div className="statistics">
