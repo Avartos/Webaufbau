@@ -29,6 +29,7 @@
     padding: 5px;
     padding-left: 15px;
     img {
+      filter: grayscale(100%) brightness(0%);
       margin: auto;
       height: 60%;
       &:active {
