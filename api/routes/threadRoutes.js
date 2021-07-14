@@ -8,7 +8,7 @@ router.get('/search', threadController.findByName)
 router.get('/all/:forumId', authMiddleware.extractUserFromToken, threadController.findAll);
 
 // get the thread that belongs to the given id
-router.get('/:id', threadController.findOne);
+router.get('/:id', authMiddleware.extractUserFromToken, threadController.findOne);
 
 // post a new thread to the given forum
 router.post('/:forumId', authMiddleware.validateToken, threadController.add);

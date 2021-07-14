@@ -36,7 +36,7 @@ const ThreadHeader = ({ thread, handleAddContribution, handleAddAlert, handleUpd
 
   useEffect(() => {
     console.log('Thread', thread);
-    if (thread.length > 0 && thread[0].ubscriptionUsersId !== null) {
+    if (thread.length > 0 && thread[0].subscriptionUsersId !== null) {
       setIsSubscribed(true);
     } else {
       setIsSubscribed(false);

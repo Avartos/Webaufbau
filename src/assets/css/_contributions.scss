@@ -43,7 +43,9 @@
 
 .newContributionForm {
   @include contentCard($nCFHeaderColor, $nCFBodyColor);
-
+  .body {
+    margin: 0 !important;
+  }
   width: 100%;
 
   textarea {
@@ -112,7 +114,7 @@
 
   .body {
     word-wrap: break-word;
-    margin-right: 150px;
+    margin-right: 200px;
   }
 
   .header {
@@ -126,6 +128,7 @@
 
   .replyButton {
     background-color: #bfcde000;
+    height: 25px;
   }
 
   .newContributionForm {
@@ -138,9 +141,10 @@
 .replyButton {
   border: none;
   position: absolute;
-  bottom: 5px;
+  bottom: 40px;
   right: 130px;
-  top: 45px;
+  height: 25px;
+  // top: 45px;
   background-color: #fefcfd00;
   color: $buttonColor;
   padding-top: 20px;
@@ -149,6 +153,12 @@
     background-color: rgba(0, 0, 0, 0);
     color: $buttonHoverColor;
   }
+}
+
+.editButton {
+  position: absolute;
+  top: 15px;
+  right: 15px;
 }
 
 .counterOfLikes {
@@ -201,4 +211,49 @@
 .contibutionAllButtons {
   display: flex;
   justify-content: flex-end;
+}
+
+
+textArea {
+  width: 80%;
+  resize: none;
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 5px;
+}
+
+.saveChangeButton {
+  margin: 0 auto;
+  @include basicButton(
+    white,
+    $buttonColor,
+    $buttonHoverColor,
+    $buttonPressedColor
+  );
+  padding: 10px;
+  font-weight: bold;
+  width: 180px;
+  float: left;
+  border: none;
+  border-radius: 5px;
+}
+
+.abortButton {
+  @include basicButton(white, #ce4d02, #6e4800, orange);
+  
+  // margin: 10px auto;
+  padding: 10px;
+  font-weight: bold;
+  width: 180px;
+  border: none;
+  float: left;
+  border-radius: 5px;
+
+  &:hover {
+    background-color: #6e4800;
+  }
+
+  &:active {
+    background-color: #3d2800;
+  }
 }

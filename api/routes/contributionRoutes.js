@@ -12,6 +12,6 @@ router.delete('/:id', contributionsController.deleteOne);
 //add the contribution with the given id
 router.post('/:threadId', authMiddleware.validateToken, contributionsController.add)
 // update the contribution with the given id
-router.put('/:id', contributionsController.update);
+router.put('/', authMiddleware.validateToken, contributionsController.update);
 
 module.exports = router;
