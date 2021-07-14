@@ -46,7 +46,7 @@ const ProfileDropDown = (props) => {
                 <span onClick={props.handleToggleUnfold}>Nutzerverwaltung</span>
               </Link>
             )}
-            <Link to="token_request">
+            <Link to="/token_request">
               <span onClick={props.handleToggleUnfold}>
                 API Token generieren
               </span>
