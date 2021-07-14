@@ -155,6 +155,34 @@ const Thread = (props) => {
       });
   };
 
+  const handleRate = (rate, contributionId) => {
+    const newRate = { rating: rate };
+
+    fetch(`http://localhost:3001/api/ratings/${contributionId}`, {
+        method: 'POST', body: JSON.stringify(newRate),
+        headers: {
+            "Content-Type": "application/json",
+            accessToken: sessionStorage.getItem("accessToken"),
+        },
+    })
+        .then((res) => {
+            if (!res.ok) {
+                throw Error(
+                    "Fehler beim Abrufen der Contributions! Bitte versuchen sie es später erneut!"
+                );
+            }
+            fetchContributions();
+        })
+        .catch((error) => {
+            if (error.name === "AbortError") {
+                console.log("fetch abortet");
+            } else {
+                props.handleAddAlert("error", "Fehler", error.message);
+            }
+        });
+
+}
+
   return (
     <div className="thread">
       <div className="header">
@@ -254,6 +282,7 @@ const Thread = (props) => {
                 <PreviewList
                   key={props.thread.id}
                   contributions={contributions}
+                  handleRate={handleRate}
                 />
               </div>
             </CSSTransition>

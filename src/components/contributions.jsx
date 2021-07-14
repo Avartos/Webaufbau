@@ -45,7 +45,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
         return () => console.log(abortController.abort());
     };
 
-    useEffect(fetchContributions, []);
+    useEffect(fetchContributions, [threadId]);
 
     const fetchThreadHeader = () => {
         const abortController = new AbortController();
@@ -82,7 +82,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
         return () => console.log(abortController.abort());
     };
 
-    useEffect(fetchThreadHeader, []);
+    useEffect(fetchThreadHeader, [threadId]);
 
     const handleAddContribution = async (e, contributionText, currentUser) => {
         e.preventDefault();

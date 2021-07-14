@@ -4,38 +4,36 @@ import { useRef } from "react";
 //import { add } from '../../api/controllers/threadController';
 
 const NewContributionForm = ({ handleAddContribution }) => {
+  const openForm = (event) => {
+    event.preventDefault();
+    setVisible(true);
+  };
+  const closeForm = () => {
+    console.log("discard 1");
+    setVisible(false);
+  };
 
+  const [visible, setVisible] = useState(false);
 
-    const openForm = (event) => {
-        event.preventDefault();
-        setVisible(true);
+  const AddNewContributionForm = ({
+    onDiscard,
+    add,
+    // handleAddContribution,
+  }) => {
+    const [contributionText, setContributionText] = useState("");
+    const [currentUser, setCurrentUser] = useState("Squidy50");
+
+    const input = useRef(null);
+
+    const onInputChange = ({ target }) => {
+      const files = target.files;
+
+      if (files.length > 0) console.log("found files for input", files);
     };
-    const closeForm = () => {
-        console.log("discard 1");
-        setVisible(false);
-    };
 
-    const [visible, setVisible] = useState(false);
-
-    const AddNewContributionForm = ({
-        onDiscard,
-        add,
-        // handleAddContribution,
-    }) => {
-        const [contributionText, setContributionText] = useState("");
-        const [currentUser, setCurrentUser] = useState("Squidy50");
-
-        const input = useRef(null);
-
-        const onInputChange = ({ target }) => {
-            const files = target.files;
-
-            if (files.length > 0) console.log("found files for input", files);
-        };
-
-        return (
-            <div className="newContributionForm">
-                {/*      
+    return (
+      <div className="newContributionForm">
+        {/*      
                onSubmit={(e) => {
     //         handleAddContribution(e, "tehehehest");
     //       }}
@@ -43,42 +41,58 @@ const NewContributionForm = ({ handleAddContribution }) => {
     //       <button>Test</button>
     //     </form> */}
 
-                <form
-                    className="body"
-                    onSubmit={(e) => {
-                        e.preventDefault();
-                        // console.log("Test")
-                        handleAddContribution(e, contributionText);
-                        setContributionText("");
-                    }}
-                >
-                    <div className="createArea">
-                        <textarea
-                            className="textarea"
-                            required
-                            value={contributionText}
-                            onChange={(e) => {
-                                setContributionText(e.target.value);
-                            }}
-                            placeholder="Gib deinen Beitrag zum Thema!"
-                        ></textarea>
-                        {/* <input type="file" style={{ display: "none" }} ref={input} onChange={onInputChange} accept="image/*" /> */}
-                        <div className="buttonArea">
-                            <button className="discardContribution" onClick={onDiscard} type="button">Verwerfen</button>
-                            {/* <button type="button" onClick={() => input.current.click()}>Anfügen</button> */}
-                            <button>Absenden</button>
-                        </div>
-                    </div>
-                </form>
+        <form
+          className="body"
+          onSubmit={(e) => {
+            e.preventDefault();
+            // console.log("Test")
+            handleAddContribution(e, contributionText);
+            setContributionText("");
+            closeForm();
+          }}
+        >
+          <div className="createArea">
+            <textarea
+              className="textarea"
+              required
+              value={contributionText}
+              onChange={(e) => {
+                setContributionText(e.target.value);
+              }}
+              placeholder="Gib deinen Beitrag zum Thema!"
+            ></textarea>
+            {/* <input type="file" style={{ display: "none" }} ref={input} onChange={onInputChange} accept="image/*" /> */}
+            <div className="buttonArea">
+              <button
+                className="discardContribution"
+                onClick={onDiscard}
+                type="button"
+              >
+                Verwerfen
+              </button>
+              {/* <button type="button" onClick={() => input.current.click()}>Anfügen</button> */}
+              <button>Absenden</button>
             </div>
-        );}
+          </div>
+        </form>
+      </div>
+    );
+  };
 
-        return (
-            <div>
-                {!visible && (<button className="addContribution" onClick={openForm}>+</button>)}
-                {visible && (<div><AddNewContributionForm onDiscard={closeForm} /></div>)} </div>
-        );
-    };
-
+  return (
+    <div>
+      {!visible && (
+        <button className="addContribution" onClick={openForm}>
+          +
+        </button>
+      )}
+      {visible && (
+        <div>
+          <AddNewContributionForm onDiscard={closeForm} />
+        </div>
+      )}{" "}
+    </div>
+  );
+};
 
 export default NewContributionForm;
