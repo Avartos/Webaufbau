@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
 import config from "../../core/config";
 
@@ -15,6 +15,7 @@ import ForumHeader from "./forumHeader";
  */
 const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
   const { forumId } = useParams("forumId");
+  const history = useHistory();
 
   const [threads, setThreads] = useState();
   // used to check if the fetch is in progress
@@ -87,6 +88,9 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
         return res.json();
       })
       .then((data) => {
+        if(data === null) {
+          throw Error('Das gesuchte Forum existiert nicht!');
+        }
         setForum(data);
         setForumIsPending(false);
         setError(null);
@@ -97,7 +101,7 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
         } else {
           handleAddAlert("error", "Fehler", "Fehler beim laden des Forums.");
           setError(error.message);
-          setForumIsPending(false);
+          history.push('/404')
         }
       });
     return () => console.log(abortController.abort());
@@ -195,7 +199,7 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
 
   return (
     <React.Fragment>
-      {!forumIsPending && (
+      {!forumIsPending && !error && (
         <ForumHeader
           forum={forum}
           handleSubmitNewThread={handleSubmitNewThread}
