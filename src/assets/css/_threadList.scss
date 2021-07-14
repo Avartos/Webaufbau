@@ -162,9 +162,12 @@
 
     .postPreviews {
       text-align: left;
+      .contribution {
+        background-color: transparent;
+      }
 
-      p {
-        padding: 10px;
+      .contribution {
+        // padding: 10px;
         &:nth-child(even) {
           background-color: $threadHeaderColor;
         }
@@ -172,10 +175,21 @@
         &:nth-child(odd) {
           background-color: $threadBodyColor;
         }
+
+        .header {
+          padding-top: 15px;
+          background-color: transparent;
+        }
+
+        .body {
+          background-color: transparent;
+        }
       }
     }
   }
 }
+
+
 
 /* #region threadHeader */
 

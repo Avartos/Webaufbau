@@ -2,6 +2,8 @@ const Sequelize = require('../config/connection');
 const Contribution = require('../models/contribution');
 const User = require('../models/user');
 const Rating = require('../models/rating');
+const Image = require('../models/image');
+
 
 /**
  * returns a basic condition setup for contribution queries
@@ -20,13 +22,28 @@ const contributionCondition = (offset, userId) => {
             //formattings for the dates that are fetched from the database
             [Sequelize.fn('date_format', Sequelize.col('contribution.createdAt'), '%d.%m.%Y'), 'createdAt'],
             [Sequelize.fn('date_format', Sequelize.col('contribution.updatedAt'), '%d.%m.%Y'), 'updatedAt'],
+            [Sequelize.col('user.image.profilePicturePath'), 'picturePath'],
         ],
         include: [{
                 model: User,
                 as: 'user',
                 //to include the user without any attributes listed
-                attributes: []
+                attributes: [],
+                include: [{
+                    model: Image,
+                    as: 'image'
+                }]
             },
+            {
+                model: Rating,
+                as: 'ratings',
+                required: false,
+                attributes: ['rating'],
+                where: {
+                    usersId: userId
+                },
+                duplicating: false
+            }
         ],
         offset: parseInt(offset),
     }
@@ -42,7 +59,7 @@ const findAll = (req, res) => {
     let condition = {
         ...contributionCondition(offset, userId)
     };
-    
+
     condition.where = {
         'threadsId': threadId
     };
@@ -150,20 +167,20 @@ const add = (req, res) => {
     console.log(contributionText);
     const userId = req.user.id;
     Contribution.create({
-        content: contributionText,
-        usersId: userId,
-        threadsId: parseInt(threadId)
-      })
-      .then(data => {
-        console.log(userId);
-        res.json(data);
-      })
-      .catch(error => {
-        console.error('Error:\t', error);
-        res.sendStatus(500);
-      });
-  }
-  
+            content: contributionText,
+            usersId: userId,
+            threadsId: parseInt(threadId)
+        })
+        .then(data => {
+            console.log(userId);
+            res.json(data);
+        })
+        .catch(error => {
+            console.error('Error:\t', error);
+            res.sendStatus(500);
+        });
+}
+
 
 const update = (req, res) => {
     const contribution = req.body;

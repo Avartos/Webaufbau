@@ -4,8 +4,8 @@ import { Link } from "react-router-dom";
 import { CircularProgress } from "@material-ui/core";
 import { ReactComponent as EditIcon } from "../../assets/icons/pencil.svg";
 
-import helper from '../../core/helperFunctions';
-import config from '../../core/config';
+import helper from "../../core/helperFunctions";
+import config from "../../core/config";
 
 import PreviewList from "./previewList";
 import SubscribeButton from "../subscribeButton";
@@ -21,7 +21,7 @@ const Thread = (props) => {
   const [isPending, setIsPending] = useState(false);
 
   //the contributions that are used as preview
-  const [contributions, setContributions] = useState(null);
+  const [contributions, setContributions] = useState([]);
 
   //used to animate the height of the preview list based on the actual content height
   const [previewHeight, setPreviewHeight] = useState(0);
@@ -48,9 +48,11 @@ const Thread = (props) => {
   const handleLoadContributionPreviews = () => {
     //only fetch contributions, if they aren't already fetched
     props.handleTogglePreview(props.thread.id);
-    if (!contributions) {
+    console.log(contributions.length);
+    // if (contributions.length !== 0) {
+      console.log('tehest');
       fetchContributions();
-    }
+    // }
   };
 
   const fetchContributions = () => {
@@ -63,6 +65,7 @@ const Thread = (props) => {
         signal: abortController.signal,
         headers: {
           "Content-Type": "application/json",
+          accessToken: sessionStorage.getItem("accessToken"),
         },
       }
     )
@@ -110,7 +113,7 @@ const Thread = (props) => {
     setIsEditMode(false);
   };
 
-  //used to switch from view to edit mode. 
+  //used to switch from view to edit mode.
   //thread title and thread body are replaced by input fields, when in edit mode
   const handleToggleEditMode = () => {
     setTitle(props.thread.title);
@@ -155,12 +158,48 @@ const Thread = (props) => {
       });
   };
 
+  const handleRate = (rate, contributionId) => {
+    const newRate = { rating: rate };
+
+    fetch(`http://localhost:3001/api/ratings/${contributionId}`, {
+      method: "POST",
+      body: JSON.stringify(newRate),
+      headers: {
+        "Content-Type": "application/json",
+        accessToken: sessionStorage.getItem("accessToken"),
+      },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw Error(
+            "Fehler beim Abrufen der Contributions! Bitte versuchen sie es später erneut!"
+          );
+        }
+        fetchContributions();
+      })
+      .catch((error) => {
+        if (error.name === "AbortError") {
+          console.log("fetch abortet");
+        } else {
+          props.handleAddAlert("error", "Fehler", error.message);
+        }
+      });
+  };
+
   return (
     <div className="thread">
       <div className="header">
         {!isEditMode && (
-          <Link className="title" to={`/contributions/${props.thread.id}`} title={props.thread.title}>
-            {helper.shortenString(props.thread.title, config.shortenedTitleLength, '...')}
+          <Link
+            className="title"
+            to={`/contributions/${props.thread.id}`}
+            title={props.thread.title}
+          >
+            {helper.shortenString(
+              props.thread.title,
+              config.shortenedTitleLength,
+              "..."
+            )}
           </Link>
         )}
         {isEditMode && (
@@ -196,7 +235,13 @@ const Thread = (props) => {
       </div>
       <div className="body">
         {!isEditMode && (
-          <p className="shortDescription">{helper.shortenString(props.thread.content, config.shortenedDescriptionLength, '...')}</p>
+          <p className="shortDescription">
+            {helper.shortenString(
+              props.thread.content,
+              config.shortenedDescriptionLength,
+              "..."
+            )}
+          </p>
         )}
         {isEditMode && (
           <div className="shortDescription">
@@ -254,6 +299,7 @@ const Thread = (props) => {
                 <PreviewList
                   key={props.thread.id}
                   contributions={contributions}
+                  handleRate={handleRate}
                 />
               </div>
             </CSSTransition>

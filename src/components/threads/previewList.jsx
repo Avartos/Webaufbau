@@ -6,18 +6,16 @@ import Contribution from "../contribution";
  * @param {contributions} contains the list of contributions that should be displayed
  * @returns
  */
-const PreviewList = ({ contributions }) => {
+const PreviewList = ({ contributions, handleRate }) => {
   return (
     <div className="postPreviews">
       {contributions.map((contribution) => {
         return (
           <Contribution
             key={contribution.id}
-            contribution={{
-              id: 0,
-              contributionText: contribution.content,
-              contributorSquid: contribution.creatorUserName,
-            }}
+            contribution={contribution}
+            isReplyButtonVisible={false}
+            handleRate={handleRate}
           ></Contribution>
         );
       })}

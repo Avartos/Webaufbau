@@ -6,36 +6,29 @@ import { Create } from '@material-ui/icons';
 import CreatedContribution from './createContribution';
 import Contributions from './contributions';
 import { useRef } from 'react';
+import config from '../core/config';
+import ProfilePicture from './profilePicture';
+import classNames from 'classnames';
 
 
-
-function Contribution({ contribution, handleRate, threadId, handleAddAlert, isReply = false }) {
+function Contribution({ contribution, handleRate, threadId, handleAddAlert, handleSubmitContribution, isReply = false , isReplyButtonVisible = true}) {
 
     // const [count, setCount] = useState(0);
     const [reply, setReply] = useState(false);
     const [replies, setReplies] = useState(contribution.replies || []);
+    
 
     const AddNewContributionForm = ({ onDiscard }) => {
         const [contributionText, setContributionText] = useState("");
-        const [currentUser, setCurrentUser] = useState("Squidy50");
-
-        const input = useRef(null)
-
-
-        const onInputChange = ({ target }) => {
-            const files = target.files
-
-            if (files.length > 0)
-                console.log("found files for input", files)
-        }
 
         return (
             <div className="newContributionForm">
 
                 <form className="body"
                     onSubmit={(e) => {
-                        handleSubmitForm(e, contributionText, currentUser);
+                        handleSubmitContribution(e, contributionText, contribution.creatorUserName);
                         setContributionText("");
+                        onDiscard();
                     }}
                 >
                     <textarea
@@ -57,59 +50,52 @@ function Contribution({ contribution, handleRate, threadId, handleAddAlert, isRe
         )
     }
 
-    const handleSubmitForm = async (e, contributionText, currentUser) => {
-        e.preventDefault();
-
-        const text = `@${contribution.creatorUserName} ${contributionText}`;
-
-        let newContribution = {
-            //id: nextId,
-            content: text,
-            creatorUserName: currentUser,
+    const getCurrentRating = () => {
+        if(contribution.ratings && contribution.ratings.length > 0) {
+            return parseInt(contribution.ratings[0].rating);
         }
-
-        const response = await fetch(`http://localhost:3001/api/contributions/${threadId}`, {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                accessToken: sessionStorage.getItem("accessToken"),
-            },
-            body: JSON.stringify({
-                contributionText: text
-            }),
-        });
-
-        if (!response.ok) {
-            return handleAddAlert("error", "Fehler", "Das Formular konnte nicht abgeschickt werden.");
-        }
-        handleAddAlert(
-            "success",
-            "",
-            "Ihr Beitrag wurde erfolgreich angelegt!"
-        );
-
-        setReplies([...replies, newContribution]);
+        return 0;
     }
 
+    const isLoggedIn = () => {
+        return (sessionStorage.getItem('accessToken') !== null);
+    }
+
+    const positiveRatingClass = classNames({
+        counterButton: true,
+        isActive: ((getCurrentRating() === 1) || !isLoggedIn())
+    });
+
+    const negativeRatingClass = classNames({
+        counterButton: true,
+        isActive: ((getCurrentRating() === -1) || !isLoggedIn())
+    });
+
     const discardReply = () => {
-        console.log("discard")
+        console.log('Tehehehest');
         setReply(false)
     }
 
+    
+
     return (
         <div className="contribution">
-
-            <p className="header">From: {contribution.creatorUserName}</p>
+            <div className="pictureWrapper">
+            <ProfilePicture 
+                path={contribution.picturePath}
+            />
+            </div>
+            <p className="header">Von: {contribution.creatorUserName}</p>
             <p className="body">{contribution.content}</p>
             <div className="counterOfLikes">
 
-                <button className="counterButton" onClick={() => handleRate(-1, contribution.id)}> <RemoveIcon /> </button>
+                <button className={negativeRatingClass} onClick={() => handleRate(-1, contribution.id)} disabled={!isLoggedIn()}> <RemoveIcon className="ignoreClick" onClick={() => handleRate(-1, contribution.id)}/> </button>
                 <p>{contribution.actualRating}</p>
-                <button className="counterButton" onClick={() => handleRate(1, contribution.id)}> <AddIcon /> </button>
+                <button className={positiveRatingClass} onClick={() => handleRate(1, contribution.id)} disabled={!isLoggedIn()}> <AddIcon className="ignoreClick" onClick={() => handleRate(-1, contribution.id)}/> </button>
 
             </div>
-            {!isReply && !reply && <button className="replyButton" onClick={() => setReply(true)}> <ReplyIcon /> </button>}
-            {!isReply && reply && <div><AddNewContributionForm onDiscard={discardReply} /></div>}
+            {!isReply && !reply && isLoggedIn() && isReplyButtonVisible && <button className="replyButton" onClick={() => setReply(true)}> <ReplyIcon className="ignoreClick"/> </button>}
+            {!isReply && reply && <div><AddNewContributionForm onDiscard={discardReply}/></div>}
 
             <div className="replies">
                 {replies.map((reply) => {

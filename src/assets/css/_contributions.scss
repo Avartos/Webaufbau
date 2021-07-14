@@ -3,144 +3,202 @@
 @import "./mixins/buttonPreset";
 @import "./mixins/statistics";
 
+.pictureWrapper {
+  position: absolute;
+  top: 5px;
+  left: 15px;
 
+  .profilePicture {
+    position: relative;
+    height: 50px;
+
+    .frame {
+      height: 100%;
+      position: absolute;
+      z-index: 1;
+      overflow: hidden;
+      border-radius: 25px;
+    }
+
+    .image {
+      height: 70%;
+      position: absolute;
+      z-index: 0;
+      left: 50%;
+      top: 50%;
+      transform: translate(20%, -50%);
+    }
+  }
+}
 
 .addContribution {
-    width: 100%;
-    @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
+  width: 100%;
+  @include basicButton(
+    $aCFontColor,
+    $buttonColor,
+    $aCHoverColor,
+    $buttonPressedColor
+  );
 }
 
 .newContributionForm {
-    @include contentCard($nCFHeaderColor, $nCFBodyColor);
+  @include contentCard($nCFHeaderColor, $nCFBodyColor);
 
-    padding-top: 30px;
-    width: 100%;
+  width: 100%;
 
-    textarea {
-        margin: 5px;
-        outline: none;
-        resize: none;
-        min-width: 95%;
-        height: 7em;
-        border: 1px solid #FF9838;
-        border-radius: 10px;
-        padding: 10px;
+  textarea {
+    margin: 5px;
+    outline: none;
+    resize: none;
+    min-width: 95%;
+    height: 7em;
+    border: 1px solid #ff9838;
+    border-radius: 10px;
+    padding: 10px;
+  }
+
+  button {
+    @include basicButton(
+      $aCFontColor,
+      $buttonColor,
+      $aCHoverColor,
+      $buttonPressedColor
+    );
+    border-radius: 20px;
+    padding: 5px;
+    margin: 5px;
+
+    &.discardContribution {
+      @include basicButton(
+        $aCFontColor,
+        $dAbuttonColor,
+        $aCHoverColor,
+        $buttonPressedColor
+      );
     }
-
-    button {
-        @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
-        border-radius: 20px;
-        padding: 5px;
-        margin: 5px;
-
-        &.discardContribution {
-            @include basicButton($aCFontColor, $dAbuttonColor, $aCHoverColor, $buttonPressedColor);
-        }
-    }
-
+  }
 }
 
-
 .forumHeader {
-
-    .body {
-
-        .statistics {
-            @include statistics;
-            display: flex;
-            float: right;
-            padding-right: 40px;
-            padding-bottom: 10px;
-        }
-
-        .shortDescription {
-            text-align: left;
-            width: 65%;
-            word-wrap: break-word;
-        }
+  .body {
+    .statistics {
+      @include statistics;
+      display: flex;
+      float: right;
+      padding-right: 40px;
+      padding-bottom: 10px;
     }
+
+    .shortDescription {
+      text-align: left;
+      width: 65%;
+      word-wrap: break-word;
+    }
+  }
 }
 
 .contributions {
-    background-color: #FEFCFD;
-    border-radius: 10px;
+  background-color: #fefcfd;
+  border-radius: 10px;
 }
 
 .contribution {
-    position: relative;
-    padding: 5px;
-    padding-left: 20px;
-    text-align: left;
-    display:flex;
-    flex-direction: column;
+  position: relative;
+  padding: 5px;
+  padding-left: 20px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
 
+  .body {
+    word-wrap: break-word;
+    margin-right: 150px;
+  }
+
+  .header {
+    margin-left: 55px;
+    font-weight: bold;
+  }
+}
+
+.contribution:nth-child(even) {
+  background-color: #bfcde0;
+
+  .replyButton {
+    background-color: #bfcde000;
+  }
+
+  .newContributionForm {
     .body {
-        word-wrap: break-word;
+      background-color: #bfcde0;
     }
-} 
-
-.contribution:nth-child(even){
-    background-color: #BFCDE0;
-
-    .replyButton {
-        background-color: #bfcde000;
-    }
-
-    .newContributionForm {
-        .body {background-color: #BFCDE0;}
-    }
+  }
 }
 
 .replyButton {
-    border: none;
-    position: absolute;
-    bottom: 5px;
-    right: 130px;
-    top: 45px;
-    background-color: #fefcfd00;
-    color: $buttonColor;
-    padding-top: 20px;
+  border: none;
+  position: absolute;
+  bottom: 5px;
+  right: 130px;
+  top: 45px;
+  background-color: #fefcfd00;
+  color: $buttonColor;
+  padding-top: 20px;
 
-    &:hover {
-        background-color:rgba(0, 0, 0, 0);
-        color: $buttonHoverColor
-      }
-    
+  &:hover {
+    background-color: rgba(0, 0, 0, 0);
+    color: $buttonHoverColor;
+  }
 }
 
 .counterOfLikes {
-    padding-bottom: 10px;
-    float: right;
-    display: flex;
-    margin-top: -42px;
-    margin-right: 10px;
-    justify-content: flex-end;
-
-    p {
-        margin: 8px;
-    }
+  padding-bottom: 10px;
+  float: right;
+  display: flex;
+  margin-top: -42px;
+  margin-right: 10px;
+  justify-content: flex-end;
+  
+  p {
+    margin: 8px;
+    width: 15px;
+    text-align: center;
+  }
 }
 
+.ignoreClick {
+    pointer-events: none;
+}
 
 .counterButton {
-    @include basicButton($aCFontColor, $buttonColor, $aCHoverColor, $buttonPressedColor);
-    margin-right: 0;
+  @include basicButton(
+    $aCFontColor,
+    $buttonColor,
+    $aCHoverColor,
+    $buttonPressedColor
+  );
+  margin-right: 0;
+
+  &.isActive {
+    background-color: grey !important;
+    cursor: initial;
+  }
 }
 
 .createArea {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: right;
-    margin: 0 auto 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: right;
+  margin: 0 auto 0 auto;
 }
 
 .buttonArea {
-    display: flex;
-    justify-content: flex-end;
-    width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  width: 100%;
 }
 
 .contibutionAllButtons {
-    display: flex;
-    justify-content: flex-end;
+  display: flex;
+  justify-content: flex-end;
 }

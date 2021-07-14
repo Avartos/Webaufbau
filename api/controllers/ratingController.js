@@ -29,17 +29,31 @@ const updateRating = (req, res) => {
     const contributionId = req.params.id;
     const rating = req.body.rating;
 
-    Rating.findOne({ where: { usersId: userId, contributionsId: contributionId } })
+    Rating.findOne({
+            where: {
+                usersId: userId,
+                contributionsId: contributionId
+            }
+        })
         .then(data => {
             if (data) {
-                data.update({ rating: rating })
+                const newRating = Math.min(Math.max(data.dataValues.rating+rating, -1), 1)
+                data.update({
+                        rating: newRating
+                    })
 
-                    .then(data => { res.sendStatus(200) })
-            }
-            else {
-                Rating.create({ usersId: userId, contributionsId: contributionId, rating: rating })
-
-                    .then(newRating => res.sendStatus(200));
+                    .then(data => {
+                        res.sendStatus(200)
+                    })
+            } else {
+                Rating.create({
+                        usersId: userId,
+                        contributionsId: contributionId,
+                        rating: rating
+                    })
+                    .then(
+                        newRating => res.sendStatus(200)
+                    );
             }
         })
         .catch(error => {

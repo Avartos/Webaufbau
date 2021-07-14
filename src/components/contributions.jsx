@@ -32,7 +32,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
                 return res.json();
             })
             .then((data) => {
-                setContributions(data);
+                setContributions([...data]);
                 console.log(data);
             })
             .catch((error) => {
@@ -45,7 +45,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
         return () => console.log(abortController.abort());
     };
 
-    useEffect(fetchContributions, []);
+    useEffect(fetchContributions, [threadId]);
 
     const fetchThreadHeader = () => {
         const abortController = new AbortController();
@@ -82,13 +82,14 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
         return () => console.log(abortController.abort());
     };
 
-    useEffect(fetchThreadHeader, []);
+    useEffect(fetchThreadHeader, [threadId]);
 
-    const handleAddContribution = async (e, contributionText) => {
+    const handleAddContribution = async (e, contributionText, currentUser) => {
         e.preventDefault();
+        const text = (currentUser)?`@${currentUser} ${contributionText}`:contributionText;
 
         let newContribution = {
-            contributionText: contributionText,
+            contributionText: text,
         };
 
         const response = await fetch(`http://localhost:3001/api/contributions/${threadId}`, {
@@ -183,7 +184,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
                 {/* <NewContributionForm handleSubmitForm={handleSubmitNewContribution} /> */}
                 <div className="contributionsList">
                     {contributions.map((contribution, index) => {
-                        return <Contribution handleAddAlert={handleAddAlert} threadId={threadId} contribution={contribution} key={index} handleRate={handleRate} />;
+                        return <Contribution handleAddAlert={handleAddAlert} handleSubmitContribution={handleAddContribution} threadId={threadId} contribution={contribution} key={index} handleRate={handleRate} />;
                     })}
                 </div>
             </React.Fragment>
