@@ -1,11 +1,15 @@
 import React from 'react';
 
+/**
+ * This component is used to display forum information in table-form (without native table tag)
+ * @param {*} props 
+ * @returns 
+ */
 const ForumStatictics = (props) => {
         return (  
             <div className="forumStatistics">
                 <div className="row"><span>Threads:</span><span className="highlighted">{props.numberOfThreads}</span></div>
                 <div className="row"><span>Erstellt am:</span><span>{props.createdAt}</span></div>
-                <div className="row"><span>Letzte Aktivität von:</span><span className="user">{props.lastActivityFrom}</span></div>
                 <div className="row"><span>Letzte Änderung am:</span><span className="highlighted">{props.updatedAt}</span></div>
             </div>
         );

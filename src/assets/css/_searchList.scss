@@ -13,15 +13,25 @@
   color: inherit;
   justify-content: center;
   align-items: center;
+  height: auto;
+  min-height: 40px;
 
-  .flag {
-    //align-self: flex-start;
+  .inner {
+    display: flex;
+    align-items: flex-start;
+    width: 100%;
+
+    .flag {
+      //align-self: flex-start;
+    }
+
+    .title {
+      margin: unset;
+      margin-left: 10px;
+      //align-self: flex-start;
+    }
   }
 
-  .title {
-    margin: unset;
-    margin-left: 10px;
-    //align-self: flex-start;
-  }
+
 
 }

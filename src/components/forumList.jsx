@@ -5,18 +5,27 @@ import config from '../core/config';
 
 import Forum from './forum';
 
+
+/**
+ * This component includes all forums and distributes the data to display each forum
+ * @param {handleAddAlert} reference to the function to add alerts to the app
+ * @returns
+ */
 const ForumList = ({handleAddAlert}) => {
     const [forums, setForums] = useState (); 
 
+    // used to check if the fetch is in progress
     const [isPending, setIsPending] = useState(true);
 
     
     const fetchForums = () => {
+        //used to stop fetching when forcing reload
         const abortController = new AbortController();
         fetch(`${config.serverPath}/api/forums`, {
             signal: abortController.signal,
             headers: {
                 "Content-Type": "application/json",
+                // undefined, if the user is not looged in
                 accessToken: sessionStorage.getItem("accessToken"),
             }
         })
@@ -42,6 +51,13 @@ const ForumList = ({handleAddAlert}) => {
         return () => console.log(abortController.abort()); 
     }
 
+
+      /**
+   * toggles the subscription state of a forum
+   * updates only the corresponding forum if the (un)subscription was successfull to transfer less data when subscribing
+   * @param {*} id            id of the forum that should be subscribed
+   * @param {*} isSubscribed  state of the subscription
+   */
     const handleSubscribeForum = (id, isSubscribed) => {
         const subscribeMethod = isSubscribed ? "DELETE" : "POST";
     
@@ -87,7 +103,6 @@ const ForumList = ({handleAddAlert}) => {
                             description={forum.description}
                             numberOfThreads={forum.numberOfThreads}
                             createdAt={forum.createdAt}
-                            lastActivityFrom={forum.lastActivityFrom}
                             updatedAt={forum.updatedAt}
                             handleSubscribeForum={handleSubscribeForum}
                             subscriptionUsersId={forum.subscriptionUsersId}
