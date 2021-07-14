@@ -9,7 +9,6 @@ const getOneThread = (req,res) => {
 
     Contribution.count({
         group:['threadsId'],
-        where: {threadsId: threadId}
     })
         .then(data => {
             Thread.findOne({
@@ -42,7 +41,6 @@ const getOneForum = (req,res) => {
 
     Thread.count({
         group: ['forumsId'],
-        where: {forumsId: forumId}
     })
         .then(data => {
             Forum.findOne({

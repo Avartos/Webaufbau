@@ -10,7 +10,7 @@ import config from "../core/config";
  */
 const ApiTokenForm = ({ handleAddAlert }) => {
   const [token, setToken] = useState('');
-
+  const [handleToggleLinks, setHandleToggleLinks] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
   //used to set the class name of the button to hide the text, when loading
@@ -20,6 +20,7 @@ const ApiTokenForm = ({ handleAddAlert }) => {
 
   const handleRequestToken = (e) => {
     e.preventDefault();
+    setHandleToggleLinks(!handleToggleLinks);
     const abortController = new AbortController();
     fetch(`${config.serverPath}/api/apiToken`, {
       signal: abortController.signal,
@@ -80,6 +81,13 @@ const ApiTokenForm = ({ handleAddAlert }) => {
             </div>
           )}
         </button>
+        {handleToggleLinks &&
+            <div>
+              <h3>Link für Foren mit Token</h3>
+              <span>http://localhost:3001/squid/getThreadForumOfTheDay/forum/?t={token}</span>
+              <h3>Link für Thread mit Token</h3>
+              <span>http://localhost:3001/squid/getThreadForumOfTheDay/thread/?t={token}</span>
+            </div>}
       </div>
     </form>
   );
