@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
 import Contribution from "./contribution";
 import DescriptionThread from "./descriptionThread";
 import NewContributionForm from "./createContribution";
@@ -10,6 +10,7 @@ const Contributions = ({ handleAddAlert }) => {
     const [contributions, setContributions] = useState([]);
     const [thread, setThread] = useState(null);
     const { threadId } = useParams("threadId");
+    const history = useHistory();
 
     const [visible, setVisible] = useState(false);
 
@@ -64,6 +65,9 @@ const Contributions = ({ handleAddAlert }) => {
                 return res.json();
             })
             .then((data) => {
+                if(data.length === 0) {
+                    throw Error('Der gesuchte Thread existiert nicht!');
+                }
                 setThread(data);
                 console.log(data);
             })
@@ -72,6 +76,7 @@ const Contributions = ({ handleAddAlert }) => {
                     console.log("fetch abortet");
                 } else {
                     handleAddAlert("error", "Fehler", error.message);
+                    history.push('/404');
                 }
             });
         return () => console.log(abortController.abort());
@@ -166,7 +171,7 @@ const Contributions = ({ handleAddAlert }) => {
     return (
         <div className="contributions">
             <React.Fragment>
-                {thread && (
+                {thread && thread.length > 0 && (
                     <ThreadHeader
                         thread={thread}
                         handleAddContribution={handleAddContribution}
