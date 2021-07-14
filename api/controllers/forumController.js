@@ -4,16 +4,21 @@ const Forum = require('../models/forum');
 const SubscribedForum = require('../models/subscribedForum');
 const Thread = require('../models/thread');
 
+
+// basic condition for forum requests
 const findAll = (req,res) => {
     const userId = (req.user) ? req.user.id : -1;
     Forum.findAll({
         attributes: [
+            //renames the attributes for better processing
             ['id','forumsID'],
             ['title','name'],
+            //reformats the date
             [Sequelize.fn('date_format', Sequelize.col('forum.createdAt'), '%d.%m.%Y'), 'createdAt'],
             [Sequelize.fn('date_format', Sequelize.col('forum.updatedAt'), '%d.%m.%Y'), 'updatedAt'],
             ['shortDescription','description'],
             [sequelize.col('subscribedForums.usersId'), 'subscriptionUsersId'],
+            //count the threads inside a forum
             [sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
         ],
         include: [{
@@ -31,6 +36,7 @@ const findAll = (req,res) => {
             attributes:[]
         }
         ],
+        //needed to count the threads
         group: ['forumsId'],
     }).then((data) => {
         res.json(data);
@@ -96,21 +102,8 @@ const findByName = (req,res) => {
         })
 }
 
-// WIP
-const countThreads = (req, res) => {
-    Forum.findAll(
-
-    ).then((data) => {
-        res.json(data);
-    }).catch((error) => {
-        console.error("Error:\t",error);
-    })
-}
-
-
 module.exports = {
     findAll,
     findOne,
-    countThreads,
     findByName
 }

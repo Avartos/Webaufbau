@@ -3,10 +3,8 @@ const router = express.Router();
 const forumController = require('../controllers/forumController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
-// get all forums
+// get all forums with relevant information
 router.get('/', authMiddleware.extractUserFromToken, forumController.findAll);
-// WIP
-router.get('/dirk', forumController.countThreads);
 
 router.get('/search', forumController.findByName);
 // get a forum with a given id
