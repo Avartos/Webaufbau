@@ -9,6 +9,7 @@
   width: 100%;
   .header {
     margin: auto auto;
+    position: relative;
     .title {
       position: absolute;
       left: 50%;
@@ -20,6 +21,11 @@
 
   .body {
     text-align: justify;
+  }
+
+  .wrapperButton {
+    position: absolute;
+    right: 0;
   }
 
   .wrapperReturn {
