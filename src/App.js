@@ -166,7 +166,7 @@ function App() {
             {/* 404 */}
             <Route path="/">
               <h1>Error 404: Page not found</h1>
-              <GifApi/>
+              <GifApi searchList={['404', 'technical difficulties', 'cry', 'anger', 'explosion']}/>
             </Route>
           </Switch>
         </div>

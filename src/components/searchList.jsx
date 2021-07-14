@@ -1,7 +1,8 @@
-import {Link, useLocation} from 'react-router-dom'
+import {Link, Route, useLocation} from 'react-router-dom'
 import React, {useEffect, useState} from 'react'
 import {CircularProgress} from "@material-ui/core";
 import config from '../core/config';
+import GifApi from "./gifApi";
 
 const SearchList = (props) => {
     let title = new URLSearchParams(useLocation().search).get("q");
@@ -16,10 +17,13 @@ const SearchList = (props) => {
         <div>
             {
                 result.length === 0 &&(
+                    <React.Fragment>
                             <span className="searchList">
                                 Kein Forum/Thread gefunden :'(
                             </span>
-                        )}
+                            <GifApi searchList={['cry', 'empty', 'nobody_here']}/>
+                    </React.Fragment>
+                )}
                         {
                 result.map((entry => {
                     return (

@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 
-const GifApi = () => {
+const GifApi = (prop) => {
 
     // set words to search for
-    const searchWords = ['404', 'technical difficulties', 'cry', 'anger', 'explosion'];
+    const searchWords = prop.searchList;
     // set the apikey and limit
     const [apikey, setApikey] = useState("OUXM9BQB1TTQ");
 
