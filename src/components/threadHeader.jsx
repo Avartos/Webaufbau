@@ -72,7 +72,9 @@ const ThreadHeader = ({
       });
   };
 
-  console.log(thread);
+  const isLoggedIn = () => {
+    return (sessionStorage.getItem('accessToken') !== null);
+  }
 
   return (
     <div className="forumHeader">
@@ -112,7 +114,7 @@ const ThreadHeader = ({
         </div>
         <p className="shortDescription">{thread[0].content}</p>
       </div>
-      <NewContributionForm handleAddContribution={handleAddContribution} />
+      {isLoggedIn() && <NewContributionForm handleAddContribution={handleAddContribution} />}
     </div>
   );
 };
