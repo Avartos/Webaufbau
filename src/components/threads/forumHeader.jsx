@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
+import {Link} from 'react-router-dom';
 
 import config from '../../core/config';
 import helper from "../../core/helperFunctions";
 
 import SubscribeButton from "../subscribeButton";
 import NewThreadForm from "./newThreadForm";
+import ReturnIcon from '../../assets/icons/returnIcon.svg';
 
 /**
  * This component is used to display the current forum at the top of the thread list
@@ -69,6 +71,9 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
     <div className="forumHeader">
       <div className="header">
         <h2 className="title">{helper.shortenString(forum.title, config.shortenedTitleLength, '...')}</h2>
+        <Link to={'/'} className="wrapperReturn" title="Zurück zur Startseite">
+            <img src={ReturnIcon} />
+        </Link>
         <div className="wrapperButton">
           {sessionStorage.getItem("accessToken") && (
             <SubscribeButton
