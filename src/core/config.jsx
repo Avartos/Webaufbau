@@ -5,6 +5,7 @@ const config = {
     shortenedDescriptionLength: 250,
     shortenedTitleLength: 50,
     favBarStringLength: 20,
+    shortenedNotificationLength: 30
 };
 
 export default config;
