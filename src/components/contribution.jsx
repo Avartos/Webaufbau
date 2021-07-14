@@ -8,6 +8,7 @@ import Contributions from './contributions';
 import { useRef } from 'react';
 import config from '../core/config';
 import ProfilePicture from './profilePicture';
+import classNames from 'classnames';
 
 
 function Contribution({ contribution, handleRate, threadId, handleAddAlert, handleSubmitContribution, isReply = false , isReplyButtonVisible = true}) {
@@ -15,6 +16,7 @@ function Contribution({ contribution, handleRate, threadId, handleAddAlert, hand
     // const [count, setCount] = useState(0);
     const [reply, setReply] = useState(false);
     const [replies, setReplies] = useState(contribution.replies || []);
+    
 
     const AddNewContributionForm = ({ onDiscard }) => {
         const [contributionText, setContributionText] = useState("");
@@ -48,14 +50,33 @@ function Contribution({ contribution, handleRate, threadId, handleAddAlert, hand
         )
     }
 
-    const discardReply = () => {
-        console.log('Tehehehest');
-        setReply(false)
+    const getCurrentRating = () => {
+        if(contribution.ratings && contribution.ratings.length > 0) {
+            return parseInt(contribution.ratings[0].rating);
+        }
+        return 0;
     }
 
     const isLoggedIn = () => {
         return (sessionStorage.getItem('accessToken') !== null);
     }
+
+    const positiveRatingClass = classNames({
+        counterButton: true,
+        isActive: ((getCurrentRating() === 1) || !isLoggedIn())
+    });
+
+    const negativeRatingClass = classNames({
+        counterButton: true,
+        isActive: ((getCurrentRating() === -1) || !isLoggedIn())
+    });
+
+    const discardReply = () => {
+        console.log('Tehehehest');
+        setReply(false)
+    }
+
+    
 
     return (
         <div className="contribution">
@@ -68,9 +89,9 @@ function Contribution({ contribution, handleRate, threadId, handleAddAlert, hand
             <p className="body">{contribution.content}</p>
             <div className="counterOfLikes">
 
-                <button className="counterButton" onClick={() => handleRate(-1, contribution.id)} disabled={!isLoggedIn()}> <RemoveIcon className="ignoreClick" onClick={() => handleRate(-1, contribution.id)}/> </button>
+                <button className={negativeRatingClass} onClick={() => handleRate(-1, contribution.id)} disabled={!isLoggedIn()}> <RemoveIcon className="ignoreClick" onClick={() => handleRate(-1, contribution.id)}/> </button>
                 <p>{contribution.actualRating}</p>
-                <button className="counterButton" onClick={() => handleRate(1, contribution.id)} disabled={!isLoggedIn()}> <AddIcon className="ignoreClick" onClick={() => handleRate(-1, contribution.id)}/> </button>
+                <button className={positiveRatingClass} onClick={() => handleRate(1, contribution.id)} disabled={!isLoggedIn()}> <AddIcon className="ignoreClick" onClick={() => handleRate(-1, contribution.id)}/> </button>
 
             </div>
             {!isReply && !reply && isLoggedIn() && isReplyButtonVisible && <button className="replyButton" onClick={() => setReply(true)}> <ReplyIcon className="ignoreClick"/> </button>}

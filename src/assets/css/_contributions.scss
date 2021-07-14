@@ -112,6 +112,7 @@
 
   .body {
     word-wrap: break-word;
+    margin-right: 150px;
   }
 
   .header {
@@ -157,9 +158,11 @@
   margin-top: -42px;
   margin-right: 10px;
   justify-content: flex-end;
-
+  
   p {
     margin: 8px;
+    width: 15px;
+    text-align: center;
   }
 }
 
@@ -175,6 +178,11 @@
     $buttonPressedColor
   );
   margin-right: 0;
+
+  &.isActive {
+    background-color: grey !important;
+    cursor: initial;
+  }
 }
 
 .createArea {
