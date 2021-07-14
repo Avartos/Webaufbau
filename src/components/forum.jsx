@@ -8,9 +8,18 @@ import SubscribeButton from "./subscribeButton";
 
 const Forum = (props) => {
   
+  const [updatedAt, setUpdatedAt] = useState (); 
+
   const isLoggedIn = () => {
     return sessionStorage.getItem('accessToken')!==null;
   }
+
+  // sets updatedAt to createdAt if updatedAt doesnt exist
+  const isUpdateSet = () => {
+    setUpdatedAt(props.updatedAt !== null ? props.updatedAt : props.createdAt);
+  }
+
+  useEffect(isUpdateSet)
 
   return (
     <div className="forum">
@@ -29,8 +38,7 @@ const Forum = (props) => {
         <ForumStatictics
           numberOfThreads={props.numberOfThreads}
           createdAt={props.createdAt}
-          lastActivityFrom={props.lastActivityFrom}
-          updatedAt={props.updatedAt}
+          updatedAt={updatedAt}
         />
       </div>
     </div>
