@@ -34,9 +34,6 @@ const Thread = (props) => {
   //thread author or the username of the last contribution author
   const [lastPoster, setLastPoster] = useState(props.thread.creatorUserName);
 
-  //the number of contributions that is max. displayed below a thread
-  const contributionLimit = 5;
-
   //used to reference to the preview list
   const previewRef = React.useRef(null);
 
@@ -60,7 +57,7 @@ const Thread = (props) => {
     const abortController = new AbortController();
     setIsPending(true);
     fetch(
-      `${config.serverPath}/api/contributions/all/${props.thread.id}?limit=${contributionLimit}&offset=0&orderBy=createdAt&order=desc`,
+      `${config.serverPath}/api/contributions/all/${props.thread.id}?limit=${config.numberOfContributionPreviews}&offset=0&orderBy=createdAt&order=desc`,
       {
         signal: abortController.signal,
         headers: {

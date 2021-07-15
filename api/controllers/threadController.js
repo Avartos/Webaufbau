@@ -214,7 +214,6 @@ const update = (req, res) => {
 const findByName = (req, res) => {
   const query = decodeURIComponent(req.query.q);
   const queryArray = getQueryParametersMapped(query)
-  console.log('Test');
   Thread.findAll({
       attributes: [
         [Sequelize.fn('concat', 'Thread:'), 'flag'],
@@ -231,7 +230,7 @@ const findByName = (req, res) => {
       res.json(data);
     })
     .catch(error => {
-      console.log('Error:\t', error);
+      console.error('Error:\t', error);
       res.sendStatus(500);
     })
 }
@@ -295,7 +294,7 @@ const addVisibilityLevelToThread = (thread, user) => {
 }
 
 /**
- * splites the query by whitespaces
+ * splits the query by whitespaces
  * @param {*} query  query that should be splitted
  * @returns an array of sequelize-substrings
  */

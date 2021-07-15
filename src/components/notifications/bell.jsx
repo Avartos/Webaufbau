@@ -79,7 +79,7 @@ const Bell = (props) => {
     setInterval(() => {
       fetchForumNotifications();
       fetchThreadNotifications();
-    }, 300000);
+    }, config.notificationBarUpdateInterval);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

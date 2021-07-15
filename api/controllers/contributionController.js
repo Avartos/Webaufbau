@@ -1,8 +1,10 @@
 const Sequelize = require('sequelize');
+
 const Contribution = require('../models/contribution');
 const User = require('../models/user');
 const Rating = require('../models/rating');
 const Image = require('../models/image');
+const Thread = require('../models/thread');
 
 
 /**
@@ -60,7 +62,7 @@ const findAll = (req, res) => {
     let condition = {
         ...contributionCondition(offset, userId)
     };
-    
+
 
     condition.where = {
         'threadsId': threadId
@@ -174,8 +176,17 @@ const add = (req, res) => {
             threadsId: parseInt(threadId)
         })
         .then(data => {
-            console.log(userId);
-            res.json(data);
+            //mark thread as updated, whenever a new contribution gets added
+            Thread.findByPk(threadId)
+                .then(thread => {
+                    thread.changed('updatedAt', true);
+                    thread.update({
+                            updatedAt: Sequelize.fn('NOW'),
+                        })
+                        .then(() => {
+                            res.json(data);
+                        })
+                })
         })
         .catch(error => {
             console.error('Error:\t', error);
@@ -183,6 +194,35 @@ const add = (req, res) => {
         });
 }
 
+
+
+
+const update = (req, res) => {
+    const receivedContribution = req.body;
+    const userId = (req.user) ? req.user.id : -1;
+    const isAdmin = (req.user) ? req.user.isAdmin : false
+    Contribution.findByPk(receivedContribution.id)
+        .then(contribution => {
+            if (userId !== contribution.usersId && !isAdmin) {
+                throw Error(`@user${userId} tried to modify @tcontribution ${receivedContribution.id}`);
+            }
+
+            contribution.update({
+                    content: receivedContribution.content
+                })
+                .then((data) => {
+                    res.sendStatus(200);
+                })
+                .catch(error => {
+                    res.sendStatus(500);
+                    console.error('Error:\t', error);
+                })
+        })
+        .catch(error => {
+            res.sendStatus(403);
+            console.error('Error:\t', error);
+        })
+}
 
 /**
  * maps the found ratings to the contributions
@@ -203,63 +243,35 @@ const addRatingsToContributions = (contributions, ratings) => {
     return mappedArray;
 }
 
-const update = (req, res) => {
-    const receivedContribution = req.body;
-    const userId = (req.user) ? req.user.id : -1;
-    const isAdmin = (req.user) ? req.user.isAdmin : false
-    Contribution.findByPk(receivedContribution.id)
-    .then(contribution => {
-      if(userId !== contribution.usersId && !isAdmin) {
-        throw Error(`@user${userId} tried to modify @tcontribution ${receivedContribution.id}`);
-      }
-  
-      contribution.update({
-        content: receivedContribution.content
-      })
-      .then((data) => {
-        res.sendStatus(200);
-      })
-      .catch(error => {
-        res.sendStatus(500);
-        console.error('Error:\t', error);
-      })
-    })
-    .catch(error => {
-      res.sendStatus(403);
-      console.error('Error:\t', error);
-    })
-  }
-
-
 /**
  * Adds visibility levels to all contributions
  * @param {*} contributions a list of threads
  * @param {*} user    the currently logged in user that should be compared with the thread
  * @returns
  */
- const addVisibilityLevelToContributions = (contributions, user) => {
+const addVisibilityLevelToContributions = (contributions, user) => {
     const mappedThreads = contributions.map(contribution => {
-      return addVisibilityLevelToContribution(contribution, user);
+        return addVisibilityLevelToContribution(contribution, user);
     });
     return mappedThreads;
-  }
-  
-  /**
-   * Adds the visibility to one single thread. If the thread has been created by the given user
-   * or the user has administrative privileges, the visibility level will be true
-   * @param {*} contribution  the thread that should be extended
-   * @param {*} user    the user that should be compared
-   * @returns
-   */
-  const addVisibilityLevelToContribution = (contribution, user) => {
-    if(user && (parseInt(user.id) === parseInt(contribution.dataValues.creatorId) || user.isAdmin)) {
-      
+}
+
+/**
+ * Adds the visibility to one single thread. If the thread has been created by the given user
+ * or the user has administrative privileges, the visibility level will be true
+ * @param {*} contribution  the thread that should be extended
+ * @param {*} user    the user that should be compared
+ * @returns
+ */
+const addVisibilityLevelToContribution = (contribution, user) => {
+    if (user && (parseInt(user.id) === parseInt(contribution.dataValues.creatorId) || user.isAdmin)) {
+
         contribution.dataValues.isEditable = true;
     } else {
-      contribution.dataValues.isEditable = false;
+        contribution.dataValues.isEditable = false;
     }
     return contribution;
-  }
+}
 
 module.exports = {
     findAll,

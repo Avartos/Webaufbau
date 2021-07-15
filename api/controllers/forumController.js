@@ -61,7 +61,7 @@ const findOne = (req, res) => {
             res.json(data);
         })
         .catch(error => {
-            console.log('Error:\t', error)
+            console.error('Error:\t', error)
             res.sendStatus(500);
         });
 }
@@ -97,7 +97,7 @@ const findByName = (req,res) => {
             res.json(data);
         })
         .catch(error => {
-            console.log('Error:\t', error);
+            console.error('Error:\t', error);
             res.sendStatus(500);
         })
 }
