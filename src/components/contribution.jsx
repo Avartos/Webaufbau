@@ -128,7 +128,7 @@ function Contribution({
         handleAddAlert(
           "success",
           "",
-          "Ihr Thread wurde erfolgreich aktualisiert!"
+          "Ihr Beitrag wurde erfolgreich aktualisiert!"
         );
       })
 
