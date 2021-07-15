@@ -1,10 +1,9 @@
-const Sequelize = require('../config/connection');
+const Sequelize = require('sequelize');
+
 const Thread = require('../models/thread');
-const User = require('../models/user');
 const SubscribedThread = require('../models/subscribedThread');
 const Forum = require('../models/forum');
 const Contribution = require('../models/contribution')
-const SubscribedForum = require('../models/subscribedForum');
 
 
 const findFavorites = (req, res) => {

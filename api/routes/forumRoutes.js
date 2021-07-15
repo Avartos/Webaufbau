@@ -7,6 +7,7 @@ const authMiddleware = require('../middlewares/authMiddleware');
 router.get('/', authMiddleware.extractUserFromToken, forumController.findAll);
 
 router.get('/search', forumController.findByName);
+
 // get a forum with a given id
 router.get('/:id', authMiddleware.extractUserFromToken, forumController.findOne);
 

@@ -1,4 +1,4 @@
-const Sequelize = require('../config/connection');
+const Sequelize = require('sequelize');
 const Contribution = require('../models/contribution');
 const User = require('../models/user');
 const Rating = require('../models/rating');

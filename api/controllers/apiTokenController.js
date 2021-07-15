@@ -1,14 +1,16 @@
 const ApiToken = require('../models/apiToken');
-const {v1: uuidv1,} = require('uuid');
+const {
+    v1: uuidv1,
+} = require('uuid');
 
-const add = (req,res) => {
+const add = (req, res) => {
 
     const apiToken = uuidv1();
 
     ApiToken.create({
-        apiToken: apiToken
-    })
-        .then(data =>{
+            apiToken: apiToken
+        })
+        .then(data => {
             res.json(apiToken)
         })
         .catch(error => {

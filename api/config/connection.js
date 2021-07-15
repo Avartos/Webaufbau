@@ -13,8 +13,9 @@ const sequelize = new Sequelize(
     {
         host: 'localhost',
         dialect: 'mysql',
+        //deprecated, therefore disabled
         operatorsAliases: 0,
-        // set to true, to see the executed queries in console log
+        // comment to see the executed queries in console log
         logging: false,
         pool: {
             // number of max simultaneous connections
@@ -29,5 +30,3 @@ const sequelize = new Sequelize(
 });
 
 module.exports = sequelize;
-// module.exports = Sequelize;
-// global.sequelize = sequelize; //did not work

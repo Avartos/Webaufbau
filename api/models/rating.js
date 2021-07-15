@@ -1,8 +1,6 @@
 const Sequelize = require('sequelize');
 const sequelize = require('../config/connection');
 
-const User = require('./user');
-
 const Rating = sequelize.define("Rating", {
     contributionsId: {
         primaryKey: true,

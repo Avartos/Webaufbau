@@ -1,14 +1,14 @@
-const User = require("../models/user.js");
-const Login = require("../models/login.js");
-const Image = require("../models/image.js");
 const bcrypt = require("bcrypt");
 const {
     sign
 } = require("jsonwebtoken");
 const Sequelize = require('sequelize');
-const {
-    CropLandscapeOutlined
-} = require("@material-ui/icons");
+
+const User = require("../models/user.js");
+const Login = require("../models/login.js");
+const Image = require("../models/image.js");
+
+
 
 //returns all users with limited login and profile picutre information
 const findAll = (req, res) => {
@@ -25,10 +25,10 @@ const findAll = (req, res) => {
         ],
         // join with tables login and image
         include: [{
-            model: Login,
-            as: "login",
-            attributes: []
-        },
+                model: Login,
+                as: "login",
+                attributes: []
+            },
             {
                 model: Image,
                 as: "image",
@@ -51,16 +51,16 @@ const findOne = (req, res) => {
     const userId = (req.user) ? req.user.id : -1;
 
     User.findByPk(userId, {
-        include: [{
-            model: Login,
-            as: "login"
-        },
-            {
-                model: Image,
-                as: "image"
-            },
-        ],
-    })
+            include: [{
+                    model: Login,
+                    as: "login"
+                },
+                {
+                    model: Image,
+                    as: "image"
+                },
+            ],
+        })
         .then((data) => {
             res.json(data);
         })
@@ -115,7 +115,7 @@ const findOneByName = (req, res) => {
                                 id: user.id,
                                 isAdmin: user.isAdmin,
                             },
-                            "i677hf8kuah2basb0fasjb234faksbf"
+                            'i677hf8kuah2basb0fasjb234faksbf'
                         );
                         const tokenObject = {
                             accessToken: accessToken,
@@ -165,9 +165,9 @@ const updateLogin = (req, res) => {
     Login.findOne(condition)
         .then(login => {
             login.update({
-                isAdmin: isAdmin,
-                isEnabled: isEnabled
-            })
+                    isAdmin: isAdmin,
+                    isEnabled: isEnabled
+                })
                 .then(updatedLogin => {
                     console.log(updatedLogin);
                     res.json(updatedLogin);
@@ -183,19 +183,21 @@ const updateLogin = (req, res) => {
 const add = (req, res) => {
     const user = req.body;
     User.findOne({
-        where: {userName: user.userName}
-    })
+            where: {
+                userName: user.userName
+            }
+        })
         .then((data) => {
             /*
-            * Check for existing username
-            * */
-                if (data) {
-                    console.error("Error:\t", `User ${user.userName} already exists!`);
-                    res.sendStatus(418);
-                } else {
-                    bcrypt.hash(req.body.passwordHash, 10)
-                        .then((hash) => {
-                            User.create({
+             * Check for existing username
+             * */
+            if (data) {
+                console.error('Error:\t', `User ${user.userName} already exists!`);
+                res.sendStatus(418);
+            } else {
+                bcrypt.hash(req.body.passwordHash, 10)
+                    .then((hash) => {
+                        User.create({
                                 userName: user.userName,
                                 login: {
                                     passwordHash: hash,
@@ -204,20 +206,19 @@ const add = (req, res) => {
                             }, {
                                 include: [{
                                     model: Login,
-                                    as: "login"
+                                    as: 'login'
                                 }], // join between User and Login. as means joincolumn
                             })
-                                .then((data) => {
-                                    res.json(data);
-                                })
-                        })
-                        .catch((error) => {
-                            console.error("Error:\t", error);
-                            res.sendStatus(500);
-                        });
-                }
+                            .then((data) => {
+                                res.json(data);
+                            })
+                    })
+                    .catch((error) => {
+                        console.error('Error:\t', error);
+                        res.sendStatus(500);
+                    });
             }
-        )
+        })
 };
 
 // updates the profile picture of the current user
@@ -235,8 +236,8 @@ const updateImage = (req, res) => {
     User.findByPk(userId, condition)
         .then(user => {
             user.update({
-                imagesId: imageId
-            })
+                    imagesId: imageId
+                })
                 .then(user => {
                     //search image to return
                     Image.findByPk(imageId)
@@ -291,8 +292,8 @@ const updatePassword = (req, res) => {
                                 .then((hash) => {
                                     //save the new hash to the database
                                     login.update({
-                                        passwordHash: hash
-                                    })
+                                            passwordHash: hash
+                                        })
                                         .then(data => {
                                             res.sendStatus(200);
                                         })

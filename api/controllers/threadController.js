@@ -7,75 +7,81 @@ const Forum = require('../models/forum');
 
 
 //the basic condition for thread requests
-const threadCondition = (userId) => {return {
-  //limits the attributes the result contains
-  attributes: [
-    'id',
-    'title',
-    'content',
-    //reformats the date
-    [Sequelize.fn('date_format', Sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
-    'usersId',
-    'forumsId',
-    //get the username from the included table
-    [Sequelize.col('user.userName'), 'creatorUserName'],
-    //get the user id from the subscribed thread include
-    [Sequelize.col('subscribedThreads.usersId'), 'subscriptionUsersId'],
-  ],
-  include: [{
-      model: User,
-      as: 'user',
-      attributes: [],
-    },
-    {
-      model: SubscribedThread,
-      as: 'subscribedThreads',
-      required: false,
-      where: {
-        usersId: userId
-      },
-      attributes: []
-    },
-    {
-      model: Contribution,
-      as: 'contributions',
-      //Orders contributions to show the newest contribution first
-      order: [
-        [
-          'createdAt', 'desc'
-        ]
-      ],
-      //only display the creation date of the contribution
-      attributes: [
-        'usersId',
-        [Sequelize.fn('date_format', Sequelize.col('contribution.createdAt'), '%d.%m.%Y'), 'createdAt'],
-      ],
-      //include the user to access its username
-      include: [{
+const threadCondition = (userId) => {
+  return {
+    //limits the attributes the result contains
+    attributes: [
+      'id',
+      'title',
+      'content',
+      //reformats the date
+      [Sequelize.fn('date_format', Sequelize.col('thread.createdAt'), '%d.%m.%Y'), 'createdAt'],
+      'usersId',
+      'forumsId',
+      //get the username from the included table
+      [Sequelize.col('user.userName'), 'creatorUserName'],
+      //get the user id from the subscribed thread include
+      [Sequelize.col('subscribedThreads.usersId'), 'subscriptionUsersId'],
+    ],
+    include: [{
         model: User,
         as: 'user',
-        attributes: ['userName']
-      }],
-      //only get the most recent contribution
-      limit: 1
-    }
-  ],
-}}
+        attributes: [],
+      },
+      {
+        model: SubscribedThread,
+        as: 'subscribedThreads',
+        required: false,
+        where: {
+          usersId: userId
+        },
+        attributes: []
+      },
+      {
+        model: Contribution,
+        as: 'contributions',
+        //Orders contributions to show the newest contribution first
+        order: [
+          [
+            'createdAt', 'desc'
+          ]
+        ],
+        //only display the creation date of the contribution
+        attributes: [
+          'usersId',
+          [Sequelize.fn('date_format', Sequelize.col('contribution.createdAt'), '%d.%m.%Y'), 'createdAt'],
+        ],
+        //include the user to access its username
+        include: [{
+          model: User,
+          as: 'user',
+          attributes: ['userName']
+        }],
+        //only get the most recent contribution
+        limit: 1
+      }
+    ],
+  }
+}
 
 
 // returns all threads from the given forum id
 const findAll = (req, res) => {
   const forumId = req.params.forumId;
   const userId = (req.user) ? req.user.id : -1;
-  const user = (req.user) ? req.user : null;
+  const user = req.user;
 
   const orderBy = req.query.orderBy;
   const order = req.query.order === 'asc' ? 'asc' : 'desc';
 
-  let condition = {...threadCondition(userId)};
+  let condition = {
+    ...threadCondition(userId)
+  };
 
-  if(orderBy) {
-    condition.order = [[orderBy, order]];
+  if (orderBy) {
+    condition.order = [
+      [orderBy, order]
+    ];
   }
 
   condition.where = {
@@ -115,8 +121,12 @@ const findOne = (req, res) => {
   const id = req.params.id;
   const userId = (req.user) ? req.user.id : -1;
   const user = (req.user) ? req.user : null;
-  let condition = {...threadCondition(userId)};
-  condition.where = {'id' : id};
+  let condition = {
+    ...threadCondition(userId)
+  };
+  condition.where = {
+    'id': id
+  };
 
   Contribution.count({
       group: ['threadsId'],
@@ -156,16 +166,16 @@ const add = (req, res) => {
     .then(data => {
       //update the updatedAt column of the forum
       Forum.findByPk(forumId)
-      .then(forum => {
-        // necessary to change updated At, simple update would not work
-        forum.changed('updatedAt', true);
-        forum.update({
-          updatedAt: Sequelize.fn('NOW'),
+        .then(forum => {
+          // necessary to change updated At, simple update would not work
+          forum.changed('updatedAt', true);
+          forum.update({
+              updatedAt: Sequelize.fn('NOW'),
+            })
+            .then(updatedForum => {
+              res.json(data);
+            })
         })
-        .then(updatedForum => {
-          res.json(data);
-        })
-      })
     })
     .catch(error => {
       console.error('Error:\t', error);
@@ -178,27 +188,52 @@ const update = (req, res) => {
   const userId = (req.user) ? req.user.id : -1;
   const isAdmin = (req.user) ? req.user.isAdmin : false
   Thread.findByPk(receivedThread.id)
-  .then(thread => {
-    if(userId !== thread.usersId && !isAdmin) {
-      throw Error(`@user${userId} tried to modify @thread${receivedThread.id}`);
-    }
+    .then(thread => {
+      if (userId !== thread.usersId && !isAdmin) {
+        throw Error(`@user${userId} tried to modify @thread${receivedThread.id}`);
+      }
 
-    thread.update({
-      title: receivedThread.title,
-      content: receivedThread.content
-    })
-    .then((data) => {
-      res.sendStatus(200);
+      thread.update({
+          title: receivedThread.title,
+          content: receivedThread.content
+        })
+        .then((data) => {
+          res.sendStatus(200);
+        })
+        .catch(error => {
+          res.sendStatus(500);
+          console.error('Error:\t', error);
+        })
     })
     .catch(error => {
-      res.sendStatus(500);
+      res.sendStatus(403);
       console.error('Error:\t', error);
     })
-  })
-  .catch(error => {
-    res.sendStatus(403);
-    console.error('Error:\t', error);
-  })
+}
+
+const findByName = (req, res) => {
+  const query = decodeURIComponent(req.query.q);
+  const queryArray = getQueryParametersMapped(query)
+  console.log('Test');
+  Thread.findAll({
+      attributes: [
+        [Sequelize.fn('concat', 'Thread:'), 'flag'],
+        'title',
+        [Sequelize.fn('concat', '/contributions/', Sequelize.col('id')), 'link']
+      ],
+      where: {
+        title: {
+          [Sequelize.Op.or]: queryArray
+        }
+      }
+    })
+    .then(data => {
+      res.json(data);
+    })
+    .catch(error => {
+      console.log('Error:\t', error);
+      res.sendStatus(500);
+    })
 }
 
 /**
@@ -207,7 +242,7 @@ const update = (req, res) => {
  * @param {*} dataCounts  the array of counts that should be mapped to the threads
  * @returns mapped list of threads and counts
  */
- const addCountsToData = (threads, contributionCounts) => {
+const addCountsToData = (threads, contributionCounts) => {
   const mappedThreads = threads.map(thread => {
     let matchingCount = contributionCounts.find(countEntry => thread.id === countEntry.threadsId);
     return mapCountToThread(thread, matchingCount);
@@ -251,7 +286,7 @@ const addVisibilityToThreads = (threads, user) => {
  * @returns
  */
 const addVisibilityLevelToThread = (thread, user) => {
-  if(user && (user.id === thread.dataValues.usersId || user.isAdmin)) {
+  if (user && (user.id === thread.dataValues.usersId || user.isAdmin)) {
     thread.dataValues.isEditable = true;
   } else {
     thread.dataValues.isEditable = false;
@@ -259,8 +294,12 @@ const addVisibilityLevelToThread = (thread, user) => {
   return thread;
 }
 
-const getQueryParametersMapped = (query) =>
-{
+/**
+ * splites the query by whitespaces
+ * @param {*} query  query that should be splitted
+ * @returns an array of sequelize-substrings
+ */
+const getQueryParametersMapped = (query) => {
   const queryArray = query.split(' ');
   const mappedArray = queryArray.map((queryString) => {
     return ({
@@ -270,31 +309,7 @@ const getQueryParametersMapped = (query) =>
   return mappedArray;
 }
 
-const findByName = (req,res) => {
-  const query = decodeURIComponent(req.query.q);
-  const queryArray = getQueryParametersMapped(query)
-  console.log('Test');
-  Thread.findAll({
-    attributes: [
-      [Sequelize.fn("concat", "Thread:"),'flag'],
-      'title',
-      [Sequelize.fn("concat", "/contributions/",Sequelize.col('id')),'link']
-    ],
-    where: {
-      title:
-          {
-            [Sequelize.Op.or]: queryArray
-          }
-    }
-  })
-      .then(data => {
-        res.json(data);
-      })
-      .catch(error => {
-        console.log('Error:\t', error);
-        res.sendStatus(500);
-      })
-}
+
 
 module.exports = {
   findAll,

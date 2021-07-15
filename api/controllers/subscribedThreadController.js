@@ -154,7 +154,7 @@ const extractUnreadNotifications = (threadSubscriptions) => {
     return newNotifications;
 }
 
-
+//updates the updated at timestamp of a subscription
 const updateTimestamp = (req, res) => {
     const threadId = req.params.id;
     const userId = (req.user) ? req.user.id : -1;

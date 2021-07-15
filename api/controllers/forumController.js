@@ -41,7 +41,7 @@ const findAll = (req,res) => {
     }).then((data) => {
         res.json(data);
     }).catch((error) => {
-        console.error("Error:\t",error);
+        console.error('Error:\t',error);
         res.sendStatus(500);
     })
 }
@@ -82,9 +82,9 @@ const findByName = (req,res) => {
     const queryArray = getQueryParametersMapped(query)
     Forum.findAll({
         attributes: [
-            [sequelize.fn("concat", "Forum:"),'flag'],
+            [sequelize.fn('concat', 'Forum:'),'flag'],
             'title',
-            [sequelize.fn("concat", "/threads/",sequelize.col('id')),'link']
+            [sequelize.fn('concat', '/threads/',sequelize.col('id')),'link']
         ],
         where: {
             title:

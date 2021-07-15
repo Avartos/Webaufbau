@@ -67,7 +67,6 @@ const getOneForum = (req, res) => {
 const addContributionCountsToData = (threads, contributionCounts) => {
     const mappedArray = threads.map(entry => {
         let matchingCount = contributionCounts.find(countEntry => entry.id === countEntry.threadsId);
-        console.log('test', threads);
         if (matchingCount) {
             entry.dataValues.contributionCount = matchingCount.count;
         } else {
