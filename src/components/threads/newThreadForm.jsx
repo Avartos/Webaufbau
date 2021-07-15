@@ -2,8 +2,6 @@ import React, { useState } from "react";
 
 /**
  * This component is used to add a new thread to the list of threads.
- * @param {*} param0
- * @returns
  */
 const NewThreadForm = ({ handleSubmitForm }) => {
   const [threadTitle, setTitle] = useState("");

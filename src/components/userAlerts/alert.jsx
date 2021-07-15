@@ -6,8 +6,6 @@ import React, { useState } from "react";
 /**
  * This component represents a single alert.
  * An alert is displayed on the top right corner of the screen
- * @param {*} param0 
- * @returns 
  */
 const AlertItem = ({ alert, handleRemoveAlert }) => {
   const [isOpen, setIsOpen] = useState(true);

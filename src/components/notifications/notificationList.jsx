@@ -3,7 +3,7 @@ import NotificationEntry from "./notificationEntry";
 /**
  * This component represents a list of notifications
  * @param {*} props forum and thread notifications
- * @returns 
+ * @returns
  */
 const NotificationList = (props) => {
   return (

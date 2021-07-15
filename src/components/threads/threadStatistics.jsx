@@ -2,8 +2,6 @@ import React from "react";
 
 /**
  * This component is used to display thread information in table-form (without native table tag)
- * @param {*} param0 
- * @returns 
  */
 const ThreadStatistics = ({
   numberOfPosts,

@@ -3,8 +3,7 @@ import { CSSTransition } from "react-transition-group";
 import ProfilePicturePreview from "./profilePicturePreview";
 
 /**
- * This component is used to list all selectable provile icons in a list
- * @param {*} props
+ * This component is used to list all selectable profile icons in a list
  */
 const ProfilePictureList = (props) => {
   const [listHeight, setListHeight] = useState(0);

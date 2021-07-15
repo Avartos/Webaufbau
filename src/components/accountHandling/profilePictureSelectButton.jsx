@@ -6,8 +6,6 @@ import config from "../../core/config";
 /**
  * This component is used to open the profile picture list
  * It also controls, when a new profile picture ist set and sends the update request to the backend
- * @param {*} props
- * @returns
  */
 const ProfilePictureSelectButton = (props) => {
   const [isUnfolded, setIsUnfolded] = useState(false);
@@ -79,8 +77,6 @@ const ProfilePictureSelectButton = (props) => {
       .catch((error) => {
         if (error.name === "AbortError") {
           console.log("fetch abortet");
-        } else {
-          setIsPending(false);
         }
       });
     return () => console.log(abortController.abort());
@@ -96,10 +92,10 @@ const ProfilePictureSelectButton = (props) => {
           <AvatarFrame className="imageFrame"></AvatarFrame>
           <img
             className="activeImage"
-            src={`${config.serverPath}/profile_pictures/${sessionStorage.getItem(
-              "profilePicture"
-            )}`}
-            alt=""
+            src={`${
+              config.serverPath
+            }/profile_pictures/${sessionStorage.getItem("profilePicture")}`}
+            alt="Ihr Profilbild"
           />
         </div>
         {!isPending && (

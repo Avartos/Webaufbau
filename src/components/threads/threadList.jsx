@@ -10,8 +10,6 @@ import ForumHeader from "./forumHeader";
 /**
  * This component includes all threads of a single forum and the form to create a new thread
  * It also handles the functions to add a new thread or to subscribe existing threads
- * @param {handleAddAlert} reference to the function to add alerts to the app
- * @returns
  */
 const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
   const { forumId } = useParams("forumId");

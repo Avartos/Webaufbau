@@ -108,7 +108,6 @@ const MyProfile = (props) => {
 
     fetch(`${config.serverPath}/api/users/`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
       body: JSON.stringify(passwordObject),
       headers: {
         "Content-Type": "application/json",

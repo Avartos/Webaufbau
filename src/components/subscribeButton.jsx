@@ -5,8 +5,6 @@ import {ReactComponent as SubscribeIcon} from '../assets/icons/splat.svg';
 
 /**
  * This component is used to toggle the subscription status of a thread or a forum
- * @param {*} param0 
- * @returns 
  */
 const SubscribeButton = ({isSubscribed, handleSubscribe, parentId}) => {
   

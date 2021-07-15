@@ -11,7 +11,9 @@ const ProfileDropDown = (props) => {
 
   //calculates the new height of the profile options list to animate it with css transitions
   const calculateProfileOptionsHeight = () => {
-    const height = props.isUnfolded ? profileOptionsRef.current.clientHeight : 0;
+    const height = props.isUnfolded
+      ? profileOptionsRef.current.clientHeight
+      : 0;
     setProfileOptionsHeight(height);
   };
 
@@ -19,7 +21,7 @@ const ProfileDropDown = (props) => {
     //clears token and other data from the session storage
     sessionStorage.clear();
     //refresh page to make sure all components reload the token
-    history.push('/');
+    history.push("/");
     history.go(0);
   };
 
@@ -35,13 +37,14 @@ const ProfileDropDown = (props) => {
       >
         <div ref={profileOptionsRef}>
           <div className="header">
-            <span>Hallo @{sessionStorage.getItem('userName')}!</span>
+            <span>Hallo @{sessionStorage.getItem("userName")}!</span>
           </div>
+
           <div className="body">
             <Link to="/my_profile">
               <span onClick={props.handleToggleUnfold}>Mein Konto</span>
             </Link>
-            {sessionStorage.getItem("isAdmin") === '1' && (
+            {sessionStorage.getItem("isAdmin") === "1" && (
               <Link to="/administration">
                 <span onClick={props.handleToggleUnfold}>Nutzerverwaltung</span>
               </Link>

@@ -79,7 +79,7 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
           )}
         </h2>
         <Link to={"/"} className="wrapperReturn" title="Zurück zur Startseite">
-          <img src={ReturnIcon} alt="zurück"/>
+          <img src={ReturnIcon} alt="zurück" />
         </Link>
         <div className="wrapperButton">
           {sessionStorage.getItem("accessToken") && (

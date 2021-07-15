@@ -1,4 +1,4 @@
-import {default as AvatarFrame} from "../../assets/icons/avatarFrame.svg";
+import { default as AvatarFrame } from "../../assets/icons/avatarFrame.svg";
 import React from "react";
 import config from "../../core/config";
 
@@ -15,20 +15,22 @@ const ProfileButton = (props) => {
         <div
           className="profileDropDownButton"
           onClick={() => props.handleToggleUnfold()}
-          title={sessionStorage.getItem('userName')}
+          title={sessionStorage.getItem("userName")}
         >
           <img
             src={`${config.serverPath}/profile_pictures/${props.profilePicturePath}`}
-            alt="Avatar"
+            alt="Profilbild"
             className="avatar"
           />
-          <img src={AvatarFrame}  className="avatarFrame" alt="" />
+          <img src={AvatarFrame} className="avatarFrame" alt="Profilbild" />
         </div>
       </div>
+
       <ProfileDropDown
         isUnfolded={props.isUnfolded}
         handleToggleUnfold={props.handleToggleUnfold}
       ></ProfileDropDown>
+      
     </React.Fragment>
   );
 };

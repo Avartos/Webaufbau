@@ -4,11 +4,11 @@ import NotificationList from "./notificationList";
 import classNames from "classnames";
 import { CSSTransition } from "react-transition-group";
 
+import config from "../../core/config";
+
 /**
  * This component is used to control notifications
  * It automatically fetches for new notifications (every 5 minutes)
- * @param {*} props
- * @returns
  */
 const Bell = (props) => {
   //two separate notification arrays since there can be twi different types of notifications
@@ -52,7 +52,6 @@ const Bell = (props) => {
       .catch((error) => {
         if (error.name === "AbortError") {
           console.log("fetch abortet");
-        } else {
         }
       });
     return () => console.log(abortController.abort());
@@ -60,14 +59,14 @@ const Bell = (props) => {
 
   const fetchForumNotifications = () => {
     fetchNotifications(
-      `http://localhost:3001/api/forums/subscriptions/new`,
+      `${config.serverPath}/api/forums/subscriptions/new`,
       false
     );
   };
 
   const fetchThreadNotifications = () => {
     fetchNotifications(
-      `http://localhost:3001/api/threads/subscriptions/new`,
+      `${config.serverPath}/api/threads/subscriptions/new`,
       true
     );
   };
@@ -80,7 +79,7 @@ const Bell = (props) => {
     setInterval(() => {
       fetchForumNotifications();
       fetchThreadNotifications();
-    }, 5000);
+    }, 300000);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -110,7 +109,6 @@ const Bell = (props) => {
       .catch((error) => {
         if (error.name === "AbortError") {
           console.log("fetch abortet");
-        } else {
         }
       });
     return () => console.log(abortController.abort());
@@ -118,13 +116,14 @@ const Bell = (props) => {
 
   const handleMarkForumAsRead = (forumId) => {
     updateNotification(
-      `http://localhost:3001/api/forums/subscriptions/${forumId}`,
+      `${config.serverPath}/api/forums/subscriptions/${forumId}`,
       fetchForumNotifications
     );
   };
+
   const handleMarkThreadAsRead = (threadId) => {
     updateNotification(
-      `http://localhost:3001/api/threads/subscriptions/${threadId}`,
+      `${config.serverPath}/api/threads/subscriptions/${threadId}`,
       fetchThreadNotifications
     );
   };

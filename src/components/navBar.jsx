@@ -3,14 +3,12 @@ import SearchBar from "./searchBar";
 import Bell from "./notifications/bell";
 import LoginButton from "./loginButton";
 import { Link } from "react-router-dom";
-// import { ReactComponent as LogoIcon } from "../assets/icons/logo.svg";
+
 import ProfileButton from "./accountHandling/profileButton";
 import { default as LogoIcon } from "../assets/icons/logo.svg";
 
 /**
  * This component represent the navigation bar
- * @param {*} props
- * @returns
  */
 const NavBar = (props) => {
   const [notificationsUnfolded, setNotificationsUnfolded] = useState(false);
@@ -68,9 +66,8 @@ const NavBar = (props) => {
         </ul>
         <Link to="/" className="wrapperLogo">
           <img className="websiteLogo" src={LogoIcon} alt="" />
-          {/* <LogoIcon className="websiteLogo" /> */}
         </Link>
-        <SearchBar handleSearch={props.handleSearch}/>
+        <SearchBar handleSearch={props.handleSearch} />
       </nav>
     </React.Fragment>
   );

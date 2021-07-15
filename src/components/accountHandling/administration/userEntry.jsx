@@ -23,12 +23,23 @@ const UserEntry = (props) => {
 
   return (
     <div className="userEntry row">
+      {/* Profile Picture */}
       <span className="cell">
         <ProfilePicture path={props.user.profilePicturePath}></ProfilePicture>
       </span>
-      <span className="cell"><span className="mobile">Id</span><span className="value">{props.user.id}</span></span>
-      <span className="cell"><span className="mobile">Nutzername</span><span className="value">{props.user.userName}</span></span>
-      
+      {/* User ID */}
+      <span className="cell">
+        <span className="mobile">Id</span>
+        <span className="value">{props.user.id}</span>
+      </span>
+
+      {/* Username */}
+      <span className="cell">
+        <span className="mobile">Nutzername</span>
+        <span className="value">{props.user.userName}</span>
+      </span>
+
+      {/* Administrator Toggle */}
       <span className="cell">
         <span className="mobile">Ist Administrator</span>
         <input
@@ -37,6 +48,8 @@ const UserEntry = (props) => {
           defaultChecked={props.user.isAdmin}
         />
       </span>
+
+      {/* Enabled Toggle */}
       <span className="cell">
         <span className="mobile">Ist Enabled</span>
         <input

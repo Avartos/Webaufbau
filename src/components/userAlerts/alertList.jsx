@@ -4,8 +4,6 @@ import AlertItem from './alert';
 /**
  * This component is used to display all alerts.
  * The newest alert is always on top
- * @param {*} param0 
- * @returns 
  */
 const AlertList = ({messages, handleRemoveAlert}) => {
     

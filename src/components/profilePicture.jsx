@@ -5,8 +5,6 @@ import config from "../core/config";
 /**
  * This component represents the profile picture
  * It is used to have the actual picture behind a bully eye
- * @param {*} param0 
- * @returns 
  */
 const ProfilePicture = ({path}) => {
     return ( 

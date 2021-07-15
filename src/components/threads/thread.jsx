@@ -50,8 +50,8 @@ const Thread = (props) => {
     props.handleTogglePreview(props.thread.id);
     console.log(contributions.length);
     // if (contributions.length !== 0) {
-      console.log('tehest');
-      fetchContributions();
+    console.log("tehest");
+    fetchContributions();
     // }
   };
 
@@ -121,6 +121,7 @@ const Thread = (props) => {
     setIsEditMode(!isEditMode);
   };
 
+  //used to save an updated thread
   const handleSendChangedThread = () => {
     let updatedThread = {
       id: props.thread.id,
@@ -149,7 +150,7 @@ const Thread = (props) => {
         );
       })
 
-      .catch((error) => {
+      .catch(() => {
         props.handleAddAlert(
           "error",
           "Fehler",
@@ -158,6 +159,7 @@ const Thread = (props) => {
       });
   };
 
+  //used to update the rating of a contribution within the preview list
   const handleRate = (rate, contributionId) => {
     const newRate = { rating: rate };
 
@@ -218,7 +220,6 @@ const Thread = (props) => {
               className="editButton"
               onClick={handleToggleEditMode}
             ></EditIcon>
-            {/* <CreateIcon ></CreateIcon> */}
           </div>
         )}
 

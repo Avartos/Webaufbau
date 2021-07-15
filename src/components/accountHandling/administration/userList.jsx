@@ -36,6 +36,7 @@ const UserList = () => {
 
   //updates a single user and updates the users state
   const handleUpdateUserLogin = (userId, isAdmin, isEnabled) => {
+    //object that is used to change the entries in the login
     const loginObject = {
       userId: userId,
       isAdmin: isAdmin,
@@ -76,6 +77,7 @@ const UserList = () => {
       <h2>Nutzer</h2>
       {!isPending && (
         <React.Fragment>
+          
           <div className="row header">
             <span className="cell head">Profilbild</span>
             <span className="cell head">User ID</span>
@@ -83,6 +85,7 @@ const UserList = () => {
             <span className="cell head">Ist Admin</span>
             <span className="cell head">Ist Aktiviert</span>
           </div>
+
           {users.map((user) => {
             return (
               <UserEntry

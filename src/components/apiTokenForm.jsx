@@ -5,11 +5,9 @@ import config from "../core/config";
 
 /**
  * This component is used to provide the user a way to request a token from the backend to use the external squid api
- * @param {*} param0
- * @returns
  */
 const ApiTokenForm = ({ handleAddAlert }) => {
-  const [token, setToken] = useState('');
+  const [token, setToken] = useState("");
   const [handleToggleLinks, setHandleToggleLinks] = useState(false);
   const [isPending, setIsPending] = useState(false);
 
@@ -32,7 +30,7 @@ const ApiTokenForm = ({ handleAddAlert }) => {
       .then((res) => {
         if (!res.ok) {
           throw Error(
-            "Fehler beim Abrufen der Threads! Bitte versuchen Sie es später erneut."
+            "Fehler beim Generieren des Token! Bitte versuchen Sie es später erneut."
           );
         }
         return res.json();
@@ -72,7 +70,7 @@ const ApiTokenForm = ({ handleAddAlert }) => {
         <button
           class={tokenButtonClass}
           onClick={handleRequestToken}
-          disabled={token !== ''}
+          disabled={token !== ""}
         >
           Token Anfordern
           {isPending && !token && (
@@ -81,13 +79,18 @@ const ApiTokenForm = ({ handleAddAlert }) => {
             </div>
           )}
         </button>
-        {handleToggleLinks &&
-            <div>
-              <h3>Link für Foren mit Token</h3>
-              <span>http://localhost:3001/squid/getThreadForumOfTheDay/forum/?t={token}</span>
-              <h3>Link für Thread mit Token</h3>
-              <span>http://localhost:3001/squid/getThreadForumOfTheDay/thread/?t={token}</span>
-            </div>}
+        {handleToggleLinks && (
+          <div>
+            <h3>Link für Foren mit Token</h3>
+            <span>
+              {config.serverPath}/squid/getThreadForumOfTheDay/forum/?t={token}
+            </span>
+            <h3>Link für Thread mit Token</h3>
+            <span>
+              {config.serverPath}/squid/getThreadForumOfTheDay/thread/?t={token}
+            </span>
+          </div>
+        )}
       </div>
     </form>
   );
