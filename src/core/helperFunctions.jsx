@@ -6,6 +6,4 @@ const shortenString = (targetString, maxLength, moreTextSymbol) => {
     return shortenedString;
 }
 
-export default {
-    shortenString
-}
+export default {shortenString : shortenString};

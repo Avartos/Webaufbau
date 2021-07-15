@@ -7,7 +7,6 @@ const SearchBar = (props) => {
 
   const query = useLocation().search;
   const searchParam = new URLSearchParams(query).get('q');
-  console.log(searchParam);
 
   let searchBarClass = classNames({
     searchBar: true,

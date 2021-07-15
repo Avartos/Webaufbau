@@ -77,10 +77,11 @@ const Bell = (props) => {
     fetchForumNotifications();
     fetchThreadNotifications();
     //refresh notifications automatically after 5 minutes
-    const interval = setInterval(() => {
+    setInterval(() => {
       fetchForumNotifications();
       fetchThreadNotifications();
     }, 5000);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const updateNotification = (url, targetFetch) => {

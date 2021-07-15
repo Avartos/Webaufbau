@@ -26,6 +26,7 @@ const NotificationEntry = (props) => {
     setNotificationHeight(height);
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(calculateEntryHeight, [props]);
 
   return (

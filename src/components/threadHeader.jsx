@@ -23,36 +23,24 @@ const ThreadHeader = ({
     }
   };
 
-  useEffect(determineLastPostData, []);
+  // useEffect(determineLastPostData, []);
 
   //the username of the last poster, can be either the username of the
   //thread author or the username of the last contribution author
   const [lastPoster, setLastPoster] = useState(thread[0].creatorUserName);
 
   useEffect(() => {
-    if (thread[0].subscriptionUsersId !== null) {
-      setIsSubscribed(true);
-    } else {
-      setIsSubscribed(false);
-    }
-  }, [thread]);
-
-  const userIsLoggedIn = () => {
-    return sessionStorage.getItem("accessToken") != null;
-  };
-
-  useEffect(() => {
-    console.log("Thread", thread);
+    determineLastPostData();
     if (thread.length > 0 && thread[0].subscriptionUsersId !== null) {
       setIsSubscribed(true);
     } else {
       setIsSubscribed(false);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [thread]);
 
   const handleSubscribeThread = (id) => {
     const subscribeMethod = isSubscribed ? "DELETE" : "POST";
-    console.log(isSubscribed);
     fetch(`http://localhost:3001/api/threads/subscriptions/${thread[0].id}`, {
       method: subscribeMethod,
       headers: {
@@ -73,8 +61,8 @@ const ThreadHeader = ({
   };
 
   const isLoggedIn = () => {
-    return (sessionStorage.getItem('accessToken') !== null);
-  }
+    return sessionStorage.getItem("accessToken") !== null;
+  };
 
   return (
     <div className="forumHeader">
@@ -89,11 +77,14 @@ const ThreadHeader = ({
             />
           )}
         </div>
-        <Link to={`/threads/${thread[0].forumsId}`} className="wrapperReturn" title="Zurück zum Forum">
-            {console.log(`/threads/${thread[0].forumsId}`)}
-            <img src={ReturnIcon} />
+        <Link
+          to={`/threads/${thread[0].forumsId}`}
+          className="wrapperReturn"
+          title="Zurück zum Forum"
+        >
+          {console.log(`/threads/${thread[0].forumsId}`)}
+          <img src={ReturnIcon} alt="zurück" />
         </Link>
-        
       </div>
       <div className="body">
         <div className="statistics">
@@ -106,7 +97,9 @@ const ThreadHeader = ({
         </div>
         <p className="shortDescription">{thread[0].content}</p>
       </div>
-      {isLoggedIn() && <NewContributionForm handleAddContribution={handleAddContribution} />}
+      {isLoggedIn() && (
+        <NewContributionForm handleAddContribution={handleAddContribution} />
+      )}
     </div>
   );
 };

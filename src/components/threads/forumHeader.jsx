@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { CSSTransition } from "react-transition-group";
-import {Link} from 'react-router-dom';
+import { Link } from "react-router-dom";
 
-import config from '../../core/config';
+import config from "../../core/config";
 import helper from "../../core/helperFunctions";
 
 import SubscribeButton from "../subscribeButton";
 import NewThreadForm from "./newThreadForm";
-import ReturnIcon from '../../assets/icons/returnIcon.svg';
+import ReturnIcon from "../../assets/icons/returnIcon.svg";
 
 /**
  * This component is used to display the current forum at the top of the thread list
@@ -16,9 +16,10 @@ import ReturnIcon from '../../assets/icons/returnIcon.svg';
  */
 const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
   const [isSubscribed, setIsSubscribed] = useState(false);
+
+  //used to handle the animation of the form
   const [formIsUnfolded, setFormIsUnfolded] = useState(false);
   const [formHeight, setFormHeight] = useState(0);
-
   const previewRef = React.useRef(null);
 
   useEffect(() => {
@@ -70,9 +71,15 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
   return (
     <div className="forumHeader">
       <div className="header">
-        <h2 className="title">{helper.shortenString(forum.title, config.shortenedTitleLength, '...')}</h2>
-        <Link to={'/'} className="wrapperReturn" title="Zurück zur Startseite">
-            <img src={ReturnIcon} />
+        <h2 className="title">
+          {helper.shortenString(
+            forum.title,
+            config.shortenedTitleLength,
+            "..."
+          )}
+        </h2>
+        <Link to={"/"} className="wrapperReturn" title="Zurück zur Startseite">
+          <img src={ReturnIcon} alt="zurück"/>
         </Link>
         <div className="wrapperButton">
           {sessionStorage.getItem("accessToken") && (
