@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch} from "react-router-dom";
 
 
 import "./assets/css/app.scss";
@@ -83,11 +83,11 @@ function App() {
 
   const handleSearch = (query) => {
       const encodedQuery= encodeURIComponent(query);
-      fetchFavBarContent(`${config.serverPath}/api/threads/search?q=${encodedQuery}`, setSearchThreadResults)
-      fetchFavBarContent(`${config.serverPath}/api/forums/search?q=${encodedQuery}`, setSearchForumResults)
+      fetchContent(`${config.serverPath}/api/threads/search?q=${encodedQuery}`, setSearchThreadResults)
+      fetchContent(`${config.serverPath}/api/forums/search?q=${encodedQuery}`, setSearchForumResults)
   }
 
-  const fetchFavBarContent = (targetUrl, targetSetter) => {
+  const fetchContent = (targetUrl, targetSetter) => {
       //used to stop fetching when forcing reload
       const abortController = new AbortController();
       fetch(targetUrl, {
@@ -122,10 +122,10 @@ function App() {
   //used to update the favbar when subscribing a new thread or logging in
   const handleUpdateFavbar = () => {
     if(isLoggedIn()) {
-      fetchFavBarContent(`${config.serverPath}/api/favBar/favorites`, setFavouriteThreads);
+      fetchContent(`${config.serverPath}/api/favBar/favorites`, setFavouriteThreads);
     }
-    fetchFavBarContent(`${config.serverPath}/api/favBar/latest?limit=5`, setLatestThreads);
-    fetchFavBarContent(`${config.serverPath}/api/favBar/popular?limit=5`, setPopularThreads);
+    fetchContent(`${config.serverPath}/api/favBar/latest?limit=5`, setLatestThreads);
+    fetchContent(`${config.serverPath}/api/favBar/popular?limit=5`, setPopularThreads);
   }
 
   //loads all information into the favbar when website has been opened
@@ -164,7 +164,7 @@ function App() {
             {isLoggedIn() &&
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
 
-            <Route exact path="/search"><SearchList searchForumResults={searchForumResults} searchThreadResults={searchThreadResults}/></Route>
+            <Route exact path="/search"><SearchList searchForumResults={searchForumResults} searchThreadResults={searchThreadResults} handleSearch={handleSearch}/></Route>
             {/* 404 */}
             <Route path="/">
               <h1>Error 404: Page not found</h1>

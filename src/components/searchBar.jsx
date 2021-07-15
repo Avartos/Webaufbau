@@ -1,7 +1,7 @@
 import { ReactComponent as GlassIcon } from "../assets/icons/glass.svg";
 import classNames from "classnames";
 import { useHistory, useLocation } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 const SearchBar = (props) => {
   const query = useLocation().search;
@@ -11,13 +11,6 @@ const SearchBar = (props) => {
     searchBar: true,
     mobile: props.isMobile,
   });
-
-  useEffect(() => {
-    if (searchParam) {
-      startSearch();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const history = useHistory();
   const [search, setSearch] = useState(searchParam || "");

@@ -5,9 +5,11 @@ import GifApi from "./gifApi";
 const SearchList = (props) => {
   const [result, setResult] = useState([]);
 
+
   useEffect(() => {
     setResult([...props.searchForumResults, ...props.searchThreadResults]);
   }, [props]);
+
 
   return (
     <div>
@@ -19,8 +21,8 @@ const SearchList = (props) => {
       )}
       {result.map((entry) => {
         return (
-          <React.Fragment>
-            <Link to={`${entry.link}`} className="searchList" key={`search${entry.id}${entry.title}`}>
+          <React.Fragment key={`search${entry.id}${entry.title}`}>
+            <Link to={`${entry.link}`} className="searchList" >
               <div className="inner">
                 <div className="flag">{entry.flag}</div>
                 <div className="title">{entry.title}</div>
