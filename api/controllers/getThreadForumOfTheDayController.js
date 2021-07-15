@@ -2,25 +2,22 @@ const sequelize = require('../config/connection');
 const Forum = require('../models/forum');
 const Thread = require('../models/thread');
 const Contribution = require('../models/contribution');
-const Sequelize =  require('sequelize');
+const Sequelize = require('sequelize');
 
-const getOneThread = (req,res) => {
+const getOneThread = (req, res) => {
     const threadId = req.params.id;
 
     Contribution.count({
-        group:['threadsId'],
-    })
+            group: ['threadsId'],
+        })
         .then(data => {
+            console.log(data);
             Thread.findOne({
-                attributes:['title'],
-                include: [{
-                    model: Contribution,
-                    as: 'contributions',
-                    required: false,
-                    attributes:[]
-                }],
-                order: [sequelize.random()],
-            })
+                    attributes: ['title', 'id',
+                        [Sequelize.fn('CONCAT', '/contributions/', Sequelize.col('id')), 'link']
+                    ],
+                    order: [sequelize.random()],
+                })
                 .then(threadData => {
                     let mappedData = addContributionCountsToData([threadData], data);
                     res.json(mappedData);
@@ -36,23 +33,22 @@ const getOneThread = (req,res) => {
         });
 }
 
-const getOneForum = (req,res) => {
+const getOneForum = (req, res) => {
     const forumId = req.params.id;
 
     Thread.count({
-        group: ['forumsId'],
-    })
+            group: ['forumsId'],
+        })
         .then(data => {
+            console.log(data);
             Forum.findOne({
-                attributes:['title'],
-                include:[{
-                    model: Thread,
-                    as: 'threads',
-                    required: false,
-                    attributes:[]
-                }],
-                order: [sequelize.random()],
-            })
+                    attributes: [
+                        'title',
+                        'id',
+                        [Sequelize.fn('CONCAT', '/threads/', Sequelize.col('id')), 'link']
+                    ],
+                    order: [sequelize.random()],
+                })
                 .then(forumData => {
                     let mappedData = addThreadCountsToData([forumData], data);
                     res.json(mappedData);
@@ -70,12 +66,14 @@ const getOneForum = (req,res) => {
 
 const addContributionCountsToData = (threads, contributionCounts) => {
     const mappedArray = threads.map(entry => {
-        let matchingCount = contributionCounts.find(countEntry => entry.id === countEntry.contributionsId);
+        let matchingCount = contributionCounts.find(countEntry => entry.id === countEntry.threadsId);
+        console.log('test', threads);
         if (matchingCount) {
             entry.dataValues.contributionCount = matchingCount.count;
         } else {
             entry.dataValues.contributionCount = 0;
         }
+        delete entry.dataValues.id;
         return entry;
     });
     return mappedArray;
@@ -83,12 +81,13 @@ const addContributionCountsToData = (threads, contributionCounts) => {
 
 const addThreadCountsToData = (forums, counts) => {
     const mappedArray = forums.map(entry => {
-        let matchingCount = counts.find(countEntry => entry.id === countEntry.threadsId);
+        let matchingCount = counts.find(countEntry => entry.id === countEntry.forumsId);
         if (matchingCount) {
             entry.dataValues.threadCount = matchingCount.count;
         } else {
             entry.dataValues.threadCount = 0;
         }
+        delete entry.dataValues.id;
         return entry;
     });
     return mappedArray;
