@@ -82,7 +82,6 @@ const ThreadHeader = ({
           className="wrapperReturn"
           title="Zurück zum Forum"
         >
-          {console.log(`/threads/${thread[0].forumsId}`)}
           <img src={ReturnIcon} alt="zurück" />
         </Link>
       </div>

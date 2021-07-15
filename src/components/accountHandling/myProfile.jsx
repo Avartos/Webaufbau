@@ -26,9 +26,8 @@ const MyProfile = (props) => {
       let hasLowerCase = password.match(/[a-z]/m);
       let hasUpperCase = password.match(/[A-Z]/m);
       let hasNumber = password.match(/[0-9]/m);
-      let hasSpecial = password.match(
-        /[@#^!"'ยง$%&/()=*\-+,.;:_<>?|\\{}\[\]]/m
-      );
+      //eslint-disable-next-line
+      let hasSpecial = password.match(/[@#^!"'ยง$%&/()=*\-+,.;:_<>?|\\{}\[\]]/m);
 
       if (
         !hasLength ||

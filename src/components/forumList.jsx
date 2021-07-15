@@ -1,4 +1,3 @@
-import { ControlCameraOutlined } from "@material-ui/icons";
 import React, { useEffect, useState } from "react";
 
 import config from "../core/config";
@@ -83,6 +82,7 @@ const ForumList = ({ handleAddAlert }) => {
       });
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchForums, []);
 
   return (

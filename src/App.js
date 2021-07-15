@@ -129,6 +129,7 @@ function App() {
   }
 
   //loads all information into the favbar when website has been opened
+  //eslint-disable-next-line
   useEffect(handleUpdateFavbar, []);
 
 

@@ -29,7 +29,6 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
       })
       .then((data) => {
         setContributions([...data]);
-        console.log(data);
       })
       .catch((error) => {
         if (error.name === "AbortError") {
@@ -41,6 +40,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
     return () => console.log(abortController.abort());
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchContributions, [threadId]);
 
   const fetchThreadHeader = () => {
@@ -65,7 +65,6 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
           throw Error("Der gesuchte Thread existiert nicht!");
         }
         setThread(data);
-        console.log(data);
       })
       .catch((error) => {
         if (error.name === "AbortError") {
@@ -78,6 +77,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
     return () => console.log(abortController.abort());
   };
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(fetchThreadHeader, [threadId]);
 
   const handleAddContribution = async (e, contributionText, currentUser) => {
