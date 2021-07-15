@@ -7,20 +7,16 @@ import ProfilePicture from "./profilePicture";
 import classNames from "classnames";
 import { ReactComponent as EditIcon } from "../assets/icons/pencil.svg";
 
-
 function Contribution({
   contribution,
   handleRate,
-  threadId,
   handleAddAlert,
   handleSubmitContribution,
   isReply = false,
   isReplyButtonVisible = true,
   isEditable = true,
 }) {
-  // const [count, setCount] = useState(0);
   const [reply, setReply] = useState(false);
-  const [replies, setReplies] = useState(contribution.replies || []);
 
   const AddNewContributionForm = ({ onDiscard }) => {
     const [contributionText, setContributionText] = useState("");
@@ -47,7 +43,6 @@ function Contribution({
             }}
             placeholder="Gib deinen Beitrag zum Thema!"
           ></textarea>
-          {/* <input type="file" style={{ display: "none" }} ref={input} onChange={onInputChange} accept="image/*" /> */}
           <div className="buttonArea">
             <button
               className="discardContribution"
@@ -56,7 +51,6 @@ function Contribution({
             >
               Verwerfen
             </button>
-            {/* <button type="button" onClick={() => input.current.click()}>Anfügen</button> */}
             <button>Absenden</button>
           </div>
         </form>
@@ -159,37 +153,42 @@ function Contribution({
         <p className="title">Von: {contribution.creatorUserName}</p>
       </div>
       <div className="body">
-      {!isReply && !reply && isLoggedIn() && isReplyButtonVisible && (
-        <button className="replyButton" onClick={() => setReply(true)}>
-          {" "}
-          <ReplyIcon className="ignoreClick" />{" "}
-        </button>
-      )}
+        {!isReply && !reply && isLoggedIn() && isReplyButtonVisible && (
+          <button className="replyButton" onClick={() => setReply(true)}>
+            <ReplyIcon className="ignoreClick" />
+          </button>
+        )}
       </div>
       {!isEditMode && <p className="body">{contribution.content}</p>}
-      {isEditMode && (<div >
-          <textarea  value={body} onChange={(e) => {setBody(e.target.value)}}></textarea>
+      {isEditMode && (
+        <div>
+          <textarea
+            value={body}
+            onChange={(e) => {
+              setBody(e.target.value);
+            }}
+          ></textarea>
           <button className="abortButton" onClick={handleAbortEdit}>
-              Abbrechen
-            </button>
-            <button
-              className="saveChangeButton"
-              onClick={handleSendChangedContribution}
-            >
-              Änderungen bestätigen
-            </button>
-          </div>)}
+            Abbrechen
+          </button>
+          <button
+            className="saveChangeButton"
+            onClick={handleSendChangedContribution}
+          >
+            Änderungen bestätigen
+          </button>
+        </div>
+      )}
       <div className="counterOfLikes">
         <button
           className={negativeRatingClass}
           onClick={() => handleRate(-1, contribution.id)}
           disabled={!isLoggedIn()}
         >
-          {" "}
           <RemoveIcon
             className="ignoreClick"
             onClick={() => handleRate(-1, contribution.id)}
-          />{" "}
+          />
         </button>
         <p>{contribution.actualRating}</p>
         <button
@@ -197,32 +196,18 @@ function Contribution({
           onClick={() => handleRate(1, contribution.id)}
           disabled={!isLoggedIn()}
         >
-          {" "}
           <AddIcon
             className="ignoreClick"
             onClick={() => handleRate(-1, contribution.id)}
-          />{" "}
+          />
         </button>
       </div>
-      
+
       {!isReply && reply && (
         <div>
           <AddNewContributionForm onDiscard={discardReply} />
         </div>
       )}
-
-      <div className="replies">
-        {replies.map((reply) => {
-          return (
-            <Contribution
-              handleAddAlert={handleAddAlert}
-              threadId={threadId}
-              contribution={reply}
-              isReply={true}
-            />
-          );
-        })}
-      </div>
     </div>
   );
 }

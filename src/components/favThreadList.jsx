@@ -31,7 +31,13 @@ const FavThreadList = ({ forum }) => {
       <li className="favForum">
         <span onClick={handleToggleUnfolded}>
           <ArrowForwardIosIcon className={dropDownClass} />
-          <span className="forumTitle" title={forum.title}>{helper.shortenString(forum.title, config.favBarStringLength, '...')}</span>
+          <span className="forumTitle" title={forum.title}>
+            {helper.shortenString(
+              forum.title,
+              config.favBarStringLength,
+              "..."
+            )}
+          </span>
         </span>
         <div style={{ height: threadListHeight }}>
           <CSSTransition
@@ -46,8 +52,17 @@ const FavThreadList = ({ forum }) => {
               {forum.threads.map((thread) => {
                 return (
                   <li className="favThread" key={`favThread${thread.id}`}>
-                    <Link to={`/contributions/${thread.id}`} title={thread.title}>
-                      <span>{helper.shortenString(thread.title, config.favBarStringLength, '...')}</span>
+                    <Link
+                      to={`/contributions/${thread.id}`}
+                      title={thread.title}
+                    >
+                      <span>
+                        {helper.shortenString(
+                          thread.title,
+                          config.favBarStringLength,
+                          "..."
+                        )}
+                      </span>
                     </Link>
                   </li>
                 );

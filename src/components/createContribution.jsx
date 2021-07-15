@@ -1,7 +1,4 @@
-import { Duo } from "@material-ui/icons";
 import React, { useState } from "react";
-import { useRef } from "react";
-//import { add } from '../../api/controllers/threadController';
 
 const NewContributionForm = ({ handleAddContribution }) => {
   const openForm = (event) => {
@@ -15,37 +12,15 @@ const NewContributionForm = ({ handleAddContribution }) => {
 
   const [visible, setVisible] = useState(false);
 
-  const AddNewContributionForm = ({
-    onDiscard,
-    add,
-    // handleAddContribution,
-  }) => {
+  const AddNewContributionForm = ({ onDiscard }) => {
     const [contributionText, setContributionText] = useState("");
-    const [currentUser, setCurrentUser] = useState("Squidy50");
-
-    const input = useRef(null);
-
-    const onInputChange = ({ target }) => {
-      const files = target.files;
-
-      if (files.length > 0) console.log("found files for input", files);
-    };
 
     return (
       <div className="newContributionForm">
-        {/*      
-               onSubmit={(e) => {
-    //         handleAddContribution(e, "tehehehest");
-    //       }}
-    //     >
-    //       <button>Test</button>
-    //     </form> */}
-
         <form
           className="body"
           onSubmit={(e) => {
             e.preventDefault();
-            // console.log("Test")
             handleAddContribution(e, contributionText);
             setContributionText("");
             closeForm();
@@ -61,7 +36,6 @@ const NewContributionForm = ({ handleAddContribution }) => {
               }}
               placeholder="Gib deinen Beitrag zum Thema!"
             ></textarea>
-            {/* <input type="file" style={{ display: "none" }} ref={input} onChange={onInputChange} accept="image/*" /> */}
             <div className="buttonArea">
               <button
                 className="discardContribution"
@@ -70,7 +44,6 @@ const NewContributionForm = ({ handleAddContribution }) => {
               >
                 Verwerfen
               </button>
-              {/* <button type="button" onClick={() => input.current.click()}>Anfügen</button> */}
               <button>Absenden</button>
             </div>
           </div>

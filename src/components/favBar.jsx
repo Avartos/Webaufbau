@@ -26,7 +26,7 @@ const FavBar = (props) => {
                 return (
                   <React.Fragment key={`favForum${forum.id}`}>
                     {forum.threads.length !== 0 && (
-                      <FavThreadList forum={forum} ></FavThreadList>
+                      <FavThreadList forum={forum}></FavThreadList>
                     )}
                   </React.Fragment>
                 );
@@ -45,7 +45,11 @@ const FavBar = (props) => {
                 <li className="favThread" key={`popular${thread.id}`}>
                   <Link to={`/contributions/${thread.id}`} title={thread.title}>
                     <span>
-                      {helper.shortenString(thread.title, config.favBarStringLength-3, '...') +
+                      {helper.shortenString(
+                        thread.title,
+                        config.favBarStringLength - 3,
+                        "..."
+                      ) +
                         " (" +
                         thread.contributionsCount +
                         ")"}
@@ -67,7 +71,11 @@ const FavBar = (props) => {
                 <li className="favThread" key={`latest${thread.id}`}>
                   <Link to={`/contributions/${thread.id}`} title={thread.title}>
                     <span>
-                      {helper.shortenString(thread.title, config.favBarStringLength, '...')}
+                      {helper.shortenString(
+                        thread.title,
+                        config.favBarStringLength,
+                        "..."
+                      )}
                     </span>
                   </Link>
                 </li>
