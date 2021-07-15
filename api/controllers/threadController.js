@@ -271,8 +271,9 @@ const getQueryParametersMapped = (query) =>
 }
 
 const findByName = (req,res) => {
-  const query = req.query.q;
+  const query = decodeURIComponent(req.query.q);
   const queryArray = getQueryParametersMapped(query)
+  console.log('Test');
   Thread.findAll({
     attributes: [
       [Sequelize.fn("concat", "Thread:"),'flag'],

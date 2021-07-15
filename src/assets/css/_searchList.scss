@@ -28,7 +28,11 @@
     .title {
       margin: unset;
       margin-left: 10px;
+      transition: ease-in-out .1s;
       //align-self: flex-start;
+      &:hover {
+        color: $highlightedFontColor
+      }
     }
   }
 

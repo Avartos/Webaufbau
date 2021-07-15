@@ -82,8 +82,9 @@ function App() {
   const [searchForumResults, setSearchForumResults] = useState([]);
 
   const handleSearch = (query) => {
-      fetchFavBarContent(`${config.serverPath}/api/threads/search?q=${query}`, setSearchThreadResults)
-      fetchFavBarContent(`${config.serverPath}/api/forums/search?q=${query}`, setSearchForumResults)
+      const encodedQuery= encodeURIComponent(query);
+      fetchFavBarContent(`${config.serverPath}/api/threads/search?q=${encodedQuery}`, setSearchThreadResults)
+      fetchFavBarContent(`${config.serverPath}/api/forums/search?q=${encodedQuery}`, setSearchForumResults)
   }
 
   const fetchFavBarContent = (targetUrl, targetSetter) => {

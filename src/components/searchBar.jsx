@@ -1,16 +1,21 @@
 import { ReactComponent as GlassIcon } from "../assets/icons/glass.svg";
 import classNames from "classnames";
-import {useHistory} from "react-router-dom"
+import {useHistory, useLocation} from "react-router-dom"
 import {useState} from "react";
 
 const SearchBar = (props) => {
+
+  const query = useLocation().search;
+  const searchParam = new URLSearchParams(query).get('q');
+  console.log(searchParam);
+
   let searchBarClass = classNames({
     searchBar: true,
     mobile: props.isMobile,
   });
 
   const history = useHistory();
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState(searchParam || '');
 
   const handleSubmit = (e) => {
       e.preventDefault();

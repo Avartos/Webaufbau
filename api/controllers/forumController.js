@@ -78,7 +78,7 @@ const getQueryParametersMapped = (query) =>
 }
 
 const findByName = (req,res) => {
-    const query = req.query.q;
+    const query = decodeURIComponent(req.query.q);
     const queryArray = getQueryParametersMapped(query)
     Forum.findAll({
         attributes: [
