@@ -2,7 +2,6 @@
 @import "./mixins/contentCard";
 
 .searchList {
-
   @include header($threadBodyColor);
 
   margin: 5px;
@@ -21,21 +20,13 @@
     align-items: flex-start;
     width: 100%;
 
-    .flag {
-      //align-self: flex-start;
-    }
-
     .title {
       margin: unset;
       margin-left: 10px;
-      transition: ease-in-out .1s;
-      //align-self: flex-start;
+      transition: ease-in-out 0.1s;
       &:hover {
-        color: $highlightedFontColor
+        color: $highlightedFontColor;
       }
     }
   }
-
-
-
 }

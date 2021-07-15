@@ -10,10 +10,6 @@ nav {
   width: 100%;
   z-index: 999;
 
-  
-
-  
-
   ul {
     list-style-type: none;
     margin: 0;
@@ -85,7 +81,7 @@ nav {
         @include squaredButton($mobileHeaderHeight * 0.6, 0, 0.5);
 
         @media (min-width: $minDesktopWidth) {
-          @include squaredButton($headerHeight * 0.4, 0, 0.4 );
+          @include squaredButton($headerHeight * 0.4, 0, 0.4);
         }
 
         &:not(.active) {

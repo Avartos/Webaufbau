@@ -3,7 +3,7 @@
 
 .notificationList {
   @include contentCard($threadHeaderColor, $threadBodyColor);
-  
+
   .header {
     display: inline-block;
     width: 100%;
@@ -11,7 +11,6 @@
       font-size: 1.3em !important;
       padding-top: 7px;
       margin: auto auto;
-
     }
   }
 
@@ -25,7 +24,6 @@
     height: 100%;
     z-index: inherit;
   }
-  
 
   .notification {
     border-bottom: 1px solid black;
@@ -150,15 +148,14 @@
   top: 80px;
   right: 50%;
   min-width: 350px;
-  transform: translate(5%,0);
+  transform: translate(5%, 0);
 
   @media (min-width: $minDesktopWidth) {
     top: 120px;
     right: 10px;
   }
 
-  // position: relative;
-  transition: height ease-in-out .2s !important;
+  transition: height ease-in-out 0.2s !important;
   box-shadow: 0 3px 3px rgba(0, 0, 0, 0.2);
   overflow: hidden !important;
   border-radius: 5px;

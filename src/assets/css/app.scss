@@ -11,7 +11,6 @@
 @import "./contributions";
 @import "./myProfile";
 @import "./userList";
-@import "./profilePicture";
 @import "./gifApi";
 
 .App {
@@ -22,19 +21,17 @@
   grid-template-columns: 1fr;
 
   grid-template-rows: $mobileHeaderHeight auto;
-  grid-template-areas: 
-  "header"
-  "content";
+  grid-template-areas:
+    "header"
+    "content";
 
   @media (min-width: $minDesktopWidth) {
-
-      grid-template-rows: $headerHeight auto;
-      grid-template-columns: $favBarWidth 5fr $favBarWidth;
-      grid-template-areas:
+    grid-template-rows: $headerHeight auto;
+    grid-template-columns: $favBarWidth 5fr $favBarWidth;
+    grid-template-areas:
       "header  header header"
-      "sidebar content ."
+      "sidebar content .";
   }
-  // overflow-x: hidden;
 }
 
 html,
@@ -50,12 +47,11 @@ body {
 }
 
 .content {
-  
   background-image: url("../images/background.svg");
   background-size: 100%;
   background-attachment: fixed;
   background-color: $backgroundColor;
-  padding: 2em .5em 0em .5em;
+  padding: 2em 0.5em 0em 0.5em;
   grid-area: content;
   height: auto;
 

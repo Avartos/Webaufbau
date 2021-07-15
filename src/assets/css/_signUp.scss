@@ -1,6 +1,6 @@
-@import './variables';
-@import './mixins/contentCard';
-@import './mixins/buttonPreset';
+@import "./variables";
+@import "./mixins/contentCard";
+@import "./mixins/buttonPreset";
 
 .signUp {
   @include contentCard($threadHeaderColor, $threadBodyColor);

@@ -76,17 +76,16 @@
         height: 50px;
         width: 50px;
         background-color: grey;
-        transition: ease-in-out .1s;
+        transition: ease-in-out 0.1s;
         cursor: pointer;
 
         &:hover {
-            filter:brightness(50%);
+          filter: brightness(50%);
         }
 
         &:active {
-            filter: brightness(80%);
+          filter: brightness(80%);
         }
-
       }
     }
 

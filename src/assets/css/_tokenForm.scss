@@ -24,42 +24,42 @@
       display: block;
       margin: 15px auto;
       @include basicButton(
-      white,
-      $buttonColor,
-      $buttonHoverColor,
-      $buttonPressedColor
-    );
-      transition: color ease-in-out .2s;
+        white,
+        $buttonColor,
+        $buttonHoverColor,
+        $buttonPressedColor
+      );
+      transition: color ease-in-out 0.2s;
 
       &.isLoading {
-          color: $buttonColor;
+        color: $buttonColor;
       }
 
       &:disabled {
+        background-color: grey;
+        cursor: default;
+        &:hover {
           background-color: grey;
-          cursor: default;
-          &:hover {
-            background-color: grey;
-          }
+        }
       }
     }
 
     .loadingCircle {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
 
-        .MuiCircularProgress-colorPrimary {
-            color: white !important;
-        }
+      .MuiCircularProgress-colorPrimary {
+        color: white !important;
+      }
     }
 
     .tokenDisplay {
-        width: 90%;
-        margin: 30px auto;
-        padding: 5px 0px 5px 0px;
-        font-size: 1.1em;
+      width: 90%;
+      margin: 30px auto;
+      padding: 5px 0px 5px 0px;
+      font-size: 1.1em;
     }
   }
 }
