@@ -1,5 +1,5 @@
 const Sequelize = require('sequelize')
-const sequelize = require('../config/connection');
+// const sequelize = require('../config/connection');
 const Forum = require('../models/forum');
 const SubscribedForum = require('../models/subscribedForum');
 const Thread = require('../models/thread');
@@ -17,9 +17,9 @@ const findAll = (req,res) => {
             [Sequelize.fn('date_format', Sequelize.col('forum.createdAt'), '%d.%m.%Y'), 'createdAt'],
             [Sequelize.fn('date_format', Sequelize.col('forum.updatedAt'), '%d.%m.%Y'), 'updatedAt'],
             ['shortDescription','description'],
-            [sequelize.col('subscribedForums.usersId'), 'subscriptionUsersId'],
+            [Sequelize.col('subscribedForums.usersId'), 'subscriptionUsersId'],
             //count the threads inside a forum
-            [sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
+            [Sequelize.fn('COUNT', 'threads.id'), 'numberOfThreads']
         ],
         include: [{
             model: Thread,
@@ -82,9 +82,9 @@ const findByName = (req,res) => {
     const queryArray = getQueryParametersMapped(query)
     Forum.findAll({
         attributes: [
-            [sequelize.fn('concat', 'Forum:'),'flag'],
+            [Sequelize.fn('concat', 'Forum:'),'flag'],
             'title',
-            [sequelize.fn('concat', '/threads/',sequelize.col('id')),'link']
+            [Sequelize.fn('concat', '/threads/',Sequelize.col('id')),'link']
         ],
         where: {
             title:

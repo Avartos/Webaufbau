@@ -20,7 +20,7 @@ const SearchList = (props) => {
       {result.map((entry) => {
         return (
           <React.Fragment>
-            <Link to={`${entry.link}`} className="searchList">
+            <Link to={`${entry.link}`} className="searchList" key={`search${entry.id}${entry.title}`}>
               <div className="inner">
                 <div className="flag">{entry.flag}</div>
                 <div className="title">{entry.title}</div>
