@@ -68,7 +68,7 @@ const ApiTokenForm = ({ handleAddAlert }) => {
         </p>
         <input type="text" readOnly className="tokenDisplay" value={token} />
         <button
-          class={tokenButtonClass}
+          className={tokenButtonClass}
           onClick={handleRequestToken}
           disabled={token !== ""}
         >
@@ -83,11 +83,11 @@ const ApiTokenForm = ({ handleAddAlert }) => {
           <div>
             <h3>Link für Foren mit Token</h3>
             <span>
-              {config.serverPath}/squid/random/forum/?t={token}
+              {config.serverPath}/squid/random/forum?t={token}
             </span>
             <h3>Link für Thread mit Token</h3>
             <span>
-              {config.serverPath}/squid/random/thread/?t={token}
+              {config.serverPath}/squid/random/thread?t={token}
             </span>
           </div>
         )}
