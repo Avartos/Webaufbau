@@ -1,5 +1,8 @@
 const ApiToken = require ('../models/apiToken');
 
+/*
+This middleware get a token via a query and check if this token is existing in the database.
+ */
 const validateApiToken =  (req, res, next) => {
     const apiToken = req.query.t;
 

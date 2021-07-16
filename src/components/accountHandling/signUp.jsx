@@ -62,6 +62,7 @@ const Signin = ({handleAddAlert}) => {
             });
     };
 
+    //In this function we check the password conditions
     const checkPasswordConditions = (password) => {
         if (password) {
             let hasLength = password.length >= 8;

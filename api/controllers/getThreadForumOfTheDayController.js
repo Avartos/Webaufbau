@@ -4,6 +4,9 @@ const Thread = require('../models/thread');
 const Contribution = require('../models/contribution');
 const Sequelize = require('sequelize');
 
+/*
+The part "getOneThread" delivers a random thread and the number of the contributions
+ */
 const getOneThread = (req, res) => {
     const threadId = req.params.id;
 
@@ -33,6 +36,9 @@ const getOneThread = (req, res) => {
         });
 }
 
+/*
+The part "getOneForum" delivers a random forum and the numbers of threads
+ */
 const getOneForum = (req, res) => {
     const forumId = req.params.id;
 
@@ -64,6 +70,9 @@ const getOneForum = (req, res) => {
         });
 }
 
+/*
+The following two function counts the threads/contributions of the random forum/thread and returns the result
+ */
 const addContributionCountsToData = (threads, contributionCounts) => {
     const mappedArray = threads.map(entry => {
         let matchingCount = contributionCounts.find(countEntry => entry.id === countEntry.threadsId);

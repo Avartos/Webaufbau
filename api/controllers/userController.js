@@ -179,7 +179,7 @@ const updateLogin = (req, res) => {
         })
 }
 
-// adds a new nuser to the database
+// adds a new user to the database
 const add = (req, res) => {
     const user = req.body;
     User.findOne({
