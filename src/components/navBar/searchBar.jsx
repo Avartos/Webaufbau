@@ -3,16 +3,24 @@ import classNames from "classnames";
 import {useHistory, useLocation} from "react-router-dom";
 import {useState} from "react";
 
+/**
+ * This component handle the searchbar and starts the searchfunktion
+ */
 const SearchBar = (props) => {
+    // the search query
     const query = useLocation().search;
+    // the extracted params from the query
     const searchParam = new URLSearchParams(query).get("q");
 
+    // the classname searchBar
     let searchBarClass = classNames({
         searchBar: true,
         mobile: props.isMobile,
     });
 
+    // history object
     const history = useHistory();
+    // all search params
     const [search, setSearch] = useState(searchParam || "");
 
     const handleSubmit = (e) => {

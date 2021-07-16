@@ -7,9 +7,15 @@ import {Link} from "react-router-dom";
 import config from "../../core/config";
 import helper from "../../core/helperFunctions";
 
+/**
+ * This component handle the thread-list for the favorite section in the favBar
+ */
 const FavThreadList = ({forum}) => {
+    // css parameter
     const [threadListHeight, setThreadListHeight] = useState(0);
+    // css parameter
     const threadListRef = React.useRef(null);
+    // css parameter
     const [isUnfolded, setIsUnfolded] = useState(false);
 
     const calculateThreadListHeight = () => {

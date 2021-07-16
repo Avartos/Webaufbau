@@ -1,15 +1,18 @@
 import React, {useEffect, useState} from "react";
 
+/**
+ * This component returns a random gif generated on a expected hit list
+ */
 const GifApi = (prop) => {
     // set words to search for
     const searchWords = prop.searchList;
     // set the apikey and limit
     const apikey = "OUXM9BQB1TTQ";
-
+    // maximum border for the random function
     const limit = 10;
-
+    // handle the synchronisation
     const [isPending, setIsPending] = useState(true);
-
+    // api url
     const [gif, setGif] = useState("");
 
     // url Async requesting function
