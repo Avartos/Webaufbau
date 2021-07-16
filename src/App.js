@@ -20,7 +20,7 @@ import ThreadList from "./components/threads/threadList";
 
 //account components
 import Login from "./components/accountHandling/login";
-import SignUp from "./components/accountHandling//signUp";
+import SignUp from "./components/accountHandling/signUp";
 import ApiTokenForm from "./components/apiTokenForm";
 import SearchList from "./components/navBar/searchList";
 import MyProfile from "./components/accountHandling/myProfile";
