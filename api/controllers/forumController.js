@@ -77,6 +77,7 @@ const getQueryParametersMapped = (query) =>
     return mappedArray;
 }
 
+// returns the requested forums
 const findByName = (req,res) => {
     const query = decodeURIComponent(req.query.q);
     const queryArray = getQueryParametersMapped(query)

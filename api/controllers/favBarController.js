@@ -5,7 +5,7 @@ const SubscribedThread = require('../models/subscribedThread');
 const Forum = require('../models/forum');
 const Contribution = require('../models/contribution')
 
-
+// returns the subscribed threads
 const findFavorites = (req, res) => {
     const userID = req.user.id;
     Forum.findAll({
@@ -40,6 +40,7 @@ const findFavorites = (req, res) => {
 
 }
 
+// returns the threads with the most contributions
 const findPopular = (req, res) => {
     const limit = parseInt(req.query.limit);
     Thread.findAll({
@@ -66,6 +67,7 @@ const findPopular = (req, res) => {
     })
 }
 
+// return the latest threads
 const findLatest = (req, res) => {
     const limit = parseInt(req.query.limit);
     Thread.findAll({

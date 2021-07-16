@@ -210,7 +210,7 @@ const update = (req, res) => {
       console.error('Error:\t', error);
     })
 }
-
+// returns the requested threads
 const findByName = (req, res) => {
   const query = decodeURIComponent(req.query.q);
   const queryArray = getQueryParametersMapped(query)
