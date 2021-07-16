@@ -43,13 +43,8 @@ const Thread = (props) => {
   const [body, setBody] = useState();
 
   const handleLoadContributionPreviews = () => {
-    //only fetch contributions, if they aren't already fetched
     props.handleTogglePreview(props.thread.id);
-    console.log(contributions.length);
-    // if (contributions.length !== 0) {
-    console.log("tehest");
     fetchContributions();
-    // }
   };
 
   const fetchContributions = () => {
