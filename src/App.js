@@ -7,11 +7,11 @@ import config from'./core/config';
 
 // #region custom component imports
 //general components
-import NavBar from "./components/navBar";
-import FavBar from "./components/favBar";
-import SearchBar from "./components/searchBar";
+import NavBar from "./components/navBar/navBar";
+import FavBar from "./components/favBar/favBar";
+import SearchBar from "./components/navBar/searchBar";
 import AlertList from "./components/userAlerts/alertList";
-import GifApi from "./components/gifApi";
+import GifApi from "./components/gifApi/gifApi";
 
 //forum components
 import ForumList from "./components/forumList";
@@ -22,7 +22,7 @@ import ThreadList from "./components/threads/threadList";
 import Login from "./components/accountHandling/login";
 import SignUp from "./components/accountHandling//signUp";
 import ApiTokenForm from "./components/apiTokenForm";
-import SearchList from "./components/searchList";
+import SearchList from "./components/navBar/searchList";
 import MyProfile from "./components/accountHandling/myProfile";
 import UserList from "./components/accountHandling/administration/userList";
 // #endregion

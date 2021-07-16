@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import SearchBar from "./searchBar";
-import Bell from "./notifications/bell";
-import LoginButton from "./loginButton";
+import Bell from "../notifications/bell";
+import LoginButton from "../loginButton";
 import { Link } from "react-router-dom";
 
-import ProfileButton from "./accountHandling/profileButton";
-import { default as LogoIcon } from "../assets/icons/logo.svg";
+import ProfileButton from "../accountHandling/profileButton";
+import { default as LogoIcon } from "../../assets/icons/logo.svg";
 
 /**
  * This component represent the navigation bar

@@ -19,7 +19,7 @@ const findFavorites = (req, res) => {
             attributes: [
                 'title',
                 'id',
-                
+
             ],
             required: true,
             include: [{
@@ -59,7 +59,7 @@ const findPopular = (req, res) => {
             [Sequelize.fn('COUNT', 'contributions.id'), 'desc']
         ]
     }).then((data) => {
-        res.json(data.slice(0,limit));
+        res.json(data.slice(0, limit));
     }).catch((error) => {
         console.error('Error:\t', error);
         res.sendStatus(500);
