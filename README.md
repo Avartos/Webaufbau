@@ -65,28 +65,29 @@ Squid ist ein Forum, in dem sich Nutzer austauschen können. Dabei soll die Anon
 Squid beinhaltet folgende Funktionalitäten:
 
 - Allgemeine Forenfunktionen
-  - Anlegen von Foren
-  - Anlegen von Threads
+  - Anlegen/Bearbeiten von Threads
   - Antworten auf Threads
   - Abonnieren von Threads und Foren
   - Suchen nach Foren und Threads
   - Bewerten von Antworten auf ein Post in einem Thread
-  - Beanchrichtigung bei neuen Aktivitäten in Abonnierten Foren
+  - Beanchrichtigung bei neuen Aktivitäten in abonnierten Foren
+  - API Token für Dritte bereitstellen
 - Kontoverwaltung
   - Auswahl eines eigenen Profilbildes aus einer Auswahl vorgegebener Profilbilder
   - Änderung des Passwortes
+  - Nutzerverwaltung für Admins
 
 ## Verworfene Funktionalitäten
 
-Es waren mehr Funktionalitäten geplan, leider mussten diese aufgrund von Zeitmangel verworfen werden:
+Es waren mehr Funktionalitäten geplant, leider mussten diese aufgrund von Zeitmangel verworfen werden:
 
 - Durchführung von Voicecalls (wurde getestet, hat aber nicht stabil genug funktioniert und war zu kurzfristig)
 - Anhängen von Dateien/ Bildern / Dokumenten an Posts
 - Implementierung von Straw Poll als externe API
 
-## Nutzung fremd API
+## Nutzung - Fremde API
 
-Als Fremd API wurde eine API von Tenor eingebunden. Diese zeigt auf der 404 Seite nach Suchkriterien festgelegte, zufällige gifs an.
+Als Fremd API wurde eine API von Tenor eingebunden. Diese zeigt auf der 404 Seite und bei der Ergebnislosen Suche nach Suchkriterien festgelegte, zufällige gifs an.
 
 ## Nutzung - Eigene API
 
@@ -108,7 +109,7 @@ Es werden ein zufälliger Thread sowie ein zufälliges Forum zurückgeliefert.
 - Eigene Syntax für Smileys / Symbole
 - Kleine Vorschau auf eingebettete Links zu anderen Webseiten
 - Markierung von Beiträgen als Spoiler
-- Name für alle Nutzer „Squidy“ + Zahl
+- Name für alle Nutzer „Squid“ + Zahl
 
 ### Kommunikation
 
