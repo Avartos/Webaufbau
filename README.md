@@ -14,7 +14,13 @@ Die DatenbankDatei befindet sich im Verzeichnis:
 [./api/src/squid.sql](./api/src/squid.sql)
 
 Anschließend das Backend sowie das Frontend starten.
-Das Backend befindet sich im Ordner api, für das Frontend genügt im Hauptverzeichnis:
+Um den API Server zu starten muss folgender Befehl im ./api Verzeichnis ausgeführt werden.
+
+```cmd
+nodemon
+```
+
+Um das Frontend zu starten muss folgender Befehl im root Verzeichnis ausgeführt werden.
 
 ```cmd
 npm start
