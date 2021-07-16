@@ -69,7 +69,6 @@ const ForumList = ({ handleAddAlert }) => {
           throw Error("Das Forum konnte nicht abonniert werden.");
         }
         let updatedForums = forums;
-        console.log(updatedForums);
         const index = updatedForums.findIndex((forum) => forum.forumsID === id);
         updatedForums[index].subscriptionUsersId = updatedForums[index]
           .subscriptionUsersId
