@@ -19,7 +19,7 @@ router.put('/image/:id', authMiddleware.validateToken, userController.updateImag
 router.put('/update/:id', authMiddleware.validateToken, authMiddleware.validateAdminStatus, userController.updateLogin);
 
 //returns one user by its name
-router.post('/login', userController.findOneByName);
+router.post('/login', userController.login);
 
 //add a new user
 router.post('/', userController.add);

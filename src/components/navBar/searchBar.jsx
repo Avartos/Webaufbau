@@ -4,7 +4,7 @@ import {useHistory, useLocation} from "react-router-dom";
 import {useState} from "react";
 
 /**
- * This component handle the searchbar and starts the searchfunktion
+ * This component handles the searchbar and starts the searchfunction
  */
 const SearchBar = (props) => {
     // the search query

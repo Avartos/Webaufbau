@@ -6,7 +6,7 @@ const config = {
   //the max length of contributions for forums and threads
   shortenedDescriptionLength: 250,
   //the max length for titles in forums and threads
-  shortenedTitleLength: 50,
+  shortenedTitleLength: 35,
   //the max length of fav bar entries
   favBarStringLength: 20,
   //the max length for titles in the contribution dropdown

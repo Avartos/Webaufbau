@@ -47,6 +47,7 @@ const findAll = (req, res) => {
         });
 };
 
+//returns the currently logged in user
 const findOne = (req, res) => {
     const userId = (req.user) ? req.user.id : -1;
 
@@ -70,7 +71,9 @@ const findOne = (req, res) => {
         });
 };
 
-const findOneByName = (req, res) => {
+//searches the given username and checks if the given password matches
+//returns a signed token, if username and password were correct
+const login = (req, res) => {
     const userName = req.body.userName;
     const password = req.body.passwordHash;
 
@@ -109,7 +112,7 @@ const findOneByName = (req, res) => {
                             res.sendStatus(403);
                         }
 
-                        //sign create the token
+                        //created and signs a token
                         const accessToken = sign({
                                 userName: user.userName,
                                 id: user.id,
@@ -138,7 +141,7 @@ const findOneByName = (req, res) => {
         });
 };
 
-//updates admin and the enabled state of the user
+//updates admin state and the enabled state of the user
 //can be only performed by admins
 const updateLogin = (req, res) => {
     const userId = req.params.id;
@@ -316,7 +319,7 @@ module.exports = {
     findOne,
     updateLogin,
     add,
-    findOneByName,
+    login,
     updateImage,
     updatePassword
 };
