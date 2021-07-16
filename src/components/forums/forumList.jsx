@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import config from "../core/config";
+import config from "../../core/config";
 
 import Forum from "./forum";
 

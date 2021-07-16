@@ -14,7 +14,7 @@ import AlertList from "./components/userAlerts/alertList";
 import GifApi from "./components/gifApi/gifApi";
 
 //forum components
-import ForumList from "./components/forumList";
+import ForumList from "./components/forums/forumList";
 import Contributions from "./components/contributions";
 import ThreadList from "./components/threads/threadList";
 

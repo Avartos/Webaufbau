@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import config from "../core/config";
-import helper from "../core/helperFunctions";
+import config from "../../core/config";
+import helper from "../../core/helperFunctions";
 
 import ForumStatictics from "./forumStatistics";
-import SubscribeButton from "./subscribeButton";
+import SubscribeButton from "../subscribeButton";
 
 /**
  * This component represents a single forum that can be listed inside the forumList component
@@ -28,6 +28,7 @@ const Forum = (props) => {
           {helper.shortenString(props.name, config.shortenedTitleLength, "...")}
         </Link>
         <div className="wrapperButton">
+          {/* hide the subscribe button, if the user is not logged in */}
           {helper.isLoggedIn() && (
             <SubscribeButton
               parentId={props.id}
