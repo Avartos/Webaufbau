@@ -3,6 +3,7 @@ const router = express.Router();
 const threadController = require('../controllers/threadController');
 const authMiddleware = require('../middlewares/authMiddleware');
 
+// get the requested entry objects
 router.get('/search', threadController.findByName)
 
 // get all threads that belongs to the given forum
