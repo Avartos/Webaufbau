@@ -36,11 +36,6 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
     setFormHeight(height);
   };
 
-  //checks if the user is logged in to provide or deny access to the add thread form
-  const userIsLoggedIn = () => {
-    return sessionStorage.getItem("accessToken") != null;
-  };
-
   const handleSubmitForm = (e, title, body) => {
     setFormIsUnfolded(false);
     handleSubmitNewThread(e, title, body);
@@ -95,7 +90,7 @@ const ForumHeader = ({ forum, handleSubmitNewThread, handleAddAlert }) => {
         <p className="shortDescription">{forum.shortDescription}</p>
       </div>
 
-      {userIsLoggedIn() && (
+      {helper.isLoggedIn() && (
         <React.Fragment>
           <button
             className="unfoldButton"

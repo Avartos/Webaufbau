@@ -8,17 +8,10 @@ import SubscribeButton from "./subscribeButton";
 
 /**
  * This component represents a single forum that can be listed inside the forumList component
- * @param {*} props
- * @returns jsx for a single thread
  */
 const Forum = (props) => {
   //used to set a date if none is given
   const [updatedAt, setUpdatedAt] = useState();
-
-  //checks if the usser is logged in
-  const isLoggedIn = () => {
-    return sessionStorage.getItem("accessToken") !== null;
-  };
 
   //sets updatedAt to createdAt if updatedAt doesnt exist
   const isUpdateSet = () => {
@@ -35,7 +28,7 @@ const Forum = (props) => {
           {helper.shortenString(props.name, config.shortenedTitleLength, "...")}
         </Link>
         <div className="wrapperButton">
-          {isLoggedIn() && (
+          {helper.isLoggedIn() && (
             <SubscribeButton
               parentId={props.id}
               isSubscribed={props.subscriptionUsersId}

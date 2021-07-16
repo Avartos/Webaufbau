@@ -49,15 +49,20 @@ const updateRating = (req, res) => {
                 Rating.create({
                         usersId: userId,
                         contributionsId: contributionId,
-                        rating: rating
+                        rating: parseInt(rating)
                     })
                     .then(
                         newRating => res.sendStatus(200)
-                    );
+                    )
+                    .catch(error => {
+                        res.sendStatus(500);
+                        console.error('Error:\t', error);
+                    })
             }
         })
         .catch(error => {
             res.sendStatus(500);
+            console.error('Error:\t', error);
         })
 }
 

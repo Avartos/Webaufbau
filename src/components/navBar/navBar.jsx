@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 import SearchBar from "./searchBar";
 import Bell from "../notifications/bell";
-import LoginButton from "../loginButton";
+import LoginButton from "./loginButton";
 import { Link } from "react-router-dom";
 
 import ProfileButton from "../accountHandling/profileButton";
 import { default as LogoIcon } from "../../assets/icons/logo.svg";
+import helper from "../../core/helperFunctions";
 
 /**
  * This component represent the navigation bar
@@ -32,10 +33,6 @@ const NavBar = (props) => {
     setNotificationsUnfolded(!notificationsUnfolded);
   };
 
-  const isLoggedIn = () => {
-    return sessionStorage.getItem("accessToken") !== null;
-  };
-
   return (
     <React.Fragment>
       <nav>
@@ -46,7 +43,7 @@ const NavBar = (props) => {
             </label>
           </li>
           <li>
-            {sessionStorage.getItem("accessToken") && (
+            {helper.isLoggedIn() && (
               <Bell
                 handleToggleUnfold={handleToggleNotificationsUnfold}
                 isUnfolded={notificationsUnfolded}
@@ -54,8 +51,8 @@ const NavBar = (props) => {
             )}
           </li>
           <li>
-            {!isLoggedIn() && <LoginButton />}
-            {isLoggedIn() && (
+            {!helper.isLoggedIn() && <LoginButton />}
+            {helper.isLoggedIn() && (
               <ProfileButton
                 handleToggleUnfold={handleToggleProfileUnfold}
                 isUnfolded={profileUnfolded}

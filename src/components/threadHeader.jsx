@@ -4,7 +4,9 @@ import NewContributionForm from "./createContribution";
 import ReturnIcon from "../assets/icons/returnIcon.svg";
 import { Link } from "react-router-dom";
 
+
 import SubscribeButton from "./subscribeButton";
+import helper from "../core/helperFunctions";
 
 const ThreadHeader = ({
   thread,
@@ -60,16 +62,12 @@ const ThreadHeader = ({
       });
   };
 
-  const isLoggedIn = () => {
-    return sessionStorage.getItem("accessToken") !== null;
-  };
-
   return (
     <div className="forumHeader">
       <div className="header">
         <h2 className="title">{thread[0].title}</h2>
         <div className="wrapperButton">
-          {sessionStorage.getItem("accessToken") && (
+          {helper.isLoggedIn() && (
             <SubscribeButton
               parentId={thread.id}
               isSubscribed={isSubscribed}
@@ -96,7 +94,7 @@ const ThreadHeader = ({
         </div>
         <p className="shortDescription">{thread[0].content}</p>
       </div>
-      {isLoggedIn() && (
+      {helper.isLoggedIn() && (
         <NewContributionForm handleAddContribution={handleAddContribution} />
       )}
     </div>

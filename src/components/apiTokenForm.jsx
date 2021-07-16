@@ -83,11 +83,11 @@ const ApiTokenForm = ({ handleAddAlert }) => {
           <div>
             <h3>Link für Foren mit Token</h3>
             <span>
-              {config.serverPath}/squid/getThreadForumOfTheDay/forum/?t={token}
+              {config.serverPath}/squid/random/forum/?t={token}
             </span>
             <h3>Link für Thread mit Token</h3>
             <span>
-              {config.serverPath}/squid/getThreadForumOfTheDay/thread/?t={token}
+              {config.serverPath}/squid/random/thread/?t={token}
             </span>
           </div>
         )}

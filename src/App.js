@@ -25,6 +25,7 @@ import ApiTokenForm from "./components/apiTokenForm";
 import SearchList from "./components/navBar/searchList";
 import MyProfile from "./components/accountHandling/myProfile";
 import UserList from "./components/accountHandling/administration/userList";
+import helper from "./core/helperFunctions";
 // #endregion
 
 function App() {
@@ -66,22 +67,18 @@ function App() {
     setCurrentProfilePicture(sessionStorage.getItem('profilePicture'));
   }
 
-  //used to determine, if the current user is logged in
-  const isLoggedIn = () => {
-    return sessionStorage.getItem('accessToken') !== null
-  }
-
-  const isAdmin = () => {
-    return (sessionStorage.getItem('accessToken') !== null && (sessionStorage.getItem('isAdmin') === '1'));
-  }
-
   const [favouriteThreads, setFavouriteThreads] = useState([]);
   const [popularThreads, setPopularThreads] = useState([]);
   const [latestThreads, setLatestThreads] = useState([]);
   const [searchThreadResults, setSearchThreadResults] = useState([]);
   const [searchForumResults, setSearchForumResults] = useState([]);
 
+  //used to prevent endless search loop when opening search list with prefilles search query
+  const [isFirstSearch, setIsFirstSearch] = useState(true);
+  
+  //fetches threads and forums for search list
   const handleSearch = (query) => {
+      setIsFirstSearch(false);
       const encodedQuery= encodeURIComponent(query);
       fetchContent(`${config.serverPath}/api/threads/search?q=${encodedQuery}`, setSearchThreadResults)
       fetchContent(`${config.serverPath}/api/forums/search?q=${encodedQuery}`, setSearchForumResults)
@@ -121,7 +118,7 @@ function App() {
 
   //used to update the favbar when subscribing a new thread or logging in
   const handleUpdateFavbar = () => {
-    if(isLoggedIn()) {
+    if(helper.isLoggedIn()) {
       fetchContent(`${config.serverPath}/api/favBar/favorites`, setFavouriteThreads);
     }
     fetchContent(`${config.serverPath}/api/favBar/latest?limit=5`, setLatestThreads);
@@ -145,26 +142,26 @@ function App() {
           <Switch>
             {/* Forum Routes */}
             {/* redirect to start page if user is logged in */}
-            {isLoggedIn() && <Route exact path="(/login|/registration)"><ForumList handleAddAlert={handleAddAlert}/></Route>}
+            {helper.isLoggedIn() && <Route exact path="(/login|/registration)"><ForumList handleAddAlert={handleAddAlert}/></Route>}
             <Route exact path="/"><ForumList handleAddAlert={handleAddAlert}/></Route>
             <Route exact path="/threads/:forumId"><ThreadList handleAddAlert={handleAddAlert} handleUpdateFavbar={handleUpdateFavbar} /></Route>
             <Route exact path="/contributions/:threadId"><Contributions handleAddAlert={handleAddAlert} handleUpdateFavbar={handleUpdateFavbar}/></Route>
             
             {/* Login Routes */}
-            {!isLoggedIn() &&
+            {!helper.isLoggedIn() &&
             <Route exact path="/registration"><SignUp handleAddAlert={handleAddAlert} /></Route>}
 
-            {!isLoggedIn() && <Route excact path="/login"><Login handleAddAlert={handleAddAlert} handleUpdateProfilePicture={handleUpdateProfilePicture} handleUpdateFavbar={handleUpdateFavbar}/></Route>}
+            {!helper.isLoggedIn() && <Route excact path="/login"><Login handleAddAlert={handleAddAlert} handleUpdateProfilePicture={handleUpdateProfilePicture} handleUpdateFavbar={handleUpdateFavbar}/></Route>}
             
             {/* account */}
-            {isLoggedIn() &&
+            {helper.isLoggedIn() &&
             <Route exact path="/my_profile"><MyProfile handleUpdateProfilePicture={handleUpdateProfilePicture} handleAddAlert={handleAddAlert}/></Route>}
-            {isAdmin() &&
+            {helper.isAdmin() &&
             <Route exact path="/administration"><UserList/></Route>}
-            {isLoggedIn() &&
+            {helper.isLoggedIn() &&
             <Route exact path="/token_request"><ApiTokenForm handleAddAlert={handleAddAlert}/></Route>}
 
-            <Route exact path="/search"><SearchList searchForumResults={searchForumResults} searchThreadResults={searchThreadResults} handleSearch={handleSearch}/></Route>
+            <Route exact path="/search"><SearchList searchForumResults={searchForumResults} searchThreadResults={searchThreadResults} handleSearch={handleSearch} isFirstSearch={isFirstSearch}/></Route>
             {/* 404 */}
             <Route path="/">
               <h1>Error 404: Page not found</h1>

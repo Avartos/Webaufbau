@@ -2,6 +2,7 @@ import { CSSTransition } from "react-transition-group";
 import { useHistory } from "react-router-dom";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import helper from "../../core/helperFunctions";
 
 const ProfileDropDown = (props) => {
   const history = useHistory();
@@ -44,7 +45,7 @@ const ProfileDropDown = (props) => {
             <Link to="/my_profile">
               <span onClick={props.handleToggleUnfold}>Mein Konto</span>
             </Link>
-            {sessionStorage.getItem("isAdmin") === "1" && (
+            {helper.isAdmin() && (
               <Link to="/administration">
                 <span onClick={props.handleToggleUnfold}>Nutzerverwaltung</span>
               </Link>

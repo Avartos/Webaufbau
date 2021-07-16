@@ -13,16 +13,16 @@ const Signin = ({handleAddAlert}) => {
         createUserName();
     }, [])
 
-    const [requiredFieldsAreOk, setRequiredFieldsAreOk] = useState("");
-    const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState("");
-    const [isInvalidPasswordFormat, setIsInvalidPasswordFormat] = useState("");
+    const [requiredFieldsAreOk, setRequiredFieldsAreOk] = useState(true);
+    const [passwordsAreEqual, setPasswordsAreEqual] = useState(true);
+    const [isInvalidPasswordFormat, setIsInvalidPasswordFormat] = useState(true);
 
     let history = useHistory();
 
     const handleSubmit = (e) => {
         e.preventDefault();
         if (
-            passwordsAreNotEqual ||
+            !passwordsAreEqual ||
             isInvalidPasswordFormat ||
             userName === "" ||
             password === ""
@@ -86,11 +86,11 @@ const Signin = ({handleAddAlert}) => {
         }
     };
 
-    const equalPasswords = (password, passwordTwo) => {
+    const checkIfPasswordsAreEqual = (password, passwordTwo) => {
         if (password !== passwordTwo) {
-            setPasswordsAreNotEqual(true);
+            setPasswordsAreEqual(false);
         } else {
-            setPasswordsAreNotEqual(false);
+            setPasswordsAreEqual(true);
         }
     };
 
@@ -118,9 +118,6 @@ const Signin = ({handleAddAlert}) => {
                         className="signinInput"
                         type="text"
                         value={userName}
-                        /*onChange={(e) => {
-                          setUserName(e.target.value);
-                        }}*/
                         readOnly={true}
                     ></input>
 
@@ -133,6 +130,7 @@ const Signin = ({handleAddAlert}) => {
                         onChange={(e) => {
                             setPassword(e.target.value);
                             checkPasswordConditions(e.target.value);
+                            checkIfPasswordsAreEqual(password, e.target.value);
                         }}
                     ></input>
 
@@ -144,7 +142,7 @@ const Signin = ({handleAddAlert}) => {
                         value={passwordTwo}
                         onChange={(e) => {
                             setPasswordTwo(e.target.value);
-                            equalPasswords(password, e.target.value);
+                            checkIfPasswordsAreEqual(password, e.target.value);
                         }}
                     ></input>
                     {!requiredFieldsAreOk && (
@@ -152,7 +150,7 @@ const Signin = ({handleAddAlert}) => {
                             Bitte füllen Sie alle Felder aus!
                         </Alert>
                     )}
-                    {passwordsAreNotEqual && (
+                    {!passwordsAreEqual && (
                         <Alert severity="error" className="error">
                             Die eingegebenen Passwörter stimmen nicht überein!
                         </Alert>

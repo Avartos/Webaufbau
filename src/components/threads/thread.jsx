@@ -221,7 +221,7 @@ const Thread = (props) => {
         )}
 
         {/* hide the subscribe button, if the user is not logged in */}
-        {sessionStorage.getItem("accessToken") && (
+        {helper.isLoggedIn() && (
           <div className="wrapperButton">
             <SubscribeButton
               parentId={props.thread.id}

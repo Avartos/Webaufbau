@@ -7,6 +7,8 @@ import ProfilePicture from "./profilePicture";
 import classNames from "classnames";
 import { ReactComponent as EditIcon } from "../assets/icons/pencil.svg";
 
+import helper from "../core/helperFunctions";
+
 function Contribution({
   contribution,
   handleRate,
@@ -65,18 +67,14 @@ function Contribution({
     return 0;
   };
 
-  const isLoggedIn = () => {
-    return sessionStorage.getItem("accessToken") !== null;
-  };
-
   const positiveRatingClass = classNames({
     counterButton: true,
-    isActive: getCurrentRating() === 1 || !isLoggedIn(),
+    isActive: getCurrentRating() === 1 || !helper.isLoggedIn(),
   });
 
   const negativeRatingClass = classNames({
     counterButton: true,
-    isActive: getCurrentRating() === -1 || !isLoggedIn(),
+    isActive: getCurrentRating() === -1 || !helper.isLoggedIn(),
   });
 
   const discardReply = () => {
@@ -153,7 +151,7 @@ function Contribution({
         <p className="title">Von: {contribution.creatorUserName}</p>
       </div>
       <div className="body">
-        {!isReply && !reply && isLoggedIn() && isReplyButtonVisible && (
+        {!isReply && !reply && helper.isLoggedIn() && isReplyButtonVisible && (
           <button className="replyButton" onClick={() => setReply(true)}>
             <ReplyIcon className="ignoreClick" />
           </button>
@@ -183,22 +181,18 @@ function Contribution({
         <button
           className={negativeRatingClass}
           onClick={() => handleRate(-1, contribution.id)}
-          disabled={!isLoggedIn()}
+          disabled={!helper.isLoggedIn()}
         >
           <RemoveIcon
-            className="ignoreClick"
-            onClick={() => handleRate(-1, contribution.id)}
           />
         </button>
         <p>{contribution.actualRating}</p>
         <button
           className={positiveRatingClass}
           onClick={() => handleRate(1, contribution.id)}
-          disabled={!isLoggedIn()}
+          disabled={!helper.isLoggedIn()}
         >
           <AddIcon
-            className="ignoreClick"
-            onClick={() => handleRate(-1, contribution.id)}
           />
         </button>
       </div>

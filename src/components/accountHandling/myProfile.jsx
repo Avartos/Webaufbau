@@ -15,9 +15,9 @@ const MyProfile = (props) => {
   const [password, setPassword] = useState("");
   const [repeatedPassword, setRepeatedPassword] = useState("");
 
-  const [requiredFieldsAreOk, setRequiredFieldsAreOk] = useState("");
-  const [passwordsAreNotEqual, setPasswordsAreNotEqual] = useState("");
-  const [isInvalidPasswordFormat, setIsInvalidPasswordFormat] = useState("");
+  const [requiredFieldsAreOk, setRequiredFieldsAreOk] = useState(true);
+  const [passwordsAreEqual, setPasswordsAreEqual] = useState(true);
+  const [isInvalidPasswordFormat, setIsInvalidPasswordFormat] = useState(false);
 
   //checks, if the new password fullfills all conditions
   const checkPasswordConditions = (password) => {
@@ -44,11 +44,11 @@ const MyProfile = (props) => {
   };
 
   //checks if both passwords are equal
-  const equalPasswords = (password, passwordTwo) => {
+  const checkIfPasswordsAreEqual = (password, passwordTwo) => {
     if (password !== passwordTwo) {
-      setPasswordsAreNotEqual(true);
+      setPasswordsAreEqual(false);
     } else {
-      setPasswordsAreNotEqual(false);
+      setPasswordsAreEqual(true);
     }
   };
 
@@ -90,7 +90,7 @@ const MyProfile = (props) => {
   const handleUpdatePasswort = (e) => {
     e.preventDefault();
     if (
-      passwordsAreNotEqual ||
+      !passwordsAreEqual ||
       isInvalidPasswordFormat ||
       currentPassword === "" ||
       password === ""
@@ -162,6 +162,7 @@ const MyProfile = (props) => {
                 value={currentPassword}
                 onChange={(e) => {
                   setCurrentPassword(e.target.value);
+                  checkPasswordConditions(e.target.value);
                 }}
               ></input>
 
@@ -183,7 +184,7 @@ const MyProfile = (props) => {
                 value={repeatedPassword}
                 onChange={(e) => {
                   setRepeatedPassword(e.target.value);
-                  equalPasswords(password, e.target.value);
+                  checkIfPasswordsAreEqual(password, e.target.value);
                 }}
               ></input>
 
@@ -192,7 +193,7 @@ const MyProfile = (props) => {
                   Bitte füllen Sie alle Felder aus!
                 </Alert>
               )}
-              {passwordsAreNotEqual && (
+              {!passwordsAreEqual && (
                 <Alert severity="error" className="error">
                   Die eingegebenen Passwörter stimmen nicht überein!
                 </Alert>
