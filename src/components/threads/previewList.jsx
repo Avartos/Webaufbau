@@ -1,5 +1,5 @@
 import React from "react";
-import Contribution from "../contribution";
+import Contribution from "../contributions/contribution";
 
 /**
  * This Component is used to preview Contributions beneath the thread
