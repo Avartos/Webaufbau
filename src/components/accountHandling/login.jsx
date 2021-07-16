@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import config from "../../core/config";
 
-const Login = ({ handleAddAlert, handleUpdateProfilePicture, handleUpdateFavbar }) => {
+const Login = ({
+  handleAddAlert,
+  handleUpdateProfilePicture,
+  handleUpdateFavbar,
+}) => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
 
@@ -22,7 +26,7 @@ const Login = ({ handleAddAlert, handleUpdateProfilePicture, handleUpdateFavbar 
       body: JSON.stringify(user),
     })
       .then((response) => {
-        if (response.status === 401) {
+        if (response.status === 403) {
           throw Error("Nutzername oder Passwort sind falsch.");
         }
         if (!response.ok) {
@@ -32,9 +36,9 @@ const Login = ({ handleAddAlert, handleUpdateProfilePicture, handleUpdateFavbar 
       })
       .then((data) => {
         sessionStorage.setItem("accessToken", data.accessToken);
-        sessionStorage.setItem('profilePicture', data.profilePicturePath);
-        sessionStorage.setItem('isAdmin', data.isAdmin);
-        sessionStorage.setItem('userName', data.userName);
+        sessionStorage.setItem("profilePicture", data.profilePicturePath);
+        sessionStorage.setItem("isAdmin", data.isAdmin);
+        sessionStorage.setItem("userName", data.userName);
         handleAddAlert(
           "success",
           "Hallo",

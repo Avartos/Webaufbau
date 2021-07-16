@@ -21,7 +21,7 @@ const isLoggedIn = () => {
 const isAdmin = () => {
   return (
     sessionStorage.getItem("accessToken") !== null &&
-    sessionStorage.getItem("isAdmin") === '1'
+    sessionStorage.getItem("isAdmin") === "1"
   );
 };
 

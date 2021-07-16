@@ -5,7 +5,8 @@ import AddIcon from "@material-ui/icons/Add";
 import config from "../../core/config";
 import ProfilePicture from "../profilePicture";
 import classNames from "classnames";
-import { ReactComponent as EditIcon } from "../assets/icons/pencil.svg";
+import { ReactComponent as EditIcon } from "../../assets/icons/pencil.svg";
+import helper from "../../core/helperFunctions";
 
 /**
  * This component represents a single contribution that can be listet in the "contributions"-component
@@ -72,21 +73,16 @@ function Contribution({
     return 0;
   };
 
-  //checks if the user is logged in
-  const isLoggedIn = () => {
-    return sessionStorage.getItem("accessToken") !== null;
-  };
-
   //gives a positiv rating
   const positiveRatingClass = classNames({
     counterButton: true,
-    isActive: getCurrentRating() === 1 || !isLoggedIn(),
+    isActive: getCurrentRating() === 1 || !helper.isLoggedIn(),
   });
 
   //gives a negativ rating
   const negativeRatingClass = classNames({
     counterButton: true,
-    isActive: getCurrentRating() === -1 || !isLoggedIn(),
+    isActive: getCurrentRating() === -1 || !helper.isLoggedIn(),
   });
 
   // discards the reply to a contribution
@@ -165,7 +161,7 @@ function Contribution({
         <p className="title">Von: {contribution.creatorUserName}</p>
       </div>
       <div className="body">
-        {!isReply && !reply && isLoggedIn() && isReplyButtonVisible && (
+        {!isReply && !reply && helper.isLoggedIn() && isReplyButtonVisible && (
           <button className="replyButton" onClick={() => setReply(true)}>
             <ReplyIcon className="ignoreClick" />
           </button>
@@ -195,23 +191,17 @@ function Contribution({
         <button
           className={negativeRatingClass}
           onClick={() => handleRate(-1, contribution.id)}
-          disabled={!isLoggedIn()}
+          disabled={!helper.isLoggedIn()}
         >
-          <RemoveIcon
-            className="ignoreClick"
-            onClick={() => handleRate(-1, contribution.id)}
-          />
+          <RemoveIcon className="ignoreClick" />
         </button>
         <p>{contribution.actualRating}</p>
         <button
           className={positiveRatingClass}
           onClick={() => handleRate(1, contribution.id)}
-          disabled={!isLoggedIn()}
+          disabled={!helper.isLoggedIn()}
         >
-          <AddIcon
-            className="ignoreClick"
-            onClick={() => handleRate(-1, contribution.id)}
-          />
+          <AddIcon className="ignoreClick" />
         </button>
       </div>
 

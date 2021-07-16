@@ -119,7 +119,7 @@ const MyProfile = (props) => {
         }
         props.handleAddAlert(
           "success",
-          "Registriert!",
+          "Passwort geändert",
           "Ihr passwort wurde erfolgreich geändert!"
         );
       })

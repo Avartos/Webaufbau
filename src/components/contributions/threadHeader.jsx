@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
 import ThreadStatistics from "../threads/threadStatistics";
 import NewContributionForm from "./createContribution";
-import ReturnIcon from "../assets/icons/returnIcon.svg";
+import ReturnIcon from "../../assets/icons/returnIcon.svg";
 import { Link } from "react-router-dom";
 
 import SubscribeButton from "../subscribeButton";
+import config from "../../core/config";
+import helper from "../../core/helperFunctions";
 
 /**
  * This component represents the thread header which includes the name of the threads, a subscribe button and the statistics
@@ -15,7 +17,6 @@ const ThreadHeader = ({
   handleAddAlert,
   handleUpdateFavbar,
 }) => {
-
   //variables to define whether or not the tread is subscribed
   const [isSubscribed, setIsSubscribed] = useState(false);
 
@@ -44,11 +45,10 @@ const ThreadHeader = ({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [thread]);
 
-
   //used to subscribe a thread, throws errors if not possible
   const handleSubscribeThread = (id) => {
     const subscribeMethod = isSubscribed ? "DELETE" : "POST";
-    fetch(`http://localhost:3001/api/threads/subscriptions/${thread[0].id}`, {
+    fetch(`${config.serverPath}/api/threads/subscriptions/${thread[0].id}`, {
       method: subscribeMethod,
       headers: {
         "Content-Type": "application/json",
@@ -67,17 +67,12 @@ const ThreadHeader = ({
       });
   };
 
-  //checks if the user is logged in
-  const isLoggedIn = () => {
-    return sessionStorage.getItem("accessToken") !== null;
-  };
-
   return (
     <div className="forumHeader">
       <div className="header">
         <h2 className="title">{thread[0].title}</h2>
         <div className="wrapperButton">
-          {sessionStorage.getItem("accessToken") && (
+          {helper.isLoggedIn() && (
             <SubscribeButton
               parentId={thread.id}
               isSubscribed={isSubscribed}
@@ -104,7 +99,7 @@ const ThreadHeader = ({
         </div>
         <p className="shortDescription">{thread[0].content}</p>
       </div>
-      {isLoggedIn() && (
+      {helper.isLoggedIn() && (
         <NewContributionForm handleAddContribution={handleAddContribution} />
       )}
     </div>

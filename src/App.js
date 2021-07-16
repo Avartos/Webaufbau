@@ -15,7 +15,7 @@ import GifApi from "./components/gifApi/gifApi";
 
 //forum components
 import ForumList from "./components/forums/forumList";
-import Contributions from "./components/contributions";
+import Contributions from "./components/contributions/contributions.jsx";
 import ThreadList from "./components/threads/threadList";
 
 //account components

@@ -77,7 +77,6 @@ const UserList = () => {
       <h2>Nutzer</h2>
       {!isPending && (
         <React.Fragment>
-          
           <div className="row header">
             <span className="cell head">Profilbild</span>
             <span className="cell head">User ID</span>

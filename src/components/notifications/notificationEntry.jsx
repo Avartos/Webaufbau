@@ -3,8 +3,8 @@ import { Link } from "react-router-dom";
 import { CSSTransition } from "react-transition-group";
 import CloseIcon from "@material-ui/icons/Close";
 
-import config from '../../core/config';
-import helper from '../../core/helperFunctions';
+import config from "../../core/config";
+import helper from "../../core/helperFunctions";
 
 /**
  * This component represents a single notification within the notification list
@@ -58,17 +58,23 @@ const NotificationEntry = (props) => {
         nodeRef={entryRef}
         className="notificationFader"
       >
-          <React.Fragment>
-            <span className="preText">{props.preText}</span>
-            <Link to={props.targetUrl} onClick={() => setIsVisible(false)}>
-              <span className="title" title={props.title}>{helper.shortenString(props.title, config.shortenedNotificationLength, '...')}</span>
-            </Link>
+        <React.Fragment>
+          <span className="preText">{props.preText}</span>
+          <Link to={props.targetUrl} onClick={() => setIsVisible(false)}>
+            <span className="title" title={props.title}>
+              {helper.shortenString(
+                props.title,
+                config.shortenedNotificationLength,
+                "..."
+              )}
+            </span>
+          </Link>
 
-            <CloseIcon
-              className="closeIcon"
-              onClick={() => setIsVisible(false)}
-            ></CloseIcon>
-          </React.Fragment>
+          <CloseIcon
+            className="closeIcon"
+            onClick={() => setIsVisible(false)}
+          ></CloseIcon>
+        </React.Fragment>
       </CSSTransition>
     </div>
   );

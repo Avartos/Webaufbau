@@ -45,7 +45,6 @@ const ForumList = ({ handleAddAlert }) => {
           handleAddAlert("error", "Fehler", error.message);
         }
       });
-    return () => console.log(abortController.abort());
   };
 
   /**

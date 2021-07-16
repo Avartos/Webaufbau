@@ -9,11 +9,10 @@ const NewContributionForm = ({ handleAddContribution }) => {
     setVisible(true);
   };
   const closeForm = () => {
-    console.log("discard 1");
     setVisible(false);
   };
 
-  //variables to set the visibility of the form 
+  //variables to set the visibility of the form
   const [visible, setVisible] = useState(false);
 
   //let the user add a new contribution to a specific thread

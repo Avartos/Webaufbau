@@ -30,7 +30,6 @@ const ProfileButton = (props) => {
         isUnfolded={props.isUnfolded}
         handleToggleUnfold={props.handleToggleUnfold}
       ></ProfileDropDown>
-      
     </React.Fragment>
   );
 };

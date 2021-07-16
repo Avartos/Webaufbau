@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import Contribution from "./contribution";
 import { useEffect } from "react";
-import ThreadHeader from "../threadHeader";
+import ThreadHeader from "./threadHeader";
+
+import config from "../../core/config";
 
 /**
  * This component represents all contributions made to an specific thread
@@ -16,7 +18,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
   const fetchContributions = () => {
     //used to stop fetching when forcing reload
     const abortController = new AbortController();
-    fetch(`http://localhost:3001/api/contributions/all/${threadId}`, {
+    fetch(`${config.serverPath}/api/contributions/all/${threadId}`, {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",
@@ -42,7 +44,6 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
           handleAddAlert("error", "Fehler", error.message);
         }
       });
-    return () => console.log(abortController.abort());
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -50,7 +51,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
 
   const fetchThreadHeader = () => {
     const abortController = new AbortController();
-    fetch(`http://localhost:3001/api/threads/${threadId}`, {
+    fetch(`${config.serverPath}/api/threads/${threadId}`, {
       signal: abortController.signal,
       headers: {
         "Content-Type": "application/json",
@@ -79,7 +80,6 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
           history.push("/404");
         }
       });
-    return () => console.log(abortController.abort());
   };
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -97,7 +97,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
     };
 
     const response = await fetch(
-      `http://localhost:3001/api/contributions/${threadId}`,
+      `${config.serverPath}/api/contributions/${threadId}`,
       {
         method: "POST",
         headers: {
@@ -123,7 +123,7 @@ const Contributions = ({ handleAddAlert, handleUpdateFavbar }) => {
   const handleRate = (rate, contributionId) => {
     const newRate = { rating: rate };
 
-    fetch(`http://localhost:3001/api/ratings/${contributionId}`, {
+    fetch(`${config.serverPath}/api/ratings/${contributionId}`, {
       method: "POST",
       body: JSON.stringify(newRate),
       headers: {

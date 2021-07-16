@@ -12,11 +12,16 @@ const AlertItem = ({ alert, handleRemoveAlert }) => {
 
   const handleClose = () => {
     setIsOpen(false);
-    handleRemoveAlert(alert.id)
+    handleRemoveAlert(alert.id);
   };
 
   return (
-    <Snackbar open={isOpen} autoHideDuration={6000} onClose={handleClose} anchorOrigin={{vertical: 'top', horizontal: 'right'}}>
+    <Snackbar
+      open={isOpen}
+      autoHideDuration={6000}
+      onClose={handleClose}
+      anchorOrigin={{ vertical: "top", horizontal: "right" }}
+    >
       <MuiAlert elevation={6} severity={alert.severity} onClose={handleClose}>
         {/* Only display the alert title, if an alert title exists */}
         {alert.title && <AlertTitle>{alert.title}</AlertTitle>}

@@ -63,7 +63,6 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
           setIsPending(false);
         }
       });
-    return () => console.log(abortController.abort());
   };
 
   const fetchForum = () => {
@@ -86,8 +85,8 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
         return res.json();
       })
       .then((data) => {
-        if(data === null) {
-          throw Error('Das gesuchte Forum existiert nicht!');
+        if (data === null) {
+          throw Error("Das gesuchte Forum existiert nicht!");
         }
         setForum(data);
         setForumIsPending(false);
@@ -99,10 +98,9 @@ const ThreadList = ({ handleAddAlert, handleUpdateFavbar }) => {
         } else {
           handleAddAlert("error", "Fehler", "Fehler beim laden des Forums.");
           setError(error.message);
-          history.push('/404')
+          history.push("/404");
         }
       });
-    return () => console.log(abortController.abort());
   };
 
   /**
